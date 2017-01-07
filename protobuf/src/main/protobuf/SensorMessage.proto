@@ -1,0 +1,10 @@
+syntax = "proto3";
+
+option java_package = "ch.rasc.protobuf";
+
+message SensorMessage {
+  uint32 tx = 1;
+  uint32 rx = 2;
+  float temp = 3;
+  uint32 humidity = 4;
+}
