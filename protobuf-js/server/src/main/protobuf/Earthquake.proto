@@ -1,0 +1,18 @@
+syntax = "proto3";
+
+option java_package = "ch.rasc.protobuf";
+
+message Earthquake {
+  string id = 1;
+  string time = 2;
+  double latitude = 3;
+  double longitude = 4;
+  float depth = 5;
+  float mag = 6;
+  string place = 7;
+  string magType = 8;
+}
+
+message Earthquakes {
+  repeated Earthquake earthquakes = 1;
+}
