@@ -1,0 +1,36 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>
+      Ionic Blank
+    </ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <ion-list>
+    <ion-item
+      *ngFor="let actor of bondActors; let i = index; let even = even; let odd = odd; let first = first; let last = last"
+      [ngClass]="{ odd: odd, even: even, first: first, last: last }">
+      {{i+1}} {{actor.firstName}} {{actor.lastName}}
+    </ion-item>
+  </ion-list>
+
+  <ion-list>
+    <ion-item
+      template="ngFor let actor of bondActors; let i = index; let even = even; let odd = odd; let first = first; let last = last"
+      [ngClass]="{ odd: odd, even: even, first: first, last: last }">
+      {{i+1}} {{actor.firstName}} {{actor.lastName}}
+    </ion-item>
+  </ion-list>
+
+  <ion-list>
+    <template ngFor let-actor [ngForOf]="bondActors"
+              let-i="index"
+              let-even="even" let-odd="odd"
+              let-first="first" let-last="last">
+      <ion-item [ngClass]="{ odd: odd, even: even, first: first, last: last }">
+        {{i+1}} {{actor.firstName}} {{actor.lastName}}
+      </ion-item>
+    </template>
+  </ion-list>
+</ion-content>
