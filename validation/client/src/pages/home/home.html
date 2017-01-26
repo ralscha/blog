@@ -1,0 +1,60 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>
+      Form Validation
+    </ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <form [formGroup]="registrationForm" (submit)="register()" novalidate>
+
+    <ion-list>
+
+      <ion-item>
+        <ion-label floating>Username</ion-label>
+        <ion-input formControlName="username" type="text" [class.invalid]="isInvalidAndDirty('username')"></ion-input>
+      </ion-item>
+      <ion-item class="error-message" *ngIf="hasError('username', 'required')">
+        Username is required
+      </ion-item>
+      <ion-item class="error-message" *ngIf="hasError('username', 'minlength')">
+        Username must be at least 2 characters long
+      </ion-item>
+      <ion-item class="error-message" *ngIf="hasError('username', 'maxlength')">
+        Username cannot be longer than 30 characters
+      </ion-item>
+      <ion-item class="error-message" *ngIf="hasError('username', 'usernameTaken')">
+        Username is already taken
+      </ion-item>
+
+      <ion-item>
+        <ion-label floating>Email</ion-label>
+        <ion-input formControlName="email" type="email" [class.invalid]="isInvalidAndDirty('email')"></ion-input>
+      </ion-item>
+      <ion-item class="error-message" *ngIf="hasError('email', 'required')">
+        Email is required
+      </ion-item>
+      <ion-item class="error-message" *ngIf="hasError('email', 'pattern')">
+        Email is not valid
+      </ion-item>
+
+      <ion-item>
+        <ion-label floating>Age</ion-label>
+        <ion-input formControlName="age" type="number" [class.invalid]="isInvalidAndDirty('age')"></ion-input>
+      </ion-item>
+      <ion-item class="error-message" *ngIf="hasError('age', 'required')">
+        Age is required
+      </ion-item>
+      <ion-item class="error-message" *ngIf="hasError('age', 'notOldEnough')">
+        You must be at least {{minAge}} years old!
+      </ion-item>
+
+    </ion-list>
+
+    <button ion-button block type="submit" [disabled]="!registrationForm.valid">
+      Create an Account
+    </button>
+
+  </form>
+</ion-content>
