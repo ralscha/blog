@@ -1,0 +1,37 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>Login</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <form #form="ngForm" (ngSubmit)="login(form.value)" novalidate>
+    <ion-list>
+      <ion-item>
+        <ion-label floating>Username</ion-label>
+        <ion-input type="text" name="username" ngModel required #username="ngModel"
+                   [class.invalid]="username.errors && username.dirty"></ion-input>
+      </ion-item>
+      <ion-item class="error-message" *ngIf="username.errors?.required && username.dirty">
+        Username is required
+      </ion-item>
+
+      <ion-item>
+        <ion-label floating>Password</ion-label>
+        <ion-input type="password" name="password" ngModel required #password="ngModel"
+                   [class.invalid]="password.errors && password.dirty"></ion-input>
+      </ion-item>
+      <ion-item class="error-message" *ngIf="password.errors?.required && password.dirty">
+        Password is required
+      </ion-item>
+
+      <div padding>
+        <button ion-button color="primary" block type="submit" [disabled]="!form.valid">Login</button>
+      </div>
+
+      <div padding>
+        <button ion-button color="secondary" block type="button" (click)="signup()">Sign up</button>
+      </div>
+    </ion-list>
+  </form>
+</ion-content>

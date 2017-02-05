@@ -1,0 +1,59 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>Sign up</ion-title>
+  </ion-navbar>
+</ion-header>
+
+
+<ion-content padding>
+  <form #form="ngForm" (ngSubmit)="signup(form.value)" novalidate>
+    <ion-list>
+      <ion-item>
+        <ion-label floating>Name</ion-label>
+        <ion-input type="text" name="name" ngModel required #name="ngModel"
+                   [class.invalid]="name.errors && name.dirty"></ion-input>
+      </ion-item>
+      <ion-item class="error-message" *ngIf="name.errors?.required && name.dirty">
+        Name is required
+      </ion-item>
+
+      <ion-item>
+        <ion-label floating>Email</ion-label>
+        <ion-input type="email" name="email" ngModel required email #email="ngModel"
+                   [class.invalid]="email.errors && email.dirty"></ion-input>
+      </ion-item>
+      <ion-item class="error-message" *ngIf="email.errors?.required && email.dirty">
+        Email is required
+      </ion-item>
+      <ion-item class="error-message" *ngIf="email.errors?.email && email.dirty">
+        Email is not valid
+      </ion-item>
+
+      <ion-item>
+        <ion-label floating>Username</ion-label>
+        <ion-input type="text" name="username" ngModel required #username="ngModel"
+                   [class.invalid]="username.errors && username.dirty"></ion-input>
+      </ion-item>
+      <ion-item class="error-message" *ngIf="username.errors?.required && username.dirty">
+        Username is required
+      </ion-item>
+      <ion-item class="error-message" *ngIf="username.errors?.usernameTaken">
+        Username already taken
+      </ion-item>
+
+      <ion-item>
+        <ion-label floating>Password</ion-label>
+        <ion-input type="password" name="password" ngModel required #password="ngModel"
+                   [class.invalid]="password.errors && password.dirty"></ion-input>
+      </ion-item>
+      <ion-item class="error-message" *ngIf="password.errors?.required && password.dirty">
+        Password is required
+      </ion-item>
+
+      <div padding>
+        <button ion-button color="primary" block type="submit" [disabled]="!form.valid">Sign up</button>
+      </div>
+
+    </ion-list>
+  </form>
+</ion-content>

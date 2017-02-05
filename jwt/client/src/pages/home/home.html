@@ -1,0 +1,21 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>
+      Logged in
+    </ion-title>
+    <ion-buttons end>
+      <button ion-button icon-only (click)="logout()">
+        <ion-icon name="exit"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  Welcome <strong>{{user}}</strong>
+
+  <p>
+    Message from the secret service:
+    <strong>{{message}}</strong>
+  </p>
+</ion-content>
