@@ -1,0 +1,30 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>
+      Upload
+    </ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <ion-item>
+    <ion-row>
+      <ion-col width-50>
+        <button ion-button color="danger" type="button" full round large (click)="takePhoto()">
+          <ion-icon name="camera"></ion-icon>
+        </button>
+      </ion-col>
+      <ion-col width-50>
+        <button ion-button color="secondary" type="button" full round large (click)="selectPhoto()">
+          <ion-icon name="image"></ion-icon>
+        </button>
+      </ion-col>
+    </ion-row>
+  </ion-item>
+  <ion-item *ngIf="error">
+    <strong>{{error}}</strong>
+  </ion-item>
+  <ion-item>
+    <img *ngIf="myPhoto" class="img-responsive" [src]="myPhoto"/>
+  </ion-item>
+</ion-content>
