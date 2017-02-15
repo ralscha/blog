@@ -32,7 +32,7 @@
     "sw-toolbox": "3.4.0"
   },
   "devDependencies": {
-    "@ionic/app-scripts": "1.0.0",
+    "@ionic/app-scripts": "1.1.0",
     "@types/node": "^7.0.0",
     "typescript": "2.1.5"
   },

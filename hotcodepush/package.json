@@ -28,7 +28,7 @@
     "sw-toolbox": "3.4.0"
   },
   "devDependencies": {
-    "@ionic/app-scripts": "1.0.0",
+    "@ionic/app-scripts": "1.1.0",
     "typescript": "2.0.9"
   },
   "cordovaPlugins": [
