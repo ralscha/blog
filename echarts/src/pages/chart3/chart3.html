@@ -1,0 +1,11 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>Chart 3</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content>
+  <echart [option]="option"></echart>
+  <button ion-button block [disabled]="running" (click)="start()" color="secondary">Start</button>
+  <button ion-button block [disabled]="!running" (click)="stop()" color="danger">Stop</button>
+</ion-content>
