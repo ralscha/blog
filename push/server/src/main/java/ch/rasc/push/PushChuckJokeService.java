@@ -20,48 +20,47 @@ import de.bytefish.fcmjava.responses.TopicMessageResponse;
 @Service
 public class PushChuckJokeService {
 
-	private final RestTemplate restTemplate;
+  private final RestTemplate restTemplate;
 
-	private final IFcmClient fcmClient;
+  private final IFcmClient fcmClient;
 
-	private int id = 0;
+  private int id = 0;
 
-	public PushChuckJokeService(IFcmClient fcmClient) {
-		this.restTemplate = new RestTemplate();
-		this.fcmClient = fcmClient;
-	}
+  public PushChuckJokeService(IFcmClient fcmClient) {
+    this.restTemplate = new RestTemplate();
+    this.fcmClient = fcmClient;
+  }
 
-	@Scheduled(fixedDelay = 30_000)
-	public void sendChuckQuotes() {
-		IcndbJoke joke = this.restTemplate
-				.getForObject("http://api.icndb.com/jokes/random", IcndbJoke.class);
-		sendPushMessage(HtmlEscape.unescapeHtml(joke.getValue().getJoke()));
-	}
+  @Scheduled(fixedDelay = 30_000)
+  public void sendChuckQuotes() {
+    IcndbJoke joke = this.restTemplate.getForObject("http://api.icndb.com/jokes/random",
+        IcndbJoke.class);
+    sendPushMessage(HtmlEscape.unescapeHtml(joke.getValue().getJoke()));
+  }
 
-	void sendPushMessage(String joke) {
-		FcmMessageOptions options = FcmMessageOptions.builder()
-				.setTimeToLive(Duration.ofMinutes(2)).build();
+  void sendPushMessage(String joke) {
+    FcmMessageOptions options = FcmMessageOptions.builder()
+        .setTimeToLive(Duration.ofMinutes(2)).build();
 
-		NotificationPayload payload = NotificationPayload.builder()
-				.setBody("A new Chuck Norris joke has arrived")
-				.setTitle("Chuck Norris Joke").setTag("chuck").build();
+    NotificationPayload payload = NotificationPayload.builder()
+        .setBody("A new Chuck Norris joke has arrived").setTitle("Chuck Norris Joke")
+        .setTag("chuck").build();
 
-		Map<String, Object> data = new HashMap<>();
-		data.put("id", ++this.id);
-		data.put("text", joke);
+    Map<String, Object> data = new HashMap<>();
+    data.put("id", ++this.id);
+    data.put("text", joke);
 
-		// Send a message
-		System.out.println("Sending chuck joke...");
+    // Send a message
+    System.out.println("Sending chuck joke...");
 
-		Topic topic = new Topic("chuck");
-		TopicUnicastMessage message = new TopicUnicastMessage(options, topic, data,
-				payload);
+    Topic topic = new Topic("chuck");
+    TopicUnicastMessage message = new TopicUnicastMessage(options, topic, data, payload);
 
-		TopicMessageResponse response = this.fcmClient.send(message);
-		ErrorCodeEnum errorCode = response.getErrorCode();
-		if (errorCode != null) {
-			System.out.println("Topic message sending failed: " + errorCode);
-		}
-	}
+    TopicMessageResponse response = this.fcmClient.send(message);
+    ErrorCodeEnum errorCode = response.getErrorCode();
+    if (errorCode != null) {
+      System.out.println("Topic message sending failed: " + errorCode);
+    }
+  }
 
 }

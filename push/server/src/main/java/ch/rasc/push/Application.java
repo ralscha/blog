@@ -14,14 +14,14 @@ import de.bytefish.fcmjava.http.client.IFcmClient;
 @EnableScheduling
 public class Application {
 
-	public static final Logger logger = LoggerFactory.getLogger("ch.rasc.push");
+  public static final Logger logger = LoggerFactory.getLogger("ch.rasc.push");
 
-	public static void main(String[] args) {
-		SpringApplication.run(Application.class, args);
-	}
+  public static void main(String[] args) {
+    SpringApplication.run(Application.class, args);
+  }
 
-	@Bean
-	public IFcmClient fcmClient(FcmSettings settings) {
-		return new FcmClient(settings);
-	}
+  @Bean
+  public IFcmClient fcmClient(FcmSettings settings) {
+    return new FcmClient(settings);
+  }
 }

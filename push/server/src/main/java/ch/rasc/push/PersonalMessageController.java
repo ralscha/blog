@@ -9,22 +9,22 @@ import org.springframework.web.bind.annotation.RestController;
 @CrossOrigin
 public class PersonalMessageController {
 
-	private final PersonalMessageSender pushSender;
+  private final PersonalMessageSender pushSender;
 
-	public PersonalMessageController(PersonalMessageSender pushSender) {
-		this.pushSender = pushSender;
-	}
+  public PersonalMessageController(PersonalMessageSender pushSender) {
+    this.pushSender = pushSender;
+  }
 
-	@PostMapping("/register")
-	public void register(@RequestParam("token") String token) {
-		System.out.println("register: " + token);
-		this.pushSender.addToken(token);
-	}
+  @PostMapping("/register")
+  public void register(@RequestParam("token") String token) {
+    System.out.println("register: " + token);
+    this.pushSender.addToken(token);
+  }
 
-	@PostMapping("/unregister")
-	public void unregister(@RequestParam("token") String token) {
-		System.out.println("unregister: " + token);
-		this.pushSender.removeToken(token);
-	}
+  @PostMapping("/unregister")
+  public void unregister(@RequestParam("token") String token) {
+    System.out.println("unregister: " + token);
+    this.pushSender.removeToken(token);
+  }
 
 }
