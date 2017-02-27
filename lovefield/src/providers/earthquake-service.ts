@@ -1,0 +1,172 @@
+import {Injectable} from '@angular/core';
+import {Http} from '@angular/http';
+import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/toPromise';
+import Papa from 'papaparse';
+import * as lf from 'lovefield'
+import {Filter} from "../filter";
+//import firebase from "firebase";
+
+@Injectable()
+export class EarthquakeService {
+
+  private readonly DATA_URL = 'https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_month.csv';
+  //private readonly DATA_URL = 'assets/data/all_month.csv';
+  private schemaBuilder;
+  private earthquakeDb;
+  private eqTbl;
+
+  constructor(private readonly http: Http) {
+  }
+
+  createSchema() {
+    this.schemaBuilder = lf.schema.create('earthquake', 1);
+
+    this.schemaBuilder.createTable('Earthquakes')
+      .addColumn('time', lf.Type.DATE_TIME)
+      .addColumn('latitude', lf.Type.NUMBER)
+      .addColumn('longitude', lf.Type.NUMBER)
+      .addColumn('depth', lf.Type.NUMBER)
+      .addColumn('mag', lf.Type.NUMBER)
+      .addColumn('magType', lf.Type.STRING)
+      .addColumn('nst', lf.Type.INTEGER)
+      .addColumn('gap', lf.Type.NUMBER)
+      .addColumn('dmin', lf.Type.NUMBER)
+      .addColumn('rms', lf.Type.NUMBER)
+      .addColumn('net', lf.Type.STRING)
+      .addColumn('id', lf.Type.STRING)
+      .addColumn('updated', lf.Type.DATE_TIME)
+      .addColumn('place', lf.Type.STRING)
+      .addColumn('type', lf.Type.STRING)
+      .addColumn('horizontalError', lf.Type.NUMBER)
+      .addColumn('depthError', lf.Type.NUMBER)
+      .addColumn('magError', lf.Type.NUMBER)
+      .addColumn('magNst', lf.Type.INTEGER)
+      .addColumn('status', lf.Type.STRING)
+      .addColumn('locationSource', lf.Type.STRING)
+      .addColumn('magSource', lf.Type.STRING)
+      .addPrimaryKey(['id'])
+      .addIndex('idxMag', ['mag'], false, lf.Order.DESC)
+      .addIndex('idxDepth', ['depth'], false, lf.Order.DESC)
+      .addIndex('idxTime', ['time'], false, lf.Order.DESC);
+  }
+
+  init() {
+    this.createSchema();
+
+    // npm install firebase --save
+    /*
+    firebase.initializeApp({
+      apiKey: "...",
+      authDomain: "...",
+      databaseURL: "..."
+    });
+
+    return this.schemaBuilder.connect({
+      storeType: lf.schema.DataStoreType.FIREBASE,
+      firebase: firebase.database().ref()
+    }).then(db => {
+    */
+    return this.schemaBuilder.connect().then(db => {
+      this.earthquakeDb = db;
+      this.eqTbl = db.getSchema().table('Earthquakes');
+      return db.select(this.eqTbl.id).from(this.eqTbl).limit(1).exec();
+    }).then(result => {
+      if (result.length === 0) {
+        return this.loadAndInsertData().toPromise();
+      }
+      return Promise.resolve();
+    });
+  }
+
+  insertData(parsedData) {
+    const rows = [];
+    for (let parsedRow of parsedData.data) {
+
+      if (!parsedRow.id) {
+        continue;
+      }
+
+      const row = this.eqTbl.createRow({
+        time: new Date(parsedRow.time),
+        latitude: Number(parsedRow.latitude),
+        longitude: Number(parsedRow.longitude),
+        depth: Number(parsedRow.depth),
+        mag: Number(parsedRow.mag),
+        magType: parsedRow.magType,
+        nst: Number(parsedRow.nst),
+        gap: Number(parsedRow.gap),
+        dmin: Number(parsedRow.dmin),
+        rms: Number(parsedRow.rms),
+        net: parsedRow.net,
+        id: parsedRow.id,
+        updated: new Date(parsedRow.updated),
+        place: parsedRow.place,
+        type: parsedRow.type,
+        locationSource: parsedRow.locationSource,
+        magSource: parsedRow.magSource,
+        horizontalError: Number(parsedRow.horizontalError),
+        depthError: Number(parsedRow.depthError),
+        magError: Number(parsedRow.magError),
+        magNst: Number(parsedRow.magNst),
+        status: parsedRow.status
+      });
+      rows.push(row);
+    }
+
+    return this.earthquakeDb.insertOrReplace()
+      .into(this.eqTbl)
+      .values(rows).exec();
+
+  }
+
+  loadAndInsertData() {
+    return this.http.get(this.DATA_URL)
+      .map(res => res.text())
+      .map(data => Papa.parse(data, {header: true}))
+      .map(parsedData => this.insertData(parsedData))
+  }
+
+  select(filter: Filter) {
+
+    const query = this.earthquakeDb.select(this.eqTbl.id, this.eqTbl.mag, this.eqTbl.time,
+      this.eqTbl.place, this.eqTbl.depth)
+      .from(this.eqTbl);
+
+    switch (filter.sort) {
+      case 'time':
+        query.orderBy(this.eqTbl.time, lf.Order.DESC);
+        break;
+      case 'mag':
+        query.orderBy(this.eqTbl.mag, lf.Order.DESC);
+        break;
+      case 'depth':
+        query.orderBy(this.eqTbl.depth, lf.Order.ASC);
+        break;
+    }
+
+    const whereClauses = [];
+    if (!(filter.mag.lower === -1 && filter.mag.upper === 10)) {
+      whereClauses.push(this.eqTbl.mag.gte(filter.mag.lower));
+      whereClauses.push(this.eqTbl.mag.lte(filter.mag.upper));
+    }
+
+    if (!(filter.depth.lower === -10 && filter.depth.upper === 800)) {
+      whereClauses.push(this.eqTbl.depth.gte(filter.depth.lower));
+      whereClauses.push(this.eqTbl.depth.lte(filter.depth.upper));
+    }
+
+    if (filter.time != -1) {
+      const now = new Date();
+      now.setHours(now.getHours() - filter.time);
+      whereClauses.push(this.eqTbl.time.gte(now));
+    }
+
+    if (whereClauses.length > 0) {
+      query.where(lf.op.and(...whereClauses));
+    }
+
+    return query.exec();
+  }
+
+}

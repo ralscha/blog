@@ -1,0 +1,21 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>
+      Earthquakes
+      <ion-note>({{earthquakes?.length}}, {{elapsedTime | number:'1.0-0'}} ms)</ion-note>
+    </ion-title>
+    <ion-buttons end>
+      <button ion-button icon-only (click)="presentPopover($event)">
+        <ion-icon name="more"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+
+<ion-content>
+  <ion-list [virtualScroll]="earthquakes" [virtualTrackBy]="identify">
+    <ion-item *virtualItem="let earthquake">
+      <detail [earthquake]="earthquake"></detail>
+    </ion-item>
+  </ion-list>
+</ion-content>
