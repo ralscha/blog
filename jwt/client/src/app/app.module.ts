@@ -5,7 +5,7 @@ import {HomePage} from '../pages/home/home';
 import {LoginPage} from "../pages/login/login";
 import {SignupPage} from "../pages/signup/signup";
 import {CustomFormsModule} from 'ng2-validation'
-import {Storage} from "@ionic/storage";
+import {Storage, IonicStorageModule} from "@ionic/storage";
 import {AuthService} from "../providers/auth-service";
 import {JwtHelper, AuthModule, AuthConfig} from "angular2-jwt";
 
@@ -21,6 +21,7 @@ const authConfig = new AuthConfig({tokenGetter: (() => storage.get('jwt'))});
   ],
   imports: [
     IonicModule.forRoot(MyApp),
+    IonicStorageModule.forRoot(),
     CustomFormsModule,
     AuthModule.forRoot(authConfig)
   ],
@@ -32,9 +33,8 @@ const authConfig = new AuthConfig({tokenGetter: (() => storage.get('jwt'))});
     SignupPage
   ],
   providers: [{provide: ErrorHandler, useClass: IonicErrorHandler},
-              AuthService,
-              {provide: Storage, useValue: storage},
-              JwtHelper]
+    AuthService,
+    JwtHelper]
 })
 export class AppModule {
 }
