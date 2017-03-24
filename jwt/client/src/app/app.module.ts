@@ -7,10 +7,15 @@ import {SignupPage} from "../pages/signup/signup";
 import {CustomFormsModule} from 'ng2-validation'
 import {Storage, IonicStorageModule} from "@ionic/storage";
 import {AuthService} from "../providers/auth-service";
-import {JwtHelper, AuthModule, AuthConfig} from "angular2-jwt";
+import {JwtHelper, AuthConfig, AuthHttp} from "angular2-jwt";
+import {Http, RequestOptions} from "@angular/http";
 
-const storage = new Storage();
-const authConfig = new AuthConfig({tokenGetter: (() => storage.get('jwt'))});
+export function authHttpServiceFactory(http: Http, options: RequestOptions, storage: Storage) {
+  const authConfig = new AuthConfig({
+    tokenGetter: (() => storage.get('jwt')),
+  });
+  return new AuthHttp(authConfig, http, options);
+}
 
 @NgModule({
   declarations: [
@@ -21,9 +26,11 @@ const authConfig = new AuthConfig({tokenGetter: (() => storage.get('jwt'))});
   ],
   imports: [
     IonicModule.forRoot(MyApp),
-    IonicStorageModule.forRoot(),
-    CustomFormsModule,
-    AuthModule.forRoot(authConfig)
+    IonicStorageModule.forRoot({
+      name: 'myapp',
+      driverOrder: ['sqlite', 'indexeddb', 'websql']
+    }),
+    CustomFormsModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -34,7 +41,11 @@ const authConfig = new AuthConfig({tokenGetter: (() => storage.get('jwt'))});
   ],
   providers: [{provide: ErrorHandler, useClass: IonicErrorHandler},
     AuthService,
-    JwtHelper]
+    JwtHelper, {
+      provide: AuthHttp,
+      useFactory: authHttpServiceFactory,
+      deps: [Http, RequestOptions, Storage]
+    }]
 })
 export class AppModule {
 }
