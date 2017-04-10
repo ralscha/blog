@@ -5,11 +5,15 @@
 	<artifactId>minio</artifactId>
 	<version>0.0.1</version>
 
+	 <prerequisites>
+       <maven>3.0</maven>
+     </prerequisites>
+	
 	<dependencies>
 		<dependency>
 			<groupId>com.amazonaws</groupId>
 			<artifactId>aws-java-sdk-s3</artifactId>
-			<version>1.11.111</version>
+			<version>1.11.118</version>
 		</dependency>
 		<dependency>
 			<groupId>io.minio</groupId>
@@ -22,7 +26,7 @@
 		<plugins>
 			<plugin>
 				<artifactId>maven-compiler-plugin</artifactId>
-				<version>3.6.0</version>
+				<version>3.6.1</version>
 				<configuration>
 					<source>1.8</source>
 					<target>1.8</target>
