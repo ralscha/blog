@@ -1,7 +1,7 @@
 import {Component} from '@angular/core';
 import {Platform} from 'ionic-angular';
-import {StatusBar, Splashscreen} from 'ionic-native';
-
+import {StatusBar} from '@ionic-native/status-bar';
+import {SplashScreen} from '@ionic-native/splash-screen';
 import {HomePage} from '../pages/home/home';
 
 declare var chcp: any;
@@ -10,17 +10,15 @@ declare var chcp: any;
   templateUrl: 'app.html'
 })
 export class MyApp {
-  rootPage = HomePage;
+  rootPage: any = HomePage;
 
-  constructor(platform: Platform) {
+  constructor(private platform: Platform, private statusBar: StatusBar, private splashScreen: SplashScreen) {
     platform.ready().then(() => {
-      // Okay, so the platform is ready and our plugins are available.
-      // Here you can do any higher level native things you might need.
-      StatusBar.styleDefault();
-      Splashscreen.hide();
+      statusBar.styleDefault();
+      splashScreen.hide();
     });
 
-	//manual mode. remove this for automatic mode
+    //manual mode. remove this for automatic mode
     platform.resume.subscribe(() => this.fetchUpdate());
   }
 
