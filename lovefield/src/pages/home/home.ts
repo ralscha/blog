@@ -9,7 +9,7 @@ import {Filter} from "../../filter";
   templateUrl: 'home.html'
 })
 export class HomePage {
-  earthquakes;
+  earthquakes = [];
   elapsedTime: number;
 
   filter: Filter = {
