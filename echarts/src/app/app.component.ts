@@ -1,18 +1,21 @@
 import {Component} from '@angular/core';
 import {Platform} from 'ionic-angular';
-import {StatusBar, Splashscreen} from 'ionic-native';
+import {StatusBar} from '@ionic-native/status-bar';
+import {SplashScreen} from '@ionic-native/splash-screen';
 import {TabsPage} from '../pages/tabs/tabs';
 
 @Component({
   templateUrl: 'app.html'
 })
 export class MyApp {
-  rootPage = TabsPage;
+  rootPage: any = TabsPage;
 
-  constructor(platform: Platform) {
+  constructor(private platform: Platform,
+              private statusBar: StatusBar,
+              private splashScreen: SplashScreen) {
     platform.ready().then(() => {
-      StatusBar.styleDefault();
-      Splashscreen.hide();
+      statusBar.styleDefault();
+      splashScreen.hide();
     });
   }
 }
