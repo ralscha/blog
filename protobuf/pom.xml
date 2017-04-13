@@ -24,13 +24,13 @@
 		<dependency>
 			<groupId>org.springframework.integration</groupId>
 			<artifactId>spring-integration-core</artifactId>
-			<version>5.0.0.M2</version>
+			<version>5.0.0.M3</version>
 		</dependency>
 
 		<dependency>
 			<groupId>org.springframework.integration</groupId>
 			<artifactId>spring-integration-ip</artifactId>
-			<version>5.0.0.M2</version>
+			<version>5.0.0.M3</version>
 		</dependency>
 
 		<dependency>
