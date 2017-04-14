@@ -1,8 +1,13 @@
+import {BrowserModule} from '@angular/platform-browser';
 import {NgModule, ErrorHandler} from '@angular/core';
 import {IonicApp, IonicModule, IonicErrorHandler} from 'ionic-angular';
 import {MyApp} from './app.component';
 import {HomePage} from '../pages/home/home';
+import {SplashScreen} from '@ionic-native/splash-screen';
+import {StatusBar} from '@ionic-native/status-bar';
 import {IonicStorageModule} from "@ionic/storage";
+import {Firebase} from "@ionic-native/firebase";
+import {HttpModule} from "@angular/http";
 
 @NgModule({
   declarations: [
@@ -10,6 +15,8 @@ import {IonicStorageModule} from "@ionic/storage";
     HomePage
   ],
   imports: [
+    BrowserModule,
+    HttpModule,
     IonicModule.forRoot(MyApp),
     IonicStorageModule.forRoot()
   ],
@@ -18,7 +25,12 @@ import {IonicStorageModule} from "@ionic/storage";
     MyApp,
     HomePage
   ],
-  providers: [{provide: ErrorHandler, useClass: IonicErrorHandler}]
+  providers: [
+    StatusBar,
+    SplashScreen,
+    Firebase,
+    {provide: ErrorHandler, useClass: IonicErrorHandler}
+  ]
 })
 export class AppModule {
 }

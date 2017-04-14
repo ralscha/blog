@@ -9,14 +9,14 @@
 <ion-content padding>
   <ion-grid>
     <ion-row>
-      <ion-col width-66>Send me Chuck Norris Jokes</ion-col>
-      <ion-col width-33>
+      <ion-col col-8>Send me Chuck Norris Jokes</ion-col>
+      <ion-col col-4>
         <ion-checkbox checked="false" [(ngModel)]="allowPush" (click)="onChange()"></ion-checkbox>
       </ion-col>
     </ion-row>
     <ion-row>
-      <ion-col width-66>Send me Personal messages</ion-col>
-      <ion-col width-33>
+      <ion-col col-8>Send me Personal messages</ion-col>
+      <ion-col col-4>
         <ion-checkbox checked="false" [(ngModel)]="allowPersonal" (click)="onPmChange()"></ion-checkbox>
       </ion-col>
     </ion-row>
