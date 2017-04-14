@@ -1,3 +1,4 @@
+import {BrowserModule} from '@angular/platform-browser';
 import {NgModule, ErrorHandler} from '@angular/core';
 import {IonicApp, IonicModule, IonicErrorHandler} from 'ionic-angular';
 import {MyApp} from './app.component';
@@ -6,6 +7,9 @@ import {EditPage} from "../pages/edit/edit";
 import {IonicStorageModule} from "@ionic/storage";
 import {TodoService} from "../providers/todo-service";
 import {PasswordPage} from "../pages/password/password";
+import {SplashScreen} from '@ionic-native/splash-screen';
+import {StatusBar} from '@ionic-native/status-bar';
+
 
 @NgModule({
   declarations: [
@@ -15,6 +19,7 @@ import {PasswordPage} from "../pages/password/password";
     PasswordPage
   ],
   imports: [
+    BrowserModule,
     IonicModule.forRoot(MyApp),
     IonicStorageModule.forRoot({name: 'todo', driverOrder: ['sqlite', 'indexeddb']})
   ],
@@ -26,6 +31,8 @@ import {PasswordPage} from "../pages/password/password";
     PasswordPage
   ],
   providers: [
+    StatusBar,
+    SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     TodoService]
 })
