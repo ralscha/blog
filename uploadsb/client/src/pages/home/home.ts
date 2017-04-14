@@ -1,11 +1,12 @@
 import {Component} from '@angular/core';
-import {Camera, FileEntry, File} from "ionic-native";
 import {Http, Response} from "@angular/http";
 import "rxjs/add/operator/map";
 import "rxjs/add/operator/catch";
 import 'rxjs/add/observable/throw';
 import {Observable} from "rxjs";
 import {LoadingController, Loading, ToastController} from "ionic-angular";
+import {Camera} from '@ionic-native/camera';
+import {File, FileEntry} from "@ionic-native/file";
 
 @Component({
   selector: 'page-home',
@@ -19,15 +20,17 @@ export class HomePage {
 
   constructor(private readonly http: Http,
               private readonly loadingCtrl: LoadingController,
-              private readonly toastCtrl: ToastController) {
+              private readonly toastCtrl: ToastController,
+              private readonly camera: Camera,
+              private readonly file: File) {
   }
 
   takePhoto() {
-    Camera.getPicture({
+    this.camera.getPicture({
       quality: 100,
-      destinationType: Camera.DestinationType.FILE_URI,
-      sourceType: Camera.PictureSourceType.CAMERA,
-      encodingType: Camera.EncodingType.PNG,
+      destinationType: this.camera.DestinationType.FILE_URI,
+      sourceType: this.camera.PictureSourceType.CAMERA,
+      encodingType: this.camera.EncodingType.PNG,
       saveToPhotoAlbum: true
     }).then(imageData => {
       this.myPhoto = imageData;
@@ -38,11 +41,11 @@ export class HomePage {
   }
 
   selectPhoto(): void {
-    Camera.getPicture({
-      sourceType: Camera.PictureSourceType.PHOTOLIBRARY,
-      destinationType: Camera.DestinationType.FILE_URI,
+    this.camera.getPicture({
+      sourceType: this.camera.PictureSourceType.PHOTOLIBRARY,
+      destinationType: this.camera.DestinationType.FILE_URI,
       quality: 100,
-      encodingType: Camera.EncodingType.PNG,
+      encodingType: this.camera.EncodingType.PNG,
     }).then(imageData => {
       this.myPhoto = imageData;
       this.uploadPhoto(imageData);
@@ -59,20 +62,20 @@ export class HomePage {
 
     this.loading.present();
 
-    File.resolveLocalFilesystemUrl(imageFileUri)
-      .then(entry => (<FileEntry>entry).file(file => this.readFile(<Blob>file)))
+    this.file.resolveLocalFilesystemUrl(imageFileUri)
+      .then(entry => (<FileEntry>entry).file(file => this.readFile(file)))
       .catch(err => console.log(err));
   }
 
-  private readFile(blob: Blob) {
+  private readFile(file: any) {
     const reader = new FileReader();
     reader.onloadend = () => {
       const formData = new FormData();
-      const imgBlob = new Blob([reader.result], {type: blob.type});
-      formData.append('file', imgBlob, (<any>blob).name);
+      const imgBlob = new Blob([reader.result], {type: file.type});
+      formData.append('file', imgBlob, file.name);
       this.postData(formData);
     };
-    reader.readAsArrayBuffer(blob);
+    reader.readAsArrayBuffer(file);
   }
 
   private postData(formData: FormData) {
