@@ -1,5 +1,6 @@
 package ch.rasc.protobuf;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -48,7 +49,7 @@ public class EarthquakeController {
 
 	@CrossOrigin
 	@GetMapping(value = "/refresh")
-	public void refresh() {
+	public void refresh() throws IOException {
 		this.earthquakeDb.readEarthquakeData();
 	}
 
