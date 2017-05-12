@@ -1,6 +1,5 @@
 {
-  "name": "echarts",
+  "name": "echartsapp",
   "app_id": "",
-  "v2": true,
-  "typescript": true
+  "type": "ionic-angular"
 }

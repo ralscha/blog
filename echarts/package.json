@@ -1,46 +1,41 @@
 {
-  "name": "ionic-hello-world",
+  "name": "echartsapp",
+  "version": "0.0.1",
   "author": "Ionic Framework",
   "homepage": "http://ionicframework.com/",
   "private": true,
   "scripts": {
     "clean": "ionic-app-scripts clean",
     "build": "ionic-app-scripts build",
+    "lint": "ionic-app-scripts lint",
     "ionic:build": "ionic-app-scripts build",
     "ionic:serve": "ionic-app-scripts serve"
   },
   "dependencies": {
-    "@angular/common": "4.0.0",
-    "@angular/compiler": "4.0.0",
-    "@angular/compiler-cli": "4.0.0",
-    "@angular/core": "4.0.0",
-    "@angular/forms": "4.0.0",
-    "@angular/http": "4.0.0",
-    "@angular/platform-browser": "4.0.0",
-    "@angular/platform-browser-dynamic": "4.0.0",
-    "echarts": "^3.5.2",
-    "@ionic-native/core": "3.6.1",
-    "@ionic-native/splash-screen": "3.6.1",
-    "@ionic-native/status-bar": "3.6.1",
+    "@angular/common": "4.1.0",
+    "@angular/compiler": "4.1.0",
+    "@angular/compiler-cli": "4.1.0",
+    "@angular/core": "4.1.0",
+    "@angular/forms": "4.1.0",
+    "@angular/http": "4.1.0",
+    "@angular/platform-browser": "4.1.0",
+    "@angular/platform-browser-dynamic": "4.1.0",
+    "@ionic-native/core": "3.7.0",
+    "@ionic-native/splash-screen": "3.7.0",
+    "@ionic-native/status-bar": "3.7.0",
     "@ionic/storage": "2.0.1",
-    "ionic-angular": "3.0.1",
+    "echarts": "^3.5.4",
+    "ionic-angular": "3.2.0",
     "ionicons": "3.0.0",
     "rxjs": "5.1.1",
     "sw-toolbox": "3.6.0",
-    "zone.js": "^0.8.4"
+    "zone.js": "0.8.10"
   },
   "devDependencies": {
-    "@ionic/app-scripts": "1.3.6",
-    "typescript": "~2.2.2"
+    "@ionic/app-scripts": "1.3.7",
+    "@ionic/cli-plugin-cordova": "1.0.0",
+    "@ionic/cli-plugin-ionic-angular": "1.0.0",
+    "typescript": "2.3.2"
   },
-  "cordovaPlugins": [
-    "cordova-plugin-whitelist",
-    "cordova-plugin-console",
-    "cordova-plugin-statusbar",
-    "cordova-plugin-device",
-    "cordova-plugin-splashscreen",
-    "ionic-plugin-keyboard"
-  ],
-  "cordovaPlatforms": [],
-  "description": "echarts: An Ionic project"
+  "description": "An Ionic project"
 }
