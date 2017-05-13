@@ -1,8 +1,8 @@
-import {Component, NgZone} from '@angular/core';
-import {EarthquakeService} from "../../providers/earthquake-service";
+import {Component} from '@angular/core';
 import {PopoverController} from "ionic-angular";
 import {FilterPopover} from "./filter";
 import {Filter} from "../../filter";
+import {EarthquakeProvider} from "../../providers/earthquake/earthquake";
 
 @Component({
   selector: 'page-home',
@@ -25,8 +25,7 @@ export class HomePage {
     sort: 'time'
   };
 
-  constructor(private readonly earthquakeService: EarthquakeService,
-              private ngZone: NgZone,
+  constructor(private readonly earthquakeService: EarthquakeProvider,
               private popoverCtrl: PopoverController) {
   }
 
@@ -38,7 +37,7 @@ export class HomePage {
     const start = performance.now();
     this.earthquakeService.select(this.filter).then(rows => {
       this.elapsedTime = performance.now() - start;
-      this.ngZone.run(() => this.earthquakes = rows);
+      this.earthquakes = rows;
     });
   }
 

@@ -1,14 +1,14 @@
-import {BrowserModule} from '@angular/platform-browser';
-import {NgModule, ErrorHandler} from '@angular/core';
-import {IonicApp, IonicModule, IonicErrorHandler} from 'ionic-angular';
-import {MyApp} from './app.component';
-import {HomePage} from '../pages/home/home';
-import {EarthquakeService} from "../providers/earthquake-service";
+import { BrowserModule } from '@angular/platform-browser';
+import { ErrorHandler, NgModule } from '@angular/core';
+import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
+import { SplashScreen } from '@ionic-native/splash-screen';
+import { StatusBar } from '@ionic-native/status-bar';
+import {HttpModule} from "@angular/http";
+import { MyApp } from './app.component';
+import { HomePage } from '../pages/home/home';
+import { EarthquakeProvider } from '../providers/earthquake/earthquake';
 import {DetailComponent} from "../pages/home/detail";
 import {FilterPopover} from "../pages/home/filter";
-import {SplashScreen} from '@ionic-native/splash-screen';
-import {StatusBar} from '@ionic-native/status-bar';
-import {HttpModule} from "@angular/http";
 
 @NgModule({
   declarations: [
@@ -31,8 +31,8 @@ import {HttpModule} from "@angular/http";
   providers: [
     StatusBar,
     SplashScreen,
-    {provide: ErrorHandler, useClass: IonicErrorHandler}, EarthquakeService
+    {provide: ErrorHandler, useClass: IonicErrorHandler},
+    EarthquakeProvider
   ]
 })
-export class AppModule {
-}
+export class AppModule {}
