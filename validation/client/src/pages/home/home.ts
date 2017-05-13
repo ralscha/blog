@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {FormGroup, FormBuilder, Validators, FormControl} from "@angular/forms";
+import {FormGroup, FormBuilder, Validators} from "@angular/forms";
 import {AgeValidator} from "./age-validator";
 import {UsernameValidator} from "./username-validator";
 import {Http} from "@angular/http";
