@@ -1,7 +1,7 @@
 import {Component} from '@angular/core';
-import {NavController} from 'ionic-angular';
+import {NavController, ToastController} from 'ionic-angular';
 import {HomePage} from "../home/home";
-import {TodoService} from "../../providers/todo-service";
+import {TodoProvider} from "../../providers/todo/todo";
 
 @Component({
   selector: 'page-password',
@@ -10,12 +10,12 @@ import {TodoService} from "../../providers/todo-service";
 export class PasswordPage {
 
   constructor(private readonly navCtrl: NavController,
-              private readonly todoService: TodoService) {
+              private readonly todoProvider: TodoProvider,
+              private readonly toastCtrl: ToastController) {
   }
 
   showTodos(password: string) {
-    this.todoService.setPassword(password).then(() => this.navCtrl.setRoot(HomePage));
-
+    this.todoProvider.setPassword(password).then(() => this.navCtrl.setRoot(HomePage));
   }
 
 }

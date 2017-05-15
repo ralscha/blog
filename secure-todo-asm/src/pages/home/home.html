@@ -20,7 +20,7 @@
 
 <ion-content padding>
   <ion-list>
-    <ion-item-sliding #slidingItem *ngFor="let todo of todoService.todos">
+    <ion-item-sliding #slidingItem *ngFor="let todo of todoProvider.todos">
       <ion-item>{{todo.title}}</ion-item>
       <ion-item-options>
         <button ion-button color="primary" (click)="editTodo(slidingItem, todo)">

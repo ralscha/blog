@@ -3,12 +3,13 @@ import {NgModule, ErrorHandler} from '@angular/core';
 import {IonicApp, IonicModule, IonicErrorHandler} from 'ionic-angular';
 import {MyApp} from './app.component';
 import {HomePage} from '../pages/home/home';
-import {SplashScreen} from '@ionic-native/splash-screen';
 import {EditPage} from "../pages/edit/edit";
 import {IonicStorageModule} from "@ionic/storage";
-import {TodoService} from "../providers/todo-service";
 import {PasswordPage} from "../pages/password/password";
-import {StatusBar} from "@ionic-native/status-bar";
+import {SplashScreen} from '@ionic-native/splash-screen';
+import {StatusBar} from '@ionic-native/status-bar';
+import {TodoProvider} from "../providers/todo/todo";
+
 
 @NgModule({
   declarations: [
@@ -33,7 +34,8 @@ import {StatusBar} from "@ionic-native/status-bar";
     StatusBar,
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
-    TodoService]
+    TodoProvider
+  ]
 })
 export class AppModule {
 }

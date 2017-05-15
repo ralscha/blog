@@ -1,7 +1,7 @@
 import {Component} from '@angular/core';
 import {NavController, NavParams} from 'ionic-angular';
-import {TodoService} from "../../providers/todo-service";
 import {Todo} from "../../todo";
+import {TodoProvider} from "../../providers/todo/todo";
 
 @Component({
   selector: 'page-edit',
@@ -12,7 +12,7 @@ export class EditPage {
 
   constructor(private readonly navCtrl: NavController,
               private readonly navParams: NavParams,
-              private readonly todoService: TodoService) {
+              private readonly todoProvider: TodoProvider) {
     this.todo = {
       title: '',
       description: ''
@@ -27,7 +27,7 @@ export class EditPage {
   }
 
   save() {
-    this.todoService.save(this.todo);
+    this.todoProvider.save(this.todo);
     this.navCtrl.pop();
   }
 }

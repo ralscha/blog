@@ -1,9 +1,9 @@
 import {Component} from '@angular/core';
 import {NavController, ItemSliding} from 'ionic-angular';
 import {EditPage} from "../edit/edit";
-import {TodoService} from "../../providers/todo-service";
 import {Todo} from "../../todo";
 import {PasswordPage} from "../password/password";
+import {TodoProvider} from "../../providers/todo/todo";
 
 @Component({
   selector: 'page-home',
@@ -12,7 +12,7 @@ import {PasswordPage} from "../password/password";
 export class HomePage {
 
   constructor(private readonly navCtrl: NavController,
-              public readonly todoService: TodoService) {
+              public readonly todoProvider: TodoProvider) {
   }
 
   addTodo() {
@@ -28,11 +28,11 @@ export class HomePage {
 
   deleteTodo(slidingItem: ItemSliding, todo: Todo) {
     slidingItem.close();
-    this.todoService.deleteTodo(todo);
+    this.todoProvider.deleteTodo(todo);
   }
 
   exit() {
-    this.todoService.todos = [];
+    this.todoProvider.todos = [];
     this.navCtrl.setRoot(PasswordPage);
   }
 }

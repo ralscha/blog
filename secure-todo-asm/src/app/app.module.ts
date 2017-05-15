@@ -5,10 +5,10 @@ import {MyApp} from './app.component';
 import {HomePage} from '../pages/home/home';
 import {EditPage} from "../pages/edit/edit";
 import {IonicStorageModule} from "@ionic/storage";
-import {TodoService} from "../providers/todo-service";
 import {PasswordPage} from "../pages/password/password";
 import {SplashScreen} from '@ionic-native/splash-screen';
 import {StatusBar} from '@ionic-native/status-bar';
+import {TodoProvider} from "../providers/todo/todo";
 
 
 @NgModule({
@@ -34,7 +34,8 @@ import {StatusBar} from '@ionic-native/status-bar';
     StatusBar,
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
-    TodoService]
+    TodoProvider
+  ]
 })
 export class AppModule {
 }
