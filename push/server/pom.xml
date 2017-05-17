@@ -39,7 +39,7 @@
 		<dependency>
 			<groupId>de.bytefish.fcmjava</groupId>
 			<artifactId>fcmjava-core</artifactId>
-			<version>1.1</version>
+			<version>2.1</version>
 			<exclusions>
 				<exclusion>
 					<groupId>log4j</groupId>
@@ -59,7 +59,7 @@
 		<dependency>
 			<groupId>de.bytefish.fcmjava</groupId>
 			<artifactId>fcmjava-client</artifactId>
-			<version>1.1</version>
+			<version>2.1</version>
 			<exclusions>
 				<exclusion>
 					<groupId>log4j</groupId>
