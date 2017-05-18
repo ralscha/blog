@@ -1,7 +1,7 @@
 import {Component} from '@angular/core';
-import {AuthService} from "../../providers/auth-service";
 import {JwtHelper, AuthHttp} from "angular2-jwt";
 import {SERVER_URL} from "../../config";
+import {AuthProvider} from "../../providers/auth/auth";
 
 @Component({
   selector: 'page-home',
@@ -11,11 +11,11 @@ export class HomePage {
   user: string;
   message: string;
 
-  constructor(private readonly authService: AuthService,
+  constructor(private readonly authProvider: AuthProvider,
               private readonly jwtHelper: JwtHelper,
               private readonly  authHttp: AuthHttp) {
 
-    this.authService.authUser.subscribe(jwt => {
+    this.authProvider.authUser.subscribe(jwt => {
       if (jwt) {
         const decoded = this.jwtHelper.decodeToken(jwt);
         this.user = decoded.sub
@@ -35,7 +35,7 @@ export class HomePage {
   }
 
   logout() {
-    this.authService.logout();
+    this.authProvider.logout();
   }
 
 }

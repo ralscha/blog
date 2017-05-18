@@ -1,7 +1,7 @@
 import {Component, ViewChild} from '@angular/core';
 import {LoadingController, ToastController} from 'ionic-angular';
-import {AuthService} from "../../providers/auth-service";
 import {NgModel} from "@angular/forms";
+import {AuthProvider} from "../../providers/auth/auth";
 
 @Component({
   selector: 'page-signup',
@@ -12,7 +12,7 @@ export class SignupPage {
   @ViewChild('username')
   usernameModel: NgModel;
 
-  constructor(private readonly authService: AuthService,
+  constructor(private readonly authProvider: AuthProvider,
               private readonly loadingCtrl: LoadingController,
               private readonly toastCtrl: ToastController) {
   }
@@ -25,7 +25,7 @@ export class SignupPage {
 
     loading.present();
 
-    this.authService
+    this.authProvider
       .signup(value)
       .finally(() => loading.dismiss())
       .subscribe(
@@ -52,7 +52,7 @@ export class SignupPage {
 
       toast.present();
 
-      this.usernameModel.control.setErrors({'usernameTaken':true});
+      this.usernameModel.control.setErrors({'usernameTaken': true});
     }
   }
 

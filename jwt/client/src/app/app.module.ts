@@ -9,9 +9,9 @@ import {LoginPage} from "../pages/login/login";
 import {SignupPage} from "../pages/signup/signup";
 import {CustomFormsModule} from 'ng2-validation'
 import {Storage, IonicStorageModule} from "@ionic/storage";
-import {AuthService} from "../providers/auth-service";
 import {JwtHelper, AuthConfig, AuthHttp} from "angular2-jwt";
 import {Http, HttpModule, RequestOptions} from "@angular/http";
+import {AuthProvider} from "../providers/auth/auth";
 
 export function authHttpServiceFactory(http: Http, options: RequestOptions, storage: Storage) {
   const authConfig = new AuthConfig({
@@ -44,10 +44,11 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions, stor
     LoginPage,
     SignupPage
   ],
-  providers: [{provide: ErrorHandler, useClass: IonicErrorHandler},
+  providers: [
     StatusBar,
     SplashScreen,
-    AuthService,
+    {provide: ErrorHandler, useClass: IonicErrorHandler},
+    AuthProvider,
     JwtHelper, {
       provide: AuthHttp,
       useFactory: authHttpServiceFactory,

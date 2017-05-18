@@ -1,7 +1,7 @@
 import {Component} from '@angular/core';
 import {NavController, LoadingController, ToastController} from 'ionic-angular';
 import {SignupPage} from "../signup/signup";
-import {AuthService} from "../../providers/auth-service";
+import {AuthProvider} from "../../providers/auth/auth";
 
 @Component({
   selector: 'page-login',
@@ -11,7 +11,7 @@ export class LoginPage {
 
   constructor(private readonly navCtrl: NavController,
               private readonly loadingCtrl: LoadingController,
-              private readonly authService: AuthService,
+              private readonly authProvider: AuthProvider,
               private readonly toastCtrl: ToastController) {
   }
 
@@ -27,7 +27,7 @@ export class LoginPage {
 
     loading.present();
 
-    this.authService
+    this.authProvider
       .login(value)
       .finally(() => loading.dismiss())
       .subscribe(
