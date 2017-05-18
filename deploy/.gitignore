@@ -32,6 +32,4 @@ $RECYCLE.BIN/
 .DS_Store
 Thumbs.db
 UserInterfaceState.xcuserstate
-/resources/
-/.io-config.json
 /.project
