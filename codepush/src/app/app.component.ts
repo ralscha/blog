@@ -20,7 +20,7 @@ export class MyApp {
       splashScreen.hide();
 
       platform.resume.subscribe(() =>
-               codePush.sync(null, {deploymentKey: 'inbXiyN8QhcattkPFQ5mDmhSdAF4V16RCXmIG'}));
+        codePush.sync(null, {deploymentKey: 'cFu_iWwpQVqGH2NuyBVW1ZG5GtIvV16RCXmIG'}));
 
       // const source = Observable.timer(5000, 1000*60*60);
       // const subscription = source.subscribe(() => codePush.sync());
