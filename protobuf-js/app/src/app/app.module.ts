@@ -1,16 +1,16 @@
 /// <reference path="../../node_modules/protobufjs/stub-long.d.ts" />
 
-import {BrowserModule} from '@angular/platform-browser';
 import {NgModule, ErrorHandler} from '@angular/core';
+import {BrowserModule} from '@angular/platform-browser';
 import {IonicApp, IonicModule, IonicErrorHandler} from 'ionic-angular';
 import {MyApp} from './app.component';
 import {TabsPage} from '../pages/tabs/tabs';
+import {StatusBar} from '@ionic-native/status-bar';
+import {SplashScreen} from '@ionic-native/splash-screen';
+import {DetailComponent} from '../components/detail/detail';
+import {EarthquakeProvider} from '../providers/earthquake/earthquake';
 import {JsonPage} from "../pages/json/json";
 import {ProtobufPage} from "../pages/protobuf/protobuf";
-import {EarthquakeService} from "../providers/earthquake";
-import {DetailComponent} from "../components/detail/detail";
-import {SplashScreen} from '@ionic-native/splash-screen';
-import {StatusBar} from '@ionic-native/status-bar';
 import {HttpModule} from "@angular/http";
 
 @NgModule({
@@ -37,7 +37,8 @@ import {HttpModule} from "@angular/http";
     StatusBar,
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
-    EarthquakeService]
+    EarthquakeProvider
+  ]
 })
 export class AppModule {
 }

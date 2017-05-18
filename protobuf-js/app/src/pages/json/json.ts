@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {EarthquakeService, Earthquake} from "../../providers/earthquake";
+import {Earthquake, EarthquakeProvider} from "../../providers/earthquake/earthquake";
 
 @Component({
   selector: 'page-json',
@@ -8,7 +8,7 @@ import {EarthquakeService, Earthquake} from "../../providers/earthquake";
 export class JsonPage {
   earthquakes: Earthquake[];
 
-  constructor(private readonly earthquakeService: EarthquakeService) {
+  constructor(private readonly earthquakeService: EarthquakeProvider) {
   }
 
   doRefresh(refresher) {

@@ -1,5 +1,5 @@
 import {Component, Input} from '@angular/core';
-import {Earthquake} from "../../providers/earthquake";
+import {Earthquake} from "../../providers/earthquake/earthquake";
 
 @Component({
   selector: 'detail',
