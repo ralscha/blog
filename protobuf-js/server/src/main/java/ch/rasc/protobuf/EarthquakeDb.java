@@ -17,6 +17,7 @@ import ch.rasc.protobuf.EarthquakeOuterClass.Earthquake.Builder;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
+import okhttp3.ResponseBody;
 
 @Service
 public class EarthquakeDb {
@@ -38,35 +39,37 @@ public class EarthquakeDb {
 				.url("http://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_day.csv")
 				.build();
 
-		try (Response response = httpClient.newCall(request).execute()) {
-			String rawData = response.body().string();
-
-			CsvParserSettings settings = new CsvParserSettings();
-			settings.setHeaderExtractionEnabled(true);
-			settings.setLineSeparatorDetectionEnabled(true);
-			CsvParser parser = new CsvParser(settings);
-			List<Record> records = parser.parseAllRecords(new StringReader(rawData));
-
-			this.earthquakes.clear();
-			for (Record record : records) {
-				Builder builder = Earthquake.newBuilder().setId(record.getString("id"))
-						.setTime(record.getString("time"))
-						.setLatitude(record.getDouble("latitude"))
-						.setLongitude(record.getDouble("longitude"))
-						.setDepth(record.getFloat("depth"))
-						.setPlace(record.getString("place"));
-
-				Float mag = record.getFloat("mag");
-				if (mag != null) {
-					builder.setMag(mag);
+		try (Response response = this.httpClient.newCall(request).execute(); ResponseBody responseBody = response.body()) {
+			if (responseBody != null) {
+				String rawData = responseBody.string();
+	
+				CsvParserSettings settings = new CsvParserSettings();
+				settings.setHeaderExtractionEnabled(true);
+				settings.setLineSeparatorDetectionEnabled(true);
+				CsvParser parser = new CsvParser(settings);
+				List<Record> records = parser.parseAllRecords(new StringReader(rawData));
+	
+				this.earthquakes.clear();
+				for (Record record : records) {
+					Builder builder = Earthquake.newBuilder().setId(record.getString("id"))
+							.setTime(record.getString("time"))
+							.setLatitude(record.getDouble("latitude"))
+							.setLongitude(record.getDouble("longitude"))
+							.setDepth(record.getFloat("depth"))
+							.setPlace(record.getString("place"));
+	
+					Float mag = record.getFloat("mag");
+					if (mag != null) {
+						builder.setMag(mag);
+					}
+	
+					String magType = record.getString("magType");
+					if (magType != null) {
+						builder.setMagType(magType);
+					}
+	
+					this.earthquakes.add(builder.build());
 				}
-
-				String magType = record.getString("magType");
-				if (magType != null) {
-					builder.setMagType(magType);
-				}
-
-				this.earthquakes.add(builder.build());
 			}
 		}
 	}
