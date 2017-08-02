@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {NavController, ToastController} from 'ionic-angular';
+import {NavController} from 'ionic-angular';
 import {HomePage} from "../home/home";
 import {TodoProvider} from "../../providers/todo/todo";
 
@@ -10,8 +10,7 @@ import {TodoProvider} from "../../providers/todo/todo";
 export class PasswordPage {
 
   constructor(private readonly navCtrl: NavController,
-              private readonly todoProvider: TodoProvider,
-              private readonly toastCtrl: ToastController) {
+              private readonly todoProvider: TodoProvider) {
   }
 
   showTodos(password: string) {
