@@ -12,9 +12,9 @@ declare var codePush: any;
 export class MyApp {
   rootPage: any = HomePage;
 
-  constructor(private platform: Platform,
-              private statusBar: StatusBar,
-              private splashScreen: SplashScreen) {
+  constructor(platform: Platform,
+              statusBar: StatusBar,
+              splashScreen: SplashScreen) {
     platform.ready().then(() => {
       statusBar.styleDefault();
       splashScreen.hide();
