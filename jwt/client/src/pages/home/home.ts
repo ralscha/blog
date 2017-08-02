@@ -12,12 +12,12 @@ export class HomePage {
   message: string;
 
   constructor(private readonly authProvider: AuthProvider,
-              private readonly jwtHelper: JwtHelper,
+              jwtHelper: JwtHelper,
               private readonly  authHttp: AuthHttp) {
 
     this.authProvider.authUser.subscribe(jwt => {
       if (jwt) {
-        const decoded = this.jwtHelper.decodeToken(jwt);
+        const decoded = jwtHelper.decodeToken(jwt);
         this.user = decoded.sub
       }
       else {
