@@ -19,7 +19,7 @@ export class HomePage {
   token: string;
 
   constructor(private readonly http: Http,
-              private readonly platform: Platform,
+              platform: Platform,
               private readonly ngZone: NgZone,
               private readonly firebase: Firebase,
               private readonly storage: Storage) {
