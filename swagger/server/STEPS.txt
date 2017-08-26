@@ -1,0 +1,4 @@
+curl -O https://oss.sonatype.org/content/repositories/releases/io/swagger/swagger-codegen-cli/2.2.2/swagger-codegen-cli-2.2.2.jar
+java -jar swagger-codegen-cli-2.2.2.jar generate -i http://localhost:8080/v2/api-docs -l typescript-angular2 -s -o ..\client\src\
+
+npm install uuid --save
