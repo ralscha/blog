@@ -1,0 +1,18 @@
+<ion-row>
+  <ion-col col-3>
+    <h1 class="magnitude">{{earthquake.mag | number:'1.1-1'}}</h1>
+  </ion-col>
+  <ion-col col-9 text-right>
+    <p>{{earthquake.time | date:'MMM d HH:mm:ss'}}</p>
+  </ion-col>
+</ion-row>
+<ion-row>
+  <ion-col>
+    <h2>{{earthquake.place}}</h2>
+  </ion-col>
+</ion-row>
+<ion-row>
+  <ion-col>
+    <p>Depth: {{earthquake.depth | number}} km | Distance to me: {{distanceToReference(earthquake) | number:'1.0-0'}} km</p>
+  </ion-col>
+</ion-row>
