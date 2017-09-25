@@ -1,1 +1,1 @@
-Source code to blog post: https://golb.hplar.ch/p/Offline-capable-Ionic-Web-App-with-IndexedDB
+Source code for the blog post: https://golb.hplar.ch/p/Offline-capable-Ionic-Web-App-with-IndexedDB
