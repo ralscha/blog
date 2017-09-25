@@ -1,0 +1,41 @@
+<ion-header>
+  <ion-navbar color="danger">
+    <ion-title>Edit Password</ion-title>
+    <ion-buttons end>
+      <button ion-button icon-only (click)="deletePassword()" [disabled]="!password.id">
+        <ion-icon name="trash">
+        </ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+
+  <ion-list>
+    <ion-item>
+      <ion-label stacked>URL</ion-label>
+      <ion-input [(ngModel)]="password.url" type="text" required></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label stacked>Username</ion-label>
+      <ion-input [(ngModel)]="password.username" type="text"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label stacked>Password</ion-label>
+      <ion-input [(ngModel)]="password.password" type="text"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label stacked>Description</ion-label>
+      <ion-input [(ngModel)]="password.description" type="text"></ion-input>
+    </ion-item>
+  </ion-list>
+
+</ion-content>
+
+<ion-footer>
+  <button (click)="save()" color="light" ion-button full>Save</button>
+</ion-footer>
