@@ -1,0 +1,36 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>
+      Upload with Flow.js
+    </ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <ion-item>
+    <video #videoElement height="300">Video stream not available.</video>
+  </ion-item>
+  <ion-item>
+    <progress-bar [progress]="loadProgress"></progress-bar>
+  </ion-item>
+  <ion-item>
+    <ion-row>
+      <ion-col width-50>
+        <button ion-button color="secondary" type="button" full round large (click)="start()" [disabled]="recording">
+          Start
+        </button>
+      </ion-col>
+      <ion-col width-50>
+        <button ion-button color="danger" type="button" full round large (click)="stop()" [disabled]="!recording">
+          Stop
+        </button>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <button ion-button color="secondary" type="button" full round large (click)="takeSnapshot()"
+              [disabled]="!recording">
+        Take a Snapshot
+      </button>
+    </ion-row>
+  </ion-item>
+</ion-content>
