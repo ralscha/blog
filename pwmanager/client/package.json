@@ -12,27 +12,27 @@
     "ionic:serve": "ionic-app-scripts serve"
   },
   "dependencies": {
-    "@angular/common": "4.4.3",
-    "@angular/compiler": "4.4.3",
-    "@angular/compiler-cli": "4.4.3",
-    "@angular/core": "4.4.3",
-    "@angular/forms": "4.4.3",
-    "@angular/http": "4.4.3",
-    "@angular/platform-browser": "4.4.3",
-    "@angular/platform-browser-dynamic": "4.4.3",
-    "ionic-angular": "3.6.1",
+    "@angular/common": "^4.4.3",
+    "@angular/compiler": "^4.4.3",
+    "@angular/compiler-cli": "^4.4.3",
+    "@angular/core": "^4.4.3",
+    "@angular/forms": "^4.4.3",
+    "@angular/http": "^4.4.3",
+    "@angular/platform-browser": "^4.4.3",
+    "@angular/platform-browser-dynamic": "^4.4.3",
+    "ionic-angular": "^3.7.0",
     "ionicons": "3.0.0",
     "lzutf8": "^0.4.6",
-    "rxjs": "5.4.3",
+    "rxjs": "^5.4.3",
     "sw-toolbox": "3.6.0",
     "text-encoding-shim": "^1.0.0",
     "uuid": "^3.1.0",
-    "zone.js": "0.8.17"
+    "zone.js": "^0.8.18"
   },
   "devDependencies": {
     "@angular/tsc-wrapped": "4.4.3",
-    "@ionic/app-scripts": "2.1.4",
-    "typescript": "2.5.2"
+    "@ionic/app-scripts": "^3.0.0",
+    "typescript": "2.5.3"
   },
   "description": "An Ionic project"
 }
