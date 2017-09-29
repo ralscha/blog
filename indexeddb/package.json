@@ -12,14 +12,14 @@
         "ionic:serve": "ionic-app-scripts serve"
     },
     "dependencies": {
-        "@angular/common": "^4.4.3",
-        "@angular/compiler": "^4.4.3",
-        "@angular/compiler-cli": "^4.4.3",
-        "@angular/core": "^4.4.3",
-        "@angular/forms": "^4.4.3",
-        "@angular/http": "^4.4.3",
-        "@angular/platform-browser": "^4.4.3",
-        "@angular/platform-browser-dynamic": "^4.4.3",
+        "@angular/common": "^4.4.4",
+        "@angular/compiler": "^4.4.4",
+        "@angular/compiler-cli": "^4.4.4",
+        "@angular/core": "^4.4.4",
+        "@angular/forms": "^4.4.4",
+        "@angular/http": "^4.4.4",
+        "@angular/platform-browser": "^4.4.4",
+        "@angular/platform-browser-dynamic": "^4.4.4",
         "@ionic/storage": "2.0.1",
         "geolib": "^2.0.23",
         "ionic-angular": "^3.7.0",
@@ -31,7 +31,7 @@
         "zone.js": "^0.8.18"
     },
     "devDependencies": {
-        "@angular/tsc-wrapped": "4.4.3",
+        "@angular/tsc-wrapped": "4.4.4",
         "@ionic/app-scripts": "^3.0.0",
         "typescript": "^2.5.3"
     },
