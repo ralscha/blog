@@ -27,41 +27,41 @@ import io.jsonwebtoken.UnsupportedJwtException;
  */
 public class JWTFilter extends GenericFilterBean {
 
-	public final static String AUTHORIZATION_HEADER = "Authorization";
+  public final static String AUTHORIZATION_HEADER = "Authorization";
 
-	private final TokenProvider tokenProvider;
+  private final TokenProvider tokenProvider;
 
-	public JWTFilter(TokenProvider tokenProvider) {
-		this.tokenProvider = tokenProvider;
-	}
+  public JWTFilter(TokenProvider tokenProvider) {
+    this.tokenProvider = tokenProvider;
+  }
 
-	@Override
-	public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse,
-			FilterChain filterChain) throws IOException, ServletException {
-		try {
-			HttpServletRequest httpServletRequest = (HttpServletRequest) servletRequest;
-			String jwt = resolveToken(httpServletRequest);
-			if (jwt != null) {
-				Authentication authentication = this.tokenProvider.getAuthentication(jwt);
-				if (authentication != null) {
-					SecurityContextHolder.getContext().setAuthentication(authentication);
-				}
-			}
-			filterChain.doFilter(servletRequest, servletResponse);
-		}
-		catch (ExpiredJwtException | UnsupportedJwtException | MalformedJwtException
-				| SignatureException | UsernameNotFoundException e) {
-			Application.logger.info("Security exception {}", e.getMessage());
-			((HttpServletResponse) servletResponse)
-					.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-		}
-	}
+  @Override
+  public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse,
+      FilterChain filterChain) throws IOException, ServletException {
+    try {
+      HttpServletRequest httpServletRequest = (HttpServletRequest) servletRequest;
+      String jwt = resolveToken(httpServletRequest);
+      if (jwt != null) {
+        Authentication authentication = this.tokenProvider.getAuthentication(jwt);
+        if (authentication != null) {
+          SecurityContextHolder.getContext().setAuthentication(authentication);
+        }
+      }
+      filterChain.doFilter(servletRequest, servletResponse);
+    }
+    catch (ExpiredJwtException | UnsupportedJwtException | MalformedJwtException
+        | SignatureException | UsernameNotFoundException e) {
+      Application.logger.info("Security exception {}", e.getMessage());
+      ((HttpServletResponse) servletResponse)
+          .setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+    }
+  }
 
-	private static String resolveToken(HttpServletRequest request) {
-		String bearerToken = request.getHeader(AUTHORIZATION_HEADER);
-		if (StringUtils.hasText(bearerToken) && bearerToken.startsWith("Bearer ")) {
-			return bearerToken.substring(7, bearerToken.length());
-		}
-		return null;
-	}
+  private static String resolveToken(HttpServletRequest request) {
+    String bearerToken = request.getHeader(AUTHORIZATION_HEADER);
+    if (StringUtils.hasText(bearerToken) && bearerToken.startsWith("Bearer ")) {
+      return bearerToken.substring(7, bearerToken.length());
+    }
+    return null;
+  }
 }

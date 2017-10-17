@@ -13,21 +13,21 @@ import ch.rasc.jwt.security.jwt.TokenProvider;
 @Configuration
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-	private final TokenProvider tokenProvider;
+  private final TokenProvider tokenProvider;
 
-	public SecurityConfig(TokenProvider tokenProvider) {
-		this.tokenProvider = tokenProvider;
-	}
+  public SecurityConfig(TokenProvider tokenProvider) {
+    this.tokenProvider = tokenProvider;
+  }
 
-	@Bean
-	@Override
-	public AuthenticationManager authenticationManagerBean() throws Exception {
-		return super.authenticationManagerBean();
-	}
+  @Bean
+  @Override
+  public AuthenticationManager authenticationManagerBean() throws Exception {
+    return super.authenticationManagerBean();
+  }
 
-	@Override
-	protected void configure(HttpSecurity http) throws Exception {
-		// @formatter:off
+  @Override
+  protected void configure(HttpSecurity http) throws Exception {
+    // @formatter:off
 		http
 		  .csrf()
 		    .disable()
@@ -46,6 +46,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		    .and()
 		  .apply(new JWTConfigurer(this.tokenProvider));
 		// @formatter:on
-	}
+  }
 
 }

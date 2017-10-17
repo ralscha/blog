@@ -7,41 +7,41 @@ import org.springframework.stereotype.Component;
 @Component
 public class MinioConfig {
 
-	private String endpoint;
-	private String accessKey;
-	private String secretKey;
-	private String region;
+  private String endpoint;
+  private String accessKey;
+  private String secretKey;
+  private String region;
 
-	public String getEndpoint() {
-		return this.endpoint;
-	}
+  public String getEndpoint() {
+    return this.endpoint;
+  }
 
-	public void setEndpoint(String endpoint) {
-		this.endpoint = endpoint;
-	}
+  public void setEndpoint(String endpoint) {
+    this.endpoint = endpoint;
+  }
 
-	public String getAccessKey() {
-		return this.accessKey;
-	}
+  public String getAccessKey() {
+    return this.accessKey;
+  }
 
-	public void setAccessKey(String accessKey) {
-		this.accessKey = accessKey;
-	}
+  public void setAccessKey(String accessKey) {
+    this.accessKey = accessKey;
+  }
 
-	public String getSecretKey() {
-		return this.secretKey;
-	}
+  public String getSecretKey() {
+    return this.secretKey;
+  }
 
-	public void setSecretKey(String secretKey) {
-		this.secretKey = secretKey;
-	}
+  public void setSecretKey(String secretKey) {
+    this.secretKey = secretKey;
+  }
 
-	public String getRegion() {
-		return this.region;
-	}
+  public String getRegion() {
+    return this.region;
+  }
 
-	public void setRegion(String region) {
-		this.region = region;
-	}
+  public void setRegion(String region) {
+    this.region = region;
+  }
 
 }

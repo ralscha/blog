@@ -12,42 +12,43 @@ import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 @Controller
 public class SSEController {
 
-	private final CopyOnWriteArrayList<SseEmitter> emitters = new CopyOnWriteArrayList<>();
+  private final CopyOnWriteArrayList<SseEmitter> emitters = new CopyOnWriteArrayList<>();
 
-	@GetMapping("/memory")
-	public SseEmitter handle() {
+  @GetMapping("/memory")
+  public SseEmitter handle() {
 
-		SseEmitter emitter = new SseEmitter();
-		// SseEmitter emitter = new SseEmitter(180_000L);
-		
-		this.emitters.add(emitter);
+    SseEmitter emitter = new SseEmitter();
+    // SseEmitter emitter = new SseEmitter(180_000L);
 
-		emitter.onCompletion(() -> this.emitters.remove(emitter));
-		emitter.onTimeout(() -> this.emitters.remove(emitter));
+    this.emitters.add(emitter);
 
-		return emitter;
-	}
+    emitter.onCompletion(() -> this.emitters.remove(emitter));
+    emitter.onTimeout(() -> this.emitters.remove(emitter));
 
-	@EventListener
-	public void onMemoryInfo(MemoryInfo memoryInfo) {
-		List<SseEmitter> deadEmitters = new ArrayList<>();
-		this.emitters.forEach(emitter -> {
-			try {
-				emitter.send(memoryInfo);
+    return emitter;
+  }
 
-				// close connnection, browser automatically reconnects
-				// emitter.complete();
+  @EventListener
+  public void onMemoryInfo(MemoryInfo memoryInfo) {
+    List<SseEmitter> deadEmitters = new ArrayList<>();
+    this.emitters.forEach(emitter -> {
+      try {
+        emitter.send(memoryInfo);
 
-				// SseEventBuilder builder = SseEmitter.event().name("second").data("1");
-				// SseEventBuilder builder = SseEmitter.event().reconnectTime(10_000L).data(memoryInfo).id("1");
-				// emitter.send(builder);
-			}
-			catch (Exception e) {
-				deadEmitters.add(emitter);
-			}
-		});
+        // close connnection, browser automatically reconnects
+        // emitter.complete();
 
-		this.emitters.remove(deadEmitters);
-	}
+        // SseEventBuilder builder = SseEmitter.event().name("second").data("1");
+        // SseEventBuilder builder =
+        // SseEmitter.event().reconnectTime(10_000L).data(memoryInfo).id("1");
+        // emitter.send(builder);
+      }
+      catch (Exception e) {
+        deadEmitters.add(emitter);
+      }
+    });
+
+    this.emitters.remove(deadEmitters);
+  }
 
 }

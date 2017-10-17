@@ -13,16 +13,16 @@ import io.minio.errors.InvalidPortException;
 @SpringBootApplication
 public class Application {
 
-	public final static Logger logger = LoggerFactory.getLogger(Application.class);
+  public final static Logger logger = LoggerFactory.getLogger(Application.class);
 
-	public static void main(String[] args) {
-		SpringApplication.run(Application.class, args);
-	}
+  public static void main(String[] args) {
+    SpringApplication.run(Application.class, args);
+  }
 
-	@Bean
-	public MinioClient minioClient(MinioConfig config)
-			throws InvalidEndpointException, InvalidPortException {
-		return new MinioClient(config.getEndpoint(), config.getAccessKey(),
-				config.getSecretKey());
-	}
+  @Bean
+  public MinioClient minioClient(MinioConfig config)
+      throws InvalidEndpointException, InvalidPortException {
+    return new MinioClient(config.getEndpoint(), config.getAccessKey(),
+        config.getSecretKey());
+  }
 }

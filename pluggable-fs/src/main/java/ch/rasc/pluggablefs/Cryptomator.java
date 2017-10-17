@@ -18,40 +18,39 @@ import org.cryptomator.cryptofs.CryptoFileSystemUri;
 
 public class Cryptomator {
 
-	public static void main(String[] args) throws IOException {
-		Path storageLocation = Paths.get("E:\\temp\\vault");
+  public static void main(String[] args) throws IOException {
+    Path storageLocation = Paths.get("E:\\temp\\vault");
 
-		Files.createDirectories(storageLocation);
-		CryptoFileSystemProvider.initialize(storageLocation, "masterkey.cryptomator",
-				"password");
+    Files.createDirectories(storageLocation);
+    CryptoFileSystemProvider.initialize(storageLocation, "masterkey.cryptomator",
+        "password");
 
-		URI uri = CryptoFileSystemUri.create(storageLocation);
+    URI uri = CryptoFileSystemUri.create(storageLocation);
 
-		try (FileSystem fs = FileSystems.newFileSystem(uri,
-				CryptoFileSystemProperties.cryptoFileSystemProperties()
-						.withPassphrase("password")
-						// .withFlags(FileSystemFlags.READONLY)
-						.build())) {
+    try (FileSystem fs = FileSystems.newFileSystem(uri,
+        CryptoFileSystemProperties.cryptoFileSystemProperties().withPassphrase("password")
+            // .withFlags(FileSystemFlags.READONLY)
+            .build())) {
 
-			Path p1 = fs.getPath("/one.txt");
-			List<String> lines = Arrays.asList("one", "two", "three");
-			Files.write(p1, lines, StandardCharsets.UTF_8);
+      Path p1 = fs.getPath("/one.txt");
+      List<String> lines = Arrays.asList("one", "two", "three");
+      Files.write(p1, lines, StandardCharsets.UTF_8);
 
-			Path p2 = fs.getPath("/two.txt");
-			Files.copy(p1, p2, StandardCopyOption.REPLACE_EXISTING);
+      Path p2 = fs.getPath("/two.txt");
+      Files.copy(p1, p2, StandardCopyOption.REPLACE_EXISTING);
 
-			Path p2b = fs.getPath("/two_renamed.txt");
-			Files.move(p2, p2b, StandardCopyOption.REPLACE_EXISTING);
+      Path p2b = fs.getPath("/two_renamed.txt");
+      Files.move(p2, p2b, StandardCopyOption.REPLACE_EXISTING);
 
-			Path dir = fs.getPath("/directory");
-			Files.createDirectory(dir);
+      Path dir = fs.getPath("/directory");
+      Files.createDirectory(dir);
 
-			Path p3 = fs.getPath("/directory/three.txt");
-			Files.write(p3, Arrays.asList("three"));
+      Path p3 = fs.getPath("/directory/three.txt");
+      Files.write(p3, Arrays.asList("three"));
 
-			Files.delete(p1);
+      Files.delete(p1);
 
-		}
-	}
+    }
+  }
 
 }

@@ -11,14 +11,14 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @SpringBootApplication
 public class Application {
 
-	public final static Logger logger = LoggerFactory.getLogger(Application.class);
-	
-	public static void main(String[] args) {
-		SpringApplication.run(Application.class, args);
-	}
+  public final static Logger logger = LoggerFactory.getLogger(Application.class);
 
-	@Bean
-	public PasswordEncoder passwordEncoder() {
-		return new BCryptPasswordEncoder(12);
-	}
+  public static void main(String[] args) {
+    SpringApplication.run(Application.class, args);
+  }
+
+  @Bean
+  public PasswordEncoder passwordEncoder() {
+    return new BCryptPasswordEncoder(12);
+  }
 }

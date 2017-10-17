@@ -15,17 +15,15 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @EnableSwagger2
 public class Application {
 
-	public static void main(String[] args) {
-		SpringApplication.run(Application.class, args);
-	}
+  public static void main(String[] args) {
+    SpringApplication.run(Application.class, args);
+  }
 
-	@Bean
-	public Docket api() {
-		return new Docket(DocumentationType.SWAGGER_2).useDefaultResponseMessages(false)
-				.apiInfo(new ApiInfoBuilder().title("Todo API Endpoints").version("1")
-						.build())
-				.select()
-				.apis(RequestHandlerSelectors.basePackage("ch.rasc.swagger.todo"))
-				.paths(PathSelectors.any()).build();
-	}
+  @Bean
+  public Docket api() {
+    return new Docket(DocumentationType.SWAGGER_2).useDefaultResponseMessages(false)
+        .apiInfo(new ApiInfoBuilder().title("Todo API Endpoints").version("1").build())
+        .select().apis(RequestHandlerSelectors.basePackage("ch.rasc.swagger.todo"))
+        .paths(PathSelectors.any()).build();
+  }
 }

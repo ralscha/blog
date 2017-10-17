@@ -6,17 +6,17 @@ import com.rometools.rome.feed.synd.SyndFeedImpl;
 
 public class CustomFeedEntry extends SyndFeedImpl {
 
-	private static final long serialVersionUID = 1L;
+  private static final long serialVersionUID = 1L;
 
-	protected Date publishedDate;
+  protected Date publishedDate;
 
-    @Override
-    public Date getPublishedDate() {
-        return this.publishedDate;
-    }
+  @Override
+  public Date getPublishedDate() {
+    return this.publishedDate;
+  }
 
-    @Override
-    public void setPublishedDate(final Date publishedDate) {
-        this.publishedDate = new Date(publishedDate.getTime());
-    }
+  @Override
+  public void setPublishedDate(final Date publishedDate) {
+    this.publishedDate = new Date(publishedDate.getTime());
+  }
 }

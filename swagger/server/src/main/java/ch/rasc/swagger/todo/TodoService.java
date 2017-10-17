@@ -21,28 +21,28 @@ import io.swagger.annotations.ApiParam;
 @CrossOrigin
 public class TodoService {
 
-	private final TodoDb todoDb;
+  private final TodoDb todoDb;
 
-	public TodoService(TodoDb todoDb) {
-		this.todoDb = todoDb;
-	}
+  public TodoService(TodoDb todoDb) {
+    this.todoDb = todoDb;
+  }
 
-	@PostMapping("/save")
-	@ResponseStatus(HttpStatus.NO_CONTENT)
-	public void save(@RequestBody Todo todo) {
-		this.todoDb.save(todo);
-	}
+  @PostMapping("/save")
+  @ResponseStatus(HttpStatus.NO_CONTENT)
+  public void save(@RequestBody Todo todo) {
+    this.todoDb.save(todo);
+  }
 
-	@PostMapping("/delete/{id}")
-	@ResponseStatus(HttpStatus.NO_CONTENT)
-	@ApiOperation("Deletes a todo entry")
-	public void delete(@ApiParam(value = "Primary key of the todo entity",
-			required = true) @PathVariable("id") String id) {
-		this.todoDb.delete(id);
-	}
+  @PostMapping("/delete/{id}")
+  @ResponseStatus(HttpStatus.NO_CONTENT)
+  @ApiOperation("Deletes a todo entry")
+  public void delete(@ApiParam(value = "Primary key of the todo entity",
+      required = true) @PathVariable("id") String id) {
+    this.todoDb.delete(id);
+  }
 
-	@GetMapping("/list")
-	public List<Todo> list() {
-		return new ArrayList<>(this.todoDb.list());
-	}
+  @GetMapping("/list")
+  public List<Todo> list() {
+    return new ArrayList<>(this.todoDb.list());
+  }
 }

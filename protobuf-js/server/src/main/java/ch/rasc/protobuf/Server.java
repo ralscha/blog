@@ -12,17 +12,17 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 @EnableScheduling
 public class Server extends WebMvcConfigurerAdapter {
 
-	public static void main(String[] args) {
-		SpringApplication.run(Server.class, args);
-	}
+  public static void main(String[] args) {
+    SpringApplication.run(Server.class, args);
+  }
 
-	@Override
-	public void configureContentNegotiation(ContentNegotiationConfigurer configurer) {
-		configurer.mediaType("protobuf", MediaType.valueOf("application/x-protobuf"));
-	}
+  @Override
+  public void configureContentNegotiation(ContentNegotiationConfigurer configurer) {
+    configurer.mediaType("protobuf", MediaType.valueOf("application/x-protobuf"));
+  }
 
-	@Bean
-	Protobuf3HttpMessageConverter protobufHttpMessageConverter() {
-		return new Protobuf3HttpMessageConverter();
-	}
+  @Bean
+  Protobuf3HttpMessageConverter protobufHttpMessageConverter() {
+    return new Protobuf3HttpMessageConverter();
+  }
 }

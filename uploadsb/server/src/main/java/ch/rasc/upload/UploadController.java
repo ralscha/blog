@@ -15,26 +15,26 @@ import org.springframework.web.multipart.MultipartFile;
 @RestController
 public class UploadController {
 
-	@CrossOrigin
-	@PostMapping("/upload")
-	public boolean pictureupload(@RequestParam("file") MultipartFile file) {
+  @CrossOrigin
+  @PostMapping("/upload")
+  public boolean pictureupload(@RequestParam("file") MultipartFile file) {
 
-		System.out.println(file.getName());
-		System.out.println(file.getOriginalFilename());
-		System.out.println(file.getSize());
+    System.out.println(file.getName());
+    System.out.println(file.getOriginalFilename());
+    System.out.println(file.getSize());
 
-		try {
-			Path downloadedFile = Paths.get(file.getOriginalFilename());
-			Files.deleteIfExists(downloadedFile);
+    try {
+      Path downloadedFile = Paths.get(file.getOriginalFilename());
+      Files.deleteIfExists(downloadedFile);
 
-			Files.copy(file.getInputStream(), downloadedFile);
+      Files.copy(file.getInputStream(), downloadedFile);
 
-			return true;
-		}
-		catch (IOException e) {
-			LoggerFactory.getLogger(this.getClass()).error("pictureupload", e);
-			return false;
-		}
+      return true;
+    }
+    catch (IOException e) {
+      LoggerFactory.getLogger(this.getClass()).error("pictureupload", e);
+      return false;
+    }
 
-	}
+  }
 }

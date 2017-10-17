@@ -11,20 +11,20 @@ import org.springframework.stereotype.Service;
 @Service
 public class MemoryObserverJob {
 
-	public final ApplicationEventPublisher eventPublisher;
+  public final ApplicationEventPublisher eventPublisher;
 
-	public MemoryObserverJob(ApplicationEventPublisher eventPublisher) {
-		this.eventPublisher = eventPublisher;
-	}
+  public MemoryObserverJob(ApplicationEventPublisher eventPublisher) {
+    this.eventPublisher = eventPublisher;
+  }
 
-	@Scheduled(fixedRate = 1000)
-	public void doSomething() {
-		MemoryMXBean memBean = ManagementFactory.getMemoryMXBean();
-		MemoryUsage heap = memBean.getHeapMemoryUsage();
-		MemoryUsage nonHeap = memBean.getNonHeapMemoryUsage();
+  @Scheduled(fixedRate = 1000)
+  public void doSomething() {
+    MemoryMXBean memBean = ManagementFactory.getMemoryMXBean();
+    MemoryUsage heap = memBean.getHeapMemoryUsage();
+    MemoryUsage nonHeap = memBean.getNonHeapMemoryUsage();
 
-		MemoryInfo mi = new MemoryInfo(heap.getUsed(), nonHeap.getUsed());
-		this.eventPublisher.publishEvent(mi);
-	}
+    MemoryInfo mi = new MemoryInfo(heap.getUsed(), nonHeap.getUsed());
+    this.eventPublisher.publishEvent(mi);
+  }
 
 }

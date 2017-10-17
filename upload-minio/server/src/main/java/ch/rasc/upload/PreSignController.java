@@ -23,35 +23,35 @@ import io.minio.errors.RegionConflictException;
 
 @RestController
 public class PreSignController {
-	private final static String BUCKET_NAME = "uploads";
+  private final static String BUCKET_NAME = "uploads";
 
-	private final MinioClient minioClient;
+  private final MinioClient minioClient;
 
-	public PreSignController(MinioClient minioClient) {
-		this.minioClient = minioClient;
-	}
+  public PreSignController(MinioClient minioClient) {
+    this.minioClient = minioClient;
+  }
 
-	@PostConstruct
-	public void createBucket() throws InvalidKeyException, InvalidBucketNameException,
-			NoSuchAlgorithmException, InsufficientDataException, NoResponseException,
-			ErrorResponseException, InternalException, IOException,
-			XmlPullParserException, RegionConflictException {
-		
-		if (!minioClient.bucketExists(BUCKET_NAME)) {
-			minioClient.makeBucket(BUCKET_NAME);
-		}
-		
-	}
+  @PostConstruct
+  public void createBucket()
+      throws InvalidKeyException, InvalidBucketNameException, NoSuchAlgorithmException,
+      InsufficientDataException, NoResponseException, ErrorResponseException,
+      InternalException, IOException, XmlPullParserException, RegionConflictException {
 
-	@CrossOrigin
-	@GetMapping("/getPreSignUrl")
-	public String getPreSignUrl(@RequestParam("fileName") String fileName)
-			throws InvalidKeyException, InvalidBucketNameException,
-			NoSuchAlgorithmException, InsufficientDataException, NoResponseException,
-			ErrorResponseException, InternalException, InvalidExpiresRangeException,
-			IOException, XmlPullParserException {
-		
-		return this.minioClient.presignedPutObject(BUCKET_NAME, fileName, 60);
-		
-	}
+    if (!minioClient.bucketExists(BUCKET_NAME)) {
+      minioClient.makeBucket(BUCKET_NAME);
+    }
+
+  }
+
+  @CrossOrigin
+  @GetMapping("/getPreSignUrl")
+  public String getPreSignUrl(@RequestParam("fileName") String fileName)
+      throws InvalidKeyException, InvalidBucketNameException, NoSuchAlgorithmException,
+      InsufficientDataException, NoResponseException, ErrorResponseException,
+      InternalException, InvalidExpiresRangeException, IOException,
+      XmlPullParserException {
+
+    return this.minioClient.presignedPutObject(BUCKET_NAME, fileName, 60);
+
+  }
 }

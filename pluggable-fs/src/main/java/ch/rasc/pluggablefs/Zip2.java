@@ -11,16 +11,16 @@ import java.util.stream.Stream;
 
 public class Zip2 {
 
-	public static void main(String[] args) throws IOException {
-		URI uri = URI.create("jar:file:///D:/ws/dacs/license-manager/target/license.jar");
+  public static void main(String[] args) throws IOException {
+    URI uri = URI.create("jar:file:///D:/ws/dacs/license-manager/target/license.jar");
 
-		try (FileSystem fs = FileSystems.newFileSystem(uri, Collections.emptyMap())) {
+    try (FileSystem fs = FileSystems.newFileSystem(uri, Collections.emptyMap())) {
 
-			try (Stream<Path> paths = Files.walk(fs.getPath("/"))) {
-				paths.filter(Files::isRegularFile).forEach(System.out::println);
-			}
-		}
+      try (Stream<Path> paths = Files.walk(fs.getPath("/"))) {
+        paths.filter(Files::isRegularFile).forEach(System.out::println);
+      }
+    }
 
-	}
+  }
 
 }
