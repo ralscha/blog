@@ -1,5 +1,4 @@
-import {Component, ViewChild} from '@angular/core';
-import {EChartsComponent} from "../../components/echart-component";
+import {Component} from '@angular/core';
 
 @Component({
   selector: 'page-chart2',
@@ -7,14 +6,7 @@ import {EChartsComponent} from "../../components/echart-component";
 })
 export class Chart2Page {
 
-  @ViewChild(EChartsComponent)
-  chart;
-
-  ionViewDidEnter() {
-    this.chart.resize();
-  }
-
-  option = {
+  options = {
     legend: {
       data: ['Profit', 'Expenses', 'Income']
     },

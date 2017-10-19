@@ -1,18 +1,15 @@
-import {Component, ViewChild} from '@angular/core';
-import {EChartsComponent} from "../../components/echart-component";
+import {Component} from '@angular/core';
 
 @Component({
   selector: 'page-chart3',
   templateUrl: 'chart3.html'
 })
 export class Chart3Page {
-  @ViewChild(EChartsComponent)
-  chart;
 
-  running = false;
-  interval = null;
+  private running = false;
+  private interval = null;
 
-  option = {
+  options: any = {
     series: [{
       type: 'gauge',
       detail: {formatter: '{value}%'},
@@ -20,15 +17,12 @@ export class Chart3Page {
     }]
   };
 
-  ionViewDidEnter() {
-    this.chart.resize();
-  }
+  datas: any = null;
 
   start() {
     this.running = true;
     this.interval = setInterval(() => {
-      this.option.series[0].data[0].value = Number((Math.random() * 100).toFixed(1));
-      this.chart.setOption(this.option, true);
+      this.datas = [{value: Number((Math.random() * 100).toFixed(1)), name: 'Sensor'}];
     }, 2000);
   }
 

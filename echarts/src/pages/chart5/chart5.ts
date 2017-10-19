@@ -1,5 +1,4 @@
-import {Component, ViewChild} from '@angular/core';
-import {EChartsComponent} from "../../components/echart-component";
+import {Component} from '@angular/core';
 import * as echarts from 'echarts/dist/echarts-en.js';
 
 @Component({
@@ -7,13 +6,6 @@ import * as echarts from 'echarts/dist/echarts-en.js';
   templateUrl: 'chart5.html'
 })
 export class Chart5Page {
-
-  @ViewChild(EChartsComponent)
-  chart;
-
-  ionViewDidEnter() {
-    this.chart.resize();
-  }
 
   private getVirtulData(year) {
     year = year || '2017';
@@ -30,7 +22,7 @@ export class Chart5Page {
     return data;
   }
 
-  option = {
+  options = {
     tooltip: {
       position: 'top',
       formatter: function (p) {
