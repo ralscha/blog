@@ -1,5 +1,5 @@
 import {Component, Input, ViewChild, OnInit, OnDestroy} from '@angular/core';
-import * as echarts from 'echarts';
+import * as echarts from 'echarts/dist/echarts-en.js';
 
 @Component({
   selector: 'echart',
@@ -8,7 +8,7 @@ import * as echarts from 'echarts';
 export class EChartsComponent implements OnInit, OnDestroy {
 
   @Input('option')
-  option: any;
+  option: object;
 
   private chart: any;
 
@@ -24,8 +24,8 @@ export class EChartsComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    window.removeEventListener('resize', this.resizeListener);
-    this.chart.destroy();
+    window.removeEventListener('resize', this.resizeListener, true);
+    this.chart.resize();
   }
 
   setOption(option, notMerge) {
