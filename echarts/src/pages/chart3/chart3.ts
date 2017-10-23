@@ -6,7 +6,7 @@ import {Component} from '@angular/core';
 })
 export class Chart3Page {
 
-  private running = false;
+  running = false;
   private interval = null;
 
   options: any = {

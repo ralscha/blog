@@ -1,6 +1,10 @@
 page-chart3 {
-  div {
-    width: 100%;
-    height: 75%;
+  .demo-chart {
+    height: 500px !important;
+    display:block;
+    width: auto !important;
+  }
+  .scroll{
+    height:100% !important
   }
 }

@@ -10,7 +10,7 @@ import {Chart4Page} from "../pages/chart4/chart4";
 import {Chart5Page} from "../pages/chart5/chart5";
 import {SplashScreen} from '@ionic-native/splash-screen';
 import {StatusBar} from '@ionic-native/status-bar';
-import {AngularEchartsDirective} from "../echarts.directive";
+import {AngularEchartsModule} from "ngx-echarts";
 
 @NgModule({
   declarations: [
@@ -20,11 +20,11 @@ import {AngularEchartsDirective} from "../echarts.directive";
     Chart3Page,
     Chart4Page,
     Chart5Page,
-    TabsPage,
-    AngularEchartsDirective
+    TabsPage
   ],
   imports: [
     BrowserModule,
+    AngularEchartsModule,
     IonicModule.forRoot(MyApp)
   ],
   bootstrap: [IonicApp],
