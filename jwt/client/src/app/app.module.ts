@@ -31,10 +31,7 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions, stor
     BrowserModule,
     HttpModule,
     IonicModule.forRoot(MyApp),
-    IonicStorageModule.forRoot({
-      name: 'myapp',
-      driverOrder: ['sqlite', 'indexeddb', 'websql']
-    }),
+    IonicStorageModule.forRoot(),
     CustomFormsModule
   ],
   bootstrap: [IonicApp],

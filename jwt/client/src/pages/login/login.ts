@@ -2,6 +2,7 @@ import {Component} from '@angular/core';
 import {NavController, LoadingController, ToastController} from 'ionic-angular';
 import {SignupPage} from "../signup/signup";
 import {AuthProvider} from "../../providers/auth/auth";
+import "rxjs/add/operator/finally";
 
 @Component({
   selector: 'page-login',
