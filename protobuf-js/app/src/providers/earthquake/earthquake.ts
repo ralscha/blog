@@ -3,6 +3,7 @@
 import {Injectable} from '@angular/core';
 import {Http, Response, ResponseContentType} from '@angular/http';
 import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/catch';
 import {SERVER_URL} from '../config';
 import {Observable} from "rxjs";
 import {load} from "protobufjs";
