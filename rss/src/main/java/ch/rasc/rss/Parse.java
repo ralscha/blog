@@ -13,7 +13,7 @@ import com.rometools.rome.io.XmlReader;
 public class Parse {
   public static void main(String[] args)
       throws IllegalArgumentException, MalformedURLException, FeedException, IOException {
-    String url = "http://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_hour.atom";
+    String url = "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_hour.atom";
 
     try (XmlReader reader = new XmlReader(new URL(url))) {
       SyndFeed feed = new SyndFeedInput().build(reader);
