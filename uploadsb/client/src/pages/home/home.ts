@@ -3,6 +3,7 @@ import {Http, Response} from "@angular/http";
 import "rxjs/add/operator/map";
 import "rxjs/add/operator/catch";
 import 'rxjs/add/observable/throw';
+import "rxjs/add/operator/finally";
 import {Observable} from "rxjs";
 import {LoadingController, Loading, ToastController} from "ionic-angular";
 import {Camera} from '@ionic-native/camera';
