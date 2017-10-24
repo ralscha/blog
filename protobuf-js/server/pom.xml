@@ -14,7 +14,7 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>1.5.7.RELEASE</version>
+		<version>1.5.8.RELEASE</version>
 		<relativePath/>
 	</parent>
 
@@ -47,7 +47,7 @@
 		<dependency>
 			<groupId>com.univocity</groupId>
 			<artifactId>univocity-parsers</artifactId>
-			<version>2.5.7</version>
+			<version>2.5.8</version>
 		</dependency>
 		<dependency>
 			<groupId>com.squareup.okhttp3</groupId>
@@ -65,7 +65,7 @@
 			<plugin>
 				<groupId>com.github.os72</groupId>
 				<artifactId>protoc-jar-maven-plugin</artifactId>
-				<version>3.4.0</version>
+				<version>3.4.0.1</version>
 				<executions>
 					<execution>
 						<phase>generate-sources</phase>
@@ -73,7 +73,7 @@
 							<goal>run</goal>
 						</goals>
 						<configuration>
-							<protocVersion>3.3.0</protocVersion>
+							<protocVersion>3.4.0</protocVersion>
 							<inputDirectories>
 								<include>src/main/protobuf</include>
 							</inputDirectories>
