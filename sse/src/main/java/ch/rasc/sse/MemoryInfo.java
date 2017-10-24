@@ -22,7 +22,7 @@ public class MemoryInfo {
   }
 
   public long getTs() {
-    return ts;
+    return this.ts;
   }
 
 }
