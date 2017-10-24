@@ -59,7 +59,7 @@ public class AuthController {
 
     try {
       this.authenticationManager.authenticate(authenticationToken);
-      return tokenProvider.createToken(loginUser.getUsername());
+      return this.tokenProvider.createToken(loginUser.getUsername());
     }
     catch (AuthenticationException e) {
       Application.logger.info("Security exception {}", e.getMessage());
