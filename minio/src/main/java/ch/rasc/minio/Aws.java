@@ -36,7 +36,7 @@ public class Aws {
         .withClientConfiguration(clientConfig)
         .withEndpointConfiguration(endpointConfiguration).build();
 
-    boolean isExist = client.doesBucketExist("cataws");
+    boolean isExist = client.doesBucketExistV2("cataws");
     if (isExist) {
       System.out.println("Bucket already exists.");
     }
