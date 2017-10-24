@@ -48,7 +48,7 @@ public class SSEController {
       }
     });
 
-    this.emitters.remove(deadEmitters);
+    this.emitters.removeAll(deadEmitters);
   }
 
 }
