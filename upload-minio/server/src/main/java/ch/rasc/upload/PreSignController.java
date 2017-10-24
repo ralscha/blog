@@ -37,8 +37,8 @@ public class PreSignController {
       InsufficientDataException, NoResponseException, ErrorResponseException,
       InternalException, IOException, XmlPullParserException, RegionConflictException {
 
-    if (!minioClient.bucketExists(BUCKET_NAME)) {
-      minioClient.makeBucket(BUCKET_NAME);
+    if (!this.minioClient.bucketExists(BUCKET_NAME)) {
+      this.minioClient.makeBucket(BUCKET_NAME);
     }
 
   }
