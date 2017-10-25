@@ -11,6 +11,7 @@ import {Chart5Page} from "../pages/chart5/chart5";
 import {SplashScreen} from '@ionic-native/splash-screen';
 import {StatusBar} from '@ionic-native/status-bar';
 import {AngularEchartsModule} from "ngx-echarts";
+import {Chart6Page} from "../pages/chart6/chart6";
 
 @NgModule({
   declarations: [
@@ -20,6 +21,7 @@ import {AngularEchartsModule} from "ngx-echarts";
     Chart3Page,
     Chart4Page,
     Chart5Page,
+    Chart6Page,
     TabsPage
   ],
   imports: [
@@ -35,6 +37,7 @@ import {AngularEchartsModule} from "ngx-echarts";
     Chart3Page,
     Chart4Page,
     Chart5Page,
+    Chart6Page,
     TabsPage
   ],
   providers: [
