@@ -2,7 +2,8 @@ import {Injectable} from "@angular/core";
 import {Filter} from "../../filter";
 import {Earthquake} from "../../earthquake";
 import {HttpClient} from "@angular/common/http";
-import 'rxjs/add/operator/map';
+import { map } from 'rxjs/operators/map';
+//import { map } from 'rxjs/operators';
 import geolib from 'geolib';
 import Papa from 'papaparse';
 
@@ -86,8 +87,8 @@ export class EarthquakeProvider {
 
   private loadData(dataUrl): Promise<void> {
     return new Promise(resolve => {
-      this.http.get(dataUrl, {responseType: 'text'})
-        .map(data => Papa.parse(data, {header: true}))
+      const data = this.http.get(dataUrl, {responseType: 'text'}).pipe(map(data => Papa.parse(data, {header: true})));
+        data
         .subscribe(data => {
           const tx = this.db.transaction('earthquakes', 'readwrite');
           const store = tx.objectStore('earthquakes');
