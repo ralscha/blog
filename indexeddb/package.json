@@ -20,7 +20,7 @@
         "@angular/http": "^4.4.6",
         "@angular/platform-browser": "^4.4.6",
         "@angular/platform-browser-dynamic": "^4.4.6",
-        "@ionic/storage": "2.0.1",
+        "@ionic/storage": "2.1.1",
         "geolib": "^2.0.24",
         "ionic-angular": "^3.8.0",
         "ionic-plugin-keyboard": "^2.2.1",
