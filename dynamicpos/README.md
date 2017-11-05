@@ -1,0 +1,1 @@
+Source code for the blog post: https://golb.hplar.ch/p/Dynamically-loading-position-data-with-Ionic-and-Spring-Boot
