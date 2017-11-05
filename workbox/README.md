@@ -1,1 +1,1 @@
-Source code for the blog post: 
+Source code for the blog post: https://golb.hplar.ch/p/Ionic-with-Workbox-Service-Worker
