@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>GeoTracker</title>
+    <style>
+        html {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+        }
+
+        #map {
+            position: absolute;
+            top: 55px;
+            left: 10px;
+            bottom: 10px;
+            right: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <h3>GeoTracker</h3>
+    <div id="map"></div>
+
+    <script src="uuid.js"></script>
+    <script src="app.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB2y-I-eMaEgzw2nB3_HV4eMRokbONHeDY&callback=init"></script>
+</body>
+
+</html>
