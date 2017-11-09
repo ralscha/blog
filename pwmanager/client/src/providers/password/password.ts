@@ -26,14 +26,15 @@ export class PasswordProvider {
   async fetchPasswords(username: string, password: string) {
     await this.initKeys(username, password);
 
-    const requestParams = {
-      headers: {
-        'Content-Type': 'application/octet-stream'
-      },
+    const headers = new Headers();
+    headers.append('Content-Type', 'application/octet-stream');
+
+    const response = await fetch(`${this.serverUrl}/fetch`, {
+      headers,
       method: 'POST',
       body: this.authenticationKey
-    };
-    const response = await fetch(`${this.serverUrl}/fetch`, requestParams);
+    });
+
     const blob = await response.blob();
 
     if (blob.size > 0) {
@@ -136,10 +137,12 @@ export class PasswordProvider {
   private async encryptAndStore(): Promise<void> {
     const encryptedData = await this.encrypt();
     const authKeyAndData = this.concatUint8Array(this.authenticationKey, encryptedData);
+
+    const headers = new Headers();
+    headers.append('Content-Type', 'application/octet-stream');
+
     const requestParams = {
-      headers: {
-        'Content-Type': 'application/octet-stream'
-      },
+      headers,
       method: 'POST',
       body: authKeyAndData
     };
