@@ -1,13 +1,11 @@
 import {Component} from '@angular/core';
-import {Http, Response} from "@angular/http";
-import "rxjs/add/operator/map";
-import "rxjs/add/operator/catch";
-import 'rxjs/add/operator/finally';
-import 'rxjs/add/observable/throw';
 import {Observable} from "rxjs";
 import {LoadingController, Loading, ToastController} from "ionic-angular";
 import {Camera} from '@ionic-native/camera';
 import {File, FileEntry} from "@ionic-native/file";
+import {catchError} from "rxjs/operators/catchError";
+import {finalize} from "rxjs/operators/finalize";
+import {HttpClient} from "@angular/common/http";
 
 @Component({
   selector: 'page-home',
@@ -19,7 +17,7 @@ export class HomePage {
   public error: string;
   private loading: Loading;
 
-  constructor(private readonly http: Http,
+  constructor(private readonly http: HttpClient,
               private readonly loadingCtrl: LoadingController,
               private readonly toastCtrl: ToastController,
               private readonly camera: Camera,
@@ -79,16 +77,17 @@ export class HomePage {
   }
 
   fetchPresignUrl(fileName: string): Observable<string> {
-    return this.http.get(`http://192.168.178.20:8080/getPreSignUrl?fileName=${fileName}`)
-      .map(response => response.text());
+    return this.http.get(`http://192.168.178.84:8080/getPreSignUrl?fileName=${fileName}`, {responseType: 'text'});
   }
 
   private postData(url: string, blob: Blob) {
-    this.http.put(url, blob)
-      .catch((e) => this.handleError(e))
-      .map(response => response.ok)
-      .finally(() => this.loading.dismiss())
-      .subscribe(ok => this.showToast(ok));
+    this.http.put(url, blob, {observe: 'response', responseType: 'text'})
+      .pipe(catchError(e => this.handleError(e)),
+        finalize(() => this.loading.dismiss())
+      )
+      .subscribe(resp => {
+        this.showToast(resp.ok);
+      });
   }
 
   private showToast(ok: boolean) {
@@ -113,7 +112,7 @@ export class HomePage {
   private handleError(error: Response | any) {
     let errMsg: string;
     if (error instanceof Response) {
-      const body = error.json() || '';
+      const body:any = error.json() || '';
       const err = body.error || JSON.stringify(body);
       errMsg = `${error.status} - ${error.statusText || ''} ${err}`;
     } else {
