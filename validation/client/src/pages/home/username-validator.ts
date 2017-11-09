@@ -1,15 +1,15 @@
 import {AbstractControl} from "@angular/forms";
 import {Injectable} from "@angular/core";
-import {Http} from "@angular/http";
 import 'rxjs/add/operator/map';
 import {SERVER_URL} from "../../config";
+import {HttpClient} from "@angular/common/http";
 
 @Injectable()
 export class UsernameValidator {
 
   private timeout;
 
-  constructor(private readonly http: Http) {
+  constructor(private readonly http: HttpClient) {
   }
 
   validate(control: AbstractControl): Promise<{[key: string]: boolean}> {
@@ -24,8 +24,7 @@ export class UsernameValidator {
 
     return new Promise((resolve, reject) => {
       this.timeout = setTimeout(() => {
-        this.http.get(`${SERVER_URL}/checkUsername?value=${control.value}`)
-          .map(data => data.json())
+        this.http.get<boolean>(`${SERVER_URL}/checkUsername?value=${control.value}`)
           .subscribe(flag => {
               if (flag) {
                 resolve({'usernameTaken': true});
