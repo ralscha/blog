@@ -4,9 +4,7 @@ import {
   BackgroundGeolocation, BackgroundGeolocationConfig,
   BackgroundGeolocationResponse
 } from '@ionic-native/background-geolocation';
-import 'rxjs/add/operator/map';
-import 'rxjs/add/operator/concat';
-import 'rxjs/add/operator/catch';
+import {catchError} from 'rxjs/operators/catchError';
 import {EmptyObservable} from "rxjs/observable/EmptyObservable";
 import {ServerPushProvider} from "../server-push/server-push";
 
@@ -60,10 +58,10 @@ export class LocationTrackerProvider {
     };
 
     this.backgroundGeolocation.configure(backgroundOptions)
-      .catch(error => {
+      .pipe(catchError(error => {
         this.serverPush.pushError(error);
         return new EmptyObservable();
-      })
+      }))
       .subscribe((location: BackgroundGeolocationResponse) => {
         if (location) {
           this.serverPush.pushPosition({
