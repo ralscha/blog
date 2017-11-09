@@ -1,18 +1,18 @@
 /// <reference types="node" />
 
 import {Injectable} from '@angular/core';
-import {Http, Response, ResponseContentType} from '@angular/http';
-import 'rxjs/add/operator/map';
-import 'rxjs/add/operator/catch';
+import {map} from 'rxjs/operators/map';
+import {catchError} from 'rxjs/operators/catchError';
 import {SERVER_URL} from '../config';
 import {Observable} from "rxjs";
 import {load} from "protobufjs";
+import {HttpClient} from "@angular/common/http";
 
 @Injectable()
 export class EarthquakeProvider {
   private Earthquakes: any;
 
-  constructor(private readonly http: Http) {
+  constructor(private readonly http: HttpClient) {
     load("assets/Earthquake.proto", (err, root) => {
       if (err) {
         throw err;
@@ -21,30 +21,25 @@ export class EarthquakeProvider {
     });
   }
 
-  refresh(): Observable<boolean> {
-    return this.http.get(SERVER_URL + "/refresh").map(res => res.ok);
+  refresh(): Observable<void> {
+    return this.http.get<void>(SERVER_URL + "/refresh");
   }
 
   fetchJson(): Observable<Earthquake[]> {
     return this.http.get(SERVER_URL + "/earthquakes.json")
-      .map(res => {
-        console.time('decodejson');
-        const json = res.json();
-        console.timeEnd('decodejson');
-        return json;
-      })
-      .catch(this.handleError);
+      .pipe(catchError(e => this.handleError(e)));
   }
 
   fetchProtobuf(): Observable<Earthquake[]> {
-    return this.http.get(SERVER_URL + "/earthquakes.protobuf", {responseType: ResponseContentType.ArrayBuffer})
-      .map(res => this.parseProtobuf(res))
-      .catch(this.handleError);
+    return this.http.get(SERVER_URL + "/earthquakes.protobuf", {responseType: 'arraybuffer'})
+      .pipe(map(res => this.parseProtobuf(res)),
+        catchError(this.handleError)
+      );
   }
 
-  parseProtobuf(response: Response): Earthquake[] {
+  parseProtobuf(response: ArrayBuffer): Earthquake[] {
     console.time('decodeprotobuf');
-    const message = this.Earthquakes.decode(new Uint8Array(response.arrayBuffer()));
+    const message = this.Earthquakes.decode(new Uint8Array(response));
     console.timeEnd('decodeprotobuf');
     return message.earthquakes;
   }

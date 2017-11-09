@@ -9,7 +9,7 @@ import {DetailComponent} from '../components/detail/detail';
 import {EarthquakeProvider} from '../providers/earthquake/earthquake';
 import {JsonPage} from "../pages/json/json";
 import {ProtobufPage} from "../pages/protobuf/protobuf";
-import {HttpModule} from "@angular/http";
+import {HttpClientModule} from "@angular/common/http";
 
 @NgModule({
   declarations: [
@@ -21,7 +21,7 @@ import {HttpModule} from "@angular/http";
   ],
   imports: [
     BrowserModule,
-    HttpModule,
+    HttpClientModule,
     IonicModule.forRoot(MyApp)
   ],
   bootstrap: [IonicApp],

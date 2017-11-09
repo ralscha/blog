@@ -4,9 +4,11 @@ import java.io.IOException;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import ch.rasc.protobuf.EarthquakeOuterClass.Earthquake;
@@ -49,6 +51,7 @@ public class EarthquakeController {
 
   @CrossOrigin
   @GetMapping(value = "/refresh")
+  @ResponseStatus(HttpStatus.NO_CONTENT)
   public void refresh() throws IOException {
     this.earthquakeDb.readEarthquakeData();
   }
