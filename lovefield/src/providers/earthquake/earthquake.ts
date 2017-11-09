@@ -1,11 +1,9 @@
-import { Injectable } from '@angular/core';
-import { Http } from '@angular/http';
-import 'rxjs/add/operator/map';
-import 'rxjs/add/operator/toPromise';
+import {Injectable} from '@angular/core';
 import Papa from 'papaparse';
 import * as lf from 'lovefield'
 import {Filter} from "../../filter";
-//import firebase from "firebase";
+import {HttpClient} from "@angular/common/http";
+import {map} from "rxjs/operators/map";
 
 @Injectable()
 export class EarthquakeProvider {
@@ -16,7 +14,7 @@ export class EarthquakeProvider {
   private earthquakeDb;
   private eqTbl;
 
-  constructor(private readonly http: Http) {
+  constructor(private readonly http: HttpClient) {
   }
 
   createSchema() {
@@ -51,35 +49,20 @@ export class EarthquakeProvider {
       .addIndex('idxTime', ['time'], false, lf.Order.DESC);
   }
 
-  init() {
+  async init() {
     this.createSchema();
 
-    // npm install firebase --save
-/*
-    firebase.initializeApp({
-      apiKey: "...",
-      authDomain: "...",
-      databaseURL: "..."
-    });
+    this.earthquakeDb = await this.schemaBuilder.connect();
+    this.eqTbl = this.earthquakeDb.getSchema().table('Earthquakes');
+    const result = await this.earthquakeDb.select(this.eqTbl.id).from(this.eqTbl).limit(1).exec();
 
-    return this.schemaBuilder.connect({
-      storeType: lf.schema.DataStoreType.FIREBASE,
-      firebase: firebase.database().ref()
-    }).then(db => {
-*/
-    return this.schemaBuilder.connect().then(db => {
-      this.earthquakeDb = db;
-      this.eqTbl = db.getSchema().table('Earthquakes');
-      return db.select(this.eqTbl.id).from(this.eqTbl).limit(1).exec();
-    }).then(result => {
-      if (result.length === 0) {
+    if (result.length === 0) {
         return this.loadAndInsertData().toPromise();
-      }
-      return Promise.resolve();
-    });
+    }
+    return Promise.resolve();
   }
 
-  insertData(parsedData) {
+  insertData(parsedData): Promise<Array<Object>> {
     const rows = [];
     for (let parsedRow of parsedData.data) {
 
@@ -121,10 +104,11 @@ export class EarthquakeProvider {
   }
 
   loadAndInsertData() {
-    return this.http.get(this.DATA_URL)
-      .map(res => res.text())
-      .map(data => Papa.parse(data, {header: true}))
-      .map(parsedData => this.insertData(parsedData))
+    return this.http.get(this.DATA_URL, {responseType: 'text'})
+      .pipe(
+        map(data => Papa.parse(data, {header: true})),
+        map(parsedData => this.insertData(parsedData))
+      )
   }
 
   select(filter: Filter) {

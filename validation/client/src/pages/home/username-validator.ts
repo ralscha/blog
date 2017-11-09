@@ -1,6 +1,5 @@
 import {AbstractControl} from "@angular/forms";
 import {Injectable} from "@angular/core";
-import 'rxjs/add/operator/map';
 import {SERVER_URL} from "../../config";
 import {HttpClient} from "@angular/common/http";
 
