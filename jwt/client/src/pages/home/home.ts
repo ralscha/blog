@@ -1,7 +1,8 @@
 import {Component} from '@angular/core';
-import {JwtHelper, AuthHttp} from "angular2-jwt";
+import {JwtHelperService} from "@auth0/angular-jwt";
 import {SERVER_URL} from "../../config";
 import {AuthProvider} from "../../providers/auth/auth";
+import {HttpClient} from "@angular/common/http";
 
 @Component({
   selector: 'page-home',
@@ -12,8 +13,8 @@ export class HomePage {
   message: string;
 
   constructor(private readonly authProvider: AuthProvider,
-              jwtHelper: JwtHelper,
-              private readonly  authHttp: AuthHttp) {
+              jwtHelper: JwtHelperService,
+              private readonly httpClient: HttpClient) {
 
     this.authProvider.authUser.subscribe(jwt => {
       if (jwt) {
@@ -28,8 +29,8 @@ export class HomePage {
   }
 
   ionViewWillEnter() {
-    this.authHttp.get(`${SERVER_URL}/secret`).subscribe(
-      data => this.message = data.text(),
+    this.httpClient.get(`${SERVER_URL}/secret`, {responseType: 'text'}).subscribe(
+      text => this.message = text,
       err => console.log(err)
     );
   }

@@ -2,7 +2,7 @@ import {Component, ViewChild} from '@angular/core';
 import {LoadingController, ToastController} from 'ionic-angular';
 import {NgModel} from "@angular/forms";
 import {AuthProvider} from "../../providers/auth/auth";
-import "rxjs/add/operator/finally";
+import {finalize} from 'rxjs/operators/finalize';
 
 @Component({
   selector: 'page-signup',
@@ -28,7 +28,7 @@ export class SignupPage {
 
     this.authProvider
       .signup(value)
-      .finally(() => loading.dismiss())
+      .pipe(finalize(() => loading.dismiss()))
       .subscribe(
         (jwt) => this.showSuccesToast(jwt),
         err => this.handleError(err));

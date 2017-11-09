@@ -7,17 +7,17 @@ import {StatusBar} from '@ionic-native/status-bar';
 import {SplashScreen} from '@ionic-native/splash-screen';
 import {LoginPage} from "../pages/login/login";
 import {SignupPage} from "../pages/signup/signup";
-import {CustomFormsModule} from 'ng2-validation'
+import {CustomFormsModule} from 'ng2-validation';
 import {Storage, IonicStorageModule} from "@ionic/storage";
-import {JwtHelper, AuthConfig, AuthHttp} from "angular2-jwt";
-import {Http, HttpModule, RequestOptions} from "@angular/http";
 import {AuthProvider} from "../providers/auth/auth";
+import {HttpClientModule} from "@angular/common/http";
+import {JWT_OPTIONS, JwtModule} from '@auth0/angular-jwt';
 
-export function authHttpServiceFactory(http: Http, options: RequestOptions, storage: Storage) {
-  const authConfig = new AuthConfig({
-    tokenGetter: (() => storage.get('jwt')),
-  });
-  return new AuthHttp(authConfig, http, options);
+export function jwtOptionsFactory(storage: Storage) {
+  return {
+    tokenGetter: () => storage.get('jwt_token'),
+    whitelistedDomains: ['localhost:8080']
+  }
 }
 
 @NgModule({
@@ -29,7 +29,14 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions, stor
   ],
   imports: [
     BrowserModule,
-    HttpModule,
+    HttpClientModule,
+    JwtModule.forRoot({
+      jwtOptionsProvider: {
+        provide: JWT_OPTIONS,
+        useFactory: jwtOptionsFactory,
+        deps: [Storage]
+      }
+    }),
     IonicModule.forRoot(MyApp),
     IonicStorageModule.forRoot(),
     CustomFormsModule
@@ -45,12 +52,8 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions, stor
     StatusBar,
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
-    AuthProvider,
-    JwtHelper, {
-      provide: AuthHttp,
-      useFactory: authHttpServiceFactory,
-      deps: [Http, RequestOptions, Storage]
-    }]
+    AuthProvider
+  ]
 })
 export class AppModule {
 }
