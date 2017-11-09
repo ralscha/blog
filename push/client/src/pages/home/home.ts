@@ -1,9 +1,9 @@
 import {Component, NgZone} from '@angular/core';
-import {Http} from "@angular/http";
 import {Platform} from "ionic-angular";
 import {Storage} from "@ionic/storage";
-import 'rxjs/add/operator/timeout';
+import { timeout } from 'rxjs/operators/timeout';
 import {Firebase} from "@ionic-native/firebase";
+import {HttpClient} from "@angular/common/http";
 
 @Component({
   selector: 'page-home',
@@ -18,7 +18,7 @@ export class HomePage {
   items: { id: number, text: string }[] = [];
   token: string;
 
-  constructor(private readonly http: Http,
+  constructor(private readonly http: HttpClient,
               platform: Platform,
               private readonly ngZone: NgZone,
               private readonly firebase: Firebase,
@@ -38,8 +38,8 @@ export class HomePage {
   register() {
     const formData = new FormData();
     formData.append('token', this.token);
-    this.http.post(`http://192.168.178.20:8080/register`, formData)
-      .timeout(10000)
+    this.http.post(`http://192.168.178.84:8080/register`, formData)
+      .pipe(timeout(10000))
       .subscribe(() => this.storage.set("allowPersonal", this.allowPersonal),
         error => this.allowPersonal = !this.allowPersonal);
   }
@@ -47,8 +47,8 @@ export class HomePage {
   unregister() {
     const formData = new FormData();
     formData.append('token', this.token);
-    this.http.post(`http://192.168.178.20:8080/unregister`, formData)
-      .timeout(10000)
+    this.http.post(`http://192.168.178.84:8080/unregister`, formData)
+      .pipe(timeout(10000))
       .subscribe(() => this.storage.set("allowPersonal", this.allowPersonal),
         error => this.allowPersonal = !this.allowPersonal);
   }
