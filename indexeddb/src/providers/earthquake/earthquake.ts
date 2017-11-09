@@ -3,7 +3,6 @@ import {Filter} from "../../filter";
 import {Earthquake} from "../../earthquake";
 import {HttpClient} from "@angular/common/http";
 import { map } from 'rxjs/operators/map';
-//import { map } from 'rxjs/operators';
 import geolib from 'geolib';
 import Papa from 'papaparse';
 
