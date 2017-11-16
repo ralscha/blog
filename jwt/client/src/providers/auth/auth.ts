@@ -18,7 +18,7 @@ export class AuthProvider {
   }
 
   checkLogin() {
-    this.storage.get('jwt_token').then(jwt => {
+    this.storage.get(this.jwtTokenName).then(jwt => {
       if (jwt && !this.jwtHelper.isTokenExpired(jwt)) {
         this.httpClient.get(`${SERVER_URL}/authenticate`)
           .subscribe(() => this.authUser.next(jwt),
