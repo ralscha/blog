@@ -37,7 +37,7 @@
   },
   "devDependencies": {
     "@angular/tsc-wrapped": "4.4.6",
-    "@ionic/app-scripts": "3.1.0",
+    "@ionic/app-scripts": "3.1.2",
     "hashmark": "5.0.0",
     "http-server": "0.10.0",
     "map-replace": "1.0.2",

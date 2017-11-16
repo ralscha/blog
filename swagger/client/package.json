@@ -28,7 +28,7 @@
   },
   "devDependencies": {
     "@angular/tsc-wrapped": "4.4.6",
-    "@ionic/app-scripts": "3.1.0",
+    "@ionic/app-scripts": "3.1.2",
     "typescript": "2.6.1"
   },
   "description": "Swagger Demo App"
