@@ -7,7 +7,8 @@ module.exports = {
     "assets/fonts/*.woff2",
     "build/**/*.css",
 	"build/**/*.js",
-    "index.html"
+    "index.html",
+    "manifest.json"
   ],
   "swSrc": "src/service-worker.js",
   "swDest": "www/service-worker.js"
