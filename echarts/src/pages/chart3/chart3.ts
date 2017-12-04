@@ -9,7 +9,7 @@ export class Chart3Page {
   running = false;
   private interval = null;
 
-  options: any = {
+  options = {
     series: [{
       type: 'gauge',
       detail: {formatter: '{value}%'},
@@ -22,7 +22,11 @@ export class Chart3Page {
   start() {
     this.running = true;
     this.interval = setInterval(() => {
-      this.datas = [{value: Number((Math.random() * 100).toFixed(1)), name: 'Sensor'}];
+      this.datas = {
+        series: [{
+          data: [{value: Number((Math.random() * 100).toFixed(1))}]
+        }]
+      };
     }, 2000);
   }
 

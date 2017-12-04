@@ -10,8 +10,8 @@ import {Chart4Page} from "../pages/chart4/chart4";
 import {Chart5Page} from "../pages/chart5/chart5";
 import {SplashScreen} from '@ionic-native/splash-screen';
 import {StatusBar} from '@ionic-native/status-bar';
-import {AngularEchartsModule} from "ngx-echarts";
 import {Chart6Page} from "../pages/chart6/chart6";
+import {NgxEchartsModule} from "ngx-echarts";
 
 @NgModule({
   declarations: [
@@ -26,7 +26,7 @@ import {Chart6Page} from "../pages/chart6/chart6";
   ],
   imports: [
     BrowserModule,
-    AngularEchartsModule,
+    NgxEchartsModule,
     IonicModule.forRoot(MyApp)
   ],
   bootstrap: [IonicApp],

@@ -5,6 +5,6 @@
 </ion-header>
 
 <ion-content padding>
-  <div echarts [options]="options1" class="demo-chart"></div>
-  <div echarts [options]="options2" class="demo-chart"></div>
+  <div echarts [options]="options1" [merge]="updateOptions1" class="demo-chart"></div>
+  <div echarts [options]="options2" [merge]="updateOptions2" class="demo-chart"></div>
 </ion-content>

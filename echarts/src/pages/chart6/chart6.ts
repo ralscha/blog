@@ -8,10 +8,14 @@ export class Chart6Page {
 
   data1: any = [];
   data2: any = [];
+
   private now = new Date(2017, 9, 3);
   private static oneDay = 24 * 3600 * 1000;
   private value = Math.random() * 1000;
   private randomDataInterval: number;
+
+  updateOptions1: any;
+  updateOptions2: any;
 
   options1 = {
     title: {
@@ -107,8 +111,18 @@ export class Chart6Page {
         this.data2.shift();
         this.data2.push(this.randomData());
       }
-      this.options1 = Object.assign({}, this.options1);
-      this.options2 = Object.assign({}, this.options2);
+
+      this.updateOptions1 = {
+        series: [{
+          data: this.data1
+        }]
+      };
+
+      this.updateOptions2 = {
+        series: [{
+          data: this.data2
+        }]
+      };
     }, 1000);
   }
 
