@@ -36,8 +36,6 @@
     "zone.js": "0.8.18"
   },
   "devDependencies": {
-    "@angular-devkit/build-optimizer": "0.0.34",
-    "@angular/tsc-wrapped": "4.4.6",
     "@ionic/app-scripts": "3.1.5",
     "hashmark": "5.0.0",
     "http-server": "0.10.0",
