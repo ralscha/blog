@@ -1,5 +1,5 @@
 import {Component, Input} from '@angular/core';
-import {Earthquake} from "../../providers/earthquake/earthquake";
+import {IEarthquake} from "../../protos/earthquake";
 
 @Component({
   selector: 'detail',
@@ -8,6 +8,6 @@ import {Earthquake} from "../../providers/earthquake/earthquake";
 export class DetailComponent {
 
   @Input()
-  earthquake: Earthquake;
+  earthquake: IEarthquake;
 
 }

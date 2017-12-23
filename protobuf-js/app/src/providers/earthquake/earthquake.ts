@@ -1,47 +1,38 @@
-/// <reference types="node" />
-
 import {Injectable} from '@angular/core';
 import {map} from 'rxjs/operators/map';
 import {catchError} from 'rxjs/operators/catchError';
-import {SERVER_URL} from '../config';
+import {ENV} from '@app/env';
 import {Observable} from "rxjs";
-import {load} from "protobufjs";
-import {HttpClient} from "@angular/common/http";
+import {HttpClient, HttpHeaders} from "@angular/common/http";
+import {Earthquakes, IEarthquake} from "../../protos/earthquake";
 
 @Injectable()
 export class EarthquakeProvider {
-  private Earthquakes: any;
-
   constructor(private readonly http: HttpClient) {
-    load("assets/Earthquake.proto", (err, root) => {
-      if (err) {
-        throw err;
-      }
-      this.Earthquakes = root.lookup("Earthquakes");
-    });
   }
 
   refresh(): Observable<void> {
-    return this.http.get<void>(SERVER_URL + "/refresh");
+    return this.http.get<void>(`${ENV.SERVER_URL}/refresh`);
   }
 
-  fetchJson(): Observable<Earthquake[]> {
-    return this.http.get(SERVER_URL + "/earthquakes.json")
-      .pipe(catchError(e => this.handleError(e)));
+  fetchJson(): Observable<IEarthquake[]> {
+    return this.http.get<any>(`${ENV.SERVER_URL}/earthquakes`)
+      .pipe(map(res => res.earthquakes), catchError(e => this.handleError(e)));
   }
 
-  fetchProtobuf(): Observable<Earthquake[]> {
-    return this.http.get(SERVER_URL + "/earthquakes.protobuf", {responseType: 'arraybuffer'})
+  fetchProtobuf(): Observable<IEarthquake[]> {
+    const headers = new HttpHeaders({'Accept': 'application/x-protobuf'});
+    return this.http.get(`${ENV.SERVER_URL}/earthquakes`, {headers, responseType: 'arraybuffer'})
       .pipe(map(res => this.parseProtobuf(res)),
         catchError(this.handleError)
       );
   }
 
-  parseProtobuf(response: ArrayBuffer): Earthquake[] {
+  parseProtobuf(response: ArrayBuffer): IEarthquake[] {
     console.time('decodeprotobuf');
-    const message = this.Earthquakes.decode(new Uint8Array(response));
+    const earthquakes = Earthquakes.decode(new Uint8Array(response))
     console.timeEnd('decodeprotobuf');
-    return message.earthquakes;
+    return earthquakes.earthquakes;
   }
 
   handleError(error): Observable<any> {
@@ -51,13 +42,3 @@ export class EarthquakeProvider {
 
 }
 
-export interface Earthquake {
-  id: string,
-  time: string,
-  latitude: number,
-  longitude: number,
-  depth: number,
-  mag?: number,
-  place: string,
-  magType?: string
-}

@@ -2,7 +2,6 @@ package ch.rasc.protobuf;
 
 import java.io.IOException;
 import java.io.StringReader;
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.scheduling.annotation.Scheduled;
@@ -13,7 +12,7 @@ import com.univocity.parsers.csv.CsvParser;
 import com.univocity.parsers.csv.CsvParserSettings;
 
 import ch.rasc.protobuf.EarthquakeOuterClass.Earthquake;
-import ch.rasc.protobuf.EarthquakeOuterClass.Earthquake.Builder;
+import ch.rasc.protobuf.EarthquakeOuterClass.Earthquakes;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
@@ -22,14 +21,14 @@ import okhttp3.ResponseBody;
 @Service
 public class EarthquakeDb {
 
-  private final List<Earthquake> earthquakes = new ArrayList<>();
+  private Earthquakes earthquakes = Earthquakes.newBuilder().build();
   private final OkHttpClient httpClient = new OkHttpClient();
 
   EarthquakeDb() throws IOException {
     readEarthquakeData();
   }
 
-  public List<Earthquake> getEarthquakes() {
+  public Earthquakes getEarthquakes() {
     return this.earthquakes;
   }
 
@@ -50,10 +49,11 @@ public class EarthquakeDb {
         CsvParser parser = new CsvParser(settings);
         List<Record> records = parser.parseAllRecords(new StringReader(rawData));
 
-        this.earthquakes.clear();
+        Earthquakes.Builder earthquakesBuilder = Earthquakes.newBuilder();
         for (Record record : records) {
-          Builder builder = Earthquake.newBuilder().setId(record.getString("id"))
-              .setTime(record.getString("time")).setLatitude(record.getDouble("latitude"))
+          Earthquake.Builder builder = Earthquake.newBuilder()
+              .setId(record.getString("id")).setTime(record.getString("time"))
+              .setLatitude(record.getDouble("latitude"))
               .setLongitude(record.getDouble("longitude"))
               .setDepth(record.getFloat("depth")).setPlace(record.getString("place"));
 
@@ -67,8 +67,9 @@ public class EarthquakeDb {
             builder.setMagType(magType);
           }
 
-          this.earthquakes.add(builder.build());
+          earthquakesBuilder.addEarthquakes(builder);
         }
+        this.earthquakes = earthquakesBuilder.build();
       }
     }
   }

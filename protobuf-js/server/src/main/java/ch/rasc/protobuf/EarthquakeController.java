@@ -1,20 +1,20 @@
 package ch.rasc.protobuf;
 
 import java.io.IOException;
-import java.util.List;
-import java.util.stream.Collectors;
 
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import ch.rasc.protobuf.EarthquakeOuterClass.Earthquake;
+import com.google.protobuf.InvalidProtocolBufferException;
+import com.google.protobuf.util.JsonFormat;
+
 import ch.rasc.protobuf.EarthquakeOuterClass.Earthquakes;
 
 @RestController
+@CrossOrigin
 public class EarthquakeController {
   private final EarthquakeDb earthquakeDb;
 
@@ -22,35 +22,17 @@ public class EarthquakeController {
     this.earthquakeDb = earthquakeDb;
   }
 
-  @CrossOrigin
-  @GetMapping(value = "/earthquakes", produces = MediaType.APPLICATION_JSON_VALUE)
-  public List<EarthquakeDto> getEarthquakesJson() {
-    return this.earthquakeDb.getEarthquakes().stream().map(this::toDto)
-        .collect(Collectors.toList());
+  @GetMapping("/earthquakes")
+  public String getEarthquakesJson() throws InvalidProtocolBufferException {
+    return JsonFormat.printer().print(this.earthquakeDb.getEarthquakes());
   }
 
-  private EarthquakeDto toDto(Earthquake earthquake) {
-    EarthquakeDto dto = new EarthquakeDto();
-    dto.setId(earthquake.getId());
-    dto.setTime(earthquake.getTime());
-    dto.setLatitude(earthquake.getLatitude());
-    dto.setLongitude(earthquake.getLongitude());
-    dto.setDepth(earthquake.getDepth());
-    dto.setMag(earthquake.getMag());
-    dto.setPlace(earthquake.getPlace());
-    dto.setMagType(earthquake.getMagType());
-    return dto;
-  }
-
-  @CrossOrigin
-  @GetMapping(value = "/earthquakes", produces = "application/x-protobuf")
+  @GetMapping(path = "/earthquakes", produces = "application/x-protobuf")
   public Earthquakes getEarthquakesProtobuf() {
-    return Earthquakes.newBuilder().addAllEarthquakes(this.earthquakeDb.getEarthquakes())
-        .build();
+    return this.earthquakeDb.getEarthquakes();
   }
 
-  @CrossOrigin
-  @GetMapping(value = "/refresh")
+  @GetMapping(path = "/refresh")
   @ResponseStatus(HttpStatus.NO_CONTENT)
   public void refresh() throws IOException {
     this.earthquakeDb.readEarthquakeData();
