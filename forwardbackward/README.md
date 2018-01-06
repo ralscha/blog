@@ -1,1 +1,1 @@
-Source code for the blog post: https://golb.hplar.ch/p/
+Source code for the blog post: https://golb.hplar.ch/p/Forward-Backward-navigation-with-Ionic
