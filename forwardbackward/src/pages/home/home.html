@@ -1,0 +1,18 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>
+      Home
+    </ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <button ion-button full [navPush]="detailPage" [navParams]="'from navPush'">Forward with navPush</button>
+  <button ion-button full (click)="forward()">Forward with push</button>
+
+  <ion-list>
+    <button ion-item *ngFor="let key of keys" (click)="showDetail(key)">
+      {{key}}
+    </button>
+  </ion-list>
+</ion-content>
