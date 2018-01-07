@@ -1,0 +1,22 @@
+{
+  "name": "ts",
+  "version": "1.0.0",
+  "main": "index.html",
+  "private": true,
+  "scripts": {
+    "start": "parcel src/index.html",
+    "prebuild": "shx rm -rf dist/*",
+    "build": "parcel build src/index.html --public-url ./",
+    "postbuild": "gzip-all \"dist/*.*\""
+  },
+  "devDependencies": {
+    "gzip-all": "^1.0.0",
+    "parcel-bundler": "^1.4.1",
+    "typescript": "^2.6.2",
+    "shx": "^0.2.2"
+  },
+  "dependencies": {
+    "core-js": "^2.5.3",
+    "whatwg-fetch": "^2.0.3"
+  }
+}
