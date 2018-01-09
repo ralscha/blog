@@ -1,0 +1,17 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>
+      Ionic Blank
+    </ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <ion-slides pager="true" paginationType="fraction" parallax="true" spaceBetween="10" zoom="true">
+    <ion-slide *ngFor="let pic of pictures">
+      <div class="swiper-zoom-container">
+        <img [src]="pic">
+      </div>
+    </ion-slide>
+  </ion-slides>
+</ion-content>
