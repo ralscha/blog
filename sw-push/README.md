@@ -1,1 +1,1 @@
-Source code for the blog post: 
+Source code for the blog post: https://golb.hplar.ch/p/Sending-Web-push-messages-from-Spring-Boot-to-Browsers
