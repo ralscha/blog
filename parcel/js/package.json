@@ -7,6 +7,7 @@
     "start": "parcel src/index.html",
     "prebuild": "shx rm -rf dist/*",
     "build": "parcel build src/index.html --no-cache --public-url ./",
+	"watch": "parcel watch src/index.html",
     "postbuild": "gzip-all \"dist/*.*\""
   },
   "devDependencies": {

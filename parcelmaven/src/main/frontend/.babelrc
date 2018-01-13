@@ -1,0 +1,11 @@
+{
+    "presets": [
+      [ "env", {
+        "targets": {
+          "browsers": "last 2 versions, > 1%"
+        },
+        "debug": false,
+        "useBuiltIns": true
+      }]
+    ]
+  }
