@@ -13,17 +13,17 @@ import ch.rasc.sse.eventbus.SseEventBus;
 @Controller
 public class SseController {
 
-	private final SseEventBus eventBus;
+  private final SseEventBus eventBus;
 
-	public SseController(SseEventBus eventBus) {
-		this.eventBus = eventBus;
-	}
+  public SseController(SseEventBus eventBus) {
+    this.eventBus = eventBus;
+  }
 
-	@GetMapping("/register/{id}")
-	public SseEmitter register(@PathVariable("id") String id,
-			HttpServletResponse response) {
-		response.setHeader("Cache-Control", "no-store");
-		return this.eventBus.createSseEmitter(id, SseEvent.DEFAULT_EVENT);
-	}
+  @GetMapping("/register/{id}")
+  public SseEmitter register(@PathVariable("id") String id,
+      HttpServletResponse response) {
+    response.setHeader("Cache-Control", "no-store");
+    return this.eventBus.createSseEmitter(id, SseEvent.DEFAULT_EVENT);
+  }
 
 }
