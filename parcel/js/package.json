@@ -6,22 +6,22 @@
   "scripts": {
     "start": "parcel src/index.html",
     "prebuild": "shx rm -rf dist/*",
-    "build": "parcel build src/index.html --no-cache --public-url ./",
-	"watch": "parcel watch src/index.html",
+    "build": "parcel build src/index.html --public-url ./",
+    "watch": "parcel watch src/index.html",
     "postbuild": "gzip-all \"dist/*.*\""
   },
   "devDependencies": {
-    "autoprefixer": "^7.2.4",
+    "autoprefixer": "^7.2.5",
     "babel-preset-env": "^1.6.1",
     "gzip-all": "^1.0.0",
     "node-sass": "^4.7.2",
-    "parcel-bundler": "^1.4.1",
+    "parcel-bundler": "^1.5.1",
     "shx": "^0.2.2"
   },
   "dependencies": {
     "babel-polyfill": "^6.26.0",
     "papaparse": "^4.3.6",
-    "tingle.js": "^0.12.0",
+    "tingle.js": "^0.13.0",
     "whatwg-fetch": "^2.0.3"
   }
 }

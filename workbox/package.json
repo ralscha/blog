@@ -36,7 +36,7 @@
     "zone.js": "0.8.19"
   },
   "devDependencies": {
-    "@ionic/app-scripts": "3.1.7",
+    "@ionic/app-scripts": "3.1.8",
     "hashmark": "5.0.0",
     "http-server": "0.10.0",
     "map-replace": "1.0.2",

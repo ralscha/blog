@@ -8,6 +8,9 @@ export async function init() {
         document.getElementById('environment').innerHTML = 'development';
     }
 
+    const dotEnvContent = `APP_NAME = ${process.env.APP_NAME}<br>APP_ENV = ${process.env.APP_ENV}<br>APP_KEY = ${process.env.APP_KEY}`;    
+    document.getElementById('dotEnv').innerHTML = dotEnvContent;
+
     const outputDiv = document.getElementById('output');
     const service = new EarthquakeService();
     const earthquakes = await service.fetch();

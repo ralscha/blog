@@ -4,7 +4,7 @@
   "scripts": {
     "start": "parcel serve src/index.html",
     "prebuild": "shx rm -rf dist/*",
-    "build": "parcel build src/index.html --no-cache --public-url .",
+    "build": "parcel build src/index.html --public-url .",
     "postbuild": "gzip-all \"dist/*.*\""
   },
   "dependencies": {
@@ -13,7 +13,7 @@
   },
   "devDependencies": {
     "gzip-all": "^1.0.0",
-    "parcel-bundler": "^1.4.1",
+    "parcel-bundler": "^1.5.1",
     "shx": "^0.2.2"
   }
 }

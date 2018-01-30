@@ -42,7 +42,7 @@
     "zrender": "3.7.4"
   },
   "devDependencies": {
-    "@ionic/app-scripts": "3.1.7",
+    "@ionic/app-scripts": "3.1.8",
     "@types/echarts": "0.0.9",
     "typescript": "2.6.2"
   },
