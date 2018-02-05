@@ -1,1 +1,4 @@
-Source code for the blog post: https://golb.hplar.ch/p/Working-with-MongoDB-Capped-Collections-from-Java
+Source code for the blog posts: 
+  * https://golb.hplar.ch/p/Working-with-MongoDB-Capped-Collections-from-Java
+  * https://golb.hplar.ch/p/Working-with-MongoDB-TTL-Indexes-from-Java
+
