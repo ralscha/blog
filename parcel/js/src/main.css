@@ -11,6 +11,7 @@ body {
     background-color: lightgray;
     padding: 20px;
     margin: 20px 100px;
+	z-index: 3333;
 }
 
 .earthquake .mag {
