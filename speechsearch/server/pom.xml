@@ -14,7 +14,7 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>1.5.9.RELEASE</version>
+		<version>1.5.10.RELEASE</version>
 		<relativePath />
 	</parent>
 
@@ -33,7 +33,7 @@
 		<dependency>
 			<groupId>com.amazonaws</groupId>
 			<artifactId>aws-java-sdk-s3</artifactId>
-			<version>1.11.271</version>
+			<version>1.11.279</version>
 		</dependency>
 
 		<dependency>
@@ -50,7 +50,7 @@
 		<dependency>
 			<groupId>com.google.cloud</groupId>
 			<artifactId>google-cloud-speech</artifactId>
-			<version>0.33.0-alpha</version>
+			<version>0.34.0-alpha</version>
 		</dependency>
 
 		<dependency>
