@@ -1,8 +1,8 @@
 import {Component} from '@angular/core';
 import {NavController, NavParams} from 'ionic-angular';
 import {v4} from "uuid"
-import {TodoserviceApi} from "../../swagger/api/TodoserviceApi";
 import {Todo} from "../../swagger/model/Todo";
+import {TodoServiceService} from "../../swagger/api/todoService.service";
 
 @Component({
   selector: 'page-edit',
@@ -13,7 +13,7 @@ export class EditPage {
 
   constructor(private readonly navCtrl: NavController,
               private readonly navParams: NavParams,
-              private readonly todoservice: TodoserviceApi) {
+              private readonly todoService: TodoServiceService) {
     this.todo = {
       id: v4(),
       title: '',
@@ -29,6 +29,6 @@ export class EditPage {
   }
 
   save() {
-    this.todoservice.saveUsingPOST(this.todo).subscribe(() => this.navCtrl.pop());
+    this.todoService.saveUsingPOST(this.todo).subscribe(() => this.navCtrl.pop());
   }
 }

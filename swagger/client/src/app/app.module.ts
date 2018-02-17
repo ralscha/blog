@@ -4,8 +4,17 @@ import {IonicApp, IonicModule, IonicErrorHandler} from 'ionic-angular';
 import {MyApp} from './app.component';
 import {HomePage} from '../pages/home/home';
 import {EditPage} from "../pages/edit/edit";
-import {HttpModule} from "@angular/http";
-import {TodoserviceApi} from "../swagger/api/TodoserviceApi";
+import {HttpClientModule} from "@angular/common/http";
+import {ApiModule} from "../swagger/api.module";
+import {Configuration, ConfigurationParameters} from "../swagger";
+
+export function apiConfigFactory (): Configuration {
+  const params: ConfigurationParameters = {
+    basePath: 'http://localhost:8080'
+  }
+  return new Configuration(params);
+}
+
 
 @NgModule({
   declarations: [
@@ -15,7 +24,8 @@ import {TodoserviceApi} from "../swagger/api/TodoserviceApi";
   ],
   imports: [
     BrowserModule,
-    HttpModule,
+    HttpClientModule,
+    ApiModule.forRoot(apiConfigFactory),
     IonicModule.forRoot(MyApp)
   ],
   bootstrap: [IonicApp],
@@ -25,8 +35,7 @@ import {TodoserviceApi} from "../swagger/api/TodoserviceApi";
     EditPage
   ],
   providers: [
-    {provide: ErrorHandler, useClass: IonicErrorHandler},
-    TodoserviceApi
+    {provide: ErrorHandler, useClass: IonicErrorHandler}
   ]
 })
 

@@ -75,7 +75,7 @@
 			<plugin>
 				<groupId>io.swagger</groupId>
 				<artifactId>swagger-codegen-maven-plugin</artifactId>
-				<version>2.2.3</version>
+				<version>2.3.1</version>
 				<executions>
 					<execution>
 						<id>typescriptgen</id>
@@ -85,7 +85,7 @@
 						</goals>
 						<configuration>
 							<inputSpec>http://localhost:8080/v2/api-docs</inputSpec>
-							<language>typescript-angular2</language>
+							<language>typescript-angular</language>
 							<output>${basedir}/../client/src/swagger</output>
 						</configuration>
 					</execution>

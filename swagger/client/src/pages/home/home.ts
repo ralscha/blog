@@ -1,8 +1,8 @@
 import {Component} from "@angular/core";
 import {NavController, ItemSliding} from "ionic-angular";
 import {EditPage} from "../edit/edit";
-import {TodoserviceApi} from "../../swagger/api/TodoserviceApi";
 import {Todo} from "../../swagger/model/Todo";
+import {TodoServiceService} from "../../swagger/api/todoService.service";
 
 @Component({
   selector: 'page-home',
@@ -13,7 +13,7 @@ export class HomePage {
   todos: Todo[];
 
   constructor(private readonly navCtrl: NavController,
-              public readonly todoService: TodoserviceApi) {
+              private readonly todoService: TodoServiceService) {
   }
 
   ionViewDidEnter() {

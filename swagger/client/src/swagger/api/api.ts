@@ -1,3 +1,3 @@
-export * from './TodoserviceApi';
-import { TodoserviceApi } from './TodoserviceApi';
-export const APIS = [TodoserviceApi];
+export * from './todoService.service';
+import { TodoServiceService } from './todoService.service';
+export const APIS = [TodoServiceService];
