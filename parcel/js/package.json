@@ -12,7 +12,7 @@
   "devDependencies": {
     "autoprefixer": "8.0.0",
     "node-sass": "4.7.2",
-    "parcel-bundler": "1.6.1",
+    "parcel-bundler": "1.6.2",
     "parcel-plugin-compress": "1.0.3",
     "shx": "0.2.2"
   },

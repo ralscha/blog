@@ -9,7 +9,7 @@
     "build": "parcel build src/index.html --public-url ./"
   },
   "devDependencies": {
-    "parcel-bundler": "1.6.1",
+    "parcel-bundler": "1.6.2",
     "parcel-plugin-compress": "1.0.3",
     "shx": "0.2.2",
     "typescript": "2.7.2"

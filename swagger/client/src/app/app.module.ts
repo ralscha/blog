@@ -15,7 +15,6 @@ export function apiConfigFactory (): Configuration {
   return new Configuration(params);
 }
 
-
 @NgModule({
   declarations: [
     MyApp,
