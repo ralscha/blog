@@ -1,7 +1,4 @@
 module.exports = {
-  //"dontCacheBustUrlsMatching": new RegExp('.+\.[a-f0-9]{8}\..+'),
-  "dontCacheBustUrlsMatching": new RegExp('.+'),
-  "maximumFileSizeToCacheInBytes": "5MB",
   "globDirectory": "www/",
   "globPatterns": [
     "assets/fonts/*.woff2",
@@ -10,6 +7,8 @@ module.exports = {
     "index.html",
     "manifest.json"
   ],
+  "dontCacheBustUrlsMatching": new RegExp('.+\.[a-f0-9]{8}\..+'),
+  "maximumFileSizeToCacheInBytes": "5MB",
   "swSrc": "src/service-worker.js",
   "swDest": "www/service-worker.js"
 };
