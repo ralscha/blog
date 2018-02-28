@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="//fonts.googleapis.com/css?family=Roboto:300,400,500,700" rel="stylesheet" type="text/css" />
+  <title>Poll Demo</title>
+  <link rel="stylesheet" href="./main.css" />
+</head>
+
+<body>
+  <div class="mui-container">
+    <h1>OS Vote</h1>    
+
+    <div id="voted" class="mui-panel hidden">
+        <span class="mui--text-dark-secondary mui--text-display2">Thanks for your vote.</span>
+      </div>
+
+    <div id="hasVotedAlreadyErrorMsg" class="mui-panel hidden">
+      <span class="mui--text-accent-secondary mui--text-display2">You have already voted, you can only vote once.</span>
+    </div>
+    <form id="vote-form" class="hidden">
+      <p>Vote for your favorite OS to develop on</p>
+      <p>
+        <input type="radio" name="os" id="windows" value="Windows">
+        <label for="windows">Windows</label>
+      </p>
+      <p>
+        <input type="radio" name="os" id="macos" value="macOS">
+        <label for="macos">macOS</label>
+      </p>
+      <p>
+        <input type="radio" name="os" id="linux" value="Linux">
+        <label for="linux">Linux</label>
+      </p>
+      <p>
+        <input type="radio" name="os" id="other" value="Other">
+        <label for="other">Something else</label>
+      </p>
+      <button class="mui-btn mui-btn--primary" id="vote-button" type="button">Vote</button>
+    </form>
+
+    <br>
+    <br>
+    
+    <h5 style="text-align: center" id="chartTitle"></h5>
+    <div id="chart" style="height: 400px;width:600px"></div>
+  </div>
+
+  <script src="./main.js"></script>
+
+</body>
+
+</html>
