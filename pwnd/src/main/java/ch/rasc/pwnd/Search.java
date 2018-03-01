@@ -26,7 +26,8 @@ public class Search {
 
   public static void main(String[] args) {
     try (Environment env = Environments.newInstance("e:/temp/pwnd")) {
-      for (String pw : Arrays.asList("123456", "password", "654321", "qwerty", "letmein")) {
+      for (String pw : Arrays.asList("123456", "password", "654321", "qwerty",
+          "letmein")) {
         long start = System.currentTimeMillis();
         Integer count = haveIBeenPwned(env, pw);
         if (count != null) {
