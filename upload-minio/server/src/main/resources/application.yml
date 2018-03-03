@@ -1,5 +1,5 @@
 minio:
-  endpoint: http://192.168.178.84:9000
-  access-key: EDVBGO8GKEY0BXMXQYXV
-  secret-key: VSomZpBJ7WluGXPPsRxCxFhLnq3yOu9m+pAaCzYt
+  endpoint: http://192.168.178.20:9000
+  access-key: KRJ8QDQA43OAEB1Y5QYI
+  secret-key: BNQKXY+7tcE01yXZt6lw+Wyrw+g66XQ0f96CZKR/
   region: us-east-1

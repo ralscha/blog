@@ -85,5 +85,5 @@
     <plugin name="ionic-plugin-keyboard" spec="^2.2.1" />
     <plugin name="cordova-plugin-camera" spec="^2.4.1" />
     <plugin name="cordova-plugin-file" spec="^4.3.3" />
-    <engine name="android" spec="~6.3.0" />
+    <engine name="android" spec="~7.0.0" />
 </widget>

@@ -33,7 +33,7 @@
 		<dependency>
 			<groupId>com.amazonaws</groupId>
 			<artifactId>aws-java-sdk-s3</artifactId>
-			<version>1.11.287</version>
+			<version>1.11.289</version>
 		</dependency>
 
 		<dependency>

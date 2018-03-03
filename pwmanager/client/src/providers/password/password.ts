@@ -5,7 +5,7 @@ import * as LZUTF8 from 'lzutf8';
 
 @Injectable()
 export class PasswordProvider {
-  private serverUrl = "http://localhost:8080";
+  private serverUrl = "http://192.168.178.20:8080";
   private ivLen = 12;
 
   private passwords: Password[] = [];

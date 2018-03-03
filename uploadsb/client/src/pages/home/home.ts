@@ -78,7 +78,7 @@ export class HomePage {
   }
 
   private postData(formData: FormData) {
-    this.http.post<boolean>("http://192.168.178.84:8080/upload", formData)
+    this.http.post<boolean>("http://192.168.178.20:8080/upload", formData)
       .pipe(
         catchError(e => this.handleError(e)),
         finalize(() => this.loading.dismiss())
