@@ -5,14 +5,14 @@
     "start": "parcel serve src/index.html",
     "prebuild": "shx rm -rf dist/*",
     "build": "parcel build src/index.html --public-url .",
-    "postbuild": "gzip-all \"dist/*.*\""
+    "postbuild": "bread-compressor -a gzip dist"
   },
   "dependencies": {
     "date-fns": "^2.0.0-alpha.7",
-    "moment": "^2.20.1"
+    "moment": "^2.21.0"
   },
   "devDependencies": {
-    "gzip-all": "^1.0.0",
+    "bread-compressor-cli": "^1.0.0",
     "parcel-bundler": "^1.6.2",
     "shx": "^0.2.2"
   }
