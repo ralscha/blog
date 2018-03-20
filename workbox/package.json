@@ -7,32 +7,32 @@
   "scripts": {
     "clean": "ionic-app-scripts clean",
     "build": "ionic-app-scripts build",
-    "postbuild": "workbox inject:manifest",
+    "postbuild": "workbox injectManifest",
     "lint": "ionic-app-scripts lint",
     "ionic:build": "ionic-app-scripts build",
     "ionic:serve": "ionic-app-scripts serve",
     "open": "http-server www  -o -a localhost -p 1234",
     "open-nocache": "http-server www -c-1 -o -a localhost -p 1234",
     "hashcb": "hashmark -l 8 -r --cwd www/build \"*.{js,css}\" {name}.{hash}{ext} | map-replace -m \"<[^>]+>\" www/index.html",
-    "dist": "npm run clean && npm run build --prod && npm run hashcb && workbox inject:manifest"
+    "dist": "npm run clean && shx rm -rf www/* && npm run build --prod && npm run hashcb && workbox injectManifest"
   },
   "config": {
     "ionic_copy": "./copy.config.js"
   },
   "dependencies": {
-    "@angular/common": "5.2.7",
-    "@angular/compiler": "5.2.7",
-    "@angular/compiler-cli": "5.2.7",
-    "@angular/core": "5.2.7",
-    "@angular/forms": "5.2.7",
-    "@angular/http": "5.2.7",
-    "@angular/platform-browser": "5.2.7",
-    "@angular/platform-browser-dynamic": "5.2.7",
+    "@angular/common": "5.2.9",
+    "@angular/compiler": "5.2.9",
+    "@angular/compiler-cli": "5.2.9",
+    "@angular/core": "5.2.9",
+    "@angular/forms": "5.2.9",
+    "@angular/http": "5.2.9",
+    "@angular/platform-browser": "5.2.9",
+    "@angular/platform-browser-dynamic": "5.2.9",
     "@ionic/storage": "2.1.3",
     "ionic-angular": "3.9.2",
     "ionicons": "3.0.0",
-    "rxjs": "5.5.6",
-    "workbox-sw": "2.1.3",
+    "rxjs": "5.5.7",
+    "workbox-sw": "3.0.0",
     "zone.js": "0.8.20"
   },
   "devDependencies": {
@@ -40,8 +40,9 @@
     "hashmark": "5.0.0",
     "http-server": "0.11.1",
     "map-replace": "1.0.2",
+    "shx": "0.2.2",
     "typescript": "2.7.2",
-    "workbox-cli": "2.1.3"
+    "workbox-cli": "3.0.0"
   },
-  "description": "An Ionic project"
+  "description": "A Workbox / Ionic example project"
 }

@@ -8,7 +8,7 @@ module.exports = {
     "manifest.json"
   ],
   "dontCacheBustUrlsMatching": new RegExp('.+\.[a-f0-9]{8}\..+'),
-  "maximumFileSizeToCacheInBytes": "5MB",
+  "maximumFileSizeToCacheInBytes": 5000000,
   "swSrc": "src/service-worker.js",
   "swDest": "www/service-worker.js"
 };
