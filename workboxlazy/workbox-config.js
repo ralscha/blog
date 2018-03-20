@@ -1,14 +1,14 @@
 module.exports = {
   "globDirectory": "www/",
   "globPatterns": [
-    "assets/fonts/*.woff2",
+    "assets/fonts/roboto*.woff2",
     "build/**/*.css",
-	"build/**/*.js",
+    "build/**/*.js",
     "index.html",
     "manifest.json"
   ],
   "dontCacheBustUrlsMatching": new RegExp('.+\.[a-f0-9]{10}\..+'),
-  "maximumFileSizeToCacheInBytes": "5MB",
+  "maximumFileSizeToCacheInBytes": 5000000,
   "swSrc": "src/service-worker.js",
   "swDest": "www/service-worker.js"
 };
