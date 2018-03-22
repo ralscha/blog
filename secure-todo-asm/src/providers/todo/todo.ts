@@ -1,6 +1,11 @@
 import {Injectable} from '@angular/core';
 import {Storage} from "@ionic/storage";
-import asmCrypto from "asmcrypto.js"
+
+import {getRandomValues} from "asmcrypto.js/src/random/exports";
+import {bytes_to_string, string_to_bytes} from "asmcrypto.js/src/exportedUtils";
+import {PBKDF2_HMAC_SHA256} from "asmcrypto.js/src/pbkdf2/exports-pbkdf2-hmac-sha256";
+import {AES_GCM} from "asmcrypto.js/src/aes/gcm/exports";
+
 import {Todo} from "../../todo";
 
 @Injectable()
@@ -51,7 +56,7 @@ export class TodoProvider {
         if (encryptedTodos) {
           try {
             const encryptedBytes = this.decrypt(encryptedTodos);
-            const decryptedString = asmCrypto.bytes_to_string(encryptedBytes);
+            const decryptedString = bytes_to_string(encryptedBytes);
             this.todos = JSON.parse(decryptedString);
           } catch (err) {
             return Promise.reject(err);
@@ -66,12 +71,12 @@ export class TodoProvider {
 
   encryptAndSaveTodos() {
     const todosString = JSON.stringify(this.todos);
-    const encrypted = this.encrypt(todosString);
+    const encrypted = this.encrypt(string_to_bytes(todosString));
     this.storage.set('todos', encrypted);
   }
 
   deriveAesKey(password: string) {
-    this.aesKey = asmCrypto.PBKDF2_HMAC_SHA256.bytes(password, this.salt, this.iterations, 32);
+    this.aesKey = PBKDF2_HMAC_SHA256.bytes(password, this.salt, this.iterations, 32);
   }
 
   joinNonceAndData(nonce: Uint8Array, data: Uint8Array) {
@@ -94,17 +99,17 @@ export class TodoProvider {
     return {nonce, data};
   }
 
-  encrypt(data) {
+  encrypt(data: Uint8Array) {
     const nonce = new Uint8Array(this.nonceLen);
-    asmCrypto.getRandomValues(nonce);
+    getRandomValues(nonce);
 
-    const encrypted = asmCrypto.AES_GCM.encrypt(data, this.aesKey, nonce);
+    const encrypted = AES_GCM.encrypt(data, this.aesKey, nonce);
     return this.joinNonceAndData(nonce, new Uint8Array(encrypted));
   }
 
   decrypt(buffer: Uint8Array) {
     const parts = this.separateNonceFromData(buffer);
-    const decrypted = asmCrypto.AES_GCM.decrypt(parts.data, this.aesKey, parts.nonce);
+    const decrypted = AES_GCM.decrypt(parts.data, this.aesKey, parts.nonce);
     return decrypted;
   }
 
