@@ -15,9 +15,9 @@
   "dependencies": {
     "classlist-polyfill": "^1.2.0",
     "core-js": "^2.5.3",
-    "echarts": "^4.0.2",
+    "echarts": "^4.0.4",
     "event-source-polyfill": "0.0.12",
-    "muicss": "^0.9.36",
+    "muicss": "^0.9.38",
     "uuid": "^3.2.1",
     "whatwg-fetch": "^2.0.3"
   },
