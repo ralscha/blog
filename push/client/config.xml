@@ -84,5 +84,5 @@
     <plugin name="cordova-plugin-statusbar" spec="2.3.0" />
     <plugin name="cordova-plugin-whitelist" spec="1.3.3" />
     <plugin name="ionic-plugin-keyboard" spec="2.2.1" />
-    <engine name="android" spec="~6.3.0" />
+    <engine name="android" spec="~7.0.0" />
 </widget>
