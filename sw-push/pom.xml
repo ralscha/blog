@@ -46,7 +46,7 @@
 			
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-compiler-plugin</artifactId>s
+				<artifactId>maven-compiler-plugin</artifactId>
 				<configuration>
 					<debug>true</debug>
 					<parameters>true</parameters>
