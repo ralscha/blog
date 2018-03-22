@@ -77,7 +77,7 @@ export class HomePage {
   }
 
   fetchPresignUrl(fileName: string): Observable<string> {
-    return this.http.get(`http://192.168.178.20:8080/getPreSignUrl?fileName=${fileName}`, {responseType: 'text'});
+    return this.http.get(`http://192.168.178.84:8080/getPreSignUrl?fileName=${fileName}`, {responseType: 'text'});
   }
 
   private postData(url: string, blob: Blob) {
