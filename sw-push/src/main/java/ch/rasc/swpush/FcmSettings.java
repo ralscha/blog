@@ -6,13 +6,14 @@ import org.springframework.stereotype.Component;
 @ConfigurationProperties(prefix = "fcm")
 @Component
 public class FcmSettings {
-  private String apiKey;
+  private String serviceAccountFile;
 
-  public String getApiKey() {
-    return this.apiKey;
+  public String getServiceAccountFile() {
+    return this.serviceAccountFile;
   }
 
-  public void setApiKey(String apiKey) {
-    this.apiKey = apiKey;
+  public void setServiceAccountFile(String serviceAccountFile) {
+    this.serviceAccountFile = serviceAccountFile;
   }
+
 }
