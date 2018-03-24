@@ -43,7 +43,7 @@ public class FcmClient {
       throws InterruptedException, ExecutionException {
 
     Message message = Message.builder().putAllData(data).setTopic("chuck")
-        .setWebpushConfig(WebpushConfig.builder().putHeader("ttl", "3")
+        .setWebpushConfig(WebpushConfig.builder().putHeader("ttl", "300")
             .setNotification(new WebpushNotification("Background Title (server)",
                 "Background Body (server)", "mail2.png"))
             .build())
