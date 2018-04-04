@@ -31,9 +31,9 @@
     "@ionic/storage": "2.1.3",
     "ionic-angular": "3.9.2",
     "ionicons": "3.0.0",
-    "rxjs": "5.5.7",
+    "rxjs": "5.5.8",
     "workbox-sw": "3.0.1",
-    "zone.js": "0.8.20"
+    "zone.js": "0.8.25"
   },
   "devDependencies": {
     "@ionic/app-scripts": "3.1.8",
@@ -41,7 +41,7 @@
     "http-server": "0.11.1",
     "map-replace": "1.0.2",
     "shx": "0.2.2",
-    "typescript": "2.7.2",
+    "typescript": "2.8.1",
     "workbox-cli": "3.0.1"
   },
   "description": "A Workbox / Ionic example project"

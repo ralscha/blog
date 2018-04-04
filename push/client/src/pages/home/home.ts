@@ -25,6 +25,11 @@ export class HomePage {
               private readonly storage: Storage) {
 
     platform.ready().then(() => {
+
+      this.firebase.getToken()
+        .then(token => this.token = token)
+        .catch(error => console.error('Error getting token', error));
+
       this.firebase.onTokenRefresh()
         .subscribe((token: string) => this.token = token);
 

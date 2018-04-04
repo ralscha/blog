@@ -22,3 +22,4 @@ nbbuild/
 dist/
 nbdist/
 .nb-gradle/
+/demoproject-91348-firebase-adminsdk-c2gco-1702d2bd33.json
