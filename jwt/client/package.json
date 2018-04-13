@@ -35,9 +35,9 @@
         "ionic-plugin-keyboard": "2.2.1",
         "ionicons": "3.0.0",
         "ng2-validation": "4.2.0",
-        "rxjs": "5.5.8",
+        "rxjs": "5.5.10",
         "sw-toolbox": "3.6.0",
-        "zone.js": "0.8.25"
+        "zone.js": "0.8.26"
     },
     "devDependencies": {
         "@ionic/app-scripts": "3.1.8",
