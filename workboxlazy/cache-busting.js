@@ -22,15 +22,16 @@ fs.readdirSync(buildDir).forEach(file => {
 	  const newFileName = `${file.substring(0, lastDotPos)}.${fileHash}${file.substring(lastDotPos)}`;
 	  const newFilePath = path.join(buildDir, newFileName);
 	  fs.renameSync(filePath, newFilePath);
-	  manifestJSON[file] = newFileName;
+	  manifestJSON[file] = `build/${newFileName}`;
   }
 
 });
 
 let indexContent = fs.readFileSync(indexPath).toString('utf8');
+console.log(manifestJSON);
 
 Object.keys(manifestJSON).forEach(key => {
-	indexContent = indexContent.replace(key, manifestJSON[key]);
+	indexContent = indexContent.replace(`build/${key}`, manifestJSON[key]);
 });
 
 fs.writeFileSync(indexPath, indexContent);
