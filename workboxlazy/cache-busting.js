@@ -28,7 +28,6 @@ fs.readdirSync(buildDir).forEach(file => {
 });
 
 let indexContent = fs.readFileSync(indexPath).toString('utf8');
-console.log(manifestJSON);
 
 Object.keys(manifestJSON).forEach(key => {
 	indexContent = indexContent.replace(`build/${key}`, manifestJSON[key]);
