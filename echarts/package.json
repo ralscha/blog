@@ -44,7 +44,7 @@
   "devDependencies": {
     "@ionic/app-scripts": "3.1.9",
     "@types/echarts": "0.0.12",
-    "typescript": "2.8.1"
+    "typescript": "2.8.3"
   },
   "description": "An Ionic/Echarts demo application",
   "cordova": {

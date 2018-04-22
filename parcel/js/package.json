@@ -10,17 +10,17 @@
     "watch": "parcel watch src/index.html --public-url ./"
   },
   "devDependencies": {
-    "autoprefixer": "8.0.0",
-    "node-sass": "4.7.2",
-    "parcel-bundler": "1.6.2",
+    "autoprefixer": "8.3.0",
+    "node-sass": "4.8.3",
+    "parcel-bundler": "1.7.1",
     "parcel-plugin-compress": "1.0.3",
     "shx": "0.2.2"
   },
   "dependencies": {
     "babel-polyfill": "6.26.0",
     "papaparse": "4.3.7",
-    "tingle.js": "0.13.0",
-    "whatwg-fetch": "2.0.3"
+    "tingle.js": "0.13.2",
+    "whatwg-fetch": "2.0.4"
   },
   "browserslist": [
     "> 1%",

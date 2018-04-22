@@ -40,8 +40,8 @@
     "http-server": "0.11.1",
     "rev-hash": "2.0.0",
     "shx": "0.2.2",
-    "typescript": "2.8.1",
-    "webpack-manifest-plugin": "2.0.0",
+    "typescript": "2.8.3",
+    "webpack-manifest-plugin": "2.0.1",
     "workbox-cli": "3.1.0"
   },
   "description": "A Workbox / Ionic example project"
