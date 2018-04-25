@@ -3,7 +3,7 @@ async function init() {
   const registration = await navigator.serviceWorker.register('/sw.js');
 	
   firebase.initializeApp({
-    'messagingSenderId': '933399038510'
+    'messagingSenderId': '220709513681'
   });
   const messaging = firebase.messaging();
   
