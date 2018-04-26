@@ -82,4 +82,5 @@
     <plugin name="cordova-plugin-ionic-webview" spec="^1.1.16" />
     <plugin name="cordova-plugin-ionic-keyboard" spec="^2.0.5" />
     <plugin name="cordova-plugin-firebase" spec="^0.1.25" />
+    <engine name="android" spec="7.1.0" />
 </widget>
