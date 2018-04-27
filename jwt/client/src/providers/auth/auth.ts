@@ -1,5 +1,5 @@
 import {Injectable} from "@angular/core";
-import {tap} from 'rxjs/operators/tap';
+import {tap} from 'rxjs/operators';
 import {ReplaySubject, Observable} from "rxjs";
 import {SERVER_URL} from "../../config";
 import {Storage} from "@ionic/storage";

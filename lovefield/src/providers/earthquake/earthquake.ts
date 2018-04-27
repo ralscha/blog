@@ -3,7 +3,7 @@ import Papa from 'papaparse';
 import * as lf from 'lovefield'
 import {Filter} from "../../filter";
 import {HttpClient} from "@angular/common/http";
-import {map} from "rxjs/operators/map";
+import {map} from "rxjs/operators";
 
 @Injectable()
 export class EarthquakeProvider {

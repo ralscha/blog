@@ -3,8 +3,7 @@ import {Observable} from "rxjs";
 import {LoadingController, Loading, ToastController} from "ionic-angular";
 import {Camera} from '@ionic-native/camera';
 import {File, FileEntry} from "@ionic-native/file";
-import {catchError} from "rxjs/operators/catchError";
-import {finalize} from "rxjs/operators/finalize";
+import {catchError, finalize} from "rxjs/operators";
 import {HttpClient} from "@angular/common/http";
 
 @Component({

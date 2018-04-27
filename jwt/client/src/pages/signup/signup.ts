@@ -2,7 +2,7 @@ import {Component, ViewChild} from '@angular/core';
 import {LoadingController, ToastController} from 'ionic-angular';
 import {NgModel} from "@angular/forms";
 import {AuthProvider} from "../../providers/auth/auth";
-import {finalize} from 'rxjs/operators/finalize';
+import {finalize} from 'rxjs/operators';
 
 @Component({
   selector: 'page-signup',
