@@ -1,1 +1,1 @@
-Source code for the blog post: 
+Source code for the blog post: https://golb.hplar.ch/2018/05/Google-OAuth2-Server-to-Server-with-Java.html
