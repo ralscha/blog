@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Passwords</title>
+    <link rel="stylesheet" type="text/css" href="./main.css">
+</head>
+<body>
+
+<section>
+  <h2>zxcvbn</h2>
+  <input type="password" name="password" id="password">
+  <meter max="4" id="password-strength-meter"></meter>
+  <p id="password-strength-text"></p>
+  Show Password <input type="checkbox" id="showPasswordFlag">
+</section>
+
+<hr>
+
+<section>
+  <h2>hibp</h2>
+  <input type="password" name="password" id="password_hibp">
+  <p id="password_hibp_output"></p>
+</section>
+
+<hr>
+
+<section>
+  <h2>passpol</h2>
+  <input type="password" name="password" id="password_passpol">
+  <p id="password_passpol_output"></p>
+</section>
+
+<hr>
+
+<section>
+  <h2>self hosted hibp</h2>
+  <input type="password" name="password" id="password_shhibp">
+  <p id="password_shhibp_output"></p>
+</section>
+
+<script src="./init.js"></script>
+</body>
+</html>
