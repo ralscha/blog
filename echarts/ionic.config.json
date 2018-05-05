@@ -1,5 +1,7 @@
 {
   "name": "echartsapp",
   "type": "ionic-angular",
-  "integrations": {}
+  "integrations": {},
+  "app_id": "",
+  "hooks": {}
 }

@@ -32,7 +32,7 @@
 		<dependency>
 			<groupId>io.minio</groupId>
 			<artifactId>minio</artifactId>
-			<version>3.0.12</version>
+			<version>4.0.0</version>
 		</dependency>
 	</dependencies>
 

@@ -35,14 +35,14 @@
         "ionicons": "3.0.0",
         "lovefield": "2.1.12",
         "papaparse": "4.4.0",
-        "rxjs": "6.0.0",
-        "rxjs-compat": "^6.0.0",
+        "rxjs": "6.1.0",
+        "rxjs-compat": "6.1.0",
         "sw-toolbox": "3.6.0",
         "zone.js": "0.8.26"
     },
     "devDependencies": {
         "@ionic/app-scripts": "3.1.9",
-        "@types/papaparse": "4.1.33",
+        "@types/papaparse": "4.1.34",
         "typescript": "2.8.3"
     },
     "description": "An Ionic project",
