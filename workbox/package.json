@@ -42,7 +42,7 @@
     "http-server": "0.11.1",
     "map-replace": "1.0.2",
     "shx": "0.2.2",
-    "typescript": "2.8.3",
+    "typescript": "2.7.2",
     "workbox-cli": "3.2.0"
   },
   "description": "A Workbox / Ionic example project"
