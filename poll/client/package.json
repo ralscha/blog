@@ -14,7 +14,7 @@
   },
   "dependencies": {
     "classlist-polyfill": "^1.2.0",
-    "core-js": "^2.5.6",
+    "core-js": "^2.5.7",
     "echarts": "^4.1.0",
     "event-source-polyfill": "0.0.12",
     "muicss": "^0.9.39",

@@ -2,5 +2,6 @@
   "name": "indexeddb",
   "app_id": "",
   "type": "ionic-angular",
-  "integrations": {}
+  "integrations": {},
+  "hooks": {}
 }

@@ -4,7 +4,7 @@ import {Position} from "../../position";
 
 @Injectable()
 export class ServerPushProvider {
-  private serverURL: string = 'https://9bf1e6c6.ngrok.io';
+  private serverURL: string = 'https://be63fd6b.ngrok.io';
 
   constructor(private readonly httpClient: HttpClient) {
   }

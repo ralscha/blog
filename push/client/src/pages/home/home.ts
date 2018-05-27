@@ -1,7 +1,7 @@
 import {Component, NgZone} from '@angular/core';
 import {Platform} from "ionic-angular";
 import {Storage} from "@ionic/storage";
-import { timeout } from 'rxjs/operators/timeout';
+import { timeout } from 'rxjs/operators';
 import {Firebase} from "@ionic-native/firebase";
 import {HttpClient} from "@angular/common/http";
 

@@ -2,5 +2,6 @@
   "name": "workboxlazy",
   "app_id": "",
   "type": "ionic-angular",
-  "integrations": {}
+  "integrations": {},
+  "hooks": {}
 }
