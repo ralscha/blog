@@ -14,7 +14,7 @@ import com.google.cloud.translate.Translation;
 public class GoogleLib {
 
   public static void main(String[] args) throws IOException {
-    Path credentialPath = Paths.get("./translationdemo-5674749bc948.json");
+    Path credentialPath = Paths.get("./demos-6ff86309d67f.json");
     ServiceAccountCredentials credentials = ServiceAccountCredentials
         .fromStream(Files.newInputStream(credentialPath));
 

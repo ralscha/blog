@@ -14,11 +14,11 @@
     "node-sass": "4.9.0",
     "parcel-bundler": "1.8.1",
     "parcel-plugin-compress": "1.0.3",
-    "shx": "0.2.2"
+    "shx": "0.3.0"
   },
   "dependencies": {
     "babel-polyfill": "6.26.0",
-    "papaparse": "4.4.0",
+    "papaparse": "4.5.0",
     "tingle.js": "0.13.2",
     "whatwg-fetch": "2.0.4"
   },

@@ -5,5 +5,10 @@ import {Component} from '@angular/core';
   templateUrl: 'home.html'
 })
 export class HomePage {
+  rate: number = 5.5;
+
+  onModelChange(event) {
+    console.log(event);
+  }
 
 }

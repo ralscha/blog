@@ -31,7 +31,7 @@ public class IcndbJoke {
     return "IcndbJoke [type=" + this.type + ", value=" + this.value + "]";
   }
 
-  static class Joke {
+  public static class Joke {
     private int id;
     private String joke;
     private String[] categories;

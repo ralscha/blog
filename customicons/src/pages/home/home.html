@@ -28,4 +28,14 @@
     <ion-icon class="bigger" name="custom-embeddedqrcode"></ion-icon>
     <ion-icon class="bigger" name="custom-embeddedspades"></ion-icon>
   </div>
+
+  <rating [(ngModel)]="rate"
+          readOnly="false"
+          max="10"
+          emptyStarIconName="custom-empty-star"
+          halfStarIconName="custom-empty-star-half"
+          starIconName="custom-star"
+          nullable="false"
+          (ngModelChange)="onModelChange($event)"></rating>
+  <ion-input type="number" [(ngModel)]="rate"></ion-input>
 </ion-content>
