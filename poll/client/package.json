@@ -10,7 +10,7 @@
   "devDependencies": {
     "parcel-bundler": "^1.8.1",
     "parcel-plugin-compress": "^1.0.3",
-    "shx": "^0.2.2"
+    "shx": "^0.3.0"
   },
   "dependencies": {
     "classlist-polyfill": "^1.2.0",
