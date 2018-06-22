@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>Ngworkbox</title>
+  <base href="/">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+
+  <link rel="manifest" href="manifest.json">
+</head>
+
+<body>
+  <app-root></app-root>
+
+  <script>
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('service-worker.js').then(function (registration) {
+        console.log('Service Worker registration successful with scope: ', registration.scope);
+      }, function (err) {
+        console.log('Service Worker registration failed: ', err);
+      });
+
+      navigator.serviceWorker.ready.then(function (registration) {
+        console.log('Service Worker ready');
+      });
+    }
+  </script>
+</body>
+
+</html>
