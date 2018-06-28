@@ -33,17 +33,17 @@
               {
                 "glob": "workbox-sw.js",
                 "input": "node_modules/workbox-sw/build",
-                "output": "./workbox-3.3.0"
+                "output": "./workbox-3.3.1"
               },
               {
                 "glob": "workbox-core.prod.js",
                 "input": "node_modules/workbox-core/build/",
-                "output": "./workbox-3.3.0"
+                "output": "./workbox-3.3.1"
               },
               {
                 "glob": "workbox-precaching.prod.js",
                 "input": "node_modules/workbox-precaching/build/",
-                "output": "./workbox-3.3.0"
+                "output": "./workbox-3.3.1"
               },
               {
                 "glob": "dexie.min.js",
