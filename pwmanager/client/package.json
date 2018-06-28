@@ -33,7 +33,7 @@
     "rxjs-compat": "6.2.1",
     "sw-toolbox": "3.6.0",
     "text-encoding-shim": "1.0.0",
-    "uuid": "3.2.1",
+    "uuid": "3.3.0",
     "zone.js": "0.8.26"
   },
   "devDependencies": {
