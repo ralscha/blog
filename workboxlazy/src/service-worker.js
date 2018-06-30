@@ -7,5 +7,5 @@ workbox.skipWaiting();
 workbox.clientsClaim();
 workbox.precaching.precacheAndRoute([]);
 workbox.precaching.precacheAndRoute([{
-   "url": "assets/fonts/ionicons.woff2?v=4.2.1"
+   "url": "assets/fonts/ionicons.woff2?v=4.2.3"
 }]);

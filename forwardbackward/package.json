@@ -18,7 +18,7 @@
     "@angular/platform-browser": "6.0.7",
     "@angular/platform-browser-dynamic": "6.0.7",
     "ionic-angular": "3.9.2",
-    "ionicons": "4.2.2",
+    "ionicons": "4.2.4",
     "rxjs": "6.2.1",
     "rxjs-compat": "6.2.1",
     "sw-toolbox": "3.6.0",

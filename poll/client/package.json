@@ -9,7 +9,7 @@
   },
   "devDependencies": {
     "parcel-bundler": "1.9.3",
-    "parcel-plugin-compress": "1.0.3",
+    "parcel-plugin-compress": "1.0.4",
     "shx": "0.3.1"
   },
   "dependencies": {
@@ -18,7 +18,7 @@
     "echarts": "4.1.0",
     "event-source-polyfill": "0.0.12",
     "muicss": "0.9.39",
-    "uuid": "3.3.0",
+    "uuid": "3.3.2",
     "whatwg-fetch": "2.0.4"
   },
   "browserslist": [

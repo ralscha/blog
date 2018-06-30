@@ -22,7 +22,7 @@
         "@angular/platform-browser-dynamic": "6.0.7",
         "@flowjs/flow.js": "2.13.0",
         "ionic-angular": "3.9.2",
-        "ionicons": "4.2.2",
+        "ionicons": "4.2.4",
         "recordrtc": "5.4.6",
         "rxjs": "6.2.1",
         "rxjs-compat": "6.2.1",
