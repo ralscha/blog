@@ -28,8 +28,7 @@ export class HomePage {
       quality: 100,
       destinationType: this.camera.DestinationType.FILE_URI,
       sourceType: this.camera.PictureSourceType.CAMERA,
-      encodingType: this.camera.EncodingType.PNG,
-      saveToPhotoAlbum: true
+      encodingType: this.camera.EncodingType.PNG
     }).then(imageData => {
       this.myPhoto = imageData;
       this.uploadPhoto(imageData);
