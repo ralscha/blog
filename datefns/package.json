@@ -13,7 +13,7 @@
   },
   "devDependencies": {
     "bread-compressor-cli": "1.0.4",
-    "parcel-bundler": "1.9.3",
+    "parcel-bundler": "1.9.4",
     "shx": "0.3.1"
   }
 }
