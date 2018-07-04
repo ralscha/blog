@@ -12,7 +12,6 @@ import {HttpClient} from "@angular/common/http";
 })
 export class HomePage {
   public myPhoto: any;
-  public myPhotoURL: any;
   public error: string;
   private loading: Loading;
 
