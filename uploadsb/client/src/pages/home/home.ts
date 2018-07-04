@@ -1,6 +1,6 @@
 import {Component} from '@angular/core';
-import {Observable} from "rxjs";
-import {LoadingController, Loading, ToastController} from "ionic-angular";
+import {throwError} from "rxjs";
+import {Loading, LoadingController, ToastController} from "ionic-angular";
 import {Camera} from '@ionic-native/camera';
 import {File, FileEntry} from "@ionic-native/file";
 import {catchError, finalize} from "rxjs/operators";
@@ -105,7 +105,7 @@ export class HomePage {
   private handleError(error: any) {
     const errMsg = error.message ? error.message : error.toString();
     this.error = errMsg;
-    return Observable.throw(errMsg);
+    return throwError(errMsg);
   }
 
 }

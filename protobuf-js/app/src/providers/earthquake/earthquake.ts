@@ -1,4 +1,5 @@
 import {Injectable} from '@angular/core';
+import {throwError} from "rxjs";
 import {map, catchError} from 'rxjs/operators';
 import {ENV} from '@app/env';
 import {Observable} from "rxjs";
@@ -36,7 +37,7 @@ export class EarthquakeProvider {
 
   handleError(error): Observable<any> {
     console.error(error);
-    return Observable.throw(error || 'Server error');
+    return throwError(error || 'Server error');
   }
 
 }
