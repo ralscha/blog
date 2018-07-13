@@ -14,7 +14,7 @@
     "node-sass": "4.9.0",
     "parcel-bundler": "1.9.4",
     "parcel-plugin-compress": "1.0.4",
-    "shx": "0.3.1"
+    "shx": "0.3.2"
   },
   "dependencies": {
     "babel-polyfill": "6.26.0",

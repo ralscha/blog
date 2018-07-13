@@ -40,25 +40,25 @@
 		<dependency>
 			<groupId>com.squareup.okhttp3</groupId>
 			<artifactId>okhttp</artifactId>
-			<version>3.10.0</version>
+			<version>3.10.2</version>
 		</dependency>
 
 		<dependency>
 			<groupId>com.squareup.okhttp3</groupId>
 			<artifactId>logging-interceptor</artifactId>
-			<version>3.10.0</version>
+			<version>3.10.2</version>
 		</dependency>
 
 		<dependency>
 			<groupId>io.jsonwebtoken</groupId>
 			<artifactId>jjwt</artifactId>
-			<version>0.9.0</version>
+			<version>0.10.0</version>
 		</dependency>
 
 		<dependency>
 			<groupId>com.google.cloud</groupId>
 			<artifactId>google-cloud-translate</artifactId>
-			<version>1.35.0</version>
+			<version>1.36.0</version>
 		</dependency>
 
 	</dependencies>
