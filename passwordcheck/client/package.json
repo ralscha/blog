@@ -10,7 +10,7 @@
   },
   "license": "ISC",
   "devDependencies": {
-    "parcel-bundler": "1.9.4",
+    "parcel-bundler": "1.9.6",
     "shx": "0.3.2"
   },
   "dependencies": {

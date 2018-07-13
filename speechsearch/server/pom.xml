@@ -50,7 +50,7 @@
 		<dependency>
 			<groupId>com.google.cloud</groupId>
 			<artifactId>google-cloud-speech</artifactId>
-			<version>0.54.0-alpha</version>
+			<version>0.54.0-beta</version>
 		</dependency>
 
 		<dependency>
