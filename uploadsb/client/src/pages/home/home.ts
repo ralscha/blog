@@ -59,7 +59,7 @@ export class HomePage {
     this.loading.present();
 
     this.file.resolveLocalFilesystemUrl(imageFileUri)
-      .then(entry => (<FileEntry>entry).file(file => this.readFile(file)))
+      .then(entry => (entry as FileEntry).file(file => this.readFile(file)))
       .catch(err => console.log(err));
   }
 

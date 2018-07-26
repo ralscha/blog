@@ -58,7 +58,7 @@
 		<dependency>
 			<groupId>com.google.cloud</groupId>
 			<artifactId>google-cloud-translate</artifactId>
-			<version>1.36.0</version>
+			<version>1.37.1</version>
 		</dependency>
 
 	</dependencies>

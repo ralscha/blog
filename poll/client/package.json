@@ -8,8 +8,8 @@
     "watch": "parcel watch src/index.html --public-url ./"
   },
   "devDependencies": {
-    "parcel-bundler": "1.9.6",
-    "parcel-plugin-compress": "1.0.4",
+    "parcel-bundler": "1.9.7",
+    "parcel-plugin-compress": "1.0.5",
     "shx": "0.3.2"
   },
   "dependencies": {

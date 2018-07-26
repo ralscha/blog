@@ -10,12 +10,12 @@
   },
   "license": "ISC",
   "devDependencies": {
-    "parcel-bundler": "1.9.6",
+    "parcel-bundler": "1.9.7",
     "shx": "0.3.2"
   },
   "dependencies": {
     "babel-polyfill": "6.26.0",
-    "hibp": "7.1.1",
+    "hibp": "7.1.3",
     "zxcvbn": "4.4.2"
   }
 }
