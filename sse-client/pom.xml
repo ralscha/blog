@@ -5,6 +5,10 @@
 	<artifactId>sse-client</artifactId>
 	<version>0.0.1</version>
 
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+	</properties>	
+	
 	<dependencies>
 		<dependency>
 			<groupId>com.launchdarkly</groupId>
@@ -48,17 +52,10 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
-				<version>3.7.0</version>
+				<version>3.8.0</version>
 				<configuration>
-					<release>10</release>
-				</configuration>
-				<dependencies>
-					<dependency>
-						<groupId>org.ow2.asm</groupId>
-						<artifactId>asm</artifactId>
-						<version>6.2</version>
-					</dependency>
-				</dependencies>
+					<release>10</release>				
+				</configuration>				
 			</plugin>
 		</plugins>
 	</build>
