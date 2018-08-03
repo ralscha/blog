@@ -27,8 +27,7 @@
         <ion-input name="description" [ngModel]="todo?.description"></ion-input>
       </ion-item>
     </ion-list>
-    <!-- TODO: https://github.com/ionic-team/ionic/issues/14856 : remove click handler and add type="submit" when fixed -->
-    <ion-button (click)="save(f)" size="medium" expand="full" [disabled]="!f.valid">Save</ion-button>
+    <ion-button type="submit" size="medium" expand="full" [disabled]="!f.valid">Save</ion-button>
     <div margin-top class="errorMessage" *ngIf="!subject.valid && subject.touched">Please enter a Subject</div>
   </form>
 </ion-content>

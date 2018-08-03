@@ -118,7 +118,7 @@ async function serverSync() {
 }
 
 async function notifyClients() {
-  const clients = await self.clients.matchAll();
+  const clients = await self.clients.matchAll({includeUncontrolled: true});
   for (const client of clients) {
     client.postMessage('sync_finished');
   }
