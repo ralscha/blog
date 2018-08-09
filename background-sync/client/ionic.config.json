@@ -1,7 +1,6 @@
 {
   "name": "syncclient",
-  "type": "angular",
   "integrations": {},
-  "app_id": "",
+  "type": "angular",
   "hooks": {}
 }

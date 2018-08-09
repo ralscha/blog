@@ -33,13 +33,13 @@
 		<dependency>
 			<groupId>com.amazonaws</groupId>
 			<artifactId>aws-java-sdk-s3</artifactId>
-			<version>1.11.376</version>
+			<version>1.11.380</version>
 		</dependency>
 
 		<dependency>
 			<groupId>com.univocity</groupId>
 			<artifactId>univocity-parsers</artifactId>
-			<version>2.7.2</version>
+			<version>2.7.5</version>
 		</dependency>
 
 		<dependency>
@@ -50,7 +50,7 @@
 		<dependency>
 			<groupId>com.google.cloud</groupId>
 			<artifactId>google-cloud-speech</artifactId>
-			<version>0.55.1-beta</version>
+			<version>0.56.0-beta</version>
 		</dependency>
 
 		<dependency>
