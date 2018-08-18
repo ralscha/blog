@@ -10,9 +10,9 @@
   },
   "devDependencies": {
     "parcel-bundler": "1.9.7",
-    "parcel-plugin-compress": "1.0.5",
+    "parcel-plugin-compress": "1.0.6",
     "shx": "0.3.2",
-    "typescript": "2.7.2"
+    "typescript": "3.0.1"
   },
   "dependencies": {
     "core-js": "2.5.7",

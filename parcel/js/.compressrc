@@ -1,0 +1,5 @@
+{
+  "brotli": {
+    "enabled": false
+  }
+}
