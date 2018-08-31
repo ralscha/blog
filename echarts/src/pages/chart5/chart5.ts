@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import * as echarts from 'echarts/dist/echarts-en.js';
+import format from 'date-fns/format'
 
 @Component({
   selector: 'page-chart5',
@@ -9,13 +9,13 @@ export class Chart5Page {
 
   private getVirtulData(year) {
     year = year || '2017';
-    var date = +echarts.number.parseDate(year + '-01-01');
-    var end = +echarts.number.parseDate((+year + 1) + '-01-01');
-    var dayTime = 3600 * 24 * 1000;
-    var data = [];
-    for (var time = date; time < end; time += dayTime) {
+    const date = new Date(year, 0, 1).getTime();
+    const end = new Date(year, 11, 31).getTime();
+    const dayTime = 3600 * 24 * 1000;
+    const data = [];
+    for (let time = date; time <= end; time += dayTime) {
       data.push([
-        echarts.format.formatTime('yyyy-MM-dd', time),
+        format(time, 'YYYY-MM-DD'),
         Math.floor(Math.random() * 1000)
       ]);
     }
@@ -26,8 +26,7 @@ export class Chart5Page {
     tooltip: {
       position: 'top',
       formatter: function (p) {
-        const format = echarts.format.formatTime('yyyy-MM-dd', p.data[0]);
-        return format + ': ' + p.data[1];
+        return p.data[0] + ': ' + p.data[1];
       }
     },
     visualMap: {

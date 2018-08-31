@@ -6,11 +6,6 @@ import {Component} from '@angular/core';
 })
 export class Chart4Page {
 
-  initOpts = {
-    renderer: 'svg'
-  };
-
-
   options = {
     title: {
       text: 'Graph Example'
