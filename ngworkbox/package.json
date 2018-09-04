@@ -21,7 +21,7 @@
     "@angular/platform-browser-dynamic": "6.1.6",
     "@angular/router": "6.1.6",
     "core-js": "2.5.7",
-    "rxjs": "6.3.0",
+    "rxjs": "6.3.1",
     "workbox-sw": "3.4.1",
     "zone.js": "0.8.26"
   },

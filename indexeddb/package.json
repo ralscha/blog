@@ -24,8 +24,8 @@
         "ionic-plugin-keyboard": "2.2.1",
         "ionicons": "4.4.3",
         "papaparse": "4.6.0",
-        "rxjs": "6.3.0",
-        "rxjs-compat": "6.3.0",
+        "rxjs": "6.3.1",
+        "rxjs-compat": "6.3.1",
         "sw-toolbox": "3.6.0",
         "zone.js": "0.8.26"
     },
