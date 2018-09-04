@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>Position</title>
+</head>
+
+<body>
+  <h1>Position</h1>
+  <button id="startWatchButton">Start watching my position</button>
+  <div id="latitude"></div>
+  <div id="longitude"></div>
+
+  <script>
+
+    document.getElementById('startWatchButton').addEventListener('click', event => {
+      startListening();
+      event.target.disabled = true;
+    });
+
+    function startListening() {
+      navigator.geolocation.watchPosition(pos => {
+
+        document.getElementById('latitude').innerHTML = pos.coords.latitude;
+        document.getElementById('longitude').innerHTML = pos.coords.longitude;
+
+        const position = {
+          latitude: pos.coords.latitude,
+          longitude: pos.coords.longitude,
+          ts: pos.timestamp
+        };
+        navigator.sendBeacon('../position', JSON.stringify(position));
+      });
+    }
+  </script>
+</body>
+
+</html>

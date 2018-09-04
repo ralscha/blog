@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>Global Error Handling</title>
+</head>
+
+<body>
+  <h1>Global Error Handling</h1>
+
+
+  <script>
+    window.onerror = function (msg, url, line, col, error) {
+      const formData = new FormData();
+      formData.append('url', url);
+      formData.append('line', line);
+      formData.append('col', col);
+      formData.append('error', error);
+      navigator.sendBeacon('../clientError', formData);
+    };
+
+    setTimeout(() => {
+      // error
+      const a = b * b;
+    }, 1000);
+
+  </script>
+</body>
+
+</html>

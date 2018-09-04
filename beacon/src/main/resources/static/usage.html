@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>Usage</title>
+</head>
+
+<body>
+  <h1>Usage</h1>
+
+  <script src="pako_deflate.min.js"></script>
+  <script>
+
+    navigator.sendBeacon('heartbeat');
+    navigator.sendBeacon('heartbeat?id=123');
+
+    // String
+    const data = JSON.stringify({
+      location: window.location,
+      time: Date()
+    });
+    navigator.sendBeacon('usageString', data);
+
+    // FormData
+    const formData = new FormData();
+    formData.append("session", "12345");
+    formData.append("id", 11);
+    navigator.sendBeacon('usageFormData', formData);
+
+    // Blob
+    const ua = JSON.stringify({ ua: navigator.userAgent, now: performance.now() });
+    const headers = { type: 'application/json' };
+    const blob = new Blob([ua], headers);
+    navigator.sendBeacon('usageBlob', blob);
+
+    // ArrayBufferView
+    const string = '=======This is a text, sent compressed to the server=======';
+    const enc = new TextEncoder();
+    const encoded = enc.encode(string);
+    const compressed = pako.deflate(encoded);
+
+    navigator.sendBeacon('usageArrayBufferView', compressed);
+  </script>
+</body>
+
+</html>

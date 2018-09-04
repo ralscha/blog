@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>Generic Sensor API: Accelerometer</title>
+</head>
+
+<body>
+  <h1>Generic Sensor API: Accelerometer</h1>
+
+  <div id="x"></div>
+  <div id="y"></div>
+  <div id="z"></div>
+
+  <script>
+    const sensor = new Accelerometer();
+    sensor.start();
+
+    sensor.onreading = () => {
+      const formData = new FormData();
+      formData.append('x', sensor.x);
+      formData.append('y', sensor.y);
+      formData.append('z', sensor.y);
+      navigator.sendBeacon('../sensor', formData);
+
+      document.getElementById('x').innerText = sensor.x;
+      document.getElementById('y').innerText = sensor.y;
+      document.getElementById('z').innerText = sensor.z;
+    };
+
+    sensor.onerror = event => console.log(event.error.name, event.error.message);
+
+  </script>
+</body>
+
+</html>

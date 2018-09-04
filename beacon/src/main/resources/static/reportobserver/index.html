@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>ReportingObserver</title>
+</head>
+
+<body>
+  <h1>Reporting Observer</h1>
+
+  <script>
+    // create deprecation warning
+    const request = new XMLHttpRequest();
+    request.open('GET', 'http://numbersapi.com/42', false);
+    request.send(null);
+
+    if (request.status === 200) {
+      console.log(request.responseText);
+    }
+
+    // observe and report
+    const observer = new ReportingObserver((reports, observer) => {
+      for (const report of reports) {
+        navigator.sendBeacon('../reportObserver', JSON.stringify(report.body, ['id', 'columnNumber', 'lineNumber', 'message', 'sourceFile']));
+      }
+    }, { types: ['intervention', 'deprecation'], buffered: true });
+
+    observer.observe();
+  </script>
+</body>
+
+</html>
