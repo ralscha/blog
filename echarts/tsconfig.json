@@ -12,7 +12,7 @@
     "moduleResolution": "node",
     "sourceMap": true,
     "target": "es5",
-	"baseUrl": ".",
+    "baseUrl": ".",
     "paths": {
       "echarts": ["node_modules/echarts/dist/echarts.min.js"]
     }

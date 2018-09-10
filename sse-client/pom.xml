@@ -28,12 +28,12 @@
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-webflux</artifactId>
-			<version>5.0.8.RELEASE</version>
+			<version>5.0.9.RELEASE</version>
 		</dependency>
 		<dependency>
 			<groupId>io.projectreactor.ipc</groupId>
 			<artifactId>reactor-netty</artifactId>
-			<version>0.7.8.RELEASE</version>
+			<version>0.7.9.RELEASE</version>
 		</dependency>
 		<dependency>
 			<groupId>javax.json</groupId>

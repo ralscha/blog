@@ -17,7 +17,7 @@
     "core-js": "2.5.7",
     "echarts": "4.1.0",
     "event-source-polyfill": "0.0.16",
-    "muicss": "0.9.40",
+    "muicss": "0.9.41",
     "uuid": "3.3.2",
     "whatwg-fetch": "2.0.4"
   },
