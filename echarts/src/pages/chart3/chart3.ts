@@ -1,4 +1,5 @@
 import {Component} from '@angular/core';
+import { EChartOption } from 'echarts';
 
 @Component({
   selector: 'page-chart3',
@@ -9,7 +10,7 @@ export class Chart3Page {
   running = false;
   private interval = null;
 
-  options = {
+  options: EChartOption = {
     series: [{
       type: 'gauge',
       detail: {formatter: '{value}%'},

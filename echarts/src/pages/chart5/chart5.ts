@@ -1,5 +1,6 @@
 import {Component} from '@angular/core';
 import format from 'date-fns/format'
+import { EChartOption } from 'echarts';
 
 @Component({
   selector: 'page-chart5',
@@ -22,7 +23,7 @@ export class Chart5Page {
     return data;
   }
 
-  options = {
+  options: EChartOption = {
     tooltip: {
       position: 'top',
       formatter: function (p) {

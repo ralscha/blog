@@ -1,4 +1,5 @@
 import {Component} from '@angular/core';
+import { EChartOption } from 'echarts';
 
 @Component({
   selector: 'page-chart1',
@@ -6,7 +7,7 @@ import {Component} from '@angular/core';
 })
 export class Chart1Page {
 
-  options = {
+  options: EChartOption = {
     color: ['#3398DB'],
     grid: {
       left: '3%',

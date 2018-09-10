@@ -1,4 +1,5 @@
 import {Component} from '@angular/core';
+import { EChartOption } from 'echarts';
 
 @Component({
   selector: 'page-chart6',
@@ -17,7 +18,7 @@ export class Chart6Page {
   updateOptions1: any;
   updateOptions2: any;
 
-  options1 = {
+  options1: EChartOption = {
     title: {
       text: 'Dynamic Data 1'
     },

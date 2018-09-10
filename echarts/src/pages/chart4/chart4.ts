@@ -1,4 +1,5 @@
 import {Component} from '@angular/core';
+import { EChartOption } from 'echarts';
 
 @Component({
   selector: 'page-chart4',
@@ -6,7 +7,7 @@ import {Component} from '@angular/core';
 })
 export class Chart4Page {
 
-  options = {
+  options: EChartOption = {
     title: {
       text: 'Graph Example'
     },
