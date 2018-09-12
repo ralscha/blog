@@ -22,7 +22,7 @@
     "@angular/router": "6.1.7",
     "core-js": "2.5.7",
     "rxjs": "6.3.2",
-    "workbox-sw": "3.4.1",
+    "workbox-sw": "3.5.0",
     "zone.js": "0.8.26"
   },
   "devDependencies": {
@@ -36,6 +36,6 @@
     "ts-node": "7.0.1",
     "tslint": "5.11.0",
     "typescript": "2.9.2",
-    "workbox-cli": "3.4.1"
+    "workbox-cli": "3.5.0"
   }
 }
