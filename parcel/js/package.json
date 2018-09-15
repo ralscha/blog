@@ -20,7 +20,7 @@
     "papaparse": "4.6.0",
     "parcel-plugin-compress": "1.0.6",
     "tingle.js": "0.13.2",
-    "whatwg-fetch": "2.0.4"
+    "whatwg-fetch": "3.0.0"
   },
   "browserslist": [
     "> 1%",

@@ -39,7 +39,7 @@
     "rev-hash": "2.0.0",
     "shx": "0.3.2",
     "typescript": "2.7.2",
-    "webpack-manifest-plugin": "2.0.3",
+    "webpack-manifest-plugin": "2.0.4",
     "workbox-cli": "3.5.0"
   },
   "description": "A Workbox / Ionic example project"

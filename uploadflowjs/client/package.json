@@ -20,7 +20,7 @@
         "@flowjs/flow.js": "2.13.0",
         "ionic-angular": "3.9.2",
         "ionicons": "4.4.3",
-        "recordrtc": "5.4.7",
+        "recordrtc": "5.4.8",
         "rxjs": "6.3.2",
         "rxjs-compat": "6.3.2",
         "sw-toolbox": "3.6.0",

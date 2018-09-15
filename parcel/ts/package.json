@@ -16,6 +16,6 @@
   },
   "dependencies": {
     "core-js": "2.5.7",
-    "whatwg-fetch": "2.0.4"
+    "whatwg-fetch": "3.0.0"
   }
 }

@@ -23,7 +23,7 @@
         "@ionic/storage": "2.2.0",
         "code-push": "2.0.6",
         "cordova-android": "7.1.1",
-        "cordova-plugin-code-push": "1.11.12",
+        "cordova-plugin-code-push": "1.11.13",
         "cordova-plugin-compat": "1.2.0",
         "cordova-plugin-console": "1.1.0",
         "cordova-plugin-device": "2.0.2",
