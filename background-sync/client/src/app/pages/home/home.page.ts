@@ -30,7 +30,7 @@ export class HomePage {
     this.router.navigateByUrl('/edit');
   }
 
-  ionViewWillEnter() {
+  ionViewDidEnter() {
     this.todos = this.todoService.getTodos();
   }
 }
