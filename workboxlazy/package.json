@@ -16,20 +16,20 @@
     "ionic_webpack": "./webpack.config.js"
   },
   "dependencies": {
-    "@angular/common": "6.1.7",
-    "@angular/compiler": "6.1.7",
-    "@angular/compiler-cli": "6.1.7",
-    "@angular/core": "6.1.7",
-    "@angular/forms": "6.1.7",
-    "@angular/http": "6.1.7",
-    "@angular/platform-browser": "6.1.7",
-    "@angular/platform-browser-dynamic": "6.1.7",
+    "@angular/common": "6.1.8",
+    "@angular/compiler": "6.1.8",
+    "@angular/compiler-cli": "6.1.8",
+    "@angular/core": "6.1.8",
+    "@angular/forms": "6.1.8",
+    "@angular/http": "6.1.8",
+    "@angular/platform-browser": "6.1.8",
+    "@angular/platform-browser-dynamic": "6.1.8",
     "@ionic/storage": "2.2.0",
     "ionic-angular": "3.9.2",
-    "ionicons": "4.4.3",
-    "rxjs": "6.3.2",
-    "rxjs-compat": "6.3.2",
-    "workbox-sw": "3.5.0",
+    "ionicons": "4.4.4",
+    "rxjs": "6.3.3",
+    "rxjs-compat": "6.3.3",
+    "workbox-sw": "3.6.1",
     "zone.js": "0.8.26"
   },
   "devDependencies": {
@@ -40,7 +40,7 @@
     "shx": "0.3.2",
     "typescript": "2.7.2",
     "webpack-manifest-plugin": "2.0.4",
-    "workbox-cli": "3.5.0"
+    "workbox-cli": "3.6.1"
   },
   "description": "A Workbox / Ionic example project"
 }
