@@ -1,11 +1,7 @@
 import {Injectable} from '@angular/core';
 import {Storage} from "@ionic/storage";
-
-import {getRandomValues} from "asmcrypto.js/src/random/exports";
-import {bytes_to_string, string_to_bytes} from "asmcrypto.js/src/exportedUtils";
-import {PBKDF2_HMAC_SHA256} from "asmcrypto.js/src/pbkdf2/exports-pbkdf2-hmac-sha256";
-import {AES_GCM} from "asmcrypto.js/src/aes/gcm/exports";
-
+import {string_to_bytes, bytes_to_string,Pbkdf2HmacSha256,AES_GCM} from 'asmcrypto.js';
+import {getRandomValues} from 'asmcrypto.js/dist_es8/other/get-random-values';
 import {Todo} from "../../todo";
 
 @Injectable()
@@ -16,7 +12,7 @@ export class TodoProvider {
   private lastId: number = 0;
   private aesKey: any;
 
-  private salt = "This is the salt. It does not have to be secret";
+  private salt = string_to_bytes("This is the salt. It does not have to be secret");
   private iterations = 4096;
   private nonceLen = 12;
 
@@ -76,7 +72,7 @@ export class TodoProvider {
   }
 
   deriveAesKey(password: string) {
-    this.aesKey = PBKDF2_HMAC_SHA256.bytes(password, this.salt, this.iterations, 32);
+    this.aesKey = Pbkdf2HmacSha256(string_to_bytes(password), this.salt, this.iterations, 32);
   }
 
   joinNonceAndData(nonce: Uint8Array, data: Uint8Array) {
