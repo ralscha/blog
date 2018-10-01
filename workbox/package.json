@@ -30,7 +30,7 @@
     "ionicons": "4.4.4",
     "rxjs": "6.3.3",
     "rxjs-compat": "6.3.3",
-    "workbox-sw": "3.6.1",
+    "workbox-sw": "3.6.2",
     "zone.js": "0.8.26"
   },
   "devDependencies": {
@@ -40,7 +40,7 @@
     "map-replace": "1.0.2",
     "shx": "0.3.2",
     "typescript": "2.7.2",
-    "workbox-cli": "3.6.1"
+    "workbox-cli": "3.6.2"
   },
   "description": "A Workbox / Ionic example project"
 }

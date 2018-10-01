@@ -24,7 +24,7 @@
     "dexie": "2.0.4",
     "rxjs": "6.3.3",
     "uuid": "3.3.2",
-    "workbox-sw": "3.6.1",
+    "workbox-sw": "3.6.2",
     "zone.js": "0.8.26"
   },
   "devDependencies": {
@@ -36,12 +36,12 @@
     "@angular-devkit/build-angular": "0.8.3",
     "@angular-devkit/core": "0.8.3",
     "@angular-devkit/schematics": "0.8.3",
-    "@types/node": "10.11.0",
+    "@types/node": "10.11.3",
     "http-server": "0.11.1",
     "codelyzer": "4.4.4",
     "ts-node": "7.0.1",
     "tslint": "5.11.0",
     "typescript": "2.9.2",
-    "workbox-cli": "3.6.1"
+    "workbox-cli": "3.6.2"
   }
 }

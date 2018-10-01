@@ -1,9 +1,9 @@
-importScripts('workbox-3.6.1/workbox-sw.js');
+importScripts('workbox-3.6.2/workbox-sw.js');
 importScripts('dexie.min.js');
 
 workbox.setConfig({
   debug: false,
-  modulePathPrefix: 'workbox-3.6.1/'
+  modulePathPrefix: 'workbox-3.6.2/'
 });
 workbox.skipWaiting();
 workbox.clientsClaim();
