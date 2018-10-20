@@ -6,7 +6,6 @@ import {HomePage} from '../pages/home/home';
 import {LocationTrackerProvider} from '../providers/location-tracker/location-tracker';
 import {ServerPushProvider} from '../providers/server-push/server-push';
 import {HttpClientModule} from "@angular/common/http";
-import {BackgroundGeolocation} from "@ionic-native/background-geolocation";
 import {Geolocation} from "@ionic-native/geolocation";
 
 @NgModule({
@@ -26,7 +25,6 @@ import {Geolocation} from "@ionic-native/geolocation";
   ],
   providers: [
     Geolocation,
-    BackgroundGeolocation,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     LocationTrackerProvider,
     ServerPushProvider

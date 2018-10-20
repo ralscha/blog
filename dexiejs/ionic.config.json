@@ -1,7 +1,6 @@
 {
   "name": "earthquakes",
-  "type": "ionic-angular",
   "integrations": {},
-  "app_id": "",
+  "type": "ionic-angular",
   "hooks": {}
 }

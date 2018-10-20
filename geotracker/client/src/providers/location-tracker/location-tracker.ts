@@ -1,19 +1,16 @@
 import {Injectable} from '@angular/core';
 import {Geolocation} from '@ionic-native/geolocation';
-import {
-  BackgroundGeolocation, BackgroundGeolocationConfig,
-  BackgroundGeolocationResponse
-} from '@ionic-native/background-geolocation';
 import {catchError} from 'rxjs/operators';
 import {EmptyObservable} from "rxjs/observable/EmptyObservable";
 import {ServerPushProvider} from "../server-push/server-push";
+
+declare var BackgroundGeolocation: any;
 
 @Injectable()
 export class LocationTrackerProvider {
 
   constructor(private serverPush: ServerPushProvider,
-              private geolocation: Geolocation,
-              private backgroundGeolocation: BackgroundGeolocation) {
+              private geolocation: Geolocation) {
   }
 
   startTracking(): void {
@@ -22,7 +19,7 @@ export class LocationTrackerProvider {
   }
 
   stopTracking(): void {
-    this.backgroundGeolocation.stop();
+    BackgroundGeolocation.stop();
   }
 
   getForegroundLocation(): void {
@@ -42,8 +39,8 @@ export class LocationTrackerProvider {
   }
 
   startBackgroundLocation(): void {
-    const backgroundOptions: BackgroundGeolocationConfig = {
-      desiredAccuracy: 10,
+    BackgroundGeolocation.configure({
+      desiredAccuracy: BackgroundGeolocation.HIGH_ACCURACY,
       stationaryRadius: 20,
       distanceFilter: 30,
       stopOnTerminate: false,
@@ -51,18 +48,14 @@ export class LocationTrackerProvider {
       notificationTitle: 'geotracker',
       notificationText: 'Demonstrate background geolocation',
       activityType: 'AutomotiveNavigation',
-      locationProvider: this.backgroundGeolocation.LocationProvider.ANDROID_ACTIVITY_PROVIDER,
+      locationProvider: BackgroundGeolocation.ACTIVITY_PROVIDER,
       interval: 90000,
       fastestInterval: 60000,
       activitiesInterval: 80000
-    };
+    });
 
-    this.backgroundGeolocation.configure(backgroundOptions)
-      .pipe(catchError(error => {
-        this.serverPush.pushError(error);
-        return new EmptyObservable();
-      }))
-      .subscribe((location: BackgroundGeolocationResponse) => {
+    BackgroundGeolocation.on('location', location => {
+      BackgroundGeolocation.startTask(taskKey => {
         if (location) {
           this.serverPush.pushPosition({
             accuracy: location.accuracy,
@@ -73,10 +66,24 @@ export class LocationTrackerProvider {
             time: location.time
           });
         }
-        this.backgroundGeolocation.finish();
+        BackgroundGeolocation.endTask(taskKey);
       });
+    });
 
-    this.backgroundGeolocation.start();
+    BackgroundGeolocation.on('stationary', stationaryLocation => {
+      // handle stationary locations here
+    });
+
+    BackgroundGeolocation.on('error', error => this.serverPush.pushError(error));
+
+    BackgroundGeolocation.checkStatus(status => {
+      console.log('[INFO] BackgroundGeolocation service is running', status.isRunning);
+      console.log('[INFO] BackgroundGeolocation services enabled', status.locationServicesEnabled);
+      console.log('[INFO] BackgroundGeolocation auth status: ' + status.authorization);
+
+      if (!status.isRunning) {
+        BackgroundGeolocation.start();
+      }
+    });
   }
-
 }

@@ -17,7 +17,7 @@ export class EarthquakeProvider {
     this.db = new EarthquakeDb();
   }
 
-  async initProvider(): Promise<void> {
+  async initProvider(): Promise<number> {
     if (!navigator.onLine) {
       return;
     }
@@ -48,7 +48,7 @@ export class EarthquakeProvider {
       await this.loadData('https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_month.csv');
     }
 
-    this.deleteOldRecords();
+    return this.deleteOldRecords();
   }
 
   private async loadData(dataUrl) {
@@ -80,7 +80,7 @@ export class EarthquakeProvider {
 
   private deleteOldRecords() {
     const thirtyDaysAgo = Date.now() - EarthquakeProvider.THIRTY_DAYS;
-    this.db.earthquakes.where("time").below(thirtyDaysAgo).delete();
+    return this.db.earthquakes.where("time").below(thirtyDaysAgo).delete();
   }
 
 
