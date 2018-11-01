@@ -1,7 +1,7 @@
-importScripts('workbox-3.6.2/workbox-sw.js');
+importScripts('workbox-3.6.3/workbox-sw.js');
 workbox.setConfig({
   debug: false,
-  modulePathPrefix: 'workbox-3.6.2/'
+  modulePathPrefix: 'workbox-3.6.3/'
 });
 workbox.skipWaiting();
 workbox.clientsClaim();
