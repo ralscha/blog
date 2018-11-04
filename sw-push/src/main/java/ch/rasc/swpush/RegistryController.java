@@ -6,7 +6,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import ch.rasc.swpush.fcm.FcmClient;
-import reactor.core.publisher.Mono;
 
 @RestController
 @CrossOrigin
@@ -19,8 +18,8 @@ public class RegistryController {
   }
 
   @PostMapping("/register")
-  public void register(@RequestBody Mono<String> token) {
-    token.subscribe(t -> this.fcmClient.subscribe("chuck", t));
+  public void register(@RequestBody String token) {
+    this.fcmClient.subscribe("chuck", token);
   }
 
 }
