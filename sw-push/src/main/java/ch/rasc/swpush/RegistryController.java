@@ -1,11 +1,14 @@
 package ch.rasc.swpush;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import ch.rasc.swpush.fcm.FcmClient;
+import reactor.core.publisher.Mono;
 
 @RestController
 @CrossOrigin
@@ -18,8 +21,9 @@ public class RegistryController {
   }
 
   @PostMapping("/register")
-  public void register(@RequestBody String token) {
-    this.fcmClient.subscribe("chuck", token);
+  @ResponseStatus(HttpStatus.NO_CONTENT)
+  public Mono<Void> register(@RequestBody Mono<String> token) {
+    return token.doOnNext(System.out::println).then();
   }
 
 }
