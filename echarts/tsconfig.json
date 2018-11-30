@@ -1,32 +1,21 @@
 {
+  "compileOnSave": false,
   "compilerOptions": {
-    "allowSyntheticDefaultImports": true,
+    "baseUrl": "./",
+    "outDir": "./dist/out-tsc",
+    "sourceMap": true,
     "declaration": false,
-    "emitDecoratorMetadata": true,
-    "experimentalDecorators": true,
-    "lib": [
-      "dom",
-      "es2015"
-    ],
     "module": "es2015",
     "moduleResolution": "node",
-    "sourceMap": true,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
     "target": "es5",
-    "baseUrl": ".",
-    "paths": {
-      "echarts": ["node_modules/echarts/dist/echarts.min.js"]
-    }
-  },
-  "include": [
-    "src/**/*.ts"
+    "typeRoots": [
+      "node_modules/@types"
   ],
-  "exclude": [
-    "node_modules",
-    "src/**/*.spec.ts",
-    "src/**/__tests__/*.ts"
-  ],
-  "compileOnSave": false,
-  "atom": {
-    "rewriteTsconfig": false
+    "lib": [
+      "es2018",
+      "dom"
+    ]
   }
 }

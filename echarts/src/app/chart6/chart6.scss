@@ -1,0 +1,14 @@
+@media screen and (orientation: portrait) {
+  .demo-chart {
+    width: 100vw;
+    height: 40vh;
+  }
+}
+
+@media screen and (orientation: landscape) {
+  .demo-chart {
+    width: 100vw;
+    height: 82vh;
+  }
+}
+

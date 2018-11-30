@@ -1,6 +1,5 @@
 {
   "name": "echartsapp",
   "integrations": {},
-  "type": "ionic-angular",
-  "hooks": {}
+  "type": "angular"
 }
