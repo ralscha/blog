@@ -19,10 +19,10 @@ public class Minio {
   public static void main(String[] args) throws InvalidKeyException,
       NoSuchAlgorithmException, IOException, XmlPullParserException {
     try {
-      String accessKey = "EDVBGO8GKEY0BXMXQYXV";
-      String secretKey = "VSomZpBJ7WluGXPPsRxCxFhLnq3yOu9m+pAaCzYt";
+      String accessKey = "EY9QX8JV680F69KF1RZJ";
+      String secretKey = "eobizOIujzVW5+y4Z6oYP2OsTAgmpf4imzWfeTby";
 
-      MinioClient minioClient = new MinioClient("http://192.168.178.84:9000", accessKey,
+      MinioClient minioClient = new MinioClient("http://127.0.0.1:9000", accessKey,
           secretKey);
 
       boolean isExist = minioClient.bucketExists("cats");
@@ -36,7 +36,7 @@ public class Minio {
       minioClient.listBuckets().forEach(b -> System.out.println(b.name()));
 
       URL url = new URL(
-          "http://writm.com/wp-content/uploads/2016/08/Cat-hd-wallpapers.jpg");
+          "http://www.cutestpaw.com/wp-content/uploads/2015/11/My-Cute-Baby-Cat.jpg");
       Path tempFile = Files.createTempFile("cat", ".jpg");
       try (InputStream in = url.openStream()) {
         Files.copy(in, tempFile, StandardCopyOption.REPLACE_EXISTING);

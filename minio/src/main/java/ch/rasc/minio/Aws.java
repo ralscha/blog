@@ -20,8 +20,8 @@ import com.amazonaws.services.s3.model.Bucket;
 
 public class Aws {
   public static void main(String[] args) throws IOException {
-    String accessKey = "EDVBGO8GKEY0BXMXQYXV";
-    String secretKey = "VSomZpBJ7WluGXPPsRxCxFhLnq3yOu9m+pAaCzYt";
+    String accessKey = "EY9QX8JV680F69KF1RZJ";
+    String secretKey = "eobizOIujzVW5+y4Z6oYP2OsTAgmpf4imzWfeTby";
 
     AWSCredentials credentials = new BasicAWSCredentials(accessKey, secretKey);
 
@@ -29,7 +29,7 @@ public class Aws {
     clientConfig.setProtocol(Protocol.HTTP);
 
     EndpointConfiguration endpointConfiguration = new EndpointConfiguration(
-        "http://192.168.178.84:9000", "us-east-1");
+        "http://127.0.0.1:9000", "us-east-1");
 
     AmazonS3 client = AmazonS3ClientBuilder.standard()
         .withCredentials(new AWSStaticCredentialsProvider(credentials))
@@ -48,7 +48,7 @@ public class Aws {
     buckets.forEach(b -> System.out.println(b.getName()));
 
     URL url = new URL(
-        "http://writm.com/wp-content/uploads/2016/08/Cat-hd-wallpapers.jpg");
+        "http://www.cutestpaw.com/wp-content/uploads/2015/11/My-Cute-Baby-Cat.jpg");
     Path tempFile = Files.createTempFile("cat", ".jpg");
     try (InputStream in = url.openStream()) {
       Files.copy(in, tempFile, StandardCopyOption.REPLACE_EXISTING);
