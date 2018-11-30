@@ -15,8 +15,8 @@
     "shx": "0.3.2"
   },
   "dependencies": {
-    "echarts": "4.1.0",
-    "event-source-polyfill": "0.0.16",
+    "echarts": "4.2.0-rc.2",
+    "event-source-polyfill": "1.0.4",
     "uuid": "3.3.2"
   },
   "browserslist": [
