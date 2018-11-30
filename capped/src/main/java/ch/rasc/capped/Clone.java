@@ -1,10 +1,10 @@
 package ch.rasc.capped;
 
 import java.util.Date;
+import java.util.function.Consumer;
 
 import org.bson.Document;
 
-import com.mongodb.Block;
 import com.mongodb.MongoClient;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
@@ -42,7 +42,7 @@ public class Clone {
       System.out.println(collStats.get("capped")); // false
 
       db.getCollection("logCapped").find().forEach(
-          (Block<Document>) document -> System.out.println(document.get("index")));
+          (Consumer<Document>) document -> System.out.println(document.get("index")));
     }
   }
 }

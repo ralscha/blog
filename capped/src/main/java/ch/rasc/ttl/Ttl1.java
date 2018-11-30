@@ -33,11 +33,11 @@ public class Ttl1 {
         collection.insertOne(logMessage);
       }
 
-      System.out.println(collection.count()); // 5
+      System.out.println(collection.countDocuments()); // 5
 
       TimeUnit.SECONDS.sleep(120);
 
-      System.out.println(collection.count()); // 0
+      System.out.println(collection.countDocuments()); // 0
 
     }
   }

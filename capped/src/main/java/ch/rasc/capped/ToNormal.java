@@ -2,10 +2,10 @@ package ch.rasc.capped;
 
 import java.util.Arrays;
 import java.util.Date;
+import java.util.function.Consumer;
 
 import org.bson.Document;
 
-import com.mongodb.Block;
 import com.mongodb.MongoClient;
 import com.mongodb.MongoNamespace;
 import com.mongodb.client.MongoCollection;
@@ -42,7 +42,8 @@ public class ToNormal {
 
       collection = db.getCollection("logOld");
       collection.aggregate(Arrays.asList(Aggregates.out("log")))
-          .forEach((Block<Document>) block -> {
+          .forEach((Consumer<Document>) block -> {
+            System.out.println(block);
           });
 
       collStats = db.runCommand(new Document("collStats", "log"));

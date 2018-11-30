@@ -31,11 +31,11 @@ public class Ttl2 {
       logMessage.append("message", "in the past");
       collection.insertOne(logMessage);
 
-      System.out.println(collection.count()); // 1
+      System.out.println(collection.countDocuments()); // 1
 
       TimeUnit.MINUTES.sleep(1);
 
-      System.out.println(collection.count()); // 0
+      System.out.println(collection.countDocuments()); // 0
 
     }
   }

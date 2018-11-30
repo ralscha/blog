@@ -1,10 +1,10 @@
 package ch.rasc.capped;
 
 import java.util.Date;
+import java.util.function.Consumer;
 
 import org.bson.Document;
 
-import com.mongodb.Block;
 import com.mongodb.MongoClient;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
@@ -31,7 +31,7 @@ public class Example2 {
       }
 
       collection.find()
-          .forEach((Block<Document>) block -> System.out.println(block.get("index")));
+          .forEach((Consumer<Document>) block -> System.out.println(block.get("index")));
       // 7
       // 8
       // 9

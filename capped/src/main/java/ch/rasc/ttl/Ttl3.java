@@ -46,13 +46,13 @@ public class Ttl3 {
       logMessage.append("message", "an error message");
       collection.insertOne(logMessage);
 
-      System.out.println(collection.count()); // 3
+      System.out.println(collection.countDocuments()); // 3
       TimeUnit.SECONDS.sleep(60);
-      System.out.println(collection.count()); // 2
+      System.out.println(collection.countDocuments()); // 2
       TimeUnit.SECONDS.sleep(120);
-      System.out.println(collection.count()); // 1
+      System.out.println(collection.countDocuments()); // 1
       TimeUnit.SECONDS.sleep(180);
-      System.out.println(collection.count()); // 0
+      System.out.println(collection.countDocuments()); // 0
 
     }
   }
