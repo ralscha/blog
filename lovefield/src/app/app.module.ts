@@ -1,35 +1,33 @@
+import {NgModule} from '@angular/core';
 import {BrowserModule} from '@angular/platform-browser';
-import {ErrorHandler, NgModule} from '@angular/core';
-import {IonicApp, IonicErrorHandler, IonicModule} from 'ionic-angular';
-import {MyApp} from './app.component';
-import {HomePage} from '../pages/home/home';
-import {EarthquakeProvider} from '../providers/earthquake/earthquake';
-import {DetailComponent} from "../pages/home/detail";
-import {FilterPopover} from "../pages/home/filter";
-import {HttpClientModule} from "@angular/common/http";
+import {RouteReuseStrategy, RouterModule, Routes} from '@angular/router';
+import {IonicModule, IonicRouteStrategy} from '@ionic/angular';
+import {AppComponent} from './app.component';
+import {HomePage} from './home/home.page';
+import {CommonModule} from '@angular/common';
+import {FormsModule} from '@angular/forms';
+import {FilterPopover} from './home/filter';
+import {DetailComponent} from './home/detail';
+import {HttpClientModule} from '@angular/common/http';
+
+const routes: Routes = [
+  {path: '', redirectTo: 'home', pathMatch: 'full'},
+  {path: 'home', component: HomePage},
+];
 
 @NgModule({
-  declarations: [
-    MyApp,
-    HomePage,
-    DetailComponent,
-    FilterPopover
-  ],
-  imports: [
-    BrowserModule,
+  declarations: [AppComponent, HomePage, DetailComponent, FilterPopover],
+  entryComponents: [FilterPopover],
+  imports: [BrowserModule,
+    CommonModule,
     HttpClientModule,
-    IonicModule.forRoot(MyApp)
-  ],
-  bootstrap: [IonicApp],
-  entryComponents: [
-    MyApp,
-    HomePage,
-    FilterPopover
-  ],
+    FormsModule,
+    IonicModule.forRoot(),
+    RouterModule.forRoot(routes, {useHash: true})],
   providers: [
-    {provide: ErrorHandler, useClass: IonicErrorHandler},
-    EarthquakeProvider
-  ]
+    {provide: RouteReuseStrategy, useClass: IonicRouteStrategy}
+  ],
+  bootstrap: [AppComponent]
 })
 export class AppModule {
 }

@@ -1,15 +1,17 @@
 import {Injectable} from '@angular/core';
 import Papa from 'papaparse';
-import * as lf from 'lovefield'
-import {Filter} from "../../filter";
-import {HttpClient} from "@angular/common/http";
-import {map} from "rxjs/operators";
+import * as lf from 'lovefield';
+import {HttpClient} from '@angular/common/http';
+import {map} from 'rxjs/operators';
+import {Filter} from '../filter';
 
-@Injectable()
-export class EarthquakeProvider {
+@Injectable({
+  providedIn: 'root'
+})
+export class EarthquakeService {
 
   private readonly DATA_URL = 'https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_month.csv';
-  //private readonly DATA_URL = 'assets/data/all_month.csv';
+  // private readonly DATA_URL = 'assets/data/all_month.csv';
   private schemaBuilder;
   private earthquakeDb;
   private eqTbl;
@@ -57,14 +59,14 @@ export class EarthquakeProvider {
     const result = await this.earthquakeDb.select(this.eqTbl.id).from(this.eqTbl).limit(1).exec();
 
     if (result.length === 0) {
-        return this.loadAndInsertData().toPromise();
+      return this.loadAndInsertData().toPromise();
     }
     return Promise.resolve();
   }
 
   insertData(parsedData): Promise<Array<Object>> {
     const rows = [];
-    for (let parsedRow of parsedData.data) {
+    for (const parsedRow of parsedData.data) {
 
       if (!parsedRow.id) {
         continue;
@@ -108,7 +110,7 @@ export class EarthquakeProvider {
       .pipe(
         map(data => Papa.parse(data, {header: true})),
         map(parsedData => this.insertData(parsedData))
-      )
+      );
   }
 
   select(filter: Filter) {
@@ -140,9 +142,9 @@ export class EarthquakeProvider {
       whereClauses.push(this.eqTbl.depth.lte(filter.depth.upper));
     }
 
-    if (filter.time != -1) {
+    if (filter.time !== '-1') {
       const now = new Date();
-      now.setHours(now.getHours() - filter.time);
+      now.setHours(now.getHours() - parseInt(filter.time, 10));
       whereClauses.push(this.eqTbl.time.gte(now));
     }
 

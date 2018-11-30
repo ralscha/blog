@@ -1,6 +1,6 @@
-import {Component, OnInit} from "@angular/core";
-import {NavParams, ViewController} from "ionic-angular";
-import {Filter} from "../../filter";
+import {Component, OnInit} from '@angular/core';
+import {NavParams, PopoverController} from '@ionic/angular';
+import {Filter} from '../filter';
 
 @Component({
   templateUrl: 'filter.html'
@@ -10,7 +10,7 @@ export class FilterPopover implements OnInit {
   filter: Filter;
 
   constructor(private readonly navParams: NavParams,
-              private readonly viewCtrl: ViewController) {
+              private readonly popoverController: PopoverController) {
   }
 
   ngOnInit() {
@@ -18,6 +18,6 @@ export class FilterPopover implements OnInit {
   }
 
   apply({value}) {
-    this.viewCtrl.dismiss(value);
+    this.popoverController.dismiss(value);
   }
 }

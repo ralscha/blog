@@ -10,7 +10,7 @@ export interface Filter {
     upper: number
   };
 
-  time: number;
+  time: string;
 
   sort: 'mag' | 'depth' | 'time';
 

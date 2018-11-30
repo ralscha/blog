@@ -1,7 +1,5 @@
 {
   "name": "lovefieldapp",
-  "app_id": "",
-  "type": "ionic-angular",
   "integrations": {},
-  "hooks": {}
+  "type": "angular"
 }
