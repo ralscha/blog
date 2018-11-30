@@ -21,12 +21,12 @@ public class Importer {
 
   public static void main(String[] args) {
 
-    final long totalLines = 501636842L;
+    final long totalLines = 517238891L;
 
     try (Environment env = Environments.newInstance("e:/temp/pwnd")) {
       env.executeInTransaction((@NotNull final Transaction txn) -> {
         Store store = env.openStore("passwords", StoreConfig.WITHOUT_DUPLICATES, txn);
-        Path inputFile = Paths.get("E:/temp/pwned-passwords-2.0.txt");
+        Path inputFile = Paths.get("E:/temp/pwned-passwords-ordered-by-count.txt");
         try {
           AtomicLong round = new AtomicLong();
           AtomicLong counter = new AtomicLong();
