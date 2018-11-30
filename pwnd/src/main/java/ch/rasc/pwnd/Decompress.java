@@ -13,7 +13,7 @@ public class Decompress {
 
   public static void main(String[] args) throws IOException {
     Path dir = Paths.get("e:/temp");
-    Path passwordFile = dir.resolve(Paths.get("pwned-passwords-ordered-by-count.7z"));
+    Path passwordFile = dir.resolve(Paths.get("pwned-passwords-ordered-by-hash.7z"));
     try (SevenZFile sevenZFile = new SevenZFile(passwordFile.toFile())) {
       SevenZArchiveEntry entry = sevenZFile.getNextEntry();
       byte[] buffer = new byte[65536];

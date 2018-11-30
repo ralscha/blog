@@ -19,7 +19,7 @@ import okhttp3.ResponseBody;
 public class Download {
 
   public static void main(String[] args) throws IOException, NoSuchAlgorithmException {
-    String torrentURL = "https://downloads.pwnedpasswords.com/passwords/pwned-passwords-ordered-by-count.7z.torrent";
+    String torrentURL = "https://downloads.pwnedpasswords.com/passwords/pwned-passwords-ordered-by-hash.7z.torrent";
 
     Path torrentFile = Paths.get("e:/temp/pwned.torrent");
     OkHttpClient client = new OkHttpClient();

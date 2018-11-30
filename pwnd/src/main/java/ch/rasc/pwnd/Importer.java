@@ -26,7 +26,7 @@ public class Importer {
     try (Environment env = Environments.newInstance("e:/temp/pwnd")) {
       env.executeInTransaction((@NotNull final Transaction txn) -> {
         Store store = env.openStore("passwords", StoreConfig.WITHOUT_DUPLICATES, txn);
-        Path inputFile = Paths.get("E:/temp/pwned-passwords-ordered-by-count.txt");
+        Path inputFile = Paths.get("E:/temp/pwned-passwords-ordered-by-hash.txt");
         try {
           AtomicLong round = new AtomicLong();
           AtomicLong counter = new AtomicLong();
@@ -56,7 +56,7 @@ public class Importer {
     int count = Integer.parseInt(line.substring(41).trim());
 
     ByteIterable key = new ArrayByteIterable(hexStringToByteArray(sha1));
-    store.put(txn, key, IntegerBinding.intToCompressedEntry(count));
+    store.putRight(txn, key, IntegerBinding.intToCompressedEntry(count));
   }
 
   private static byte[] hexStringToByteArray(String s) {
