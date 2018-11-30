@@ -1,1 +1,1 @@
-Code for the blog post: https://golb.hplar.ch/p/Upload-files-from-Java-to-a-Minio-server
+Code for the blog post: https://golb.hplar.ch/2017/02/Upload-files-from-Java-to-a-Minio-server.html
