@@ -1,0 +1,19 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Protocol Buffers</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+
+  <ion-list>
+    <ion-item *ngFor="let earthquake of earthquakes">
+      <ion-label>
+        <app-detail [earthquake]="earthquake"></app-detail>
+      </ion-label>
+    </ion-item>
+  </ion-list>
+</ion-content>

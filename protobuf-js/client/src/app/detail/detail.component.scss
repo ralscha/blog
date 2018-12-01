@@ -1,0 +1,23 @@
+
+ion-note {
+  font-size: 14px;
+}
+
+.row {
+  display: flex;
+  align-items: center;
+
+  h3 {
+    flex-grow: 3;
+  }
+
+  .place {
+    margin-left: 15px;
+  }
+
+  .depth {
+    margin-left: auto;
+    font-size: 14px;
+  }
+}
+
