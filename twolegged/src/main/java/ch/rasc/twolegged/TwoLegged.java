@@ -42,7 +42,7 @@ public class TwoLegged {
     SLF4JBridgeHandler.removeHandlersForRootLogger();
     SLF4JBridgeHandler.install();
 
-    Path credentialPath = Paths.get("./translationdemo-5674749bc948.json");
+    Path credentialPath = Paths.get("./demos-6ff86309d67f.json");
     ObjectMapper om = new ObjectMapper();
 
     Credentials credentials = om.readValue(Files.readAllBytes(credentialPath),
