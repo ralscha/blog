@@ -153,7 +153,7 @@ export class EarthquakeService {
       };
 
       openRequest.onsuccess = event => {
-        this.db = (<any>event.target).result;
+        this.db = (event.target as any).result;
 
         this.db.onerror = e => {
           console.log(e);
