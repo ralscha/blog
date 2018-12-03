@@ -1,13 +1,14 @@
 import {Component, OnInit} from '@angular/core';
-import {LoadingController, ModalController} from 'ionic-angular';
-import {Filter} from "../../filter";
-import {FilterPage} from "./filter";
-import {Earthquake} from "../../earthquake";
-import {EarthquakeProvider} from "../../providers/earthquake/earthquake";
+import {FilterPage} from '../filter/filter.page';
+import {EarthquakeService} from '../earthquake.service';
+import {LoadingController, ModalController} from '@ionic/angular';
+import {Filter} from '../filter-interface';
+import {Earthquake} from '../earthquake';
 
 @Component({
-  selector: 'page-home',
-  templateUrl: 'home.html'
+  selector: 'app-home',
+  templateUrl: 'home.page.html',
+  styleUrls: ['home.page.scss']
 })
 export class HomePage implements OnInit {
 
@@ -25,12 +26,12 @@ export class HomePage implements OnInit {
       lower: 0,
       upper: 20000
     },
-    time: -1,
+    time: '-1',
     sort: 'time',
     myLocation: null
   };
 
-  constructor(private readonly earthquakeProvider: EarthquakeProvider,
+  constructor(private readonly earthquakeService: EarthquakeService,
               private readonly modalCtrl: ModalController,
               private readonly loadingCtrl: LoadingController) {
   }
@@ -43,13 +44,13 @@ export class HomePage implements OnInit {
     navigator.geolocation.getCurrentPosition(position => {
       this.filter.myLocation = position.coords;
 
-      this.earthquakeProvider.initProvider()
+      this.earthquakeService.initProvider()
         .then(() => this.filterEarthquakes())
         .catch(err => console.log(err));
 
     }, error => {
       this.filter.myLocation = {longitude: 7.5663964, latitude: 46.9268287};
-      this.earthquakeProvider.initProvider()
+      this.earthquakeService.initProvider()
         .then(() => this.filterEarthquakes())
         .catch(err => console.log(err));
     });
@@ -63,10 +64,10 @@ export class HomePage implements OnInit {
     });
   }
 
-  doRefresh(refresher) {
-    this.earthquakeProvider.initProvider()
+  doRefresh(event) {
+    this.earthquakeService.initProvider()
       .then(() => this.filterEarthquakes(true))
-      .then(() => refresher.complete());
+      .then(() => event.target.complete());
   }
 
   async filterEarthquakes(hideLoading = false) {
@@ -75,14 +76,15 @@ export class HomePage implements OnInit {
     let loading = null;
 
     if (!hideLoading) {
-      loading = this.loadingCtrl.create({
-        content: 'Please wait...'
+      loading = await this.loadingCtrl.create({
+        message: 'Please wait...'
       });
-      loading.present();
+      await loading.present();
     }
 
     const start = performance.now();
-    this.earthquakes = await this.earthquakeProvider.filter(this.filter);
+    this.earthquakes = await this.earthquakeService.filter(this.filter);
+
     this.elapsedTime = performance.now() - start;
 
     if (loading) {
@@ -90,20 +92,22 @@ export class HomePage implements OnInit {
     }
   }
 
-  identify(index, item) {
-    return item.id;
-  }
-
-  presentFilterPage() {
-    const filterPage = this.modalCtrl.create(FilterPage, {filter: this.filter});
-    filterPage.present();
-
-    filterPage.onDidDismiss(filter => {
-      if (filter) {
-        this.filter = filter;
-        this.filterEarthquakes();
+  async presentFilterPage() {
+    const filterPage = await this.modalCtrl.create(
+      {
+        component: FilterPage,
+        componentProps: {filter: this.filter}
       }
-    });
+    );
+
+    await filterPage.present();
+    const event = await filterPage.onDidDismiss();
+
+    if (event && event.data) {
+      this.filter = event.data;
+      await this.filterEarthquakes();
+    }
+
   }
 
 }

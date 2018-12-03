@@ -1,35 +1,36 @@
+import {NgModule} from '@angular/core';
 import {BrowserModule} from '@angular/platform-browser';
-import {ErrorHandler, NgModule} from '@angular/core';
-import {IonicApp, IonicErrorHandler, IonicModule} from 'ionic-angular';
-import {MyApp} from './app.component';
-import {HomePage} from '../pages/home/home';
-import {EarthquakeProvider} from '../providers/earthquake/earthquake';
-import {DetailComponent} from "../pages/home/detail";
-import {FilterPage} from "../pages/home/filter";
-import {HttpClientModule} from "@angular/common/http";
+import {RouteReuseStrategy, RouterModule, Routes} from '@angular/router';
+import {IonicModule, IonicRouteStrategy} from '@ionic/angular';
+import {AppComponent} from './app.component';
+import {HomePage} from './home/home.page';
+import {CommonModule} from '@angular/common';
+import {FormsModule} from '@angular/forms';
+import {DetailComponent} from './detail/detail.component';
+import {FilterPage} from './filter/filter.page';
+import {HttpClientModule} from '@angular/common/http';
+import { ServiceWorkerModule } from '@angular/service-worker';
+import { environment } from '../environments/environment';
+
+const routes: Routes = [
+  {path: '', redirectTo: 'home', pathMatch: 'full'},
+  {path: 'home', component: HomePage}
+];
 
 @NgModule({
-  declarations: [
-    MyApp,
-    HomePage,
-    DetailComponent,
-    FilterPage
-  ],
-  imports: [
-    BrowserModule,
+  declarations: [AppComponent, HomePage, DetailComponent, FilterPage],
+  entryComponents: [FilterPage],
+  imports: [BrowserModule,
+    CommonModule,
+    FormsModule,
     HttpClientModule,
-    IonicModule.forRoot(MyApp)
-  ],
-  bootstrap: [IonicApp],
-  entryComponents: [
-    MyApp,
-    HomePage,
-    FilterPage
-  ],
+    IonicModule.forRoot(),
+    RouterModule.forRoot(routes, {useHash: true}),
+    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })],
   providers: [
-    {provide: ErrorHandler, useClass: IonicErrorHandler},
-    EarthquakeProvider
-  ]
+    {provide: RouteReuseStrategy, useClass: IonicRouteStrategy}
+  ],
+  bootstrap: [AppComponent]
 })
 export class AppModule {
 }

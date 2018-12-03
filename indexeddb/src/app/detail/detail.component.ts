@@ -1,10 +1,10 @@
 import {Component, Input} from '@angular/core';
-import {Earthquake} from "../../earthquake";
-import geolib from 'geolib';
+import * as geolib from 'geolib';
+import {Earthquake} from '../earthquake';
 
 @Component({
-  selector: 'detail',
-  templateUrl: 'detail.html'
+  selector: 'app-detail',
+  templateUrl: './detail.component.html'
 })
 export class DetailComponent {
 
@@ -34,5 +34,4 @@ export class DetailComponent {
     }
     return null;
   }
-
 }

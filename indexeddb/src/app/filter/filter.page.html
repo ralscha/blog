@@ -1,0 +1,92 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button (click)="dismiss()">Cancel</ion-button>
+    </ion-buttons>
+
+    <ion-title>
+      Filter Earthquakes
+    </ion-title>
+
+    <ion-buttons slot="end">
+      <ion-button (click)="applyFilters(f)" strong>Done</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <form #f="ngForm">
+
+    <ion-item-group>
+      <ion-item-divider color="light">
+        <ion-label>
+          Distance from me: <strong>{{f.controls.distance?.value?.lower}}
+          - {{f.controls.distance?.value?.upper}}</strong>
+        </ion-label>
+      </ion-item-divider>
+
+      <ion-item>
+        <ion-label>
+          <ion-range dualKnobs="true" min="0" max="20000" name="distance" [ngModel]="filter.distance" no-padding>
+            <ion-label slot="start">0 km</ion-label>
+            <ion-label slot="end">20,000 km</ion-label>
+          </ion-range>
+        </ion-label>
+      </ion-item>
+    </ion-item-group>
+
+    <ion-item-group>
+      <ion-item-divider color="light">
+        <ion-label>
+          Magnitude: <strong>{{f.controls.mag?.value?.lower}} - {{f.controls.mag?.value?.upper}}</strong>
+        </ion-label>
+      </ion-item-divider>
+      <ion-item>
+        <ion-label>
+          <ion-range dualKnobs="true" min="-1" max="10" name="mag" [ngModel]="filter.mag" no-padding>
+            <ion-label slot="start">-1</ion-label>
+            <ion-label slot="end">10</ion-label>
+          </ion-range>
+        </ion-label>
+      </ion-item>
+    </ion-item-group>
+
+    <ion-item-group>
+      <ion-radio-group>
+        <ion-item-divider color="light">
+          <ion-label>Time</ion-label>
+        </ion-item-divider>
+        <ion-select [ngModel]="filter.time" name="time">
+          <ion-select-option value="-1">All</ion-select-option>
+          <ion-select-option value="1">Last hour</ion-select-option>
+          <ion-select-option value="6">Last 6 hours</ion-select-option>
+          <ion-select-option value="12">Last 12 hours</ion-select-option>
+          <ion-select-option value="24">Last 24 hours</ion-select-option>
+          <ion-select-option value="48">Last 48 hours</ion-select-option>
+          <ion-select-option value="168">Last 7 days</ion-select-option>
+        </ion-select>
+      </ion-radio-group>
+    </ion-item-group>
+
+    <ion-item-group name="sort">
+      <ion-radio-group [ngModel]="filter.sort" name="sort">
+        <ion-item-divider color="light">
+          <ion-label>Sort by</ion-label>
+        </ion-item-divider>
+        <ion-item>
+          <ion-label>Magnitude</ion-label>
+          <ion-radio slot="start" value="mag"></ion-radio>
+        </ion-item>
+        <ion-item>
+          <ion-label>Time</ion-label>
+          <ion-radio slot="start" value="time"></ion-radio>
+        </ion-item>
+        <ion-item>
+          <ion-label>Distance</ion-label>
+          <ion-radio slot="start" value="distance"></ion-radio>
+        </ion-item>
+      </ion-radio-group>
+    </ion-item-group>
+
+  </form>
+</ion-content>

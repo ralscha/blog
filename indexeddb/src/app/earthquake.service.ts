@@ -1,14 +1,15 @@
-import {Injectable} from "@angular/core";
-import {Filter} from "../../filter";
-import {Earthquake} from "../../earthquake";
-import {HttpClient} from "@angular/common/http";
-import { map } from 'rxjs/operators';
-import geolib from 'geolib';
+import {Injectable} from '@angular/core';
+import {Filter} from './filter-interface';
 import Papa from 'papaparse';
+import * as geolib from 'geolib';
+import {map} from 'rxjs/operators';
+import {HttpClient} from '@angular/common/http';
+import {Earthquake} from './earthquake';
 
-@Injectable()
-export class EarthquakeProvider {
-
+@Injectable({
+  providedIn: 'root'
+})
+export class EarthquakeService {
   private static readonly FOURTYFIVE_MINUTES = 30 * 60 * 1000;
   private static readonly ONE_HOUR = 60 * 60 * 1000;
   private static readonly ONE_DAY = 24 * 60 * 60 * 1000;
@@ -29,31 +30,110 @@ export class EarthquakeProvider {
 
     const lastUpdate = localStorage.getItem('lastUpdate');
     if (lastUpdate) {
-      const lastUpdateTs = parseInt(lastUpdate);
+      const lastUpdateTs = parseInt(lastUpdate, 10);
       const now = Date.now();
-      if (lastUpdateTs + EarthquakeProvider.SEVEN_DAYS < now) {
+      if (lastUpdateTs + EarthquakeService.SEVEN_DAYS < now) {
         // database older than 7 days. load the 30 days file
         promise = promise.then(() => this.loadData('https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_month.csv'));
-      }
-      else if (lastUpdateTs + EarthquakeProvider.ONE_DAY < now) {
+      } else if (lastUpdateTs + EarthquakeService.ONE_DAY < now) {
         // database older than 1 day. load the 7 days file
         promise = promise.then(() => this.loadData('https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_week.csv'));
-      }
-      else if (lastUpdateTs + EarthquakeProvider.ONE_HOUR < now) {
+      } else if (lastUpdateTs + EarthquakeService.ONE_HOUR < now) {
         // database older than 1 hour. load the 1 day file
         promise = promise.then(() => this.loadData('https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_day.csv'));
-      }
-      else if (lastUpdateTs + EarthquakeProvider.FOURTYFIVE_MINUTES < now) {
+      } else if (lastUpdateTs + EarthquakeService.FOURTYFIVE_MINUTES < now) {
         // database older than 45 minutes. load the 1 hour file
         promise = promise.then(() => this.loadData('https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_hour.csv'));
       }
-    }
-    else {
-      //no last update. load the 30 days file
+    } else {
+      // no last update. load the 30 days file
       promise = promise.then(() => this.loadData('https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_month.csv'));
     }
 
     return promise.then(() => this.deleteOldRecords());
+  }
+
+  filter(filter: Filter): Promise<Earthquake[]> {
+    const tx = this.db.transaction('earthquakes', 'readonly');
+    const store = tx.objectStore('earthquakes');
+    const magIndex: any = store.index('mag');
+    const timeIndex: any = store.index('time');
+
+    const hasMagFilter = !(filter.mag.lower === -1 && filter.mag.upper === 10);
+    const hasDistanceFilter = !(filter.distance.lower === 0 && filter.distance.upper === 20000);
+    const hasTimeFilter = filter.time !== '-1';
+
+    let promise = new Promise<Earthquake[]>(resolve => {
+      if (hasMagFilter && !hasTimeFilter) {
+        magIndex.getAll(IDBKeyRange.bound(filter.mag.lower, filter.mag.upper))
+          .onsuccess = e => resolve(e.target.result);
+      } else if (!hasMagFilter && hasTimeFilter) {
+        const now = new Date();
+        now.setHours(now.getHours() - parseInt(filter.time, 10));
+        timeIndex.getAll(IDBKeyRange.lowerBound(now.getTime()))
+          .onsuccess = e => resolve(e.target.result);
+      } else if (hasMagFilter && hasTimeFilter) {
+        const magPromise = new Promise<string[]>(res => {
+          magIndex.getAllKeys(IDBKeyRange.bound(filter.mag.lower, filter.mag.upper))
+            .onsuccess = e => res(e.target.result);
+        });
+
+        const now = new Date();
+        now.setHours(now.getHours() - parseInt(filter.time, 10));
+        const timePromise = new Promise<string[]>(res => {
+          timeIndex.getAllKeys(IDBKeyRange.lowerBound(now.getTime()))
+            .onsuccess = e => res(e.target.result);
+        });
+
+        Promise.all([magPromise, timePromise]).then(results => {
+          const intersection = results[0].filter(id => results[1].includes(id));
+          const result: Earthquake[] = [];
+          intersection.forEach(id => {
+            store.get(id).onsuccess = e => result.push((<any>e.target).result);
+          });
+          tx.oncomplete = e => resolve(result);
+        });
+      } else {
+        magIndex.getAll()
+          .onsuccess = e => resolve(e.target.result);
+      }
+    });
+
+    if (hasDistanceFilter || filter.sort === 'distance') {
+      promise = promise.then(e => {
+        const filtered: Earthquake[] = [];
+        e.forEach(r => {
+
+          const distanceInKilometers = geolib.getDistance(
+            {latitude: r.latLng[0], longitude: r.latLng[1]},
+            {latitude: filter.myLocation.latitude, longitude: filter.myLocation.longitude}) / 1000;
+
+          if (hasDistanceFilter) {
+            if (filter.distance.lower <= distanceInKilometers && distanceInKilometers <= filter.distance.upper) {
+              r.distance = distanceInKilometers;
+              filtered.push(r);
+            }
+          } else {
+            r.distance = distanceInKilometers;
+            filtered.push(r);
+          }
+
+        });
+
+        return filtered;
+      });
+    }
+
+
+    if (filter.sort === 'mag') {
+      return promise.then(e => e.sort((a, b) => b.mag - a.mag));
+    }
+
+    if (filter.sort === 'distance') {
+      return promise.then(e => e.sort((a, b) => a.distance - b.distance));
+    }
+
+    return promise.then(e => e.sort((a, b) => b.time - a.time));
   }
 
   private initDb(): Promise<void> {
@@ -62,7 +142,7 @@ export class EarthquakeProvider {
     }
 
     return new Promise(resolve => {
-      const openRequest = indexedDB.open("Earthquake", 1);
+      const openRequest = indexedDB.open('Earthquake', 1);
 
       openRequest.onupgradeneeded = event => {
         const target: any = event.target;
@@ -75,24 +155,24 @@ export class EarthquakeProvider {
       openRequest.onsuccess = event => {
         this.db = (<any>event.target).result;
 
-        this.db.onerror = event => {
-          console.log(event);
+        this.db.onerror = e => {
+          console.log(e);
         };
 
         resolve();
-      }
+      };
     });
   }
 
   private loadData(dataUrl): Promise<void> {
     return new Promise(resolve => {
-      const data = this.http.get(dataUrl, {responseType: 'text'}).pipe(map(data => Papa.parse(data, {header: true})));
-        data
+      const response = this.http.get(dataUrl, {responseType: 'text'}).pipe(map(data => Papa.parse(data, {header: true})));
+      response
         .subscribe(data => {
           const tx = this.db.transaction('earthquakes', 'readwrite');
           const store = tx.objectStore('earthquakes');
 
-          for (let row of data.data) {
+          for (const row of data.data) {
             if (row.id) {
               store.put({
                 time: new Date(row.time).getTime(),
@@ -117,11 +197,11 @@ export class EarthquakeProvider {
     const tx = this.db.transaction('earthquakes', 'readwrite');
     const store = tx.objectStore('earthquakes');
     const timeIndex: any = store.index('time');
-    const thirtyDaysAgo = Date.now() - EarthquakeProvider.THIRTY_DAYS;
+    const thirtyDaysAgo = Date.now() - EarthquakeService.THIRTY_DAYS;
 
     return new Promise(resolve => {
       timeIndex.openCursor(IDBKeyRange.upperBound(thirtyDaysAgo)).onsuccess = event => {
-        var cursor = event.target.result;
+        const cursor = event.target.result;
         if (cursor) {
           cursor.delete();
           cursor.continue();
@@ -129,92 +209,5 @@ export class EarthquakeProvider {
       };
       tx.oncomplete = e => resolve();
     });
-  }
-
-  filter(filter: Filter): Promise<Earthquake[]> {
-    const tx = this.db.transaction('earthquakes', 'readonly');
-    const store = tx.objectStore('earthquakes');
-    const magIndex: any = store.index('mag');
-    const timeIndex: any = store.index('time');
-
-    const hasMagFilter = !(filter.mag.lower === -1 && filter.mag.upper === 10);
-    const hasDistanceFilter = !(filter.distance.lower === 0 && filter.distance.upper === 20000);
-    const hasTimeFilter = filter.time !== -1;
-
-    let promise = new Promise<Earthquake[]>(resolve => {
-      if (hasMagFilter && !hasTimeFilter) {
-        magIndex.getAll(IDBKeyRange.bound(filter.mag.lower, filter.mag.upper))
-          .onsuccess = e => resolve(e.target.result);
-      }
-      else if (!hasMagFilter && hasTimeFilter) {
-        const now = new Date();
-        now.setHours(now.getHours() - filter.time);
-        timeIndex.getAll(IDBKeyRange.lowerBound(now.getTime()))
-          .onsuccess = e => resolve(e.target.result);
-      }
-      else if (hasMagFilter && hasTimeFilter) {
-        const magPromise = new Promise<string[]>(resolve => {
-          magIndex.getAllKeys(IDBKeyRange.bound(filter.mag.lower, filter.mag.upper))
-            .onsuccess = e => resolve(e.target.result);
-        });
-
-        const now = new Date();
-        now.setHours(now.getHours() - filter.time);
-        const timePromise = new Promise<string[]>(resolve => {
-          timeIndex.getAllKeys(IDBKeyRange.lowerBound(now.getTime()))
-            .onsuccess = e => resolve(e.target.result);
-        });
-
-        Promise.all([magPromise, timePromise]).then(results => {
-          const intersection = results[0].filter(id => results[1].includes(id));
-          const result: Earthquake[] = [];
-          intersection.forEach(id => {
-            store.get(id).onsuccess = e => result.push((<any>e.target).result);
-          });
-          tx.oncomplete = e => resolve(result);
-        });
-      }
-      else {
-        magIndex.getAll()
-          .onsuccess = e => resolve(e.target.result);
-      }
-    });
-
-    if (hasDistanceFilter || filter.sort === 'distance') {
-      promise = promise.then(e => {
-        const filtered: Earthquake[] = [];
-        e.forEach(r => {
-
-          const distanceInKilometers = geolib.getDistance(
-            {latitude: r.latLng[0], longitude: r.latLng[1]},
-            {latitude: filter.myLocation.latitude, longitude: filter.myLocation.longitude}) / 1000;
-
-          if (hasDistanceFilter) {
-            if (filter.distance.lower <= distanceInKilometers && distanceInKilometers <= filter.distance.upper) {
-              r.distance = distanceInKilometers;
-              filtered.push(r);
-            }
-          }
-          else {
-            r.distance = distanceInKilometers;
-            filtered.push(r);
-          }
-
-        });
-
-        return filtered;
-      });
-    }
-
-
-    if (filter.sort === 'mag') {
-      return promise.then(e => e.sort((a, b) => b.mag - a.mag));
-    }
-
-    if (filter.sort === 'distance') {
-      return promise.then(e => e.sort((a, b) => a.distance - b.distance));
-    }
-
-    return promise.then(e => e.sort((a, b) => b.time - a.time));
   }
 }

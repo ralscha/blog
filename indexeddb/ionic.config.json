@@ -1,7 +1,5 @@
 {
-  "name": "indexeddb",
-  "app_id": "",
-  "type": "ionic-angular",
+  "name": "earthquakepwa",
   "integrations": {},
-  "hooks": {}
+  "type": "angular"
 }

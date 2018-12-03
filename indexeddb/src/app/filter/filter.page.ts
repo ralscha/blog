@@ -1,16 +1,18 @@
-import {Component, OnInit} from "@angular/core";
-import {NavParams, ViewController} from "ionic-angular";
-import {Filter} from "../../filter";
+import {Component, OnInit} from '@angular/core';
+import {ModalController, NavParams} from '@ionic/angular';
+import {Filter} from '../filter-interface';
 
 @Component({
-  templateUrl: 'filter.html'
+  selector: 'app-filter',
+  templateUrl: './filter.page.html',
+  styleUrls: ['./filter.page.scss'],
 })
 export class FilterPage implements OnInit {
 
   filter: Filter;
 
   constructor(private readonly navParams: NavParams,
-              private readonly viewCtrl: ViewController) {
+              private readonly modalCtrl: ModalController) {
   }
 
   ngOnInit() {
@@ -24,9 +26,8 @@ export class FilterPage implements OnInit {
   dismiss(data?: any) {
     if (data) {
       data.myLocation = this.filter.myLocation;
-      data.time = parseInt(data.time);
     }
-    this.viewCtrl.dismiss(data);
+    this.modalCtrl.dismiss(data);
   }
 
 }
