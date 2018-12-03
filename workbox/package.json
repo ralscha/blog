@@ -27,14 +27,14 @@
     "@angular/platform-browser-dynamic": "6.1.10",
     "@ionic/storage": "2.2.0",
     "ionic-angular": "3.9.2",
-    "ionicons": "4.4.6",
+    "ionicons": "4.4.8",
     "rxjs": "6.3.3",
     "rxjs-compat": "6.3.3",
     "workbox-sw": "3.6.3",
     "zone.js": "0.8.26"
   },
   "devDependencies": {
-    "@ionic/app-scripts": "3.2.0",
+    "@ionic/app-scripts": "3.2.1",
     "hashmark": "5.0.0",
     "http-server": "0.11.1",
     "map-replace": "1.0.2",
