@@ -1,7 +1,5 @@
 {
-  "name": "markers",
-  "type": "ionic-angular",
+  "name": "dynamicpos",
   "integrations": {},
-  "app_id": "",
-  "hooks": {}
+  "type": "angular"
 }

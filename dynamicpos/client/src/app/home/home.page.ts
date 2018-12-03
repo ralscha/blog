@@ -1,12 +1,13 @@
-import {Component} from '@angular/core';
-import {HttpClient} from "@angular/common/http";
-import {LatLngBounds, LayerGroup, layerGroup, Map, tileLayer, latLng, circleMarker} from "leaflet";
+import {AfterViewInit, Component} from '@angular/core';
+import {HttpClient} from '@angular/common/http';
+import {circleMarker, latLng, LatLngBounds, LayerGroup, layerGroup, Map, tileLayer} from 'leaflet';
 
 @Component({
-  selector: 'page-home',
-  templateUrl: 'home.html'
+  selector: 'app-home',
+  templateUrl: 'home.page.html',
+  styleUrls: ['home.page.scss']
 })
-export class HomePage {
+export class HomePage implements AfterViewInit {
   private map: Map;
   private markerGroup: LayerGroup = null;
 
@@ -15,11 +16,18 @@ export class HomePage {
 
   options = {
     layers: [
-      tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {maxZoom: 18, attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'})
+      tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+        maxZoom: 18,
+        attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+      })
     ],
     zoom: 5,
     center: latLng([46.879966, -121.726909])
   };
+
+  ngAfterViewInit() {
+    setTimeout(() => this.map.invalidateSize(), 10);
+  }
 
   onMapReady(map: Map) {
     this.map = map;
@@ -32,7 +40,7 @@ export class HomePage {
   private loadEarthquakes(bounds: LatLngBounds) {
     const southWest = bounds.getSouthWest();
     const northEast = bounds.getNorthEast();
-    this.httpClient.get<Earthquake[]>(`http://192.168.178.84:8080/earthquakes/${southWest.lng}/${southWest.lat}/${northEast.lng}/${northEast.lat}`)
+    this.httpClient.get<Earthquake[]>(`http://127.0.0.1:8080/earthquakes/${southWest.lng}/${southWest.lat}/${northEast.lng}/${northEast.lat}`)
       .subscribe(data => this.drawCircles(data));
   }
 
@@ -41,7 +49,7 @@ export class HomePage {
       this.markerGroup.removeFrom(this.map);
     }
     this.markerGroup = layerGroup(null).addTo(this.map);
-    for (let earthquake of earthquakes) {
+    for (const earthquake of earthquakes) {
       const info = `${earthquake.time}<br>${earthquake.place}<br>${earthquake.mag}`;
 
       circleMarker([earthquake.location.coordinates[1], earthquake.location.coordinates[0]], {
@@ -59,17 +67,13 @@ export class HomePage {
   private getFillColor(mag: number) {
     if (mag < 3) {
       return '#FFC0CB';
-    }
-    else if (mag < 4) {
+    } else if (mag < 4) {
       return '#F88379';
-    }
-    else if (mag < 5) {
+    } else if (mag < 5) {
       return '#FF0000';
-    }
-    else if (mag < 6) {
+    } else if (mag < 6) {
       return '#ED1C24';
-    }
-    else if (mag < 7) {
+    } else if (mag < 7) {
       return '#C40233';
     }
     return '#960018';
@@ -82,5 +86,5 @@ interface Earthquake {
   mag: number;
   location: {
     coordinates: number[]
-  }
+  };
 }
