@@ -1,6 +1,5 @@
 {
   "name": "earthquakes",
   "integrations": {},
-  "type": "ionic-angular",
-  "hooks": {}
+  "type": "angular"
 }

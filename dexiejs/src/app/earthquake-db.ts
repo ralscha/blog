@@ -1,10 +1,10 @@
-import Dexie from "dexie";
+import Dexie from 'dexie';
 
 export class EarthquakeDb extends Dexie {
   earthquakes: Dexie.Table<Earthquake, string>;
 
   constructor() {
-    super("Earthquake");
+    super('Earthquake');
     this.version(1).stores({
       earthquakes: 'id,mag,time'
     });

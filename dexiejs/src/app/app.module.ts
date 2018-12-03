@@ -1,33 +1,31 @@
+import {NgModule} from '@angular/core';
 import {BrowserModule} from '@angular/platform-browser';
-import {ErrorHandler, NgModule} from '@angular/core';
-import {IonicApp, IonicErrorHandler, IonicModule} from 'ionic-angular';
-import {MyApp} from './app.component';
-import {HomePage} from '../pages/home/home';
-import {EarthquakeProvider} from '../providers/earthquakeProvider';
-import {DetailComponent} from "../pages/home/detail";
-import {FilterPage} from "../pages/home/filter";
+import {RouteReuseStrategy, RouterModule, Routes} from '@angular/router';
+import {IonicModule, IonicRouteStrategy} from '@ionic/angular';
+import {AppComponent} from './app.component';
+import {HomePage} from './home/home.page';
+import {CommonModule} from '@angular/common';
+import {FormsModule} from '@angular/forms';
+import {DetailComponent} from './detail/detail.component';
+import {FilterPage} from './filter/filter.page';
+
+const routes: Routes = [
+  {path: '', redirectTo: 'home', pathMatch: 'full'},
+  {path: 'home', component: HomePage}
+];
 
 @NgModule({
-  declarations: [
-    MyApp,
-    HomePage,
-    DetailComponent,
-    FilterPage
-  ],
-  imports: [
-    BrowserModule,
-    IonicModule.forRoot(MyApp)
-  ],
-  bootstrap: [IonicApp],
-  entryComponents: [
-    MyApp,
-    HomePage,
-    FilterPage
-  ],
+  declarations: [AppComponent, HomePage, DetailComponent, FilterPage],
+  entryComponents: [FilterPage],
+  imports: [BrowserModule,
+    CommonModule,
+    FormsModule,
+    IonicModule.forRoot(),
+    RouterModule.forRoot(routes, {useHash: true})],
   providers: [
-    {provide: ErrorHandler, useClass: IonicErrorHandler},
-    EarthquakeProvider
-  ]
+    {provide: RouteReuseStrategy, useClass: IonicRouteStrategy}
+  ],
+  bootstrap: [AppComponent]
 })
 export class AppModule {
 }
