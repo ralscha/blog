@@ -65,7 +65,7 @@
 						<configuration>
 							<inputSpec>http://localhost:8080/v2/api-docs</inputSpec>
 							<language>typescript-angular</language>
-							<output>${basedir}/../client4/src/app/swagger</output>
+							<output>${basedir}/../client/src/app/swagger</output>
 						</configuration>
 					</execution>
 				</executions>
