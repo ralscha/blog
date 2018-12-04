@@ -61,7 +61,7 @@ public class UploadController {
       @RequestParam("flowChunkNumber") int flowChunkNumber,
       @RequestParam("flowTotalChunks") int flowTotalChunks,
       @RequestParam("flowChunkSize") long flowChunkSize,
-      @RequestParam("flowTotalSize") long flowTotalSize,
+      @SuppressWarnings("unused") @RequestParam("flowTotalSize") long flowTotalSize,
       @RequestParam("flowIdentifier") String flowIdentifier,
       @RequestParam("flowFilename") String flowFilename,
       @RequestParam("file") MultipartFile file) throws IOException {
