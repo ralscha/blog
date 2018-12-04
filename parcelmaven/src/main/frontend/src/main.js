@@ -1,7 +1,9 @@
 import echarts from 'echarts/lib/echarts';
 import 'echarts/lib/chart/gauge';
-import 'event-source-polyfill';
+import { NativeEventSource, EventSourcePolyfill } from 'event-source-polyfill';
 import uuidv4 from 'uuid/v4';
+
+const EventSource = NativeEventSource || EventSourcePolyfill;
 
 const gauge = echarts.init(document.getElementById('chart'));
 gauge.setOption({
