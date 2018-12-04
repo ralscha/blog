@@ -27,6 +27,7 @@
 <ion-footer padding>
   <ion-button color="secondary" (click)="searchCordova()">Cordova</ion-button>
   <ion-button color="secondary" (click)="searchWebSpeech()" [disabled]="isWebSpeechRecording">Web Speech</ion-button>
-  <ion-button [color]="isRecording ? 'danger' : 'secondary'" (click)="searchGoogleCloudSpeech()">{{isRecording ? 'Stop' : 'Cloud Speech'}}
+  <ion-button [color]="isRecording ? 'danger' : 'secondary'"
+              (click)="searchGoogleCloudSpeech()">{{isRecording ? 'Stop' : 'Cloud Speech'}}
   </ion-button>
 </ion-footer>

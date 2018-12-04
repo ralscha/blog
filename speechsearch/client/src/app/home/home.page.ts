@@ -1,11 +1,10 @@
-import {Component, NgZone} from '@angular/core';
+import {ChangeDetectorRef, Component} from '@angular/core';
 import {Movie} from '../movie';
 import {LoadingController} from '@ionic/angular';
 import * as RecordRTC from 'recordrtc';
 import {environment} from '../../environments/environment';
 
 declare var webkitSpeechRecognition: any;
-declare var speechRecognition: any;
 
 @Component({
   selector: 'app-home',
@@ -15,12 +14,11 @@ declare var speechRecognition: any;
 export class HomePage {
   movies: Movie[] = [];
   matches: string[] = [];
-  private recorder: RecordRTC;
   isRecording = false;
-
   isWebSpeechRecording = false;
+  private recorder: RecordRTC;
 
-  constructor(private readonly ngZone: NgZone,
+  constructor(private readonly changeDetectorRef: ChangeDetectorRef,
               private readonly loadingCtrl: LoadingController) {
   }
 
@@ -38,21 +36,37 @@ export class HomePage {
         queryParams += `term=${term}&`;
       });
       const response = await fetch(`${environment.serverUrl}/search?${queryParams}`);
-      const matchingMovies = await response.json();
+      this.movies = await response.json();
       loading.dismiss();
-      this.ngZone.run(() => this.movies = matchingMovies);
+      this.changeDetectorRef.detectChanges();
     } else {
       this.movies = [];
     }
   }
 
-  async searchCordova() {
-    const hasPermission = await speechRecognition.hasPermission();
-    if (!hasPermission) {
-      await speechRecognition.requestPermission();
-    }
+  searchCordova() {
+    window['plugins'].speechRecognition.hasPermission(permission => {
 
-    speechRecognition.startListening().subscribe(async terms => this.movieSearch(terms));
+      if (!permission) {
+        window['plugins'].speechRecognition.requestPermission(_ => {
+          window['plugins'].speechRecognition.startListening(terms => {
+            if (terms && terms.length > 0) {
+              this.movieSearch([terms[0]]);
+            } else {
+              this.movieSearch(terms);
+            }
+          });
+        });
+      } else {
+        window['plugins'].speechRecognition.startListening(terms => {
+          if (terms && terms.length > 0) {
+            this.movieSearch([terms[0]]);
+          } else {
+            this.movieSearch(terms);
+          }
+        });
+      }
+    });
   }
 
   searchWebSpeech() {
@@ -63,9 +77,16 @@ export class HomePage {
     const recognition = new webkitSpeechRecognition();
     recognition.continuous = false;
 
-    recognition.onstart = () => this.ngZone.run(() => this.isWebSpeechRecording = true);
+    recognition.onstart = () => {
+      this.isWebSpeechRecording = true;
+      this.changeDetectorRef.detectChanges();
+    };
+
     recognition.onerror = event => console.log('error', event);
-    recognition.onend = () => this.ngZone.run(() => this.isWebSpeechRecording = false);
+    recognition.onend = () => {
+      this.isWebSpeechRecording = false;
+      this.changeDetectorRef.detectChanges();
+    };
 
     recognition.onresult = event => {
       const terms = [];
@@ -87,7 +108,7 @@ export class HomePage {
   async searchGoogleCloudSpeech() {
     if (this.isRecording) {
       if (this.recorder) {
-        this.recorder.stopRecording(async audioVideoWebMURL => {
+        this.recorder.stopRecording(async _ => {
           const recordedBlob = this.recorder.getBlob();
 
           const headers = new Headers();
@@ -101,7 +122,6 @@ export class HomePage {
           const response = await fetch(`${environment.serverUrl}/uploadSpeech`, requestParams);
           const searchTerms = await response.json();
           this.movieSearch(searchTerms);
-
         });
       }
       this.isRecording = false;
@@ -114,7 +134,6 @@ export class HomePage {
       };
       this.recorder = RecordRTC(stream, options);
       this.recorder.startRecording();
-
     }
   }
 
