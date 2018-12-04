@@ -65,103 +65,112 @@ public class ImportImdbData {
 
 		MongoClientOptions options = MongoClientOptions.builder()
 				.writeConcern(WriteConcern.UNACKNOWLEDGED).build();
-		MongoClient mongoClient = new MongoClient("localhost", options);
-		MongoDatabase database = mongoClient.getDatabase("imdb");
-		MongoCollection<Document> actorsCollection = database.getCollection("actors");
+		try (MongoClient mongoClient = new MongoClient("localhost", options)) {
+			MongoDatabase database = mongoClient.getDatabase("imdb");
+			MongoCollection<Document> actorsCollection = database.getCollection("actors");
 
-		List<InsertOneModel<Document>> documents = new ArrayList<>();
+			List<InsertOneModel<Document>> documents = new ArrayList<>();
 
-		try (InputStream is = Files.newInputStream(actorsFile);
-				GZIPInputStream gzIs = new GZIPInputStream(is)) {
-			for (Record record : parser.iterateRecords(gzIs)) {
-				String actorId = record.getString("nconst");
-				String primaryName = record.getString("primaryName");
+			try (InputStream is = Files.newInputStream(actorsFile);
+					GZIPInputStream gzIs = new GZIPInputStream(is)) {
+				for (Record record : parser.iterateRecords(gzIs)) {
+					String actorId = record.getString("nconst");
+					String primaryName = record.getString("primaryName");
 
-				Document doc = new Document("_id", actorId).append("name", primaryName);
-				documents.add(new InsertOneModel<>(doc));
+					Document doc = new Document("_id", actorId).append("name",
+							primaryName);
+					documents.add(new InsertOneModel<>(doc));
 
-				if (documents.size() > 5_000) {
+					if (documents.size() > 5_000) {
+						actorsCollection.bulkWrite(documents);
+						documents.clear();
+					}
+				}
+
+				if (!documents.isEmpty()) {
 					actorsCollection.bulkWrite(documents);
 					documents.clear();
 				}
 			}
 
-			if (!documents.isEmpty()) {
-				actorsCollection.bulkWrite(documents);
-				documents.clear();
-			}
-		}
+			MongoCollection<Document> moviesCollection = database.getCollection("movies");
+			try (InputStream is = Files.newInputStream(moviesFile);
+					GZIPInputStream gzIs = new GZIPInputStream(is)) {
+				for (Record record : parser.iterateRecords(gzIs)) {
 
-		MongoCollection<Document> moviesCollection = database.getCollection("movies");
-		try (InputStream is = Files.newInputStream(moviesFile);
-				GZIPInputStream gzIs = new GZIPInputStream(is)) {
-			for (Record record : parser.iterateRecords(gzIs)) {
+					String titleType = record.getString("titleType");
+					if (!"movie".equals(titleType)) {
+						continue;
+					}
 
-				String titleType = record.getString("titleType");
-				if (!"movie".equals(titleType)) {
-					continue;
+					String movieId = record.getString("tconst");
+					String primaryTitle = record.getString("primaryTitle");
+					String originalTitle = record.getString("originalTitle");
+					Boolean adultMovie = record.getBoolean("isAdult", "1", "0");
+					String runtimeMinutesStr = record.getString("runtimeMinutes");
+					String genres = record.getString("genres");
+
+					Document doc = new Document("_id", movieId);
+					if (isNotNull(primaryTitle)) {
+						doc.append("primaryTitle", primaryTitle);
+					}
+					if (isNotNull(originalTitle)) {
+						doc.append("originalTitle", originalTitle);
+					}
+					if (adultMovie != null) {
+						doc.append("adultMovie", adultMovie);
+					}
+					if (isNotNull(runtimeMinutesStr)) {
+						doc.append("runtimeMinutes", Integer.valueOf(runtimeMinutesStr));
+					}
+					if (isNotNull(genres)) {
+						doc.append("genres", genres);
+					}
+
+					documents.add(new InsertOneModel<>(doc));
+
+					if (documents.size() > 5_000) {
+						moviesCollection.bulkWrite(documents);
+						documents.clear();
+					}
 				}
 
-				String movieId = record.getString("tconst");
-				String primaryTitle = record.getString("primaryTitle");
-				String originalTitle = record.getString("originalTitle");
-				Boolean adultMovie = record.getBoolean("isAdult", "1", "0");
-				String runtimeMinutesStr = record.getString("runtimeMinutes");
-				String genres = record.getString("genres");
-
-				Document doc = new Document("_id", movieId);
-				if (isNotNull(primaryTitle)) {
-					doc.append("primaryTitle", primaryTitle);
-				}
-				if (isNotNull(originalTitle)) {
-					doc.append("originalTitle", originalTitle);
-				}
-				if (adultMovie != null) {
-					doc.append("adultMovie", adultMovie);
-				}
-				if (isNotNull(runtimeMinutesStr)) {
-					doc.append("runtimeMinutes", Integer.valueOf(runtimeMinutesStr));
-				}
-				if (isNotNull(genres)) {
-					doc.append("genres", genres);
-				}
-
-				documents.add(new InsertOneModel<>(doc));
-
-				if (documents.size() > 5_000) {
+				if (!documents.isEmpty()) {
 					moviesCollection.bulkWrite(documents);
 					documents.clear();
 				}
 			}
 
-			if (!documents.isEmpty()) {
-				moviesCollection.bulkWrite(documents);
-				documents.clear();
-			}
-		}
+			List<UpdateOneModel<Document>> movieUpdates = new ArrayList<>();
+			List<UpdateOneModel<Document>> actorUpdates = new ArrayList<>();
 
-		List<UpdateOneModel<Document>> movieUpdates = new ArrayList<>();
-		List<UpdateOneModel<Document>> actorUpdates = new ArrayList<>();
+			try (InputStream is = Files.newInputStream(actorMovieFile);
+					GZIPInputStream gzIs = new GZIPInputStream(is)) {
+				for (Record record : parser.iterateRecords(gzIs)) {
+					String movieId = record.getString("tconst");
+					String principalCastString = record.getString("principalCast");
+					if (principalCastString != null) {
+						String[] principalCast = principalCastString.split(",");
+						movieUpdates.add(new UpdateOneModel<>(Filters.eq("_id", movieId),
+								Updates.addEachToSet("actors",
+										Arrays.asList(principalCast))));
 
-		try (InputStream is = Files.newInputStream(actorMovieFile);
-				GZIPInputStream gzIs = new GZIPInputStream(is)) {
-			for (Record record : parser.iterateRecords(gzIs)) {
-				String movieId = record.getString("tconst");
-				String principalCastString = record.getString("principalCast");
-				if (principalCastString != null) {
-					String[] principalCast = principalCastString.split(",");
-					movieUpdates.add(new UpdateOneModel<>(Filters.eq("_id", movieId),
-							Updates.addEachToSet("actors",
-									Arrays.asList(principalCast))));
+						for (String principal : principalCast) {
+							actorUpdates.add(
+									new UpdateOneModel<>(Filters.eq("_id", principal),
+											Updates.addToSet("movies", movieId)));
+						}
+					}
 
-					for (String principal : principalCast) {
-						actorUpdates
-								.add(new UpdateOneModel<>(Filters.eq("_id", principal),
-										Updates.addToSet("movies", movieId)));
+					if (movieUpdates.size() > 5_000) {
+						moviesCollection.bulkWrite(movieUpdates);
+						actorsCollection.bulkWrite(actorUpdates);
+						movieUpdates.clear();
+						actorUpdates.clear();
 					}
 				}
 
-				if (movieUpdates.size() > 5_000) {
+				if (!movieUpdates.isEmpty()) {
 					moviesCollection.bulkWrite(movieUpdates);
 					actorsCollection.bulkWrite(actorUpdates);
 					movieUpdates.clear();
@@ -169,17 +178,10 @@ public class ImportImdbData {
 				}
 			}
 
-			if (!movieUpdates.isEmpty()) {
-				moviesCollection.bulkWrite(movieUpdates);
-				actorsCollection.bulkWrite(actorUpdates);
-				movieUpdates.clear();
-				actorUpdates.clear();
-			}
+			moviesCollection.createIndex(Indexes.ascending("primaryTitle"));
+
 		}
 
-		moviesCollection.createIndex(Indexes.ascending("primaryTitle"));
-
-		mongoClient.close();
 	}
 
 	private static boolean isNotNull(String text) {
