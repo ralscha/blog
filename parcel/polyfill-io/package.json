@@ -13,8 +13,5 @@
     "parcel-bundler": "1.10.3",
     "parcel-plugin-compress": "1.0.6",
     "shx": "0.3.2"
-  },
-  "dependencies": {
-    "regenerator-runtime": "0.12.1"
   }
 }
