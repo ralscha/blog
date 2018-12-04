@@ -1,0 +1,32 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>
+      Movie Speech Search
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding>
+  <ion-card *ngIf="matches && matches.length > 0">
+    <ion-card-content>
+      {{matches.join(', ')}}
+    </ion-card-content>
+  </ion-card>
+  <ion-list *ngIf="movies && movies.length > 0">
+    <ion-card *ngFor="let movie of movies">
+      <ion-card-header> {{ movie.title }}</ion-card-header>
+      <ion-card-content>
+        <p>{{ movie.genres }}</p>
+        <p *ngIf="movie.runtimeMinutes">Runtime: {{ movie.runtimeMinutes }} minutes</p>
+        <p>{{ movie.actors.join(', ') }}</p>
+      </ion-card-content>
+    </ion-card>
+  </ion-list>
+</ion-content>
+
+<ion-footer padding>
+  <ion-button color="secondary" (click)="searchCordova()">Cordova</ion-button>
+  <ion-button color="secondary" (click)="searchWebSpeech()" [disabled]="isWebSpeechRecording">Web Speech</ion-button>
+  <ion-button [color]="isRecording ? 'danger' : 'secondary'" (click)="searchGoogleCloudSpeech()">{{isRecording ? 'Stop' : 'Cloud Speech'}}
+  </ion-button>
+</ion-footer>
