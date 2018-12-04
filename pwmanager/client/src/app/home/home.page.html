@@ -1,0 +1,42 @@
+<ion-header>
+  <ion-toolbar color="danger">
+    <ion-title>
+      Password Manager
+    </ion-title>
+    <ion-buttons slot="start">
+      <ion-button (click)="logout()" icon-only>
+        <ion-icon name="exit">
+        </ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-buttons slot="end">
+      <ion-button (click)="addPassword()" icon-only>
+        <ion-icon name="add">
+        </ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding>
+  <ion-searchbar (ionInput)="filter($event)"></ion-searchbar>
+  <ion-card *ngFor="let password of passwords" (click)="editPassword(password)">
+    <ion-card-header>
+      {{password.url}}
+    </ion-card-header>
+
+    <ion-card-content>
+      <div>
+        Username: <strong>{{password.username}}</strong>
+      </div>
+      <div>
+        Password: <strong>{{password.password}}</strong>
+      </div>
+      <ion-note>
+        {{password.description}}
+      </ion-note>
+    </ion-card-content>
+
+  </ion-card>
+
+</ion-content>

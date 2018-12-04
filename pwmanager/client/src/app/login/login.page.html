@@ -1,0 +1,27 @@
+<ion-header>
+  <ion-toolbar color="danger">
+    <ion-title>Password Manager</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding>
+  <form (ngSubmit)="login(username.value, password.value)">
+    <ion-list>
+      <ion-item>
+        <ion-label position="stacked">Username</ion-label>
+        <ion-input type="username" ngModel #username="ngModel" required name="username"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="stacked">Password</ion-label>
+        <ion-input (keydown.enter)="login(username.value, password.value)" type="password" ngModel #password="ngModel"
+                   required name="password"></ion-input>
+      </ion-item>
+
+    </ion-list>
+
+    <ion-button type="submit" expand="full"
+                [disabled]="!username.valid || !password.valid">Login
+    </ion-button>
+  </form>
+</ion-content>

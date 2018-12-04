@@ -44,21 +44,17 @@ async function serverSync() {
     if (serverTimestamp) {
       if (todo.ts === -1) {
         syncRequest.remove.push(todo.id);
-      }
-      else if (todo.ts > serverTimestamp) {
+      } else if (todo.ts > serverTimestamp) {
         syncRequest.update.push(todo);
-      }
-      else if (todo.ts < serverTimestamp) {
+      } else if (todo.ts < serverTimestamp) {
         syncRequest.get.push(todo.id);
       }
       serverMap.delete(todo.id);
-    }
-    else {
+    } else {
       //not on the server, either insert or delete locally
       if (todo.ts === 0) {
         syncRequest.update.push(todo);
-      }
-      else {
+      } else {
         deleteLocal.push(todo.id);
       }
     }
@@ -80,8 +76,7 @@ async function serverSync() {
     && syncRequest.get.length === 0) {
     if (deleted) {
       return notifyClients();
-    }
-    else {
+    } else {
       return Promise.resolve();
     }
   }
