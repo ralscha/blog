@@ -2,8 +2,8 @@ module.exports = {
   "globDirectory": "www/",
   "globPatterns": [
     "index.html",
-	"*.js",
-	"*.css",
+    "*.js",
+    "*.css",
     "svg/md-add.svg",
     "svg/md-trash.svg",
     "svg/ios-add.svg",

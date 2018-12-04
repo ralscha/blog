@@ -1,6 +1,5 @@
 {
   "name": "syncclient",
   "integrations": {},
-  "type": "angular",
-  "hooks": {}
+  "type": "angular"
 }

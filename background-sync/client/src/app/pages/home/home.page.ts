@@ -18,7 +18,7 @@ export class HomePage {
 
     navigator.serviceWorker.addEventListener('message', event => {
       if (event.data === 'sync_finished') {
-          this.todos = this.todoService.getTodos();
+        this.todos = this.todoService.getTodos();
       }
     });
   }
