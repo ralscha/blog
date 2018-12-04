@@ -8,6 +8,8 @@ import {CommonModule} from '@angular/common';
 import {FormsModule} from '@angular/forms';
 import {HttpClientModule} from '@angular/common/http';
 import {EditPage} from './edit/edit.page';
+import {ApiModule, Configuration, ConfigurationParameters} from './swagger';
+import {environment} from '../environments/environment';
 
 const routes: Routes = [
   {path: '', redirectTo: 'home', pathMatch: 'full'},
@@ -16,12 +18,20 @@ const routes: Routes = [
   {path: '**', redirectTo: 'home'}
 ];
 
+export function apiConfigFactory (): Configuration {
+  const params: ConfigurationParameters = {
+    basePath: environment.basePath
+  };
+  return new Configuration(params);
+}
+
 @NgModule({
   declarations: [AppComponent, HomePage, EditPage],
   entryComponents: [],
   imports: [BrowserModule,
     CommonModule,
     HttpClientModule,
+    ApiModule.forRoot(apiConfigFactory),
     FormsModule,
     IonicModule.forRoot(),
     RouterModule.forRoot(routes, {useHash: true})],

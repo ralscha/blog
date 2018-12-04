@@ -14,24 +14,22 @@
 import {Inject, Injectable, Optional} from '@angular/core';
 import {HttpClient, HttpEvent, HttpHeaders, HttpResponse} from '@angular/common/http';
 
+import {Observable} from 'rxjs';
+
 import {Todo} from '../model/todo';
 
 import {BASE_PATH} from '../variables';
 import {Configuration} from '../configuration';
-import {Observable} from 'rxjs';
-import {environment} from '../../../environments/environment';
 
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable()
 export class TodoServiceService {
 
-  public selectedTodo: Todo = null;
+  public selectedTodo: Todo;
 
   public defaultHeaders = new HttpHeaders();
   public configuration = new Configuration();
-  protected basePath = environment.basePath;
+  protected basePath = 'https://localhost:8080';
 
   constructor(protected httpClient: HttpClient, @Optional() @Inject(BASE_PATH) basePath: string, @Optional() configuration: Configuration) {
     if (basePath) {
