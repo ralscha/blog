@@ -1,0 +1,31 @@
+<ion-header>
+  <ion-toolbar color="secondary">
+    <ion-title>
+      Todo
+    </ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="addTodo()" icon-only>
+        <ion-icon name="add">
+        </ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding>
+  <ion-list>
+    <ion-item-sliding #slidingItem *ngFor="let todo of todos">
+      <ion-item><ion-label>{{todo.title}}</ion-label></ion-item>
+      <ion-item-options>
+        <ion-button color="primary" (click)="editTodo(slidingItem, todo)">
+          <ion-icon name="create"></ion-icon>
+          Edit
+        </ion-button>
+        <ion-button color="danger" (click)="deleteTodo(slidingItem, todo)">
+          <ion-icon name="trash"></ion-icon>
+          Delete
+        </ion-button>
+      </ion-item-options>
+    </ion-item-sliding>
+  </ion-list>
+</ion-content>

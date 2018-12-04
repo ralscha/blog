@@ -1,27 +1,32 @@
+import {NgModule} from '@angular/core';
 import {BrowserModule} from '@angular/platform-browser';
-import {ErrorHandler, NgModule} from '@angular/core';
-import {IonicApp, IonicErrorHandler, IonicModule} from 'ionic-angular';
-import {ProgressBarComponent} from "../components/progress-bar/progress-bar";
-import {MyApp} from './app.component';
-import {HomePage} from '../pages/home/home';
+import {RouteReuseStrategy, RouterModule, Routes} from '@angular/router';
+import {IonicModule, IonicRouteStrategy} from '@ionic/angular';
+import {AppComponent} from './app.component';
+import {HomePage} from './home/home.page';
+import {CommonModule} from '@angular/common';
+import {FormsModule} from '@angular/forms';
+import {HttpClientModule} from '@angular/common/http';
+import {ProgressBarComponent} from './progress-bar/progress-bar.component';
+
+const routes: Routes = [
+  {path: '', redirectTo: 'home', pathMatch: 'full'},
+  {path: 'home', component: HomePage},
+];
 
 @NgModule({
-  declarations: [
-    MyApp,
-    HomePage,
-    ProgressBarComponent
-  ],
-  imports: [
-    BrowserModule,
-    IonicModule.forRoot(MyApp)
-  ],
-  bootstrap: [IonicApp],
-  entryComponents: [
-    MyApp,
-    HomePage
-  ],
+  declarations: [AppComponent, HomePage, ProgressBarComponent],
+  entryComponents: [],
+  imports: [BrowserModule,
+    CommonModule,
+    HttpClientModule,
+    FormsModule,
+    IonicModule.forRoot(),
+    RouterModule.forRoot(routes, {useHash: true})],
   providers: [
-    {provide: ErrorHandler, useClass: IonicErrorHandler}]
+    {provide: RouteReuseStrategy, useClass: IonicRouteStrategy}
+  ],
+  bootstrap: [AppComponent]
 })
 export class AppModule {
 }

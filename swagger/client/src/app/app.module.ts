@@ -1,42 +1,34 @@
+import {NgModule} from '@angular/core';
 import {BrowserModule} from '@angular/platform-browser';
-import {NgModule, ErrorHandler} from '@angular/core';
-import {IonicApp, IonicModule, IonicErrorHandler} from 'ionic-angular';
-import {MyApp} from './app.component';
-import {HomePage} from '../pages/home/home';
-import {EditPage} from "../pages/edit/edit";
-import {HttpClientModule} from "@angular/common/http";
-import {ApiModule} from "../swagger/api.module";
-import {Configuration, ConfigurationParameters} from "../swagger";
+import {RouteReuseStrategy, RouterModule, Routes} from '@angular/router';
+import {IonicModule, IonicRouteStrategy} from '@ionic/angular';
+import {AppComponent} from './app.component';
+import {HomePage} from './home/home.page';
+import {CommonModule} from '@angular/common';
+import {FormsModule} from '@angular/forms';
+import {HttpClientModule} from '@angular/common/http';
+import {EditPage} from './edit/edit.page';
 
-export function apiConfigFactory (): Configuration {
-  const params: ConfigurationParameters = {
-    basePath: 'http://localhost:8080'
-  }
-  return new Configuration(params);
-}
+const routes: Routes = [
+  {path: '', redirectTo: 'home', pathMatch: 'full'},
+  {path: 'home', component: HomePage},
+  {path: 'edit', component: EditPage},
+  {path: '**', redirectTo: 'home'}
+];
 
 @NgModule({
-  declarations: [
-    MyApp,
-    HomePage,
-    EditPage
-  ],
-  imports: [
-    BrowserModule,
+  declarations: [AppComponent, HomePage, EditPage],
+  entryComponents: [],
+  imports: [BrowserModule,
+    CommonModule,
     HttpClientModule,
-    ApiModule.forRoot(apiConfigFactory),
-    IonicModule.forRoot(MyApp)
-  ],
-  bootstrap: [IonicApp],
-  entryComponents: [
-    MyApp,
-    HomePage,
-    EditPage
-  ],
+    FormsModule,
+    IonicModule.forRoot(),
+    RouterModule.forRoot(routes, {useHash: true})],
   providers: [
-    {provide: ErrorHandler, useClass: IonicErrorHandler}
-  ]
+    {provide: RouteReuseStrategy, useClass: IonicRouteStrategy}
+  ],
+  bootstrap: [AppComponent]
 })
-
 export class AppModule {
 }
