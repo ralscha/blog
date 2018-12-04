@@ -1,0 +1,76 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>
+      Form Validation
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding>
+  <form [formGroup]="registrationForm" (submit)="register()" novalidate>
+
+    <ion-list>
+
+      <ion-item>
+        <ion-label position="stacked">Username</ion-label>
+        <ion-input formControlName="username" type="text" [class.invalid]="isInvalidAndDirty('username')"></ion-input>
+      </ion-item>
+      <ion-item class="error-message" *ngIf="hasError('username', 'required')">
+        <ion-label>
+          Username is required
+        </ion-label>
+      </ion-item>
+      <ion-item class="error-message" *ngIf="hasError('username', 'minlength')">
+        <ion-label>
+          Username must be at least 2 characters long
+        </ion-label>
+      </ion-item>
+      <ion-item class="error-message" *ngIf="hasError('username', 'maxlength')">
+        <ion-label>
+          Username cannot be longer than 30 characters
+        </ion-label>
+      </ion-item>
+      <ion-item class="error-message" *ngIf="hasError('username', 'usernameTaken')">
+        <ion-label>
+          Username is already taken
+        </ion-label>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="stacked">Email</ion-label>
+        <ion-input formControlName="email" type="email" [class.invalid]="isInvalidAndDirty('email')"></ion-input>
+      </ion-item>
+      <ion-item class="error-message" *ngIf="hasError('email', 'required')">
+        <ion-label>
+          Email is required
+        </ion-label>
+      </ion-item>
+      <ion-item class="error-message" *ngIf="hasError('email', 'pattern')">
+        <ion-label>
+          Email is not valid
+        </ion-label>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="stacked">Age</ion-label>
+        <ion-input formControlName="age" type="number" [class.invalid]="isInvalidAndDirty('age')"></ion-input>
+      </ion-item>
+      <ion-item class="error-message" *ngIf="hasError('age', 'required')">
+        <ion-label>
+          Age is required
+        </ion-label>
+      </ion-item>
+      <ion-item class="error-message" *ngIf="hasError('age', 'notOldEnough')">
+        <ion-label>
+          You must be at least {{minAge}} years old!
+        </ion-label>
+      </ion-item>
+
+    </ion-list>
+
+    <ion-button expand="block" type="submit" [disabled]="!registrationForm.valid">
+      Create an Account
+    </ion-button>
+
+  </form>
+</ion-content>
