@@ -17,7 +17,7 @@ const routes: Routes = [
   {path: 'login', component: LoginPage},
   {path: 'edit', component: EditPage, canActivate: [AuthGuard]},
   {path: 'edit/:id', component: EditPage, canActivate: [AuthGuard]},
-  {path: '**', redirectTo: '/home'},
+  {path: '**', redirectTo: '/home'}
 ];
 
 @NgModule({

@@ -1,27 +1,27 @@
 {
   "project_info": {
-    "project_number": "220709513681",
-    "firebase_url": "https://demoproject-91348.firebaseio.com",
-    "project_id": "demoproject-91348",
-    "storage_bucket": "demoproject-91348.appspot.com"
+    "project_number": "532700130849",
+    "firebase_url": "https://pushdemo-91541.firebaseio.com",
+    "project_id": "pushdemo-91541",
+    "storage_bucket": "pushdemo-91541.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:220709513681:android:613f8f86b87d2b4f",
+        "mobilesdk_app_id": "1:532700130849:android:613f8f86b87d2b4f",
         "android_client_info": {
           "package_name": "com.ionicframework.push124502"
         }
       },
       "oauth_client": [
         {
-          "client_id": "220709513681-7isjikse3i19kusmk3cl78o3bh9fsim3.apps.googleusercontent.com",
+          "client_id": "532700130849-3jkdct47910lrqg4nsr672gglt88gsee.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyCTQpeScxALD5NVvuyQsDG8tlEEDB7IuYs"
+          "current_key": "AIzaSyAvOyd-swn7C98RrT5ToMmkjeewl4cgr44"
         }
       ],
       "services": {

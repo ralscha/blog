@@ -1,1 +1,1 @@
-Source code for the blog post: https://golb.hplar.ch/p/Uploading-files-from-Ionic-2-Cordova-to-Minio-S3
+Source code for the blog post: https://golb.hplar.ch/2017/02/Uploading-files-from-Ionic-2-Cordova-to-Minio-S3.html

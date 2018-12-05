@@ -1,0 +1,32 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>
+      Push
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding>
+  <ion-grid>
+    <ion-row>
+      <ion-col size="8">Send me Chuck Norris Jokes</ion-col>
+      <ion-col size="4">
+        <ion-checkbox checked="false" [(ngModel)]="allowPush" (click)="onChange()"></ion-checkbox>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col size="8">Send me Personal messages</ion-col>
+      <ion-col size="4">
+        <ion-checkbox checked="false" [(ngModel)]="allowPersonal" (click)="onPmChange()"></ion-checkbox>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <ion-list>
+    <ion-item *ngFor="let item of items">
+      <ion-label text-wrap>
+        {{item.id}}. {{item.text}}
+      </ion-label>
+    </ion-item>
+  </ion-list>
+</ion-content>

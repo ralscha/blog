@@ -5,8 +5,8 @@
     </ion-buttons>
     <ion-title>Edit Password</ion-title>
     <ion-buttons slot="end">
-      <ion-button (click)="deletePassword()" [disabled]="!password.id" icon-only>
-        <ion-icon name="trash">
+      <ion-button (click)="deletePassword()" [disabled]="!password.id">
+        <ion-icon slot="icon-only" name="trash">
         </ion-icon>
       </ion-button>
     </ion-buttons>

@@ -1,8 +1,5 @@
 {
   "name": "upload",
-  "integrations": {
-    "cordova": {}
-  },
-  "type": "ionic-angular",
-  "hooks": {}
+  "integrations": {},
+  "type": "angular"
 }

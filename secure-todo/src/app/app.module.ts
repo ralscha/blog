@@ -1,41 +1,36 @@
+import {NgModule} from '@angular/core';
 import {BrowserModule} from '@angular/platform-browser';
-import {NgModule, ErrorHandler} from '@angular/core';
-import {IonicApp, IonicModule, IonicErrorHandler} from 'ionic-angular';
-import {MyApp} from './app.component';
-import {HomePage} from '../pages/home/home';
-import {EditPage} from "../pages/edit/edit";
-import {IonicStorageModule} from "@ionic/storage";
-import {PasswordPage} from "../pages/password/password";
-import {SplashScreen} from '@ionic-native/splash-screen';
-import {StatusBar} from '@ionic-native/status-bar';
-import {TodoProvider} from "../providers/todo/todo";
+import {RouteReuseStrategy, RouterModule, Routes} from '@angular/router';
+import {IonicModule, IonicRouteStrategy} from '@ionic/angular';
+import {AppComponent} from './app.component';
+import {HomePage} from './home/home.page';
+import {CommonModule} from '@angular/common';
+import {FormsModule} from '@angular/forms';
+import {PasswordPage} from './password/password.page';
+import {AuthGuard} from './auth.guard';
+import {EditPage} from './edit/edit.page';
 
+const routes: Routes = [
+  {path: '', redirectTo: 'home', pathMatch: 'full'},
+  {path: 'home', component: HomePage, canActivate: [AuthGuard]},
+  {path: 'password', component: PasswordPage},
+  {path: 'edit', component: EditPage, canActivate: [AuthGuard]},
+  {path: 'edit/:id', component: EditPage, canActivate: [AuthGuard]},
+  {path: '**', redirectTo: '/home'}
+];
 
 @NgModule({
-  declarations: [
-    MyApp,
-    HomePage,
-    EditPage,
-    PasswordPage
-  ],
-  imports: [
-    BrowserModule,
-    IonicModule.forRoot(MyApp),
-    IonicStorageModule.forRoot({name: 'todo', driverOrder: ['sqlite', 'indexeddb']})
-  ],
-  bootstrap: [IonicApp],
-  entryComponents: [
-    MyApp,
-    HomePage,
-    EditPage,
-    PasswordPage
-  ],
+  declarations: [AppComponent, HomePage, PasswordPage, EditPage],
+  entryComponents: [],
+  imports: [BrowserModule,
+    CommonModule,
+    FormsModule,
+    IonicModule.forRoot(),
+    RouterModule.forRoot(routes, {useHash: true})],
   providers: [
-    StatusBar,
-    SplashScreen,
-    {provide: ErrorHandler, useClass: IonicErrorHandler},
-    TodoProvider
-  ]
+    {provide: RouteReuseStrategy, useClass: IonicRouteStrategy}
+  ],
+  bootstrap: [AppComponent]
 })
 export class AppModule {
 }

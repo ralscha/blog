@@ -1,7 +1,5 @@
 {
   "name": "secure-todo",
-  "app_id": "",
-  "type": "ionic-angular",
   "integrations": {},
-  "hooks": {}
+  "type": "angular"
 }

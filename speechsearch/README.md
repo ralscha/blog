@@ -1,1 +1,1 @@
-Source code for the blog post: https://golb.hplar.ch/p/Adding-speech-recognition-to-an-Ionic-App
+Source code for the blog post: https://golb.hplar.ch/2017/12/Adding-speech-recognition-to-an-Ionic-App.html

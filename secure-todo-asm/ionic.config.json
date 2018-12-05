@@ -1,6 +1,5 @@
 {
   "name": "secure-todo",
   "integrations": {},
-  "type": "ionic-angular",
-  "hooks": {}
+  "type": "angular"
 }
