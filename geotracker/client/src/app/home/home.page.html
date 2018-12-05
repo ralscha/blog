@@ -1,0 +1,13 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>
+      Geo Tracker
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding>
+  <ion-button color="primary" (click)="start()" [disabled]="tracking" expand="block">Start Tracking</ion-button>
+  <ion-button color="primary" (click)="stop()" [disabled]="!tracking" expand="block">Stop Tracking</ion-button>
+  <ion-button color="primary" (click)="clear()" expand="block">Clear Data</ion-button>
+</ion-content>
