@@ -11,7 +11,7 @@ export class HomePage {
 
   tracking: boolean;
 
-  constructor(private readonly locationTracker: LocationTrackerService,
+  constructor(public readonly locationTracker: LocationTrackerService,
               private readonly serverPush: ServerPushService) {
     this.tracking = false;
   }

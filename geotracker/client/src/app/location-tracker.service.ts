@@ -1,5 +1,6 @@
 import {Injectable} from '@angular/core';
 import {ServerPushService} from './server-push.service';
+import {AppPosition} from './app-position';
 
 declare var BackgroundGeolocation: any;
 
@@ -8,6 +9,7 @@ declare var BackgroundGeolocation: any;
 })
 export class LocationTrackerService {
 
+  pos: AppPosition = null;
 
   constructor(private serverPush: ServerPushService) {
   }
@@ -29,14 +31,15 @@ export class LocationTrackerService {
     };
 
     navigator.geolocation.getCurrentPosition(loc => {
-      this.serverPush.pushPosition({
+      this.pos = {
         accuracy: loc.coords.accuracy,
         bearing: loc.coords.heading,
         latitude: loc.coords.latitude,
         longitude: loc.coords.longitude,
         speed: loc.coords.speed,
         time: loc.timestamp
-      });
+      };
+      this.serverPush.pushPosition(this.pos);
     }, err => this.serverPush.pushError(err.message), geoOptions);
   }
 
@@ -59,14 +62,15 @@ export class LocationTrackerService {
     BackgroundGeolocation.on('location', location => {
       BackgroundGeolocation.startTask(taskKey => {
         if (location) {
-          this.serverPush.pushPosition({
+          this.pos = {
             accuracy: location.accuracy,
             bearing: location.bearing,
             latitude: location.latitude,
             longitude: location.longitude,
             speed: location.speed,
             time: location.time
-          });
+          };
+          this.serverPush.pushPosition(this.pos);
         }
         BackgroundGeolocation.endTask(taskKey);
       });
