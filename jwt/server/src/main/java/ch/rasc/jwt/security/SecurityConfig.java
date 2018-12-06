@@ -36,7 +36,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		  .sessionManagement()
 			.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
 			.and()
-		//.httpBasic() // optional, if you want to access 
+		//.httpBasic() // optional, if you want to access
 		//  .and()     // the services from a browser
 		  .authorizeRequests()
 		    .antMatchers("/signup").permitAll()
