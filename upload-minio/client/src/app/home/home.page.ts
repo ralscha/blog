@@ -47,10 +47,6 @@ export class HomePage {
     });
   }
 
-  fetchPresignUrl(fileName: string): Observable<string> {
-    return this.http.get(`${environment.serverURL}/getPreSignUrl?fileName=${fileName}`, {responseType: 'text'});
-  }
-
   private convertFileSrc(url: string): string {
     if (!url) {
       return url;
@@ -87,6 +83,10 @@ export class HomePage {
       this.fetchPresignUrl(fileName).subscribe(url => this.postData(url, imgBlob));
     };
     reader.readAsArrayBuffer(file);
+  }
+
+  fetchPresignUrl(fileName: string): Observable<string> {
+    return this.http.get(`${environment.serverURL}/getPreSignUrl?fileName=${fileName}`, {responseType: 'text'});
   }
 
   private postData(url: string, blob: Blob) {
