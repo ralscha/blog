@@ -1,0 +1,15 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>
+      Ionic Blank
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding>
+  <ion-slides pager="true">
+    <ion-slide *ngFor="let pic of pictures">
+      <img [src]="pic">
+    </ion-slide>
+  </ion-slides>
+</ion-content>
