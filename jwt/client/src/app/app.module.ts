@@ -1,59 +1,49 @@
+import {NgModule} from '@angular/core';
 import {BrowserModule} from '@angular/platform-browser';
-import {NgModule, ErrorHandler} from '@angular/core';
-import {IonicApp, IonicModule, IonicErrorHandler} from 'ionic-angular';
-import {MyApp} from './app.component';
-import {HomePage} from '../pages/home/home';
-import {StatusBar} from '@ionic-native/status-bar';
-import {SplashScreen} from '@ionic-native/splash-screen';
-import {LoginPage} from "../pages/login/login";
-import {SignupPage} from "../pages/signup/signup";
-import {CustomFormsModule} from 'ng2-validation';
-import {Storage, IonicStorageModule} from "@ionic/storage";
-import {AuthProvider} from "../providers/auth/auth";
-import {HttpClientModule} from "@angular/common/http";
-import {JWT_OPTIONS, JwtModule} from '@auth0/angular-jwt';
+import {RouteReuseStrategy, RouterModule, Routes} from '@angular/router';
+import {IonicModule, IonicRouteStrategy} from '@ionic/angular';
+import {AppComponent} from './app.component';
+import {HomePage} from './home/home.page';
+import {CommonModule} from '@angular/common';
+import {FormsModule} from '@angular/forms';
+import {HttpClientModule} from '@angular/common/http';
+import {LoginPage} from './login/login.page';
+import {SignupPage} from './signup/signup.page';
+import {JwtModule} from '@auth0/angular-jwt';
+import {environment} from '../environments/environment';
+import {AuthGuard} from './auth.guard';
 
-export function jwtOptionsFactory(storage: Storage) {
-  return {
-    tokenGetter: () => storage.get('jwt_token'),
-    whitelistedDomains: ['localhost:8080']
-  }
+const routes: Routes = [
+  {path: '', redirectTo: 'home', pathMatch: 'full'},
+  {path: 'home', component: HomePage, canActivate: [AuthGuard]},
+  {path: 'login', component: LoginPage},
+  {path: 'signup', component: SignupPage},
+  {path: '**', redirectTo: '/home'}
+];
+
+export function tokenGetter() {
+  return localStorage.getItem('jwt_token');
 }
 
 @NgModule({
-  declarations: [
-    MyApp,
-    HomePage,
-    LoginPage,
-    SignupPage
-  ],
-  imports: [
-    BrowserModule,
+  declarations: [AppComponent, HomePage, LoginPage, SignupPage],
+  entryComponents: [],
+  imports: [BrowserModule,
+    CommonModule,
     HttpClientModule,
     JwtModule.forRoot({
-      jwtOptionsProvider: {
-        provide: JWT_OPTIONS,
-        useFactory: jwtOptionsFactory,
-        deps: [Storage]
+      config: {
+        tokenGetter: tokenGetter,
+        whitelistedDomains: environment.whitelistedDomains
       }
     }),
-    IonicModule.forRoot(MyApp),
-    IonicStorageModule.forRoot(),
-    CustomFormsModule
-  ],
-  bootstrap: [IonicApp],
-  entryComponents: [
-    MyApp,
-    HomePage,
-    LoginPage,
-    SignupPage
-  ],
+    FormsModule,
+    IonicModule.forRoot(),
+    RouterModule.forRoot(routes, {useHash: true})],
   providers: [
-    StatusBar,
-    SplashScreen,
-    {provide: ErrorHandler, useClass: IonicErrorHandler},
-    AuthProvider
-  ]
+    {provide: RouteReuseStrategy, useClass: IonicRouteStrategy}
+  ],
+  bootstrap: [AppComponent]
 })
 export class AppModule {
 }

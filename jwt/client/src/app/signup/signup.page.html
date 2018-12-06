@@ -1,0 +1,74 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/login"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Sign up</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+
+<ion-content padding>
+  <form #form="ngForm" (ngSubmit)="signup(form.value)" novalidate>
+    <ion-list>
+      <ion-item>
+        <ion-label position="stacked">Name</ion-label>
+        <ion-input type="text" name="name" ngModel required #name="ngModel"
+                   [class.invalid]="name.errors && name.dirty"></ion-input>
+      </ion-item>
+      <ion-item class="error-message" *ngIf="name.errors?.required && name.dirty">
+        <ion-label>
+          Name is required
+        </ion-label>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="stacked">Email</ion-label>
+        <ion-input type="email" name="email" ngModel required email #email="ngModel"
+                   [class.invalid]="email.errors && email.dirty"></ion-input>
+      </ion-item>
+      <ion-item class="error-message" *ngIf="email.errors?.required && email.dirty">
+        <ion-label>
+          Email is required
+        </ion-label>
+      </ion-item>
+      <ion-item class="error-message" *ngIf="email.errors?.email && email.dirty">
+        <ion-label>
+          Email is not valid
+        </ion-label>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="stacked">Username</ion-label>
+        <ion-input type="text" name="username" ngModel required #username="ngModel"
+                   [class.invalid]="username.errors && username.dirty"></ion-input>
+      </ion-item>
+      <ion-item class="error-message" *ngIf="username.errors?.required && username.dirty">
+        <ion-label>
+          Username is required
+        </ion-label>
+      </ion-item>
+      <ion-item class="error-message" *ngIf="username.errors?.usernameTaken">
+        <ion-label>
+          Username already taken
+        </ion-label>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="stacked">Password</ion-label>
+        <ion-input type="password" name="password" ngModel required #password="ngModel"
+                   [class.invalid]="password.errors && password.dirty"></ion-input>
+      </ion-item>
+      <ion-item class="error-message" *ngIf="password.errors?.required && password.dirty">
+        <ion-label>
+          Password is required
+        </ion-label>
+      </ion-item>
+
+      <div padding>
+        <ion-button color="primary" expand="block" type="submit" [disabled]="!form.valid">Sign up</ion-button>
+      </div>
+
+    </ion-list>
+  </form>
+</ion-content>
