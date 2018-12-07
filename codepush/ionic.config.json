@@ -1,7 +1,5 @@
 {
-  "name": "demo",
-  "app_id": "",
-  "type": "ionic-angular",
+  "name": "codepush",
   "integrations": {},
-  "hooks": {}
+  "type": "angular"
 }

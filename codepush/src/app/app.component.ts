@@ -1,30 +1,33 @@
 import {Component} from '@angular/core';
-import {Platform} from 'ionic-angular';
-import {StatusBar} from '@ionic-native/status-bar';
-import {SplashScreen} from '@ionic-native/splash-screen';
-import {HomePage} from '../pages/home/home';
-//import {Observable} from "rxjs";
+import {Platform} from '@ionic/angular';
+import {SplashScreen} from '@ionic-native/splash-screen/ngx';
+import {StatusBar} from '@ionic-native/status-bar/ngx';
+
 declare var codePush: any;
 
 @Component({
-  templateUrl: 'app.html'
+  selector: 'app-root',
+  templateUrl: 'app.component.html'
 })
-export class MyApp {
-  rootPage: any = HomePage;
+export class AppComponent {
+  constructor(
+    private platform: Platform,
+    private splashScreen: SplashScreen,
+    private statusBar: StatusBar
+  ) {
+    this.initializeApp();
+  }
 
-  constructor(platform: Platform,
-              statusBar: StatusBar,
-              splashScreen: SplashScreen) {
-    platform.ready().then(() => {
-      statusBar.styleDefault();
-      splashScreen.hide();
+  initializeApp() {
+    this.platform.ready().then(() => {
 
-      platform.resume.subscribe(() =>
-        codePush.sync(null, {deploymentKey: 'cFu_iWwpQVqGH2NuyBVW1ZG5GtIvV16RCXmIG'}));
+      const deploymentKey = 'Z_F0kSey7z0lrIWRr7rjobgU0qwnSJ8SY5DJV';
+      codePush.sync(null, {deploymentKey});
 
-      // const source = Observable.timer(5000, 1000*60*60);
-      // const subscription = source.subscribe(() => codePush.sync());
+      this.platform.resume.subscribe(() => codePush.sync(null, {deploymentKey}));
+
+      this.statusBar.styleDefault();
+      this.splashScreen.hide();
     });
-
   }
 }
