@@ -16,7 +16,7 @@
   },
   "dependencies": {
     "echarts": "4.2.0-rc.2",
-    "event-source-polyfill": "1.0.4",
+    "event-source-polyfill": "1.0.5",
     "uuid": "3.3.2"
   },
   "browserslist": [
