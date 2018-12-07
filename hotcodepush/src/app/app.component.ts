@@ -18,13 +18,14 @@ export class MyApp {
       splashScreen.hide();
     });
 
-    //manual mode. remove this for automatic mode
+    // manual mode. remove this for automatic mode
+	this.fetchUpdate();
     platform.resume.subscribe(() => this.fetchUpdate());
   }
 
   fetchUpdate() {
     const options = {
-      'config-file': 'https://static.rasc.ch/hcp/chcp.json'
+      'config-file': 'https://demo.rasc.ch/hcp/chcp.json'
     };
     chcp.fetchUpdate(this.updateCallback, options);
   }
