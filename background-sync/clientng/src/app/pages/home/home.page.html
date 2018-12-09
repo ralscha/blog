@@ -1,0 +1,20 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>
+      Todo
+    </ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="addTodo()">
+        <ion-icon name="add" size="large"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding>
+  <ion-list lines="full">
+    <ion-item routerLink="/edit/{{todo.id}}" detail="true" *ngFor="let todo of todos | async">
+      <ion-label>{{todo.subject}}</ion-label>
+    </ion-item>
+  </ion-list>
+</ion-content>
