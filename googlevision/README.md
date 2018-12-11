@@ -1,3 +1,3 @@
-Source code for the blog post: 
+Source code for the blog post: https://golb.hplar.ch/2018/12/google-vision-storage-example.html
 
 Online Demo: https://demo.rasc.ch/googlevision
