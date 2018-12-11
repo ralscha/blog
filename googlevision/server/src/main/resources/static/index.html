@@ -1,0 +1,22 @@
+<title>test</title>
+
+<script>
+
+async function upload() {
+	const response = await fetch('http://localhost:8080/signurl');
+	const signedURL = await response.text();
+		
+	fetch(signedURL, {
+        method: "PUT",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+      	  a:2
+    	})
+    })  
+}
+
+upload();
+
+</script>

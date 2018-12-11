@@ -1,0 +1,19 @@
+.canvasContainer {
+  width: 100%;
+  height: 35vh;
+  margin-top: 10px;
+}
+
+ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.smallerFont {
+  font-size: 0.9rem;
+  text-overflow: unset;
+}
+
+agm-map {
+  height: 200px;
+}
