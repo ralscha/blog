@@ -35,7 +35,7 @@ public class EarthquakeDb {
   @Scheduled(cron = "0 0 * * * ?")
   public void readEarthquakeData() throws IOException {
     Request request = new Request.Builder()
-        .url("http://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_day.csv")
+        .url("https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_day.csv")
         .build();
 
     try (Response response = this.httpClient.newCall(request).execute();
