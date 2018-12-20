@@ -15,7 +15,7 @@ export class LoginPage {
 
   async login(username: string, password: string) {
     await this.passwordService.fetchPasswords(username, password);
-    this.navCtrl.navigateRoot(['home'], true, {replaceUrl: true});
+    this.navCtrl.navigateRoot(['home'], {replaceUrl: true});
   }
 
 }

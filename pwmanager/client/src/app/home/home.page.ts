@@ -39,6 +39,6 @@ export class HomePage {
 
   logout() {
     this.passwordService.clearPasswords();
-    this.navCtrl.navigateRoot(['login'], true, {replaceUrl: true});
+    this.navCtrl.navigateRoot(['login'], {replaceUrl: true});
   }
 }

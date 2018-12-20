@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {ItemSliding, NavController} from '@ionic/angular';
+import {IonItemSliding, NavController} from '@ionic/angular';
 import {TodoService} from '../todo.service';
 import {Todo} from '../todo';
 
@@ -24,12 +24,12 @@ export class HomePage {
     this.navCtrl.navigateForward(['edit']);
   }
 
-  editTodo(slidingItem: ItemSliding, todo: Todo) {
+  editTodo(slidingItem: IonItemSliding, todo: Todo) {
     slidingItem.close();
     this.navCtrl.navigateForward(['edit', todo.id]);
   }
 
-  deleteTodo(slidingItem: ItemSliding, todo: Todo) {
+  deleteTodo(slidingItem: IonItemSliding, todo: Todo) {
     slidingItem.close();
     this.todoService.deleteTodo(todo);
     this.ionViewDidEnter();
@@ -37,7 +37,7 @@ export class HomePage {
 
   exit() {
     this.todoService.exit();
-    this.navCtrl.navigateRoot(['password'], true, {replaceUrl: true});
+    this.navCtrl.navigateRoot(['password'], {replaceUrl: true});
   }
 
 }

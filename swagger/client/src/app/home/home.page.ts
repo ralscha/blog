@@ -1,6 +1,6 @@
 import {Component} from '@angular/core';
 import {Todo, TodoServiceService} from '../swagger';
-import {ItemSliding, NavController} from '@ionic/angular';
+import {IonItemSliding, NavController} from '@ionic/angular';
 
 @Component({
   selector: 'app-home',
@@ -24,13 +24,13 @@ export class HomePage {
     this.navCtrl.navigateForward(['edit']);
   }
 
-  editTodo(slidingItem: ItemSliding, todo: Todo) {
+  editTodo(slidingItem: IonItemSliding, todo: Todo) {
     slidingItem.close();
     this.todoService.selectedTodo = todo;
     this.navCtrl.navigateForward(['edit']);
   }
 
-  deleteTodo(slidingItem: ItemSliding, todo: Todo) {
+  deleteTodo(slidingItem: IonItemSliding, todo: Todo) {
     slidingItem.close();
     this.todoService.deleteUsingPOST(todo.id).subscribe(() => this.ionViewDidEnter());
   }

@@ -17,7 +17,7 @@ export class PasswordPage {
   async showTodos(password: string) {
     try {
       await this.todoService.setPassword(password);
-      this.navCtrl.navigateRoot('home', true, {replaceUrl: true});
+      this.navCtrl.navigateRoot('home', {replaceUrl: true});
     } catch (e) {
       const toast = await this.toastCtrl.create({
         message: 'Decryption unsuccessful',

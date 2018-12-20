@@ -57,7 +57,7 @@ export class SignupPage {
       });
 
       toast.present();
-      this.navCtrl.navigateRoot(['home'], true, {replaceUrl: true});
+      this.navCtrl.navigateRoot(['home'], {replaceUrl: true});
     } else {
       const toast = await this.toastCtrl.create({
         message: 'Username already registered',

@@ -4,13 +4,10 @@ module.exports = {
     "index.html",
     "*.js",
     "*.css",
-    "svg/md-add.svg",
-    "svg/md-trash.svg",
-    "svg/ios-add.svg",
-    "svg/ios-trash.svg",
-    "svg/md-arrow-back.svg",
-    "svg/ios-arrow-back.svg",
-    "assets/**/*.png"
+    "assets/**/*.png",
+	"assets/**/favicon.ico",
+	"*.svg",
+	"manifest.json"
   ],
   "dontCacheBustUrlsMatching": new RegExp('.+\.[a-f0-9]{20}\..+'),
   "maximumFileSizeToCacheInBytes": 5000000,

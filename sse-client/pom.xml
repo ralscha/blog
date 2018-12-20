@@ -13,7 +13,7 @@
 		<dependency>
 			<groupId>com.launchdarkly</groupId>
 			<artifactId>okhttp-eventsource</artifactId>
-			<version>1.8.0</version>
+			<version>1.9.0</version>
 		</dependency>
 		<dependency>
 			<groupId>org.slf4j</groupId>

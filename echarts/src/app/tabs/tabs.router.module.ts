@@ -14,45 +14,69 @@ const routes: Routes = [
     component: TabsPage,
     children: [
       {
-        path: '',
-        redirectTo: '/tabs/(chart1:chart1)',
-        pathMatch: 'full',
-      },
-      {
         path: 'chart1',
-        outlet: 'chart1',
-        component: Chart1Page
+        children: [
+          {
+            path: '',
+            component: Chart1Page
+          }
+        ]
       },
       {
         path: 'chart2',
-        outlet: 'chart2',
-        component: Chart2Page
+        children: [
+          {
+            path: '',
+            component: Chart2Page
+          }
+        ]
       },
       {
         path: 'chart3',
-        outlet: 'chart3',
-        component: Chart3Page
+        children: [
+          {
+            path: '',
+            component: Chart3Page
+          }
+        ]
       },
       {
         path: 'chart4',
-        outlet: 'chart4',
-        component: Chart4Page
+        children: [
+          {
+            path: '',
+            component: Chart4Page
+          }
+        ]
       },
       {
         path: 'chart5',
-        outlet: 'chart5',
-        component: Chart5Page
+        children: [
+          {
+            path: '',
+            component: Chart5Page
+          }
+        ]
       },
       {
         path: 'chart6',
-        outlet: 'chart6',
-        component: Chart6Page
+        children: [
+          {
+            path: '',
+            component: Chart6Page
+          }
+        ]
+      },
+      {
+        path: '',
+        redirectTo: '/tabs/chart1',
+        pathMatch: 'full'
       }
     ]
   },
   {
     path: '',
-    redirectTo: '/tabs/(chart1:chart1)',
+    redirectTo: '/tabs/chart1',
     pathMatch: 'full'
   }
 ];

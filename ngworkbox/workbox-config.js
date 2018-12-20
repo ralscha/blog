@@ -4,7 +4,8 @@ module.exports = {
     "index.html",
 	"*.js",
 	"*.css",    
-    "assets/**/*.png"
+    "assets/**/*.png",
+	"manifest.json"
   ],
   "dontCacheBustUrlsMatching": new RegExp('.+\.[a-f0-9]{20}\..+'),
   "maximumFileSizeToCacheInBytes": 5000000,

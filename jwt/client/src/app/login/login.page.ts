@@ -17,7 +17,7 @@ export class LoginPage {
   }
 
   signup() {
-    this.navCtrl.navigateRoot(['signup'], true);
+    this.navCtrl.navigateRoot(['signup']);
   }
 
   async login(value: any) {
@@ -33,7 +33,7 @@ export class LoginPage {
       .pipe(finalize(() => loading.dismiss()))
       .subscribe(
         _ => {
-          this.navCtrl.navigateRoot(['home'], true, {replaceUrl: true});
+          this.navCtrl.navigateRoot(['home'], {replaceUrl: true});
         },
         err => this.handleError(err));
   }

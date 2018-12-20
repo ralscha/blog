@@ -1,19 +1,12 @@
 <ion-tabs>
 
-  <ion-tab tab="json">
-    <ion-router-outlet name="json"></ion-router-outlet>
-  </ion-tab>
-  <ion-tab tab="protobuf">
-    <ion-router-outlet name="protobuf"></ion-router-outlet>
-  </ion-tab>
-
   <ion-tab-bar slot="bottom">
-    <ion-tab-button href="/tabs/(json:json)" tab="json">
+    <ion-tab-button tab="json">
       <ion-icon name="cloud-download"></ion-icon>
       <ion-label>JSON</ion-label>
     </ion-tab-button>
 
-    <ion-tab-button href="/tabs/(protobuf:protobuf)" tab="protobuf">
+    <ion-tab-button tab="protobuf">
       <ion-icon name="cloud-download"></ion-icon>
       <ion-label>Protobuf</ion-label>
     </ion-tab-button>

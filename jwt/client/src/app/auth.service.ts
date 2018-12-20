@@ -56,7 +56,7 @@ export class AuthService {
   logout() {
     localStorage.removeItem(this.jwtTokenName);
     this.authUser.next(null);
-    this.navCtrl.navigateRoot('login', true, {replaceUrl: true, skipLocationChange: true});
+    this.navCtrl.navigateRoot('login', {replaceUrl: true, skipLocationChange: true});
   }
 
   signup(values: any): Observable<string> {

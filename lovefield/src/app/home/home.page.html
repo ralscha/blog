@@ -5,8 +5,8 @@
       <ion-note>({{earthquakes?.length}}, {{elapsedTime | number:'1.0-0'}} ms)</ion-note>
     </ion-title>
     <ion-buttons slot="primary">
-      <ion-button (click)="presentPopover($event)" icon-only>
-        <ion-icon name="more"></ion-icon>
+      <ion-button (click)="presentPopover($event)">
+        <ion-icon slot="icon-only" name="more"></ion-icon>
       </ion-button>
     </ion-buttons>
   </ion-toolbar>

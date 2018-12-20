@@ -1,4 +1,4 @@
-import {ActivatedRouteSnapshot, CanActivate, RouterStateSnapshot} from '@angular/router';
+import {ActivatedRouteSnapshot, CanActivate, RouterStateSnapshot, UrlTree} from '@angular/router';
 import {Observable} from 'rxjs';
 import {Injectable} from '@angular/core';
 import {NavController} from '@ionic/angular';
@@ -14,10 +14,10 @@ export class AuthGuard implements CanActivate {
   }
 
   canActivate(route: ActivatedRouteSnapshot,
-              state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
+              state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
 
     if (!this.passwordService.isLoggedIn()) {
-      this.navCtrl.navigateRoot('/login', true, {replaceUrl: true});
+      this.navCtrl.navigateRoot('/login', {replaceUrl: true});
       return false;
     }
 

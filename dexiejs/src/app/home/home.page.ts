@@ -64,10 +64,10 @@ export class HomePage implements OnInit {
     });
   }
 
-  doRefresh(refresher) {
+  doRefresh(event) {
     this.earthquakeService.initProvider()
       .then(() => this.filterEarthquakes(true))
-      .then(() => refresher.complete());
+      .then(() => event.target.complete());
   }
 
   async filterEarthquakes(hideLoading = false) {

@@ -16,25 +16,29 @@ const routes: Routes = [
     component: TabsPage,
     children: [
       {
-        path: '',
-        redirectTo: '/tabs/(json:json)',
-        pathMatch: 'full',
-      },
-      {
         path: 'json',
-        outlet: 'json',
-        component: JsonPage
+        children: [{
+          path: '',
+          component: JsonPage
+        }]
       },
       {
         path: 'protobuf',
-        outlet: 'protobuf',
-        component: ProtobufPage
+        children: [{
+          path: '',
+          component: ProtobufPage
+        }]
       },
+      {
+        path: '',
+        redirectTo: '/tabs/json',
+        pathMatch: 'full',
+      }
     ]
   },
   {
     path: '',
-    redirectTo: '/tabs/(json:json)',
+    redirectTo: '/tabs/json',
     pathMatch: 'full'
   }
 ];

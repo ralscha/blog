@@ -94,7 +94,7 @@
 					</execution>
 				</executions>
 				<configuration>
-					<nodeVersion>v10.14.1</nodeVersion>
+					<nodeVersion>v10.14.2</nodeVersion>
 					<workingDirectory>${basedir}/../client</workingDirectory>					
 					<NODE_ENV>production</NODE_ENV>
 				</configuration>
