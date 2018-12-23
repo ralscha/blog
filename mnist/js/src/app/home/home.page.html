@@ -1,0 +1,25 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>
+      MNIST
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding text-center>
+  <canvas appDrawable (newImage)="detect($event)"></canvas>
+  <div>
+    <ion-button (click)="erase()">Erase</ion-button>
+  </div>
+  <div>
+    <h3>Detected number: <strong>{{detectedNumber}}</strong></h3>
+  </div>
+
+  <table>
+    <tr *ngFor="let detection of detections; index as i">
+      <td>{{i}}</td>
+      <td text-end>{{detection * 100 | number:'1.1-1'}} %</td>
+    </tr>
+  </table>
+
+</ion-content>
