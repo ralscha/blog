@@ -33,16 +33,27 @@ export class HomePage {
 
   detect(canvas) {
     const canvasCopy = document.createElement('canvas');
-    const copyContext = canvasCopy.getContext('2d');
     canvasCopy.width = 28;
     canvasCopy.height = 28;
-    copyContext.drawImage(canvas, 0, 0, 28, 28);
+
+    const copyContext = canvasCopy.getContext('2d');
+
+    const ratioX = canvas.width / 28;
+    const ratioY = canvas.height / 28;
+    const drawBox = this.drawable.getDrawingBox();
+    const scaledSourceWidth = Math.min(20, Math.max(4, ((drawBox[2] - drawBox[0] + 32) / ratioX)));
+    const scaledSourceHeight = Math.min(20, ((drawBox[3] - drawBox[1] + 32) / ratioY));
+    const dx = (28 - scaledSourceWidth) / 2;
+    const dy = (28 - scaledSourceHeight) / 2;
+
+    copyContext.drawImage(canvas, drawBox[0] - 16, drawBox[1] - 16, drawBox[2] - drawBox[0] + 16, drawBox[3] - drawBox[1] + 16,
+      dx, dy, scaledSourceWidth, scaledSourceHeight);
     const imageData = copyContext.getImageData(0, 0, 28, 28);
 
     const numPixels = imageData.width * imageData.height;
     const values = new Array<number>(numPixels);
     for (let i = 0; i < numPixels; i++) {
-      values[i] = (imageData.data[i * 4 + 3] / 255.0 * 0.999) + 0.001;
+      values[i] = imageData.data[i * 4 + 3] / 255.0;
     }
 
     this.detections = this.forwardPropagation(values);

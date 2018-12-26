@@ -5,7 +5,8 @@
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
-    "build-prod": "ng build --prod && bread-compressor www",
+    "build-prod": "ng build --prod",
+    "postbuild-prod": "shx rm www/*.svg && bread-compressor www",
     "serve-www": "http-server www -o -a localhost -p 1234",
     "lint": "ng lint"
   },
@@ -38,6 +39,7 @@
     "bread-compressor-cli": "1.0.4",
     "codelyzer": "4.5.0",
     "http-server": "0.11.1",
+    "shx": "0.3.2",
     "ts-node": "7.0.1",
     "tslint": "5.12.0",
     "typescript": "3.1.6"

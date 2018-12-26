@@ -11,6 +11,10 @@ export class DrawableDirective implements OnInit {
   private canvas: HTMLCanvasElement;
   private lastX: number;
   private lastY: number;
+  private minX = Number.MAX_SAFE_INTEGER;
+  private minY = Number.MAX_SAFE_INTEGER;
+  private maxX = 0;
+  private maxY = 0;
   private drawing = false;
 
   constructor(private readonly  el: ElementRef, private readonly renderer: Renderer2,
@@ -72,6 +76,11 @@ export class DrawableDirective implements OnInit {
       y = e.clientY - rect.top;
     }
 
+    this.minX = Math.min(this.minX, x);
+    this.minY = Math.min(this.minY, y);
+    this.maxX = Math.max(this.maxX, x);
+    this.maxY = Math.max(this.maxY, y);
+
     this.ctx.lineTo(x, y);
     this.lastX = x;
     this.lastY = y;
@@ -81,6 +90,14 @@ export class DrawableDirective implements OnInit {
   clear() {
     this.drawing = false;
     this.ctx.clearRect(0, 0, this.ctx.canvas.width, this.ctx.canvas.height);
+    this.minX = Number.MAX_SAFE_INTEGER;
+    this.minY = Number.MAX_SAFE_INTEGER;
+    this.maxX = 0;
+    this.maxY = 0;
+  }
+
+  getDrawingBox() {
+    return [this.minX, this.minY, this.maxX, this.maxY];
   }
 
   getImgData(): HTMLCanvasElement {
