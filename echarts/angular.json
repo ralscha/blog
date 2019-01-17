@@ -24,7 +24,12 @@
                 "glob": "**/*",
                 "input": "src/assets",
                 "output": "assets"
-              }
+              },
+              {
+                "glob": "@(md-podium.svg|ios-podium.svg)",
+                "input": "node_modules/ionicons/dist/ionicons/svg",
+                "output": "./svg"
+              }	              
             ],
             "styles": [
               {
