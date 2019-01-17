@@ -25,6 +25,11 @@
                 "input": "src/assets",
                 "output": "assets"
               },
+              {
+                "glob": "@(md-options.svg|ios-options.svg|md-arrow-dropdown.svg|ios-arrow-dropdown.svg)",
+                "input": "node_modules/ionicons/dist/ionicons/svg",
+                "output": "./svg"
+              },
               "src/manifest.json"
             ],
             "styles": [
