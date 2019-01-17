@@ -24,6 +24,11 @@
                 "glob": "**/*",
                 "input": "src/assets",
                 "output": "assets"
+              },
+              {
+                "glob": "@(md-cloud-download.svg|ios-cloud-download.svg|md-arrow-down.svg|ios-arrow-down.svg)",
+                "input": "node_modules/ionicons/dist/ionicons/svg",
+                "output": "./svg"
               }
             ],
             "styles": [
