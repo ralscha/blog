@@ -24,6 +24,11 @@
                 "glob": "**/*",
                 "input": "src/assets",
                 "output": "assets"
+              },
+              {
+                "glob": "@(md-exit.svg|ios-exit.svg)",
+                "input": "node_modules/ionicons/dist/ionicons/svg",
+                "output": "./svg"
               }
             ],
             "styles": [
