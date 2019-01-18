@@ -24,7 +24,12 @@
                 "glob": "**/*",
                 "input": "src/assets",
                 "output": "assets"
-              }
+              },
+              {
+                "glob": "@(md-camera.svg|ios-camera.svg|ios-arrow-forward.svg|md-arrow-forward.svg)",
+                "input": "node_modules/ionicons/dist/ionicons/svg",
+                "output": "./svg"
+              }	
             ],
             "styles": [
               {
