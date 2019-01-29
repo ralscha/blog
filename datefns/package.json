@@ -9,10 +9,10 @@
   },
   "dependencies": {
     "date-fns": "2.0.0-alpha.7",
-    "moment": "2.23.0"
+    "moment": "2.24.0"
   },
   "devDependencies": {
-    "bread-compressor-cli": "1.0.4",
+    "bread-compressor-cli": "1.0.5",
     "parcel-bundler": "1.11.0",
     "shx": "0.3.2"
   }
