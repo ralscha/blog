@@ -11,7 +11,7 @@
   },
   "devDependencies": {
     "parcel-bundler": "1.11.0",
-    "parcel-plugin-compress": "1.0.6",
+    "parcel-plugin-compress": "1.0.7",
     "shx": "0.3.2"
   }
 }
