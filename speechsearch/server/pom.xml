@@ -33,7 +33,7 @@
 		<dependency>
 			<groupId>com.amazonaws</groupId>
 			<artifactId>aws-java-sdk-s3</artifactId>
-			<version>1.11.493</version>
+			<version>1.11.495</version>
 		</dependency>
 
 		<dependency>
@@ -50,7 +50,7 @@
 		<dependency>
 			<groupId>com.google.cloud</groupId>
 			<artifactId>google-cloud-speech</artifactId>
-			<version>0.79.0-beta</version>
+			<version>0.80.0-beta</version>
 		</dependency>
 
 		<dependency>
