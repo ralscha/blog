@@ -15,7 +15,7 @@
   },
   "dependencies": {
     "babel-polyfill": "6.26.0",
-    "hibp": "7.2.3",
+    "hibp": "7.5.0",
     "zxcvbn": "4.4.2"
   }
 }

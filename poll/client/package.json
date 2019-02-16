@@ -9,12 +9,12 @@
   },
   "devDependencies": {
     "parcel-bundler": "1.11.0",
-    "parcel-plugin-compress": "1.0.6",
+    "parcel-plugin-compress": "1.0.7",
     "shx": "0.3.2"
   },
   "dependencies": {
     "classlist-polyfill": "1.2.0",
-    "core-js": "2.6.2",
+    "core-js": "2.6.5",
     "echarts": "4.2.0-rc.2",
     "event-source-polyfill": "1.0.5",
     "muicss": "0.9.41",
