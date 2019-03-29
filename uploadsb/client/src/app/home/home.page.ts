@@ -37,7 +37,7 @@ export class HomePage {
   selectPhoto(): void {
     const camera: any = navigator['camera'];
     camera.getPicture(imageData => {
-      this.myPhoto = null;
+      this.myPhoto = this.convertFileSrc(imageData);
       this.uploadPhoto(imageData);
     }, error => this.error = JSON.stringify(error), {
       sourceType: camera.PictureSourceType.PHOTOLIBRARY,
@@ -51,14 +51,16 @@ export class HomePage {
     if (!url) {
       return url;
     }
-    if (!url.startsWith('file://')) {
-      return url;
+    if (url.startsWith('/')) {
+      return window['WEBVIEW_SERVER_URL'] + '/_app_file_' + url;
     }
-    url = url.substr(7);
-    if (url.length === 0 || url[0] !== '/') {
-      url = '/' + url;
+    if (url.startsWith('file://')) {
+      return window['WEBVIEW_SERVER_URL'] + url.replace('file://', '/_app_file_');
     }
-    return window['WEBVIEW_SERVER_URL'] + '/_file_' + url;
+    if (url.startsWith('content://')) {
+      return window['WEBVIEW_SERVER_URL'] + url.replace('content:/', '/_app_content_');
+    }
+    return url;
   }
 
   private async uploadPhoto(imageFileUri: any) {

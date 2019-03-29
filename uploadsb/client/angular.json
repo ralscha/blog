@@ -25,10 +25,10 @@
                 "input": "src/assets",
                 "output": "assets"
               }, {
-			    "glob": "@(md-camera.svg|ios-camera.svg|md-image.svg|ios-image.svg)",
+                "glob": "@(md-camera.svg|ios-camera.svg|md-image.svg|ios-image.svg)",
                 "input": "node_modules/ionicons/dist/ionicons/svg",
                 "output": "./svg"
-			  }
+              }
             ],
             "styles": [
               {
@@ -38,7 +38,8 @@
                 "input": "src/global.scss"
               }
             ],
-            "scripts": []
+            "scripts": [],
+            "es5BrowserSupport": true
           },
           "configurations": {
             "production": {
@@ -64,6 +65,9 @@
                   "maximumError": "5mb"
                 }
               ]
+            },
+            "ci": {
+              "progress": false
             }
           }
         },
@@ -75,6 +79,9 @@
           "configurations": {
             "production": {
               "browserTarget": "app:build:production"
+            },
+            "ci": {
+              "progress": false
             }
           }
         },
