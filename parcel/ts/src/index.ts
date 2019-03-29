@@ -1,6 +1,6 @@
 import 'whatwg-fetch';
-import "core-js/modules/es6.promise";
-import "core-js/modules/es7.string.pad-start";
+import "core-js/modules/es.promise";
+import "core-js/modules/es.string.pad-start";
 
 import numberURL from "./config";
 
