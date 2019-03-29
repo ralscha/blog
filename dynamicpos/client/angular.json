@@ -33,9 +33,10 @@
               {
                 "input": "src/global.scss"
               },
-			  "./node_modules/leaflet/dist/leaflet.css"
+              "./node_modules/leaflet/dist/leaflet.css"
             ],
-            "scripts": []
+            "scripts": [],
+            "es5BrowserSupport": true
           },
           "configurations": {
             "production": {
@@ -61,6 +62,9 @@
                   "maximumError": "5mb"
                 }
               ]
+            },
+            "ci": {
+              "progress": false
             }
           }
         },
@@ -72,6 +76,9 @@
           "configurations": {
             "production": {
               "browserTarget": "app:build:production"
+            },
+            "ci": {
+              "progress": false
             }
           }
         },
