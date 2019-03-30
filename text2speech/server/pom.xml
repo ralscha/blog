@@ -33,7 +33,7 @@
 		<dependency>
 			<groupId>com.google.cloud</groupId>
 			<artifactId>google-cloud-texttospeech</artifactId>
-			<version>0.84.0-beta</version>
+			<version>0.85.0-beta</version>
 		</dependency>
 		<dependency>
 			<groupId>net.sourceforge.argparse4j</groupId>
