@@ -3,10 +3,10 @@ async function init() {
   const registration = await navigator.serviceWorker.register('/sw.js');
   await navigator.serviceWorker.ready;	
   firebase.initializeApp({
-	    messagingSenderId: "544834184896"
+	    messagingSenderId: "1005830369458"
   });
   const messaging = firebase.messaging();
-  messaging.usePublicVapidKey('BHioL1lTK99SeRs-Vi6lWYfw9xlTQtkVvCPsOoyrCjWyFHpCL05aDXaAFiEdam36xJdALL5ENYN6a6c-4zaMIfw');
+  messaging.usePublicVapidKey('BPNm30tVGRSS2DWJYDgeCZErZY6FGSBNbomf3ojIK3EIhrLVKEFuNnehZvtQ3k165k_b58RuU5wigE88KU0RQog');
   messaging.useServiceWorker(registration);	
   
   try {

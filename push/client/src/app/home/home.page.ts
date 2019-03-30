@@ -30,7 +30,8 @@ export class HomePage {
 
       window['FirebasePlugin'].onNotificationOpen(notification => this.handleNotification(notification),
                                         error => console.error('Error notification open', error));
-
+      this.onChange();
+      this.onPmChange();
     });
 
     const pushFlag = localStorage.getItem('allowPush');
@@ -38,6 +39,7 @@ export class HomePage {
 
     const personalFlag = localStorage.getItem('allowPersonal');
     this.allowPersonal = personalFlag != null ? JSON.parse(personalFlag) : false;
+
   }
 
   register() {
