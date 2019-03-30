@@ -1,4 +1,5 @@
 1. npm install
 2. ionic cordova prepare android
-3. ionic cordova plugin add cordova-plugin-mauron85-background-geolocation@alpha
-4. ionic cordova run android
+3. ionic cordova plugin add @mauron85/cordova-plugin-background-geolocation
+4. ionic cordova plugin add cordova-plugin-geolocation
+5. ionic cordova run android
