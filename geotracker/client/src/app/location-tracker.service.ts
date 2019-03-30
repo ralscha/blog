@@ -1,4 +1,4 @@
-import {Injectable} from '@angular/core';
+import {ApplicationRef, Injectable} from '@angular/core';
 import {ServerPushService} from './server-push.service';
 import {AppPosition} from './app-position';
 
@@ -11,7 +11,8 @@ export class LocationTrackerService {
 
   pos: AppPosition = null;
 
-  constructor(private serverPush: ServerPushService) {
+  constructor(private serverPush: ServerPushService,
+              private readonly appRef: ApplicationRef) {
   }
 
   startTracking(): void {
@@ -71,6 +72,7 @@ export class LocationTrackerService {
             time: location.time
           };
           this.serverPush.pushPosition(this.pos);
+          this.appRef.tick();
         }
         BackgroundGeolocation.endTask(taskKey);
       });
