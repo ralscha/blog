@@ -16,7 +16,7 @@
     "@angular/forms": "6.1.10",
     "@angular/platform-browser": "6.1.10",
     "@angular/platform-browser-dynamic": "6.1.10",
-    "ionic-angular": "3.9.2",
+    "ionic-angular": "3.9.4",
     "ionic2-rating": "1.2.2",
     "ionicons": "4.4.8",
     "rxjs": "6.3.3",
@@ -25,7 +25,7 @@
     "zone.js": "0.8.26"
   },
   "devDependencies": {
-    "@ionic/app-scripts": "3.2.1",
+    "@ionic/app-scripts": "3.2.3",
     "typescript": "2.7.2"
   }
 }
