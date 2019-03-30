@@ -2,8 +2,8 @@ module.exports = {
   "globDirectory": "dist/ngworkbox/",
   "globPatterns": [
     "index.html",
-	"*.js",
-	"*.css",    
+    "*.js",
+    "*.css",    
     "assets/**/*.png",
 	"manifest.json"
   ],
@@ -12,5 +12,3 @@ module.exports = {
   "swSrc": "src/service-worker.js",
   "swDest": "dist/ngworkbox/service-worker.js"
 };
-
-
