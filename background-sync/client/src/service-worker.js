@@ -1,12 +1,12 @@
-importScripts('workbox-3.6.3/workbox-sw.js');
+importScripts('workbox-4.1.1/workbox-sw.js');
 importScripts('dexie.min.js');
 
 workbox.setConfig({
   debug: false,
-  modulePathPrefix: 'workbox-3.6.3/'
+  modulePathPrefix: 'workbox-4.1.1/'
 });
-workbox.skipWaiting();
-workbox.clientsClaim();
+workbox.core.skipWaiting();
+workbox.core.clientsClaim();
 workbox.precaching.precacheAndRoute([]);
 
 

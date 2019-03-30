@@ -32,18 +32,23 @@
               },			  
               {
                 "glob": "workbox-sw.js",
-                "input": "node_modules/workbox-sw/build",
-                "output": "./workbox-3.6.3"
+                "input": "node_modules/workbox-sw/build/",
+                "output": "./workbox-4.1.1"
               },
               {
                 "glob": "workbox-core.prod.js",
                 "input": "node_modules/workbox-core/build/",
-                "output": "./workbox-3.6.3"
+                "output": "./workbox-4.1.1"
               },
               {
                 "glob": "workbox-precaching.prod.js",
                 "input": "node_modules/workbox-precaching/build/",
-                "output": "./workbox-3.6.3"
+                "output": "./workbox-4.1.1"
+              },
+              {
+                "glob": "workbox-window.prod.mjs",
+                "input": "node_modules/workbox-window/build/",
+                "output": "./workbox-4.1.1"
               },
               {
                 "glob": "dexie.min.js",
@@ -61,7 +66,8 @@
                 "input": "src/global.scss"
               }
             ],
-            "scripts": []
+            "scripts": [],
+            "es5BrowserSupport": true
           },
           "configurations": {
             "production": {
@@ -87,6 +93,9 @@
                   "maximumError": "5mb"
                 }
               ]
+            },
+            "ci": {
+              "progress": false
             }
           }
         },
@@ -98,6 +107,9 @@
           "configurations": {
             "production": {
               "browserTarget": "app:build:production"
+            },
+            "ci": {
+              "progress": false
             }
           }
         },

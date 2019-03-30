@@ -47,7 +47,8 @@
                 "input": "src/global.scss"
               }
             ],
-            "scripts": []
+            "scripts": [],
+            "es5BrowserSupport": true
           },
           "configurations": {
             "production": {
@@ -74,6 +75,9 @@
                   "maximumError": "5mb"
                 }
               ]
+            },
+            "ci": {
+              "progress": false
             }
           }
         },
@@ -85,6 +89,9 @@
           "configurations": {
             "production": {
               "browserTarget": "app:build:production"
+            },
+            "ci": {
+              "progress": false
             }
           }
         },
