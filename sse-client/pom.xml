@@ -28,12 +28,12 @@
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-webflux</artifactId>
-			<version>5.1.6.RELEASE</version>
+			<version>5.1.7.RELEASE</version>
 		</dependency>
 		<dependency>
 			<groupId>io.projectreactor.netty</groupId>
 			<artifactId>reactor-netty</artifactId>
-			<version>0.8.6.RELEASE</version>
+			<version>0.8.8.RELEASE</version>
 		</dependency>
 		<dependency>
 			<groupId>jakarta.json</groupId>
@@ -52,7 +52,7 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
-				<version>3.8.0</version>
+				<version>3.8.1</version>
 				<configuration>
 					<release>11</release>				
 				</configuration>				

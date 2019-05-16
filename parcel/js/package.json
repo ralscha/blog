@@ -13,13 +13,13 @@
     "autoprefixer": "9.5.1",
     "parcel-bundler": "1.12.3",
     "parcel-plugin-compress": "1.0.9",
-    "sass": "1.19.0",
+    "sass": "1.20.1",
     "shx": "0.3.2"
   },
   "dependencies": {
     "@babel/polyfill": "7.4.4",
     "papaparse": "4.6.3",
-    "tingle.js": "0.14.0",
+    "tingle.js": "0.15.1",
     "whatwg-fetch": "3.0.0"
   },
   "browserslist": [
