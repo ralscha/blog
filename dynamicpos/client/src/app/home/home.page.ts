@@ -4,8 +4,8 @@ import {circleMarker, latLng, LatLngBounds, LayerGroup, layerGroup, Map, tileLay
 
 @Component({
   selector: 'app-home',
-  templateUrl: 'home.page.html',
-  styleUrls: ['home.page.scss']
+  templateUrl: './home.page.html',
+  styleUrls: ['./home.page.scss']
 })
 export class HomePage implements AfterViewInit {
   private map: Map;
