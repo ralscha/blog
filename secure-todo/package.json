@@ -18,7 +18,7 @@
     "@angular/platform-browser-dynamic": "7.2.15",
     "@angular/router": "7.2.15",
     "@ionic/angular": "4.4.2",
-    "core-js": "2.6.7",
+    "core-js": "2.6.9",
     "rxjs": "6.5.2",
     "zone.js": "0.9.1"
   },
@@ -35,7 +35,7 @@
     "@types/node": "11.13.11",
     "codelyzer": "4.5.0",
     "http-server": "0.11.1",
-    "ts-node": "8.1.1",
+    "ts-node": "8.2.0",
     "tslint": "5.16.0",
     "typescript": "3.2.4"
   }
