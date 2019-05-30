@@ -6,7 +6,7 @@ import {AppComponent} from './app.component';
 import {HomePage} from './home/home.page';
 import {CommonModule} from '@angular/common';
 import {FormsModule} from '@angular/forms';
-import {AgmCoreModule} from '@agm/core';
+import {AgmCoreModule} from '@agm-preview/core';
 
 const routes: Routes = [
   {path: '', redirectTo: 'home', pathMatch: 'full'},

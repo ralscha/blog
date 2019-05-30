@@ -2,18 +2,18 @@ import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {LoadingController} from '@ionic/angular';
 import {environment} from '../../environments/environment';
 import {Face, FaceLandmark, Landmark, Logo, Text, Vertex, VisionResult} from '../vision';
-import {ControlPosition, FullscreenControlOptions} from '@agm/core/services/google-maps-types';
+import {ControlPosition, FullscreenControlOptions} from '@agm-preview/core/services/google-maps-types';
 
 @Component({
   selector: 'app-home',
-  templateUrl: 'home.page.html',
-  styleUrls: ['home.page.scss']
+  templateUrl: './home.page.html',
+  styleUrls: ['./home.page.scss']
 })
 export class HomePage implements OnInit {
 
-  @ViewChild('fileSelector') fileInput: ElementRef;
-  @ViewChild('canvas') canvas: ElementRef;
-  @ViewChild('canvasContainer') canvasContainer: ElementRef;
+  @ViewChild('fileSelector', {static: false}) fileInput: ElementRef;
+  @ViewChild('canvas', {static: true}) canvas: ElementRef;
+  @ViewChild('canvasContainer', {static: false}) canvasContainer: ElementRef;
 
   visionResult: VisionResult = null;
   detail: string = null;
