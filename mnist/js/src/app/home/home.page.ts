@@ -4,12 +4,12 @@ import * as math from 'mathjs';
 
 @Component({
   selector: 'app-home',
-  templateUrl: 'home.page.html',
-  styleUrls: ['home.page.scss'],
+  templateUrl: './home.page.html',
+  styleUrls: ['./home.page.scss']
 })
 export class HomePage {
 
-  @ViewChild(DrawableDirective) drawable: DrawableDirective;
+  @ViewChild(DrawableDirective, {static: false}) drawable: DrawableDirective;
   detections: number[] = [];
   detectedNumber: number;
   private weightsInputHidden: number[][];
