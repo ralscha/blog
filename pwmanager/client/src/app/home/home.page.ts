@@ -5,8 +5,8 @@ import {Password} from '../password';
 
 @Component({
   selector: 'app-home',
-  templateUrl: 'home.page.html',
-  styleUrls: ['home.page.scss']
+  templateUrl: './home.page.html',
+  styleUrls: ['./home.page.scss']
 })
 export class HomePage {
   passwords: Password[] = [];

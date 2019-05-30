@@ -4,8 +4,8 @@ import {PasswordService} from '../password.service';
 
 @Component({
   selector: 'app-login',
-  templateUrl: 'login.page.html',
-  styleUrls: ['login.page.scss']
+  templateUrl: './login.page.html',
+  styleUrls: ['./login.page.scss']
 })
 export class LoginPage {
 

@@ -7,8 +7,8 @@ import {ActivatedRoute} from '@angular/router';
 
 @Component({
   selector: 'app-edit',
-  templateUrl: 'edit.page.html',
-  styleUrls: ['edit.page.scss']
+  templateUrl: './edit.page.html',
+  styleUrls: ['./edit.page.scss']
 })
 export class EditPage implements OnInit {
   password: Password;
