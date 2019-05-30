@@ -6,13 +6,13 @@ import {environment} from '../../environments/environment';
 
 @Component({
   selector: 'app-home',
-  templateUrl: 'home.page.html',
-  styleUrls: ['home.page.scss']
+  templateUrl: './home.page.html',
+  styleUrls: ['./home.page.scss']
 })
 export class HomePage {
   recording = false;
   loadProgress = 0;
-  @ViewChild('videoElement') videoElement;
+  @ViewChild('videoElement', { static: false }) videoElement;
   private recordRTC: RecordRTC;
 
   constructor(private readonly toastCtrl: ToastController) {
