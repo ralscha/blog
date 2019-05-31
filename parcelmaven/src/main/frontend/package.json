@@ -10,7 +10,7 @@
     "watch": "parcel watch src/index.html --public-url ./"
   },
   "devDependencies": {
-    "parcel-plugin-compress": "1.0.9",
+    "parcel-plugin-compress": "1.0.10",
     "parcel-bundler": "1.12.3",
     "shx": "0.3.2"
   },
