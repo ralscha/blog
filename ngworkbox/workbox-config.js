@@ -2,10 +2,11 @@ module.exports = {
   "globDirectory": "dist/ngworkbox/",
   "globPatterns": [
     "index.html",
+    "favicon.ico",
     "*.js",
     "*.css",    
     "assets/**/*.png",
-	"manifest.json"
+    "manifest.json"
   ],
   "dontCacheBustURLsMatching": new RegExp('.+\.[a-f0-9]{20}\..+'),
   "maximumFileSizeToCacheInBytes": 5000000,

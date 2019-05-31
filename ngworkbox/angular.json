@@ -3,12 +3,16 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "ngworkbox": {
+    "app": {
+      "projectType": "application",
+      "schematics": {
+        "@schematics/angular:component": {
+          "style": "scss"
+        }
+      },
       "root": "",
       "sourceRoot": "src",
-      "projectType": "application",
       "prefix": "app",
-      "schematics": {},
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
@@ -17,7 +21,7 @@
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
-            "tsConfig": "src/tsconfig.app.json",
+            "tsConfig": "tsconfig.app.json",
             "assets": [
               "src/favicon.ico",
               "src/assets",
@@ -26,29 +30,28 @@
               {
                 "glob": "workbox-sw.js",
                 "input": "node_modules/workbox-sw/build/",
-                "output": "./workbox-4.3.1"
+                "output": "./workbox-431"
               },
               {
                 "glob": "workbox-core.prod.js",
                 "input": "node_modules/workbox-core/build/",
-                "output": "./workbox-4.3.1"
+                "output": "./workbox-431"
               },
               {
                 "glob": "workbox-precaching.prod.js",
                 "input": "node_modules/workbox-precaching/build/",
-                "output": "./workbox-4.3.1"
+                "output": "./workbox-431"
               },
               {
                 "glob": "workbox-window.prod.mjs",
                 "input": "node_modules/workbox-window/build/",
-                "output": "./workbox-4.3.1"
+                "output": "./workbox-431"
               }
             ],
             "styles": [
-              "src/styles.css"
+              "src/styles.scss"
             ],
-            "scripts": [],
-            "es5BrowserSupport": true
+            "scripts": []
           },
           "configurations": {
             "production": {
@@ -74,6 +77,9 @@
                   "maximumError": "5mb"
                 }
               ]
+            },
+            "ci": {
+              "progress": false
             }
           }
         },
@@ -85,6 +91,9 @@
           "configurations": {
             "production": {
               "browserTarget": "ngworkbox:build:production"
+            },
+            "ci": {
+              "progress": false
             }
           }
         },
@@ -92,7 +101,7 @@
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
             "tsConfig": [
-              "src/tsconfig.app.json"
+              "tsconfig.app.json"
             ],
             "exclude": [
               "**/node_modules/**"
