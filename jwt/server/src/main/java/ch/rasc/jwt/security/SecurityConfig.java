@@ -28,7 +28,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
   @Override
   protected void configure(HttpSecurity http) throws Exception {
-    JWTFilter customFilter = new JWTFilter(this.tokenProvider);
+    JWTFilter jwtFilter = new JWTFilter(this.tokenProvider);
 
     // @formatter:off
 		http
@@ -44,7 +44,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		    .antMatchers("/signup", "/login", "/public").permitAll()
 		    .anyRequest().authenticated()
 		    .and()
-		  .addFilterBefore(customFilter, UsernamePasswordAuthenticationFilter.class);
+		  .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
 		// @formatter:on
   }
 
