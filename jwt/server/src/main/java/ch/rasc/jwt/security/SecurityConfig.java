@@ -6,8 +6,9 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
-import ch.rasc.jwt.security.jwt.JWTConfigurer;
+import ch.rasc.jwt.security.jwt.JWTFilter;
 import ch.rasc.jwt.security.jwt.TokenProvider;
 
 @Configuration
@@ -27,24 +28,23 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
   @Override
   protected void configure(HttpSecurity http) throws Exception {
+    JWTFilter customFilter = new JWTFilter(this.tokenProvider);
+
     // @formatter:off
 		http
-		  .csrf()
-		    .disable()
+		  .csrf().disable()
 		  .cors()
 		    .and()
 		  .sessionManagement()
-			.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-			.and()
+			  .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+			  .and()
 		//.httpBasic() // optional, if you want to access
 		//  .and()     // the services from a browser
 		  .authorizeRequests()
-		    .antMatchers("/signup").permitAll()
-		    .antMatchers("/login").permitAll()
-		    .antMatchers("/public").permitAll()
+		    .antMatchers("/signup", "/login", "/public").permitAll()
 		    .anyRequest().authenticated()
 		    .and()
-		  .apply(new JWTConfigurer(this.tokenProvider));
+		  .addFilterBefore(customFilter, UsernamePasswordAuthenticationFilter.class);
 		// @formatter:on
   }
 
