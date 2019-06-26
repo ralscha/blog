@@ -26,11 +26,11 @@
     "zone.js": "0.9.1"
   },
   "devDependencies": {
-    "@angular-devkit/build-angular": "0.800.3",
-    "@angular/cli": "8.0.3",
+    "@angular-devkit/build-angular": "0.800.4",
+    "@angular/cli": "8.0.4",
     "@angular/compiler-cli": "8.0.2",
     "@angular/language-service": "8.0.2",
-    "@ionic/angular-toolkit": "1.5.1",
+    "@ionic/angular-toolkit": "2.0.0",
     "@types/node": "12.0.10",
     "codelyzer": "5.1.0",
     "local-web-server": "3.0.3",
