@@ -1,29 +1,18 @@
 import {NgModule} from '@angular/core';
 import {BrowserModule} from '@angular/platform-browser';
-import {RouteReuseStrategy, RouterModule, Routes} from '@angular/router';
+import {RouteReuseStrategy} from '@angular/router';
+
 import {IonicModule, IonicRouteStrategy} from '@ionic/angular';
-import {AppComponent} from './app.component';
-import {HomePage} from './home/home.page';
-import {CommonModule} from '@angular/common';
-import {FormsModule} from '@angular/forms';
-import {HttpClientModule} from '@angular/common/http';
 import {SplashScreen} from '@ionic-native/splash-screen/ngx';
 import {StatusBar} from '@ionic-native/status-bar/ngx';
 
-const routes: Routes = [
-  {path: '', redirectTo: 'home', pathMatch: 'full'},
-  {path: 'home', component: HomePage},
-];
+import {AppComponent} from './app.component';
+import {AppRoutingModule} from './app-routing.module';
 
 @NgModule({
-  declarations: [AppComponent, HomePage],
+  declarations: [AppComponent],
   entryComponents: [],
-  imports: [BrowserModule,
-    CommonModule,
-    HttpClientModule,
-    FormsModule,
-    IonicModule.forRoot(),
-    RouterModule.forRoot(routes, {useHash: true})],
+  imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule],
   providers: [
     StatusBar,
     SplashScreen,
