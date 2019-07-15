@@ -42,12 +42,12 @@
 		<dependency>
 			<groupId>com.google.protobuf</groupId>
 			<artifactId>protobuf-java</artifactId>
-			<version>3.8.0</version>
+			<version>3.9.0</version>
 		</dependency>
 		<dependency>
 			<groupId>com.google.protobuf</groupId>
 			<artifactId>protobuf-java-util</artifactId>
-			<version>3.8.0</version>
+			<version>3.9.0</version>
 		</dependency>		
 		<dependency>
 			<groupId>com.univocity</groupId>
@@ -57,7 +57,7 @@
 		<dependency>
 			<groupId>com.squareup.okhttp3</groupId>
 			<artifactId>okhttp</artifactId>
-			<version>4.0.0</version>
+			<version>4.0.1</version>
 		</dependency>
 		<dependency>
 			<groupId>com.google.code.findbugs</groupId>
@@ -86,7 +86,7 @@
 							<goal>run</goal>
 						</goals>
 						<configuration>
-							<protocVersion>3.8.0</protocVersion>
+							<protocVersion>3.9.0</protocVersion>
 							<inputDirectories>
 								<include>src/main/protobuf</include>
 							</inputDirectories>
