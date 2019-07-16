@@ -6,9 +6,12 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content padding>
-  <ion-button color="primary" (click)="start()" [disabled]="tracking" size="large" expand="block">Start Tracking</ion-button>
-  <ion-button margin-top color="danger" (click)="stop()" [disabled]="!tracking" size="large" expand="block">Stop Tracking</ion-button>
+<ion-content class="ion-padding">
+  <ion-button (click)="start()" [disabled]="tracking" color="primary" expand="block" size="large">Start Tracking
+  </ion-button>
+  <ion-button (click)="stop()" [disabled]="!tracking" color="danger" expand="block" margin-top size="large">Stop
+    Tracking
+  </ion-button>
 
   <div *ngIf="tracking">
     <div>Accuracy: {{locationTracker.pos?.accuracy}}</div>
@@ -19,5 +22,5 @@
     <div>Time: {{locationTracker.pos?.time | date:'medium'}}</div>
   </div>
 
-  <ion-button margin-top color="primary" (click)="clear()" expand="block">Clear Data</ion-button>
+  <ion-button (click)="clear()" color="primary" expand="block" margin-top>Clear Data</ion-button>
 </ion-content>
