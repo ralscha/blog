@@ -1,5 +1,5 @@
 {
-  "name": "upload",
+  "name": "uploadminio",
   "integrations": {
     "cordova": {}
   },

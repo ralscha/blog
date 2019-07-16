@@ -1,15 +1,14 @@
 {
-  "$schema": "./node_modules/@angular-devkit/core/src/workspace/workspace-schema.json",
+  "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
   "version": 1,
-  "defaultProject": "app",
   "newProjectRoot": "projects",
   "projects": {
     "app": {
+      "projectType": "application",
+      "schematics": {},
       "root": "",
       "sourceRoot": "src",
-      "projectType": "application",
       "prefix": "app",
-      "schematics": {},
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
@@ -18,28 +17,21 @@
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
-            "tsConfig": "src/tsconfig.app.json",
+            "tsConfig": "tsconfig.app.json",
+            "aot": false,
             "assets": [
+              "src/assets",
               {
-                "glob": "**/*",
-                "input": "src/assets",
-                "output": "assets"
-              }, {
-                "glob": "@(md-camera.svg|ios-camera.svg|md-image.svg|ios-image.svg)",
+                "glob": "**/*.svg",
                 "input": "node_modules/ionicons/dist/ionicons/svg",
                 "output": "./svg"
-			  }
-            ],
-            "styles": [
-              {
-                "input": "src/theme/variables.scss"
-              },
-              {
-                "input": "src/global.scss"
               }
             ],
-            "scripts": [],
-            "es5BrowserSupport": true
+            "styles": [
+              "src/variables.scss",
+              "src/styles.scss"
+            ],
+            "scripts": []
           },
           "configurations": {
             "production": {
@@ -89,7 +81,7 @@
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
             "tsConfig": [
-              "src/tsconfig.app.json"
+              "tsconfig.app.json"
             ],
             "exclude": [
               "**/node_modules/**"
@@ -133,5 +125,6 @@
     "@ionic/angular-toolkit:page": {
       "styleext": "scss"
     }
-  }
+  },
+  "defaultProject": "app"
 }
