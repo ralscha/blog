@@ -48,134 +48,128 @@ import net.bramp.ffmpeg.builder.FFmpegBuilder;
 @CrossOrigin
 public class SearchController {
 
-	private final MongoClient mongoClient;
+  private final MongoClient mongoClient;
 
-	private final MongoDatabase mongoDatabase;
+  private final MongoDatabase mongoDatabase;
 
-	private final SpeechClient speech;
+  private final SpeechClient speech;
 
-	public SearchController(AppConfig appConfig) throws IOException {
-		this.mongoClient = new MongoClient("localhost");
-		this.mongoDatabase = this.mongoClient.getDatabase("imdb");
+  public SearchController(AppConfig appConfig) throws IOException {
+    this.mongoClient = new MongoClient("localhost");
+    this.mongoDatabase = this.mongoClient.getDatabase("imdb");
 
-		ServiceAccountCredentials credentials = ServiceAccountCredentials.fromStream(
-				Files.newInputStream(Paths.get(appConfig.getCredentialsPath())));
-		SpeechSettings settings = SpeechSettings.newBuilder()
-				.setCredentialsProvider(FixedCredentialsProvider.create(credentials))
-				.build();
-		this.speech = SpeechClient.create(settings);
-	}
+    ServiceAccountCredentials credentials = ServiceAccountCredentials
+        .fromStream(Files.newInputStream(Paths.get(appConfig.getCredentialsPath())));
+    SpeechSettings settings = SpeechSettings.newBuilder()
+        .setCredentialsProvider(FixedCredentialsProvider.create(credentials)).build();
+    this.speech = SpeechClient.create(settings);
+  }
 
-	@PreDestroy
-	public void shutdown() {
-		this.mongoClient.close();
-		try {
-			this.speech.close();
-		}
-		catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
+  @PreDestroy
+  public void shutdown() {
+    this.mongoClient.close();
+    try {
+      this.speech.close();
+    }
+    catch (Exception e) {
+      e.printStackTrace();
+    }
+  }
 
-	@PostMapping("/uploadSpeech")
-	public List<String> uploadSpeech(@RequestBody byte[] payloadFromWeb)
-			throws Exception {
+  @PostMapping("/uploadSpeech")
+  public List<String> uploadSpeech(@RequestBody byte[] payloadFromWeb) throws Exception {
 
-		String id = UUID.randomUUID().toString();
-		Path inFile = Paths.get("./in" + id + ".wav");
-		Path outFile = Paths.get("./out" + id + ".flac");
+    String id = UUID.randomUUID().toString();
+    Path inFile = Paths.get("./in" + id + ".wav");
+    Path outFile = Paths.get("./out" + id + ".flac");
 
-		Files.write(inFile, payloadFromWeb);
+    Files.write(inFile, payloadFromWeb);
 
-		FFmpeg ffmpeg = new FFmpeg("./ffmpeg.exe");
-		FFmpegBuilder builder = new FFmpegBuilder().setInput(inFile.toString())
-				.overrideOutputFiles(true).addOutput(outFile.toString())
-				.setAudioSampleRate(44_100).setAudioChannels(1)
-				.setAudioSampleFormat(FFmpeg.AUDIO_FORMAT_S16).setAudioCodec("flac")
-				.done();
+    FFmpeg ffmpeg = new FFmpeg("./ffmpeg.exe");
+    FFmpegBuilder builder = new FFmpegBuilder().setInput(inFile.toString())
+        .overrideOutputFiles(true).addOutput(outFile.toString())
+        .setAudioSampleRate(44_100).setAudioChannels(1)
+        .setAudioSampleFormat(FFmpeg.AUDIO_FORMAT_S16).setAudioCodec("flac").done();
 
-		FFmpegExecutor executor = new FFmpegExecutor(ffmpeg);
-		executor.createJob(builder).run();
+    FFmpegExecutor executor = new FFmpegExecutor(ffmpeg);
+    executor.createJob(builder).run();
 
-		byte[] payload = Files.readAllBytes(outFile);
+    byte[] payload = Files.readAllBytes(outFile);
 
-		ByteString audioBytes = ByteString.copyFrom(payload);
+    ByteString audioBytes = ByteString.copyFrom(payload);
 
-		RecognitionConfig config = RecognitionConfig.newBuilder()
-				.setEncoding(AudioEncoding.FLAC).setLanguageCode("en-US").build();
-		RecognitionAudio audio = RecognitionAudio.newBuilder().setContent(audioBytes)
-				.build();
+    RecognitionConfig config = RecognitionConfig.newBuilder()
+        .setEncoding(AudioEncoding.FLAC).setLanguageCode("en-US").build();
+    RecognitionAudio audio = RecognitionAudio.newBuilder().setContent(audioBytes).build();
 
-		RecognizeResponse response = this.speech.recognize(config, audio);
-		List<SpeechRecognitionResult> results = response.getResultsList();
+    RecognizeResponse response = this.speech.recognize(config, audio);
+    List<SpeechRecognitionResult> results = response.getResultsList();
 
-		List<String> searchTerms = new ArrayList<>();
-		for (SpeechRecognitionResult result : results) {
-			SpeechRecognitionAlternative alternative = result.getAlternativesList()
-					.get(0);
-			searchTerms.add(alternative.getTranscript());
-		}
+    List<String> searchTerms = new ArrayList<>();
+    for (SpeechRecognitionResult result : results) {
+      SpeechRecognitionAlternative alternative = result.getAlternativesList().get(0);
+      searchTerms.add(alternative.getTranscript());
+    }
 
-		Files.deleteIfExists(inFile);
-		Files.deleteIfExists(outFile);
+    Files.deleteIfExists(inFile);
+    Files.deleteIfExists(outFile);
 
-		return searchTerms;
-	}
+    return searchTerms;
+  }
 
-	@SuppressWarnings("unchecked")
-	@GetMapping("/search")
-	public List<Movie> search(@RequestParam("term") List<String> searchTerms) {
+  @SuppressWarnings("unchecked")
+  @GetMapping("/search")
+  public List<Movie> search(@RequestParam("term") List<String> searchTerms) {
 
-		Set<Movie> results = new HashSet<>();
-		MongoCollection<Document> moviesCollection = this.mongoDatabase
-				.getCollection("movies");
+    Set<Movie> results = new HashSet<>();
+    MongoCollection<Document> moviesCollection = this.mongoDatabase
+        .getCollection("movies");
 
-		MongoCollection<Document> actorCollection = this.mongoDatabase
-				.getCollection("actors");
+    MongoCollection<Document> actorCollection = this.mongoDatabase
+        .getCollection("actors");
 
-		List<Bson> orQueries = new ArrayList<>();
-		for (String term : searchTerms) {
-			orQueries.add(Filters.regex("primaryTitle", term + ".*", "i"));
-		}
+    List<Bson> orQueries = new ArrayList<>();
+    for (String term : searchTerms) {
+      orQueries.add(Filters.regex("primaryTitle", term + ".*", "i"));
+    }
 
-		try (MongoCursor<Document> cursor = moviesCollection.find(Filters.or(orQueries))
-				.limit(20).iterator()) {
-			while (cursor.hasNext()) {
-				Document doc = cursor.next();
-				Movie movie = new Movie();
-				movie.id = doc.getString("_id");
-				movie.title = doc.getString("primaryTitle");
-				movie.adult = doc.getBoolean("adultMovie", false);
-				movie.genres = doc.getString("genres");
-				movie.runtimeMinutes = doc.getInteger("runtimeMinutes", 0);
-				movie.actors = getActors(actorCollection,
-						(List<String>) doc.get("actors"));
-				results.add(movie);
-			}
-		}
+    try (MongoCursor<Document> cursor = moviesCollection.find(Filters.or(orQueries))
+        .limit(20).iterator()) {
+      while (cursor.hasNext()) {
+        Document doc = cursor.next();
+        Movie movie = new Movie();
+        movie.id = doc.getString("_id");
+        movie.title = doc.getString("primaryTitle");
+        movie.adult = doc.getBoolean("adultMovie", false);
+        movie.genres = doc.getString("genres");
+        movie.runtimeMinutes = doc.getInteger("runtimeMinutes", 0);
+        movie.actors = getActors(actorCollection, (List<String>) doc.get("actors"));
+        results.add(movie);
+      }
+    }
 
-		return results.stream().collect(Collectors.toList());
-	}
+    return results.stream().collect(Collectors.toList());
+  }
 
-	private static List<String> getActors(MongoCollection<Document> actorCollection,
-			List<String> actorIds) {
-		if (actorIds == null) {
-			return Collections.emptyList();
-		}
+  private static List<String> getActors(MongoCollection<Document> actorCollection,
+      List<String> actorIds) {
+    if (actorIds == null) {
+      return Collections.emptyList();
+    }
 
-		List<String> result = new ArrayList<>();
+    List<String> result = new ArrayList<>();
 
-		try (MongoCursor<Document> cursor = actorCollection
-				.find(Filters.in("_id", actorIds)).iterator()) {
-			while (cursor.hasNext()) {
-				String name = cursor.next().getString("name");
-				if (name != null) {
-					result.add(name);
-				}
-			}
-		}
+    try (MongoCursor<Document> cursor = actorCollection.find(Filters.in("_id", actorIds))
+        .iterator()) {
+      while (cursor.hasNext()) {
+        String name = cursor.next().getString("name");
+        if (name != null) {
+          result.add(name);
+        }
+      }
+    }
 
-		return result;
-	}
+    return result;
+  }
 
 }

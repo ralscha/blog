@@ -6,7 +6,7 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content padding>
+<ion-content class="ion-padding">
   <ion-card *ngIf="matches && matches.length > 0">
     <ion-card-content>
       {{matches.join(', ')}}
@@ -24,10 +24,10 @@
   </ion-list>
 </ion-content>
 
-<ion-footer padding>
+<ion-footer class="ion-padding">
   <ion-button color="secondary" (click)="searchCordova()">Cordova</ion-button>
   <ion-button color="secondary" (click)="searchWebSpeech()" [disabled]="isWebSpeechRecording">Web Speech</ion-button>
   <ion-button [color]="isRecording ? 'danger' : 'secondary'"
               (click)="searchGoogleCloudSpeech()">{{isRecording ? 'Stop' : 'Cloud Speech'}}
-  </ion-button>
+          </ion-button>
 </ion-footer>

@@ -8,8 +8,8 @@ declare var webkitSpeechRecognition: any;
 
 @Component({
   selector: 'app-home',
-  templateUrl: 'home.page.html',
-  styleUrls: ['home.page.scss']
+  templateUrl: './home.page.html',
+  styleUrls: ['./home.page.scss']
 })
 export class HomePage {
   movies: Movie[] = [];
@@ -27,14 +27,14 @@ export class HomePage {
 
       const loading = await this.loadingCtrl.create({
         message: 'Please wait...'
-      });
+    });
       loading.present();
 
       this.matches = searchTerms;
       let queryParams = '';
       searchTerms.forEach(term => {
         queryParams += `term=${term}&`;
-      });
+    });
       const response = await fetch(`${environment.serverUrl}/search?${queryParams}`);
       this.movies = await response.json();
       loading.dismiss();
@@ -54,7 +54,7 @@ export class HomePage {
               this.movieSearch([terms[0]]);
             } else {
               this.movieSearch(terms);
-            }
+    }
           });
         });
       } else {
@@ -63,16 +63,16 @@ export class HomePage {
             this.movieSearch([terms[0]]);
           } else {
             this.movieSearch(terms);
-          }
+    }
         });
-      }
+    }
     });
-  }
+    }
 
   searchWebSpeech() {
     if (!('webkitSpeechRecognition' in window)) {
       return;
-    }
+  }
 
     const recognition = new webkitSpeechRecognition();
     recognition.continuous = false;
@@ -96,7 +96,7 @@ export class HomePage {
             terms.push(ra.transcript);
           }
         }
-      }
+  }
 
       this.movieSearch(terms);
     };
@@ -122,8 +122,8 @@ export class HomePage {
           const response = await fetch(`${environment.serverUrl}/uploadSpeech`, requestParams);
           const searchTerms = await response.json();
           this.movieSearch(searchTerms);
-        });
-      }
+      });
+  }
       this.isRecording = false;
     } else {
       this.isRecording = true;

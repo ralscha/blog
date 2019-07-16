@@ -7,10 +7,10 @@ import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
 @JsonInclude(Include.NON_NULL)
 public class Movie {
-	public String id;
-	public String title;
-	public String genres;
-	public boolean adult;
-	public Integer runtimeMinutes;
-	public List<String> actors;
+  public String id;
+  public String title;
+  public String genres;
+  public boolean adult;
+  public Integer runtimeMinutes;
+  public List<String> actors;
 }
