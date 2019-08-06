@@ -29,7 +29,7 @@
     "code-push": "2.0.6",
     "core-js": "2.6.9",
     "rxjs": "6.5.2",
-    "zone.js": "0.10.0"
+    "zone.js": "0.10.1"
   },
   "devDependencies": {
     "@angular-devkit/architect": "0.13.9",

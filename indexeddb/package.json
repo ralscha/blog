@@ -17,7 +17,7 @@
     "@angular/forms": "8.2.0",
     "@angular/platform-browser": "8.2.0",
     "@angular/platform-browser-dynamic": "8.2.0",
-    "@angular/pwa": "0.801.3",
+    "@angular/pwa": "0.802.0",
     "@angular/router": "8.2.0",
     "@angular/service-worker": "8.2.0",
     "@ionic/angular": "4.7.1",
@@ -25,7 +25,7 @@
     "papaparse": "5.0.1",
     "rxjs": "6.5.2",
     "tslib": "1.10.0",
-    "zone.js": "0.10.0"
+    "zone.js": "0.10.1"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "0.802.0",
@@ -33,7 +33,7 @@
     "@angular/compiler-cli": "8.2.0",
     "@angular/language-service": "8.2.0",
     "@ionic/angular-toolkit": "2.0.0",
-    "@types/node": "12.6.8",
+    "@types/node": "12.6.9",
     "codelyzer": "5.1.0",
     "local-web-server": "3.0.7",
     "tslint": "5.18.0",
