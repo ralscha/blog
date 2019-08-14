@@ -18,6 +18,7 @@ import io.minio.errors.InsufficientDataException;
 import io.minio.errors.InternalException;
 import io.minio.errors.InvalidBucketNameException;
 import io.minio.errors.InvalidExpiresRangeException;
+import io.minio.errors.InvalidResponseException;
 import io.minio.errors.NoResponseException;
 import io.minio.errors.RegionConflictException;
 
@@ -32,10 +33,10 @@ public class PreSignController {
   }
 
   @PostConstruct
-  public void createBucket()
-      throws InvalidKeyException, InvalidBucketNameException, NoSuchAlgorithmException,
-      InsufficientDataException, NoResponseException, ErrorResponseException,
-      InternalException, IOException, XmlPullParserException, RegionConflictException {
+  public void createBucket() throws InvalidKeyException, InvalidBucketNameException,
+      NoSuchAlgorithmException, InsufficientDataException, NoResponseException,
+      ErrorResponseException, InternalException, IOException, XmlPullParserException,
+      RegionConflictException, InvalidResponseException {
 
     if (!this.minioClient.bucketExists(BUCKET_NAME)) {
       this.minioClient.makeBucket(BUCKET_NAME);
@@ -49,7 +50,7 @@ public class PreSignController {
       throws InvalidKeyException, InvalidBucketNameException, NoSuchAlgorithmException,
       InsufficientDataException, NoResponseException, ErrorResponseException,
       InternalException, InvalidExpiresRangeException, IOException,
-      XmlPullParserException {
+      XmlPullParserException, InvalidResponseException {
 
     return this.minioClient.presignedPutObject(BUCKET_NAME, fileName, 60);
 
