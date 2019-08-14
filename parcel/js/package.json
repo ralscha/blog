@@ -18,7 +18,7 @@
   },
   "dependencies": {
     "@babel/polyfill": "7.4.4",
-    "papaparse": "5.0.1",
+    "papaparse": "5.0.2",
     "tingle.js": "0.15.1",
     "whatwg-fetch": "3.0.0"
   },
