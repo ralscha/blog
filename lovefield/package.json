@@ -23,18 +23,18 @@
     "papaparse": "5.0.2",
     "rxjs": "6.5.2",
     "tslib": "1.10.0",
-    "zone.js": "0.10.1"
+    "zone.js": "0.10.2"
   },
   "devDependencies": {
-    "@angular-devkit/build-angular": "0.802.1",
-    "@angular/cli": "8.2.1",
+    "@angular-devkit/build-angular": "0.802.2",
+    "@angular/cli": "8.2.2",
     "@angular/compiler-cli": "8.2.2",
     "@angular/language-service": "8.2.2",
     "@ionic/angular-toolkit": "2.0.0",
-    "@types/node": "12.7.1",
+    "@types/node": "12.7.2",
     "codelyzer": "5.1.0",
     "local-web-server": "3.0.7",
-    "tslint": "5.18.0",
+    "tslint": "5.19.0",
     "typescript": "3.4.5"
   }
 }
