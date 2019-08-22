@@ -19,7 +19,7 @@ inputEl.addEventListener('change', () => {
     const now = new Date();
     const inputDate = new Date(inputEl.value);
 
-    out.push(format(inputDate, "dddd, MMMM Do YYYY, h:mm:ss a"));
+    out.push(format(inputDate, "MMMM dd, yyyy, HH:mm:ss a"));
     
     out.push(`Before today: ${isBefore(inputDate, now)}`);
     out.push(`After today: ${isAfter(inputDate, now)}`);
