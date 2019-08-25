@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import * as format from 'date-fns/format';
+import format from 'date-fns/format'
 
 @Component({
   selector: 'page-chart5',
@@ -64,7 +64,7 @@ export class Chart5Page {
     const data = [];
     for (let time = date; time <= end; time += dayTime) {
       data.push([
-        format(time, 'YYYY-MM-DD'),
+        format(time, 'yyyy-MM-dd'),
         Math.floor(Math.random() * 1000)
       ]);
     }
