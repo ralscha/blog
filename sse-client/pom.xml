@@ -33,7 +33,7 @@
 		<dependency>
 			<groupId>io.projectreactor.netty</groupId>
 			<artifactId>reactor-netty</artifactId>
-			<version>0.8.10.RELEASE</version>
+			<version>0.8.11.RELEASE</version>
 		</dependency>
 		<dependency>
 			<groupId>org.glassfish</groupId>
