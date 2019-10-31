@@ -8,12 +8,12 @@
     "postbuild": "bread-compressor dist"
   },
   "dependencies": {
-    "date-fns": "2.4.1",
+    "date-fns": "2.6.0",
     "moment": "2.24.0"
   },
   "devDependencies": {
-    "bread-compressor-cli": "1.0.7",
-    "parcel-bundler": "1.12.3",
+    "bread-compressor-cli": "1.0.8",
+    "parcel-bundler": "1.12.4",
     "shx": "0.3.2"
   }
 }
