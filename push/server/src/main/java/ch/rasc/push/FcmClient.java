@@ -52,8 +52,8 @@ public class FcmClient {
 
     Message message = Message.builder().putAllData(data).setTopic("chuck")
         .setApnsConfig(apnsConfig).setAndroidConfig(androidConfig)
-        .setNotification(
-            new Notification("Chuck Norris Joke", "A new Chuck Norris joke has arrived"))
+        .setNotification(Notification.builder().setTitle("Chuck Norris Joke")
+            .setBody("A new Chuck Norris joke has arrived").build())
         .build();
 
     String response = FirebaseMessaging.getInstance().sendAsync(message).get();
@@ -74,7 +74,8 @@ public class FcmClient {
 
     Message message = Message.builder().putAllData(data).setToken(clientToken)
         .setApnsConfig(apnsConfig).setAndroidConfig(androidConfig)
-        .setNotification(new Notification("Personal Message", "A Personal Message"))
+        .setNotification(Notification.builder().setTitle("Personal Message")
+            .setBody("A Personal Message").build())
         .build();
 
     String response = FirebaseMessaging.getInstance().sendAsync(message).get();
