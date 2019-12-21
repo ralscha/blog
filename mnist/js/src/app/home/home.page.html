@@ -6,7 +6,7 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content class="ion-padding" text-center>
+<ion-content class="ion-padding ion-text-center">
   <canvas appDrawable (newImage)="detect($event)"></canvas>
   <div>
     <ion-button (click)="erase()">Erase</ion-button>
@@ -18,7 +18,7 @@
   <table>
     <tr *ngFor="let detection of detections; index as i">
       <td>{{i}}</td>
-      <td text-end>{{detection * 100 | number:'1.1-1'}} %</td>
+      <td class="ion-text-end">{{detection * 100 | number:'1.1-1'}} %</td>
     </tr>
   </table>
 

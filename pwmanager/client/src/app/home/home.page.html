@@ -18,7 +18,7 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content padding>
+<ion-content class="ion-padding">
   <ion-searchbar (ionInput)="filter($event)"></ion-searchbar>
   <ion-card *ngFor="let password of passwords" (click)="editPassword(password)">
     <ion-card-header>

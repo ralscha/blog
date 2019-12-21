@@ -16,7 +16,7 @@
     "@angular/forms": "6.1.10",
     "@angular/platform-browser": "6.1.10",
     "@angular/platform-browser-dynamic": "6.1.10",
-    "ionic-angular": "3.9.4",
+    "ionic-angular": "3.9.9",
     "ionic2-rating": "1.2.2",
     "ionicons": "4.4.8",
     "rxjs": "6.3.3",

@@ -9,14 +9,14 @@
   },
   "devDependencies": {
     "parcel-bundler": "1.12.4",
-    "parcel-plugin-compress": "1.0.11",
+    "parcel-plugin-compress": "1.1.0",
     "shx": "0.3.2"
   },
   "dependencies": {
     "classlist-polyfill": "1.2.0",
-    "core-js": "3.3.4",
-    "echarts": "4.4.0",
-    "event-source-polyfill": "1.0.9",
+    "core-js": "3.6.0",
+    "echarts": "4.5.0",
+    "event-source-polyfill": "1.0.11",
     "muicss": "0.10.0",
     "uuid": "3.3.3",
     "whatwg-fetch": "3.0.0"

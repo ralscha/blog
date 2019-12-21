@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  serverURL: 'https://demo.rasc.ch/googlevision-backend'
+  serverURL: 'http://localhost:8080'
 };

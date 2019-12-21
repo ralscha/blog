@@ -5,9 +5,9 @@
       </ion-label>
     </ion-item-divider>
 
-    <ion-range [ngModel]="filter.mag" dualKnobs="true" max="10" min="-1" name="mag" no-padding>
+    <ion-range [ngModel]="filter.mag" dualKnobs="true" max="10" min="-1" name="mag" class="ion-no-padding">
       <ion-label slot="start">-1</ion-label>
-      <ion-label slot="end" text-right>10</ion-label>
+      <ion-label slot="end" class="ion-text-right">10</ion-label>
     </ion-range>
 
   </ion-item-group>
@@ -18,9 +18,9 @@
         km</strong></ion-label>
     </ion-item-divider>
 
-    <ion-range [ngModel]="filter.depth" dualKnobs="true" max="800" min="-10" name="depth" no-padding>
+    <ion-range [ngModel]="filter.depth" dualKnobs="true" max="800" min="-10" name="depth" class="ion-no-padding">
       <ion-label slot="start">-10 km</ion-label>
-      <ion-label slot="end" text-right>800 km</ion-label>
+      <ion-label slot="end" class="ion-text-right">800 km</ion-label>
     </ion-range>
 
   </ion-item-group>
