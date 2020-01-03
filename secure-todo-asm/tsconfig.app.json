@@ -2,10 +2,14 @@
   "extends": "./tsconfig.json",
   "compilerOptions": {
     "outDir": "./out-tsc/app",
-    "types": [],
-    "downlevelIteration": true
+    "types": []
   },
+  "files": [
+    "src/main.ts",
+    "src/zone-flags.ts",
+    "src/polyfills.ts"
+  ],
   "include": [
-    "src/**/*.ts"
+    "src/**/*.d.ts"
   ]
 }

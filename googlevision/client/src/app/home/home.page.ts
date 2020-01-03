@@ -2,7 +2,6 @@ import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {LoadingController} from '@ionic/angular';
 import {environment} from '../../environments/environment';
 import {Face, FaceLandmark, Landmark, Logo, Text, Vertex, VisionResult} from '../vision';
-import {ControlPosition, FullscreenControlOptions} from '@agm-preview/core/services/google-maps-types';
 
 @Component({
   selector: 'app-home',
@@ -11,9 +10,9 @@ import {ControlPosition, FullscreenControlOptions} from '@agm-preview/core/servi
 })
 export class HomePage implements OnInit {
 
-  @ViewChild('fileSelector', {static: false}) fileInput: ElementRef;
+  @ViewChild('fileSelector') fileInput: ElementRef;
   @ViewChild('canvas', {static: true}) canvas: ElementRef;
-  @ViewChild('canvasContainer', {static: false}) canvasContainer: ElementRef;
+  @ViewChild('canvasContainer') canvasContainer: ElementRef;
 
   visionResult: VisionResult = null;
   detail: string = null;
@@ -21,7 +20,6 @@ export class HomePage implements OnInit {
   lat: number = null;
   lng: number = null;
   zoom = 8;
-  fullscreenControlOptions: FullscreenControlOptions = {position: ControlPosition.BOTTOM_LEFT};
   markers: { lat: number, lng: number }[] = [];
   private ratio: number;
   private ctx: CanvasRenderingContext2D;

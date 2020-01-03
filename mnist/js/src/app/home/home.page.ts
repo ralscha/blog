@@ -9,7 +9,7 @@ import * as math from 'mathjs';
 })
 export class HomePage {
 
-  @ViewChild(DrawableDirective, {static: false}) drawable: DrawableDirective;
+  @ViewChild(DrawableDirective) drawable: DrawableDirective;
   detections: number[] = [];
   detectedNumber: number;
   private weightsInputHidden: number[][];
@@ -75,8 +75,7 @@ export class HomePage {
     const hiddenInputs = math.multiply(this.weightsInputHidden, inputs);
     const hiddenOutputs = hiddenInputs.map(value => this.sigmoid(value));
     const finalInputs = math.multiply(this.weightsHiddenOutput, hiddenOutputs);
-    const finalOutputs = finalInputs.map(value => this.sigmoid(value));
-    return finalOutputs;
+    return finalInputs.map(value => this.sigmoid(value));
   }
 
   private indexMax(data: number[]): number {

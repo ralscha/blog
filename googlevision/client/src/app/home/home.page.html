@@ -11,7 +11,7 @@
   </ion-toolbar>
 </ion-header>
 
-<div text-center class="canvasContainer" #canvasContainer>
+<div class="ion-text-center canvasContainer" #canvasContainer>
   <canvas #canvas></canvas>
 </div>
 
@@ -123,7 +123,7 @@
         <ion-col size="10">
           {{label.description}}
         </ion-col>
-        <ion-col size="2" text-right>
+        <ion-col size="2" class="ion-text-right">
           {{label.score | number: '1.2-2'}}
         </ion-col>
       </ion-row>
@@ -136,12 +136,12 @@
         <ion-col size="10">
           {{we.description}}
         </ion-col>
-        <ion-col size="2" text-right>
+        <ion-col size="2" class="ion-text-right">
           {{we.score | number: '1.2-2'}}
         </ion-col>
       </ion-row>
     </li>
-    <div margin-top text-center>Full Matching Images</div>
+    <div class="ion-margin-top ion-text-center">Full Matching Images</div>
     <ion-list *ngFor="let we of visionResult?.web?.fullMatchingImages">
       <ion-item>
         <ion-label>
@@ -149,7 +149,7 @@
         </ion-label>
       </ion-item>
     </ion-list>
-    <div margin-top text-center>Partial Matching Images</div>
+    <div class="ion-margin-top ion-text-center">Partial Matching Images</div>
     <ion-list *ngFor="let we of visionResult?.web?.partialMatchingImages">
       <ion-item>
         <ion-label>
@@ -157,7 +157,7 @@
         </ion-label>
       </ion-item>
     </ion-list>
-    <div margin-top text-center>Pages with Matching Images</div>
+    <div class="ion-margin-top ion-text-center">Pages with Matching Images</div>
     <ion-list *ngFor="let we of visionResult?.web?.pagesWithMatchingImages">
       <ion-item>
         <ion-label>
@@ -182,7 +182,7 @@
           <ion-col size="10">
             {{logo.description}}
           </ion-col>
-          <ion-col size="2" text-right>
+          <ion-col size="2" class="ion-text-right">
             {{logo.score | number: '1.2-2'}}
           </ion-col>
         </ion-row>
@@ -197,7 +197,7 @@
           <ion-col size="10">
             {{landmark.description}}
           </ion-col>
-          <ion-col size="2" text-right>
+          <ion-col size="2" class="ion-text-right">
             {{landmark.score | number: '1.2-2'}}
           </ion-col>
         </ion-row>
@@ -207,7 +207,6 @@
 
   <agm-map [zoom]="zoom"
            [fullscreenControl]="true"
-           [fullscreenControlOptions]="fullscreenControlOptions"
            *ngIf="markers.length > 0"
            [latitude]="lat" [longitude]="lng">
     <agm-marker *ngFor="let m of markers" [latitude]="m.lat" [longitude]="m.lng"></agm-marker>
@@ -258,6 +257,6 @@
 
 </ion-content>
 
-<ion-footer text-center *ngIf="detail !== null">
+<ion-footer class="ion-text-center" *ngIf="detail !== null">
   <ion-button (click)="showDetail(null)">Back</ion-button>
 </ion-footer>

@@ -12,7 +12,7 @@ import {environment} from '../../environments/environment';
 export class HomePage {
   recording = false;
   loadProgress = 0;
-  @ViewChild('videoElement', { static: false }) videoElement;
+  @ViewChild('videoElement') videoElement;
   private recordRTC: RecordRTC;
 
   constructor(private readonly toastCtrl: ToastController) {

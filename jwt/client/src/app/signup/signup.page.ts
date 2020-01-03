@@ -11,7 +11,7 @@ import {finalize} from 'rxjs/operators';
 })
 export class SignupPage {
 
-  @ViewChild('username', { static: false })
+  @ViewChild('username')
   usernameModel: NgModel;
 
   constructor(private readonly navCtrl: NavController,

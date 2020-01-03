@@ -13,7 +13,7 @@
     "autoprefixer": "9.7.3",
     "parcel-bundler": "1.12.4",
     "parcel-plugin-compress": "1.1.0",
-    "sass": "1.24.0",
+    "sass": "1.24.1",
     "shx": "0.3.2"
   },
   "dependencies": {
