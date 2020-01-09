@@ -18,7 +18,7 @@
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
             "tsConfig": "tsconfig.app.json",
-            "aot": false,			
+            "aot": true,			
             "assets": [
               "src/favicon.ico",
               "src/assets",
@@ -27,22 +27,22 @@
               {
                 "glob": "workbox-sw.js",
                 "input": "node_modules/workbox-sw/build/",
-                "output": "./workbox-431"
+                "output": "./workbox-500"
               },
               {
                 "glob": "workbox-core.prod.js",
                 "input": "node_modules/workbox-core/build/",
-                "output": "./workbox-431"
+                "output": "./workbox-500"
               },
               {
                 "glob": "workbox-precaching.prod.js",
                 "input": "node_modules/workbox-precaching/build/",
-                "output": "./workbox-431"
+                "output": "./workbox-500"
               },
               {
                 "glob": "workbox-window.prod.mjs",
                 "input": "node_modules/workbox-window/build/",
-                "output": "./workbox-431"
+                "output": "./workbox-500"
               }
             ],
             "styles": [
@@ -63,7 +63,6 @@
               "sourceMap": false,
               "extractCss": true,
               "namedChunks": false,
-              "aot": true,
               "extractLicenses": true,
               "vendorChunk": false,
               "buildOptimizer": true,
@@ -72,10 +71,21 @@
                   "type": "initial",
                   "maximumWarning": "2mb",
                   "maximumError": "5mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "6kb",
+                  "maximumError": "10kb"
                 }
               ]
             },
             "ci": {
+              "budgets": [
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "6kb"
+                }
+              ],
               "progress": false
             }
           }

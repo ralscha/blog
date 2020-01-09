@@ -1,4 +1,4 @@
-package ch.rasc.jwt.security.jwt;
+package ch.rasc.jwt.security;
 
 import java.io.IOException;
 

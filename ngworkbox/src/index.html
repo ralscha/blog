@@ -10,38 +10,38 @@
   <link rel="manifest" href="manifest.json">
 </head>
 <body>
-  <app-root></app-root>
+<app-root></app-root>
 
-  <script type="module">
-    import {Workbox} from './workbox-431/workbox-window.prod.mjs';
+<script type="module">
+    import {Workbox} from './workbox-500/workbox-window.prod.mjs';
 
-	if ('serviceWorker' in navigator) {
-	  const wb = new Workbox('service-worker.js');
+    if ('serviceWorker' in navigator) {
+        const wb = new Workbox('service-worker.js');
 
-	  wb.addEventListener('activated', (event) => {
-		if (!event.isUpdate) {
-		  console.log('Service worker activated for the first time!');
-		} else {
-		  console.log('Service worker activated!');
-		}
-	  });
-	  
-	  wb.addEventListener('waiting', (event) => {
-        console.log(`A new service worker has installed, but it can't activate` +
-             `until all tabs running the current version have fully unloaded.`);
-      });
-	  
-	  wb.addEventListener('installed', (event) => {
-	    if (!event.isUpdate) {
-		  console.log('Service worker installed for the first time');
-	    } else {
-		  console.log('Service worker installed');
-		}
-	  });	  
+        wb.addEventListener('activated', (event) => {
+            if (!event.isUpdate) {
+                console.log('Service worker activated for the first time!');
+            } else {
+                console.log('Service worker activated!');
+            }
+        });
 
-	  wb.register();
-	}
-  </script>
+        wb.addEventListener('waiting', (event) => {
+            console.log(`A new service worker has installed, but it can't activate` +
+                `until all tabs running the current version have fully unloaded.`);
+        });
+
+        wb.addEventListener('installed', (event) => {
+            if (!event.isUpdate) {
+                console.log('Service worker installed for the first time');
+            } else {
+                console.log('Service worker installed');
+            }
+        });
+
+        wb.register();
+    }
+</script>
 
 </body>
 

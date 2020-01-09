@@ -4,11 +4,13 @@ module.exports = {
     "index.html",
     "favicon.ico",
     "*.js",
-    "*.css",    
+    "*.css",
     "assets/**/*.png",
-    "manifest.json"
+    "manifest.json",
+		"**/workbox-window.prod.mjs"
   ],
-  "dontCacheBustURLsMatching": new RegExp('.+\.[a-f0-9]{20}\..+'),
+	"globIgnores": ['**/*-es5*'],
+  "dontCacheBustURLsMatching": new RegExp('.+\.[a-f0-9]{20,}\..+'),
   "maximumFileSizeToCacheInBytes": 5000000,
   "swSrc": "src/service-worker.js",
   "swDest": "dist/ngworkbox/service-worker.js"

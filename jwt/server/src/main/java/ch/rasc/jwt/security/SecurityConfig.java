@@ -3,13 +3,12 @@ package ch.rasc.jwt.security;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.AuthenticationServiceException;
+import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-
-import ch.rasc.jwt.security.jwt.JWTFilter;
-import ch.rasc.jwt.security.jwt.TokenProvider;
+import org.springframework.security.web.context.SecurityContextPersistenceFilter;
 
 @Configuration
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
@@ -22,30 +21,27 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
   @Bean
   @Override
-  public AuthenticationManager authenticationManagerBean() throws Exception {
-    return super.authenticationManagerBean();
+  protected AuthenticationManager authenticationManager() throws Exception {
+    return authentication -> {
+      throw new AuthenticationServiceException("Cannot authenticate " + authentication);
+    };
   }
 
   @Override
   protected void configure(HttpSecurity http) throws Exception {
-    JWTFilter jwtFilter = new JWTFilter(this.tokenProvider);
-
-    // @formatter:off
-		http
-		  .csrf().disable()
-		  .cors()
-		    .and()
-		  .sessionManagement()
-			  .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-			  .and()
-		//.httpBasic() // optional, if you want to access
-		//  .and()     // the services from a browser
-		  .authorizeRequests()
-		    .antMatchers("/signup", "/login", "/public").permitAll()
-		    .anyRequest().authenticated()
-		    .and()
-		  .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
-		// @formatter:on
+    http.csrf(cust -> cust.disable())
+        .cors(Customizer.withDefaults())
+        .sessionManagement(
+            customizer -> customizer.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+        // optional, if you want to access the
+        // services from a browser
+        // .httpBasic(Customizer.withDefaults())
+        .authorizeRequests(customizer -> {
+          customizer.antMatchers("/signup", "/login", "/public").permitAll();
+          customizer.anyRequest().authenticated();
+        })
+        .addFilterAfter(new JWTFilter(this.tokenProvider),
+            SecurityContextPersistenceFilter.class);
   }
 
 }

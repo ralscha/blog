@@ -1,12 +1,9 @@
-package ch.rasc.jwt;
+package ch.rasc.jwt.security;
 
-import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
 import org.springframework.http.HttpStatus;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.AuthenticationException;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,7 +14,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import ch.rasc.jwt.db.User;
 import ch.rasc.jwt.db.UserService;
-import ch.rasc.jwt.security.jwt.TokenProvider;
 
 @RestController
 @CrossOrigin
@@ -29,19 +25,16 @@ public class AuthController {
 
   private final PasswordEncoder passwordEncoder;
 
-  private final AuthenticationManager authenticationManager;
+  private final String userNotFoundEncodedPassword;
 
   public AuthController(PasswordEncoder passwordEncoder, UserService userService,
-      TokenProvider tokenProvider, AuthenticationManager authenticationManager) {
+      TokenProvider tokenProvider) {
     this.userService = userService;
     this.tokenProvider = tokenProvider;
     this.passwordEncoder = passwordEncoder;
-    this.authenticationManager = authenticationManager;
 
-    User user = new User();
-    user.setUsername("admin");
-    user.setPassword(this.passwordEncoder.encode("admin"));
-    this.userService.save(user);
+    this.userNotFoundEncodedPassword = this.passwordEncoder
+        .encode("userNotFoundPassword");
   }
 
   @GetMapping("/authenticate")
@@ -55,20 +48,23 @@ public class AuthController {
   }
 
   @PostMapping("/login")
-  public String authorize(@Valid @RequestBody User loginUser,
-      HttpServletResponse response) {
-    UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(
-        loginUser.getUsername(), loginUser.getPassword());
+  public ResponseEntity<String> authorize(@Valid @RequestBody User loginUser) {
 
-    try {
-      this.authenticationManager.authenticate(authenticationToken);
-      return this.tokenProvider.createToken(loginUser.getUsername());
+    User user = this.userService.lookup(loginUser.getUsername());
+    if (user != null) {
+      boolean pwMatches = this.passwordEncoder.matches(loginUser.getPassword(),
+          user.getPassword());
+      if (pwMatches) {
+        String token = this.tokenProvider.createToken(loginUser.getUsername());
+        return ResponseEntity.ok(token);
+      }
     }
-    catch (AuthenticationException e) {
-      Application.logger.info("Security exception {}", e.getMessage());
-      response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-      return null;
+    else {
+      this.passwordEncoder.matches(loginUser.getPassword(),
+          this.userNotFoundEncodedPassword);
     }
+
+    return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
   }
 
   @PostMapping("/signup")
