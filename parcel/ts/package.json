@@ -12,7 +12,7 @@
     "parcel-bundler": "1.12.4",
     "parcel-plugin-compress": "1.1.0",
     "shx": "0.3.2",
-    "typescript": "3.7.4"
+    "typescript": "3.7.5"
   },
   "dependencies": {
     "core-js": "3.6.2",
