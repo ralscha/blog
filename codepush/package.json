@@ -46,7 +46,7 @@
     "codelyzer": "4.5.0",
     "http-server": "0.11.1",
     "ts-node": "8.2.0",
-    "tslint": "5.20.1",
+    "tslint": "6.0.0",
     "typescript": "3.2.4"
   }
 }

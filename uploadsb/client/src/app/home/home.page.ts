@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {ChangeDetectorRef, Component} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {LoadingController, ToastController} from '@ionic/angular';
 import {catchError, finalize} from 'rxjs/operators';
@@ -18,13 +18,16 @@ export class HomePage {
 
   constructor(private readonly http: HttpClient,
               private readonly loadingCtrl: LoadingController,
-              private readonly toastCtrl: ToastController) {
+              private readonly toastCtrl: ToastController,
+              private readonly changeDetectorRef: ChangeDetectorRef) {
   }
 
   takePhoto() {
     const camera: any = navigator['camera'];
     camera.getPicture(imageData => {
       this.myPhoto = this.convertFileSrc(imageData);
+      this.changeDetectorRef.detectChanges();
+      this.changeDetectorRef.markForCheck();
       this.uploadPhoto(imageData);
     }, error => this.error = JSON.stringify(error), {
       quality: 100,
@@ -118,6 +121,7 @@ export class HomePage {
   private handleError(error: any) {
     const errMsg = error.message ? error.message : error.toString();
     this.error = errMsg;
+    this.changeDetectorRef.detectChanges();
     return throwError(errMsg);
   }
 
