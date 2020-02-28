@@ -29,7 +29,7 @@
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-webflux</artifactId>
-			<version>5.2.2.RELEASE</version>
+			<version>5.2.4.RELEASE</version>
 		</dependency>
 		<dependency>
 			<groupId>io.projectreactor.netty</groupId>
