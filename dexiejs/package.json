@@ -32,7 +32,7 @@
     "@angular/compiler-cli": "9.0.4",
     "@angular/language-service": "9.0.4",
     "@ionic/angular-toolkit": "2.2.0",
-    "@types/node": "13.7.6",
+    "@types/node": "13.7.7",
     "codelyzer": "5.2.1",
     "local-web-server": "4.0.0",
     "tslint": "6.0.0",
