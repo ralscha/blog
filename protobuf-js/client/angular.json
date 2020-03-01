@@ -22,7 +22,7 @@
             "assets": [
               "src/assets",
               {
-                "glob": "@(md-cloud-download.svg|ios-cloud-download.svg|md-arrow-down.svg|ios-arrow-down.svg)",
+                "glob": "@(cloud-download-outline.svg|caret-back-sharp.svg)",
                 "input": "node_modules/ionicons/dist/ionicons/svg",
                 "output": "./svg"
               }
