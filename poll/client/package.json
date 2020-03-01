@@ -14,11 +14,11 @@
   },
   "dependencies": {
     "classlist-polyfill": "1.2.0",
-    "core-js": "3.6.1",
+    "core-js": "3.6.4",
     "echarts": "4.6.0",
-    "event-source-polyfill": "1.0.11",
-    "muicss": "0.10.0",
-    "uuid": "3.4.0",
+    "event-source-polyfill": "1.0.12",
+    "muicss": "0.10.1",
+    "uuid": "7.0.1",
     "whatwg-fetch": "3.0.0"
   },
   "browserslist": [
