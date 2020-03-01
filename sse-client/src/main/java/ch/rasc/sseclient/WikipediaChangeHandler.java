@@ -2,12 +2,12 @@ package ch.rasc.sseclient;
 
 import java.io.StringReader;
 
-import javax.json.Json;
-import javax.json.JsonObject;
-import javax.json.JsonReader;
-import javax.json.JsonValue;
-
 import com.launchdarkly.eventsource.MessageEvent;
+
+import jakarta.json.Json;
+import jakarta.json.JsonObject;
+import jakarta.json.JsonReader;
+import jakarta.json.JsonValue;
 
 public class WikipediaChangeHandler implements DefaultEventHandler {
 

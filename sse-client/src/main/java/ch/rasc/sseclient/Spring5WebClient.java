@@ -20,9 +20,9 @@ public class Spring5WebClient {
 
     while (true) {
       try {
-        final Flux<ServerSentEvent<String>> stream = WebClient.create("http://localhost:8080")
-            .get().uri("/memory").accept(MediaType.TEXT_EVENT_STREAM).retrieve()
-            .bodyToFlux(typeRef);
+        final Flux<ServerSentEvent<String>> stream = WebClient
+            .create("http://localhost:8080").get().uri("/memory")
+            .accept(MediaType.TEXT_EVENT_STREAM).retrieve().bodyToFlux(typeRef);
         stream.subscribe(sse -> logger.info("Received: {}", sse));
         TimeUnit.MINUTES.sleep(10);
       }

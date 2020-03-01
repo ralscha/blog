@@ -5,7 +5,7 @@
     </ion-title>
     <ion-buttons slot="end">
       <ion-button (click)="addTodo()">
-        <ion-icon slot="icon-only" name="add">
+        <ion-icon slot="icon-only" name="add-outline">
         </ion-icon>
       </ion-button>
     </ion-buttons>
@@ -20,11 +20,11 @@
       </ion-item>
       <ion-item-options>
         <ion-button color="primary" (click)="editTodo(slidingItem, todo)">
-          <ion-icon name="create"></ion-icon>
+          <ion-icon name="create-outline"></ion-icon>
           Edit
         </ion-button>
         <ion-button color="danger" (click)="deleteTodo(slidingItem, todo)">
-          <ion-icon name="trash"></ion-icon>
+          <ion-icon name="trash-outline"></ion-icon>
           Delete
         </ion-button>
       </ion-item-options>
