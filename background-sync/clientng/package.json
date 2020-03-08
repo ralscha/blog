@@ -17,7 +17,7 @@
     "@angular/forms": "9.0.5",
     "@angular/platform-browser": "9.0.5",
     "@angular/platform-browser-dynamic": "9.0.5",
-    "@angular/pwa": "0.900.2",
+    "@angular/pwa": "0.900.5",
     "@angular/router": "9.0.5",
     "@angular/service-worker": "9.0.5",
     "@ionic/angular": "4.11.10",

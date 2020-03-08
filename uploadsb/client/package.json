@@ -34,7 +34,7 @@
     "@angular/compiler-cli": "9.0.5",
     "@angular/language-service": "9.0.5",
     "@ionic/angular-toolkit": "2.2.0",
-    "@types/node": "13.7.7",
+    "@types/node": "13.9.0",
     "codelyzer": "5.2.1",
     "cordova-plugin-camera": "4.1.0",
     "cordova-plugin-device": "2.0.3",
