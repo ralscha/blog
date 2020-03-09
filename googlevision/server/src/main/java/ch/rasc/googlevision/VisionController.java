@@ -70,7 +70,7 @@ import ch.rasc.googlevision.dto.WebUrl;
 @CrossOrigin
 public class VisionController {
 
-	private static final String BUCKET_NAME = "rasc-visiondemo-2019";
+	private static final String BUCKET_NAME = "rasc_visiondemo_2019";
 	private Storage storage;
 	private ImageAnnotatorSettings imageAnnotatorSettings;
 
