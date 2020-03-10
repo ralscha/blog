@@ -122,8 +122,8 @@ export class HomePage {
           const response = await fetch(`${environment.serverUrl}/uploadSpeech`, requestParams);
           const searchTerms = await response.json();
           this.movieSearch(searchTerms);
-      });
-  }
+        });
+      }
       this.isRecording = false;
     } else {
       this.isRecording = true;
