@@ -11,3 +11,4 @@ skipWaiting()
 clientsClaim();
 precacheAndRoute(self.__WB_MANIFEST);
 
+
