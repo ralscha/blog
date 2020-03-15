@@ -5,10 +5,13 @@
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
-    "build-prod": "ng build --prod && npm run service-worker-webpack",
+	"prebuild-prod": "shx rm -f ./src/service-worker.js",
+    "build-prod": "ng build --prod",
+	"postbuild-prod": "npm run sw-prod-webpack",
     "serve-dist": "ws --hostname localhost -d dist/ngworkbox -p 1234 -o --log.format stats",
     "lint": "ng lint",
-    "service-worker-webpack": "shx rm -f ./dist/ngworkbox/service-worker.js && webpack --config ./service-worker-webpack.config.js --progress --colors && workbox injectManifest ./workbox-config.js"
+    "sw-dev-webpack": "shx rm -f ./src/service-worker.js && webpack --config ./sw-dev-webpack.config.js",	
+    "sw-prod-webpack": "shx rm -f ./dist/ngworkbox/service-worker.js && webpack --config ./sw-prod-webpack.config.js --progress --colors && workbox injectManifest ./workbox-config.js"
   },
   "private": true,
   "dependencies": {
@@ -31,7 +34,7 @@
     "@angular/cli": "9.0.6",
     "@angular/compiler-cli": "9.0.6",
     "@angular/language-service": "9.0.6",
-    "@types/node": "13.9.0",
+    "@types/node": "13.9.1",
     "codelyzer": "5.2.1",
     "local-web-server": "4.0.0",
     "path": "0.12.7",

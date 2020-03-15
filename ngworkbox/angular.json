@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "app": {
+    "ngworkbox": {
       "projectType": "application",
       "schematics": {},
       "root": "",
@@ -22,7 +22,8 @@
             "assets": [
               "src/favicon.ico",
               "src/assets",
-              "src/manifest.json"
+              "src/manifest.json",
+              "src/service-worker.js"
             ],
             "styles": [
               "src/styles.scss"
@@ -57,15 +58,6 @@
                   "maximumError": "10kb"
                 }
               ]
-            },
-            "ci": {
-              "budgets": [
-                {
-                  "type": "anyComponentStyle",
-                  "maximumWarning": "6kb"
-                }
-              ],
-              "progress": false
             }
           }
         },
@@ -77,9 +69,6 @@
           "configurations": {
             "production": {
               "browserTarget": "ngworkbox:build:production"
-            },
-            "ci": {
-              "progress": false
             }
           }
         },
