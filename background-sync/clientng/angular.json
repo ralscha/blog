@@ -22,7 +22,7 @@
             "assets": [
               "src/assets",
               {
-                "glob": "@(md-add.svg|md-trash.svg|ios-add.svg|ios-trash.svg|md-arrow-back.svg|ios-arrow-back.svg|md-arrow-forward.svg|ios-arrow-forward.svg)",
+                "glob": "@(add-outline.svg|trash-outline.svg|arrow-back-sharp.svg|chevron-back.svg|chevron-forward.svg)",
                 "input": "node_modules/ionicons/dist/ionicons/svg",
                 "output": "./svg"
               },
