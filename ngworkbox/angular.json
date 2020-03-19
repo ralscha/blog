@@ -27,7 +27,7 @@
               {
                 "glob": "workbox-window.prod.mjs",
                 "input": "node_modules/workbox-window/build/",
-                "output": "./workbox500"
+                "output": "./workbox510"
               },			  
             ],
             "styles": [

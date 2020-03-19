@@ -26,9 +26,9 @@
     "@angular/router": "9.0.7",
     "rxjs": "6.5.4",
     "tslib": "1.11.1",
-    "workbox-core": "5.0.0",
-    "workbox-precaching": "5.0.0",
-    "workbox-window": "5.0.0",
+    "workbox-core": "5.1.0",
+    "workbox-precaching": "5.1.0",
+    "workbox-window": "5.1.0",
     "zone.js": "0.10.3"
   },
   "devDependencies": {

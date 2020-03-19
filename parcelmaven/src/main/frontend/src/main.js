@@ -1,7 +1,7 @@
 import echarts from 'echarts/lib/echarts';
 import 'echarts/lib/chart/gauge';
 import { NativeEventSource, EventSourcePolyfill } from 'event-source-polyfill';
-import uuidv4 from 'uuid/v4';
+import { v4 as uuidv4 } from 'uuid';
 
 const EventSource = NativeEventSource || EventSourcePolyfill;
 
