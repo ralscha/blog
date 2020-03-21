@@ -24,7 +24,7 @@
     "tslib": "1.11.1",
     "stream": "0.0.2",
     "text-encoding-shim": "1.0.5",
-    "uuid": "7.0.1",
+    "uuid": "7.0.2",
     "zone.js": "0.10.3"
   },
   "devDependencies": {

@@ -20,7 +20,7 @@
     "@angular/router": "9.0.7",
     "@ionic/angular": "5.0.5",
     "rxjs": "6.5.4",
-    "uuid": "7.0.1",
+    "uuid": "7.0.2",
     "tslib": "1.11.1",
     "zone.js": "0.10.3"
   },
