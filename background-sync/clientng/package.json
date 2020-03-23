@@ -5,7 +5,7 @@
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
-    "build-prod": "ng build --prod  --baseHref=/syncappng/",
+    "build-prod": "ng build --prod",
     "serve-dist": "ws --hostname localhost -d dist/app -p 1234 -o --log.format stats",
     "lint": "ng lint"
   },
@@ -17,7 +17,6 @@
     "@angular/forms": "9.0.7",
     "@angular/platform-browser": "9.0.7",
     "@angular/platform-browser-dynamic": "9.0.7",
-    "@angular/pwa": "0.900.7",
     "@angular/router": "9.0.7",
     "@angular/service-worker": "9.0.7",
     "@ionic/angular": "5.0.5",

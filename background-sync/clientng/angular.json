@@ -31,7 +31,7 @@
                 "input": "node_modules/dexie/dist/",
                 "output": "./"
               },
-              "src/manifest.json",
+              "src/manifest.webmanifest",
               "src/sw-master.js",
               "src/sw-sync.js"
             ],
@@ -57,7 +57,6 @@
               "extractLicenses": true,
               "vendorChunk": false,
               "buildOptimizer": true,
-              "serviceWorker": true,
               "budgets": [
                 {
                   "type": "initial",
@@ -69,7 +68,9 @@
                   "maximumWarning": "6kb",
                   "maximumError": "10kb"
                 }
-              ]
+              ],
+              "serviceWorker": true,
+              "ngswConfigPath": "ngsw-config.json"
             },
             "ci": {
               "progress": false
