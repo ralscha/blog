@@ -23,12 +23,7 @@
               "src/favicon.ico",
               "src/assets",
               "src/manifest.json",
-              "src/service-worker.js",
-              {
-                "glob": "workbox-window.prod.mjs",
-                "input": "node_modules/workbox-window/build/",
-                "output": "./workbox510"
-              },			  
+              "src/service-worker.js"
             ],
             "styles": [
               "src/styles.scss"

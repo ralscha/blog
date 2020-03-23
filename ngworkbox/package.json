@@ -26,9 +26,8 @@
     "@angular/router": "9.0.7",
     "rxjs": "6.5.4",
     "tslib": "1.11.1",
-    "workbox-core": "5.1.0",
-    "workbox-precaching": "5.1.0",
-    "workbox-window": "5.1.0",
+    "workbox-core": "5.1.1",
+    "workbox-precaching": "5.1.1",
     "zone.js": "0.10.3"
   },
   "devDependencies": {
@@ -36,10 +35,9 @@
     "@angular/cli": "9.0.7",
     "@angular/compiler-cli": "9.0.7",
     "@angular/language-service": "9.0.7",
-    "@types/node": "13.9.2",
+    "@types/node": "13.9.3",
     "codelyzer": "5.2.1",
     "local-web-server": "4.0.0",
-    "path": "0.12.7",
     "shx": "0.3.2",
     "npm-run-all": "4.1.5",
     "ts-loader": "6.2.1",
@@ -47,6 +45,6 @@
     "typescript": "3.8.3",
     "webpack": "4.42.0",
     "webpack-cli": "3.3.11",
-    "workbox-cli": "5.0.0"
+    "workbox-cli": "5.1.1"
   }
 }
