@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {Todo, TodoDb} from '../todo';
-import uuidv4 from 'uuid/v4';
+import { v4 as uuidv4 } from 'uuid';
 
 @Injectable({
   providedIn: 'root'
