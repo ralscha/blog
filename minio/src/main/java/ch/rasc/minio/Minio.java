@@ -9,15 +9,14 @@ import java.nio.file.StandardCopyOption;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 
-import org.xmlpull.v1.XmlPullParserException;
-
 import io.minio.MinioClient;
+import io.minio.PutObjectOptions;
 import io.minio.errors.MinioException;
 
 public class Minio {
 
   public static void main(String[] args) throws InvalidKeyException,
-      NoSuchAlgorithmException, IOException, XmlPullParserException {
+      NoSuchAlgorithmException, IOException {
     try {
       String accessKey = "EY9QX8JV680F69KF1RZJ";
       String secretKey = "eobizOIujzVW5+y4Z6oYP2OsTAgmpf4imzWfeTby";
@@ -42,7 +41,8 @@ public class Minio {
         Files.copy(in, tempFile, StandardCopyOption.REPLACE_EXISTING);
       }
 
-      minioClient.putObject("cats", "cat.jpg", tempFile.toString());
+      minioClient.putObject("cats", "cat.jpg", tempFile.toString(),
+          new PutObjectOptions(Files.size(tempFile), -1));
       Files.delete(tempFile);
     }
     catch (MinioException e) {
