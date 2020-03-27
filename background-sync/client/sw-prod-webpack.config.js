@@ -1,16 +1,12 @@
 const path = require('path');
 
 module.exports = {
-  mode: 'development',
+  mode: 'production',
   entry: path.join(__dirname, 'src', 'service-worker.ts'),
   output: {
-    path: path.join(__dirname, 'src'),
+    path: path.join(__dirname, 'dist', 'app'),
     filename: 'service-worker.js'
   },
-  watch: true,
-  watchOptions: {
-    ignored: /node_modules/
-  },  
   module: {
     rules: [
       {

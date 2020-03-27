@@ -2,6 +2,7 @@ import {enableProdMode} from '@angular/core';
 import {platformBrowserDynamic} from '@angular/platform-browser-dynamic';
 import {AppModule} from './app/app.module';
 import {environment} from './environments/environment';
+import {Workbox} from 'workbox-window';
 
 if (environment.production) {
   enableProdMode();
@@ -9,11 +10,34 @@ if (environment.production) {
 
 function loadServiceWorker() {
   if (environment.production && ('serviceWorker' in navigator)) {
-    navigator.serviceWorker.register('service-worker.js')
-      .catch(err => console.error('Service worker registration failed with:', err));
+
+    const wb = new Workbox('service-worker.js');
+
+    wb.addEventListener('activated', (event) => {
+      if (!event.isUpdate) {
+        console.log('Service worker activated for the first time!');
+      } else {
+        console.log('Service worker activated!');
+      }
+    });
+
+    wb.addEventListener('waiting', (event) => {
+      console.log(`A new service worker has installed, but it can't activate` +
+        `until all tabs running the current version have fully unloaded.`);
+    });
+
+    wb.addEventListener('installed', (event) => {
+      if (!event.isUpdate) {
+        console.log('Service worker installed for the first time');
+      } else {
+        console.log('Service worker installed');
+      }
+    });
+
+    wb.register();
   }
 }
 
 platformBrowserDynamic().bootstrapModule(AppModule)
-  .then(module => loadServiceWorker())
+  .then(_ => loadServiceWorker())
   .catch(err => console.error(err));

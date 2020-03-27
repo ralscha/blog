@@ -27,13 +27,6 @@
 </head>
 <body>
 <app-root></app-root>
-  <script type="module">
-    import {Workbox} from './workbox-431/workbox-window.prod.mjs';
-
-	if ('serviceWorker' in navigator) {
-	  const wb = new Workbox('service-worker.js');
-	  wb.register();
-	}
-  </script>
 </body>
+
 </html>

@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import org.xmlpull.v1.XmlPullParserException;
 
 import io.minio.MinioClient;
 import io.minio.errors.ErrorResponseException;
@@ -19,8 +18,8 @@ import io.minio.errors.InternalException;
 import io.minio.errors.InvalidBucketNameException;
 import io.minio.errors.InvalidExpiresRangeException;
 import io.minio.errors.InvalidResponseException;
-import io.minio.errors.NoResponseException;
 import io.minio.errors.RegionConflictException;
+import io.minio.errors.XmlParserException;
 
 @RestController
 public class PreSignController {
@@ -34,9 +33,9 @@ public class PreSignController {
 
   @PostConstruct
   public void createBucket() throws InvalidKeyException, InvalidBucketNameException,
-      NoSuchAlgorithmException, InsufficientDataException, NoResponseException,
-      ErrorResponseException, InternalException, IOException, XmlPullParserException,
-      RegionConflictException, InvalidResponseException {
+      NoSuchAlgorithmException, InsufficientDataException, ErrorResponseException,
+      InternalException, IOException, RegionConflictException, InvalidResponseException,
+      IllegalArgumentException, XmlParserException {
 
     if (!this.minioClient.bucketExists(BUCKET_NAME)) {
       this.minioClient.makeBucket(BUCKET_NAME);
@@ -48,9 +47,9 @@ public class PreSignController {
   @GetMapping("/getPreSignUrl")
   public String getPreSignUrl(@RequestParam("fileName") String fileName)
       throws InvalidKeyException, InvalidBucketNameException, NoSuchAlgorithmException,
-      InsufficientDataException, NoResponseException, ErrorResponseException,
-      InternalException, InvalidExpiresRangeException, IOException,
-      XmlPullParserException, InvalidResponseException {
+      InsufficientDataException, ErrorResponseException, InternalException,
+      InvalidExpiresRangeException, IOException, InvalidResponseException,
+      IllegalArgumentException, XmlParserException {
 
     return this.minioClient.presignedPutObject(BUCKET_NAME, fileName, 60);
 

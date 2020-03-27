@@ -1,17 +1,11 @@
 module.exports = {
-  "globDirectory": "dist/app/",
-  "globPatterns": [
-    "index.html",
-    "*.js",
-    "*.css",
-    "assets/**/*.png",
-    "assets/**/favicon.ico",
-    "*svg/*",
-    "manifest.json"
-  ],
-  "globIgnores": ['**/*-es5*'],
-  "dontCacheBustURLsMatching": new RegExp('.+\.[a-f0-9]{20,}\..+'),
-  "maximumFileSizeToCacheInBytes": 5000000,
-  "swSrc": "src/service-worker.js",
-  "swDest": "dist/app/service-worker.js"
+  globDirectory: "dist/app/",
+  globPatterns: ["**/*.{css,eot,html,ico,jpg,js,json,png,svg,ttf,txt,webmanifest,woff,woff2,webm,xml}"],
+  globFollow: true,
+  globStrict: true,
+  globIgnores: ['**/*-es5.*.js', '3rdpartylicenses.txt', 'assets/icons/*.png'],
+  dontCacheBustURLsMatching: new RegExp('.+.[a-f0-9]{20}..+'),
+  maximumFileSizeToCacheInBytes: 5000000,
+  swSrc: "dist/app/service-worker.js",
+  swDest: "dist/app/service-worker.js"
 };

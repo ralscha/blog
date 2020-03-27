@@ -28,6 +28,6 @@
       </ion-item>
     </ion-list>
     <ion-button type="submit" size="medium" expand="full" [disabled]="!f.valid">Save</ion-button>
-    <div margin-top class="errorMessage" *ngIf="!subject.valid && subject.touched">Please enter a Subject</div>
+    <div class="ion-margin-top errorMessage" *ngIf="!subject.valid && subject.touched">Please enter a Subject</div>
   </form>
 </ion-content>

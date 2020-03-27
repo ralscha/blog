@@ -29,12 +29,12 @@
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-webflux</artifactId>
-			<version>5.2.4.RELEASE</version>
+			<version>5.2.5.RELEASE</version>
 		</dependency>
 		<dependency>
 			<groupId>io.projectreactor.netty</groupId>
 			<artifactId>reactor-netty</artifactId>
-			<version>0.9.5.RELEASE</version>
+			<version>0.9.6.RELEASE</version>
 		</dependency>
 		<dependency>
 			<groupId>org.glassfish</groupId>

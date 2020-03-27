@@ -22,34 +22,9 @@
             "assets": [
               "src/assets",
               {
-                "glob": "@(md-add.svg|md-trash.svg|ios-add.svg|ios-trash.svg|md-arrow-back.svg|ios-arrow-back.svg|md-arrow-forward.svg|ios-arrow-forward.svg)",
+                "glob": "@(add-outline.svg|trash-outline.svg|arrow-back-sharp.svg|chevron-back.svg|chevron-forward.svg)",
                 "input": "node_modules/ionicons/dist/ionicons/svg",
                 "output": "./svg"
-              },			  
-              {
-                "glob": "workbox-sw.js",
-                "input": "node_modules/workbox-sw/build/",
-                "output": "./workbox-431"
-              },
-              {
-                "glob": "workbox-core.prod.js",
-                "input": "node_modules/workbox-core/build/",
-                "output": "./workbox-431"
-              },
-              {
-                "glob": "workbox-precaching.prod.js",
-                "input": "node_modules/workbox-precaching/build/",
-                "output": "./workbox-431"
-              },
-              {
-                "glob": "workbox-window.prod.mjs",
-                "input": "node_modules/workbox-window/build/",
-                "output": "./workbox-431"
-              },
-              {
-                "glob": "dexie.min.js",
-                "input": "node_modules/dexie/dist/",
-                "output": "./"
               },
               "src/manifest.json",
               "src/service-worker.js"
