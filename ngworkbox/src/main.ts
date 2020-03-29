@@ -9,8 +9,8 @@ if (environment.production) {
 }
 
 function loadServiceWorker() {
-  if (environment.production && ('serviceWorker' in navigator)) {
-
+  // if (environment.production && ('serviceWorker' in navigator)) {
+  if ('serviceWorker' in navigator) {
     const wb = new Workbox('service-worker.js');
 
     wb.addEventListener('activated', (event) => {

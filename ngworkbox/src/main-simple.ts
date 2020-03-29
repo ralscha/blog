@@ -8,7 +8,8 @@ if (environment.production) {
 }
 
 function loadServiceWorker() {
-  if (environment.production && ('serviceWorker' in navigator)) {
+  // if (environment.production && ('serviceWorker' in navigator)) {
+  if ('serviceWorker' in navigator) {
     navigator.serviceWorker.register('service-worker.js')
       .catch(err => console.error('Service worker registration failed with:', err));
   }
