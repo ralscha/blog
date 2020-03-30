@@ -9,12 +9,12 @@
 		<dependency>
 			<groupId>com.amazonaws</groupId>
 			<artifactId>aws-java-sdk-s3</artifactId>
-			<version>1.11.751</version>
+			<version>1.11.754</version>
 		</dependency>
 		<dependency>
 			<groupId>io.minio</groupId>
 			<artifactId>minio</artifactId>
-			<version>7.0.0</version>
+			<version>7.0.1</version>
 		</dependency>
 	</dependencies>
 

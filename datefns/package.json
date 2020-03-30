@@ -12,7 +12,7 @@
     "moment": "2.24.0"
   },
   "devDependencies": {
-    "bread-compressor-cli": "1.0.9",
+    "bread-compressor-cli": "1.1.0",
     "parcel-bundler": "1.12.4",
     "shx": "0.3.2"
   }

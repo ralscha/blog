@@ -20,7 +20,7 @@
     "@angular/router": "9.1.0",
     "@auth0/angular-jwt": "4.0.0",
     "@ionic/angular": "5.0.7",
-    "ngx-custom-validators": "9.0.1",
+    "ngx-custom-validators": "9.1.0",
     "rxjs": "6.5.4",
     "tslib": "1.11.1",
     "zone.js": "0.10.3"
