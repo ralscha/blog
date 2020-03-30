@@ -16,5 +16,5 @@ function loadServiceWorker() {
 }
 
 platformBrowserDynamic().bootstrapModule(AppModule)
-  .then(module => loadServiceWorker())
+  .then(_ => loadServiceWorker())
   .catch(err => console.error(err));

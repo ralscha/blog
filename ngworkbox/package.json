@@ -4,7 +4,7 @@
   "scripts": {
     "ng": "ng",
     "dev": "npm-run-all --parallel sw-dev-webpack start",
-    "start": "ng serve",
+    "start": "ng serve -o",
     "build": "ng build",
     "build-prod": "ng build --prod",
     "postbuild-prod": "npm run sw-prod-webpack",
