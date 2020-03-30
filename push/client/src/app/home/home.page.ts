@@ -6,8 +6,8 @@ import {environment} from '../../environments/environment';
 
 @Component({
   selector: 'app-home',
-  templateUrl: 'home.page.html',
-  styleUrls: ['home.page.scss']
+  templateUrl: './home.page.html',
+  styleUrls: ['./home.page.scss']
 })
 export class HomePage {
 
@@ -23,13 +23,13 @@ export class HomePage {
 
     platform.ready().then(() => {
       window['FirebasePlugin'].getToken(token => this.token = token,
-                                        error => console.error('Error getting token', error));
+        error => console.error('Error getting token', error));
 
       window['FirebasePlugin'].onTokenRefresh(token => this.token = token,
-                                        error => console.error('Error token refresh', error));
+        error => console.error('Error token refresh', error));
 
       window['FirebasePlugin'].onNotificationOpen(notification => this.handleNotification(notification),
-                                        error => console.error('Error notification open', error));
+        error => console.error('Error notification open', error));
       this.onChange();
       this.onPmChange();
     });
@@ -48,7 +48,7 @@ export class HomePage {
     this.http.post(`${environment.serverURL}/register`, formData)
       .pipe(timeout(10000))
       .subscribe(() => localStorage.setItem('allowPersonal', JSON.stringify(this.allowPersonal)),
-        error => this.allowPersonal = !this.allowPersonal);
+        _ => this.allowPersonal = !this.allowPersonal);
   }
 
   unregister() {
@@ -57,7 +57,7 @@ export class HomePage {
     this.http.post(`${environment.serverURL}/unregister`, formData)
       .pipe(timeout(10000))
       .subscribe(() => localStorage.setItem('allowPersonal', JSON.stringify(this.allowPersonal)),
-        error => this.allowPersonal = !this.allowPersonal);
+        _ => this.allowPersonal = !this.allowPersonal);
   }
 
   onChange() {
