@@ -4,16 +4,15 @@
   "scripts": {
     "ng": "ng",
     "dev": "npm-run-all --parallel sw-dev-webpack ionic-start",
-    "start": "ng serve",
+    "start": "ng serve -o",
     "ionic-start": "ionic serve",
     "build": "ng build",
-    "prebuild-prod": "shx rm -f ./src/service-worker.js",
     "build-prod": "ng build --prod",
     "postbuild-prod": "npm run sw-prod-webpack",
     "serve-dist": "ws --hostname localhost -d dist/app -p 1234 -o --log.format stats",
     "lint": "ng lint",
-    "sw-dev-webpack": "shx rm -f ./src/service-worker.js && webpack --config ./sw-dev-webpack.config.js",
-    "sw-prod-webpack": "shx rm -f ./dist/app/service-worker.js && webpack --config ./sw-prod-webpack.config.js --progress --colors && workbox injectManifest ./workbox-config.js"
+    "sw-dev-webpack": "rimraf ./src/service-worker.js && webpack --config ./sw-dev-webpack.config.js",
+    "sw-prod-webpack": "rimraf ./dist/app/service-worker.js && webpack --config ./sw-prod-webpack.config.js --progress --colors && workbox injectManifest ./workbox-config.js"
   },
   "private": true,
   "dependencies": {
@@ -46,7 +45,7 @@
     "codelyzer": "5.2.2",
     "local-web-server": "4.0.0",
     "npm-run-all": "4.1.5",
-    "shx": "0.3.2",
+    "rimraf": "3.0.2",
     "ts-loader": "6.2.2",
     "tslint": "6.1.0",
     "typescript": "3.8.3",
