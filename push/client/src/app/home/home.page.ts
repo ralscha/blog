@@ -4,6 +4,8 @@ import {Platform} from '@ionic/angular';
 import {timeout} from 'rxjs/operators';
 import {environment} from '../../environments/environment';
 
+declare var cordova: any;
+
 @Component({
   selector: 'app-home',
   templateUrl: './home.page.html',
@@ -21,15 +23,25 @@ export class HomePage {
               platform: Platform,
               private readonly changeDetectorRef: ChangeDetectorRef) {
 
-    platform.ready().then(() => {
-      window['FirebasePlugin'].getToken(token => this.token = token,
-        error => console.error('Error getting token', error));
+    platform.ready().then(async () => {
+      await cordova.plugins.firebase.messaging.requestPermission();
+      this.token = await cordova.plugins.firebase.messaging.getToken();
 
-      window['FirebasePlugin'].onTokenRefresh(token => this.token = token,
-        error => console.error('Error token refresh', error));
+      cordova.plugins.firebase.messaging.onTokenRefresh(async () => {
+        console.log('Token updated');
+        this.token = await cordova.plugins.firebase.messaging.getToken();
+      });
 
-      window['FirebasePlugin'].onNotificationOpen(notification => this.handleNotification(notification),
-        error => console.error('Error notification open', error));
+      cordova.plugins.firebase.messaging.onMessage(payload => {
+        console.log('New foreground FCM message: ', payload);
+        this.handleNotification(payload);
+      });
+
+      cordova.plugins.firebase.messaging.onBackgroundMessage(payload => {
+        console.log('New background FCM message: ', payload);
+        this.handleNotification(payload);
+      });
+
       this.onChange();
       this.onPmChange();
     });
@@ -64,9 +76,9 @@ export class HomePage {
     localStorage.setItem('allowPush', JSON.stringify(this.allowPush));
 
     if (this.allowPush) {
-      window['FirebasePlugin'].subscribe(this.TOPIC_NAME);
+      cordova.plugins.firebase.messaging.subscribe(this.TOPIC_NAME);
     } else {
-      window['FirebasePlugin'].unsubscribe(this.TOPIC_NAME);
+      cordova.plugins.firebase.messaging.unsubscribe(this.TOPIC_NAME);
     }
   }
 
