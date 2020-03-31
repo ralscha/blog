@@ -32,7 +32,7 @@
     "@angular/language-service": "9.1.0",
     "@ionic/angular-toolkit": "2.2.0",
     "@types/flowjs": "2.13.2",
-    "@types/node": "13.9.5",
+    "@types/node": "13.9.8",
     "codelyzer": "5.2.2",
     "local-web-server": "4.0.0",
     "tslint": "6.1.0",

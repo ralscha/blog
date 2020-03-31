@@ -24,26 +24,11 @@ export class HomePage {
               private readonly changeDetectorRef: ChangeDetectorRef) {
 
     platform.ready().then(async () => {
-      await cordova.plugins.firebase.messaging.requestPermission();
-      this.token = await cordova.plugins.firebase.messaging.getToken();
-
-      cordova.plugins.firebase.messaging.onTokenRefresh(async () => {
-        console.log('Token updated');
-        this.token = await cordova.plugins.firebase.messaging.getToken();
-      });
-
-      cordova.plugins.firebase.messaging.onMessage(payload => {
-        console.log('New foreground FCM message: ', payload);
-        this.handleNotification(payload);
-      });
-
-      cordova.plugins.firebase.messaging.onBackgroundMessage(payload => {
-        console.log('New background FCM message: ', payload);
-        this.handleNotification(payload);
-      });
-
-      this.onChange();
-      this.onPmChange();
+      try {
+        await this.initFcm();
+      } catch (e) {
+        console.log('Something went wrong during initialization: ', e);
+      }
     });
 
     const pushFlag = localStorage.getItem('allowPush');
@@ -51,7 +36,29 @@ export class HomePage {
 
     const personalFlag = localStorage.getItem('allowPersonal');
     this.allowPersonal = personalFlag != null ? JSON.parse(personalFlag) : false;
+  }
 
+  async initFcm() {
+    await cordova.plugins.firebase.messaging.requestPermission();
+    this.token = await cordova.plugins.firebase.messaging.getToken();
+
+    cordova.plugins.firebase.messaging.onTokenRefresh(async () => {
+      console.log('Token updated');
+      this.token = await cordova.plugins.firebase.messaging.getToken();
+    });
+
+    cordova.plugins.firebase.messaging.onMessage(payload => {
+      console.log('New foreground message: ', payload);
+      this.handleNotification(payload);
+    });
+
+    cordova.plugins.firebase.messaging.onBackgroundMessage(payload => {
+      console.log('New background message: ', payload);
+      this.handleNotification(payload);
+    });
+
+    this.onChange();
+    this.onPmChange();
   }
 
   register() {
