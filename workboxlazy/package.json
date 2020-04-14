@@ -8,7 +8,7 @@
     "build": "ionic-app-scripts build",
     "lint": "ionic-app-scripts lint",
     "dist": "shx rm -rf www/* && npm run build --prod && node ./cache-busting.js && workbox injectManifest && npm run compress",
-    "compress": "bread-compressor -a gzip www",
+    "compress": "bread-compressor www",
     "open": "http-server www -c-1 -o -a localhost -p 1234"
   },
   "config": {
