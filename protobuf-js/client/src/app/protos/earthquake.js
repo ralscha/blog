@@ -135,21 +135,21 @@
         Earthquake.encode = function encode(message, writer) {
             if (!writer)
                 writer = $Writer.create();
-            if (message.id != null && message.hasOwnProperty("id"))
+            if (message.id != null && Object.hasOwnProperty.call(message, "id"))
                 writer.uint32(/* id 1, wireType 2 =*/10).string(message.id);
-            if (message.time != null && message.hasOwnProperty("time"))
+            if (message.time != null && Object.hasOwnProperty.call(message, "time"))
                 writer.uint32(/* id 2, wireType 2 =*/18).string(message.time);
-            if (message.latitude != null && message.hasOwnProperty("latitude"))
+            if (message.latitude != null && Object.hasOwnProperty.call(message, "latitude"))
                 writer.uint32(/* id 3, wireType 1 =*/25).double(message.latitude);
-            if (message.longitude != null && message.hasOwnProperty("longitude"))
+            if (message.longitude != null && Object.hasOwnProperty.call(message, "longitude"))
                 writer.uint32(/* id 4, wireType 1 =*/33).double(message.longitude);
-            if (message.depth != null && message.hasOwnProperty("depth"))
+            if (message.depth != null && Object.hasOwnProperty.call(message, "depth"))
                 writer.uint32(/* id 5, wireType 5 =*/45).float(message.depth);
-            if (message.mag != null && message.hasOwnProperty("mag"))
+            if (message.mag != null && Object.hasOwnProperty.call(message, "mag"))
                 writer.uint32(/* id 6, wireType 5 =*/53).float(message.mag);
-            if (message.place != null && message.hasOwnProperty("place"))
+            if (message.place != null && Object.hasOwnProperty.call(message, "place"))
                 writer.uint32(/* id 7, wireType 2 =*/58).string(message.place);
-            if (message.magType != null && message.hasOwnProperty("magType"))
+            if (message.magType != null && Object.hasOwnProperty.call(message, "magType"))
                 writer.uint32(/* id 8, wireType 2 =*/66).string(message.magType);
             return writer;
         };

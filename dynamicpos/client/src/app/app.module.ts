@@ -19,7 +19,7 @@ const routes: Routes = [
   imports: [BrowserModule,
     CommonModule,
     HttpClientModule,
-    LeafletModule.forRoot(),
+    LeafletModule,
     IonicModule.forRoot(),
     RouterModule.forRoot(routes, {useHash: true})],
   providers: [
