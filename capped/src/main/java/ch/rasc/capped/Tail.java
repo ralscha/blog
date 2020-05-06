@@ -7,7 +7,8 @@ import java.util.concurrent.atomic.AtomicInteger;
 import org.bson.Document;
 
 import com.mongodb.CursorType;
-import com.mongodb.MongoClient;
+import com.mongodb.client.MongoClient;
+import com.mongodb.client.MongoClients;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoCursor;
 import com.mongodb.client.MongoDatabase;
@@ -16,7 +17,7 @@ import com.mongodb.client.model.CreateCollectionOptions;
 public class Tail {
 
   public static void main(String[] args) throws InterruptedException {
-    try (MongoClient mongoClient = new MongoClient()) {
+    try (MongoClient mongoClient = MongoClients.create()) {
       MongoDatabase db = mongoClient.getDatabase("test");
       db.drop();
 

@@ -7,7 +7,8 @@ import java.util.concurrent.TimeUnit;
 
 import org.bson.Document;
 
-import com.mongodb.MongoClient;
+import com.mongodb.client.MongoClient;
+import com.mongodb.client.MongoClients;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.model.IndexOptions;
@@ -17,7 +18,7 @@ public class Ttl3 {
 
   public static void main(String[] args) throws InterruptedException {
 
-    try (MongoClient mongoClient = new MongoClient()) {
+    try (MongoClient mongoClient = MongoClients.create()) {
       MongoDatabase db = mongoClient.getDatabase("test");
       db.drop();
 
