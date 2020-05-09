@@ -12,14 +12,14 @@
   "devDependencies": {
     "autoprefixer": "9.7.6",
     "parcel-bundler": "1.12.4",
-    "parcel-plugin-compress": "2.0.1",
-    "sass": "1.26.3",
+    "parcel-plugin-compress": "2.0.2",
+    "sass": "1.26.5",
     "shx": "0.3.2"
   },
   "dependencies": {
     "@babel/polyfill": "7.8.7",
     "papaparse": "5.2.0",
-    "tingle.js": "0.15.2",
+    "tingle.js": "0.15.3",
     "whatwg-fetch": "3.0.0"
   },
   "browserslist": [
