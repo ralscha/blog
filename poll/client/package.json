@@ -15,10 +15,10 @@
   "dependencies": {
     "classlist-polyfill": "1.2.0",
     "core-js": "3.6.5",
-    "echarts": "4.7.0",
-    "event-source-polyfill": "1.0.12",
+    "echarts": "4.8.0",
+    "event-source-polyfill": "1.0.15",
     "muicss": "0.10.2",
-    "uuid": "8.0.0",
+    "uuid": "8.1.0",
     "whatwg-fetch": "3.0.0"
   },
   "browserslist": [

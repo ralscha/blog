@@ -8,8 +8,8 @@
     "postbuild": "bread-compressor dist"
   },
   "dependencies": {
-    "date-fns": "2.13.0",
-    "moment": "2.25.3"
+    "date-fns": "2.14.0",
+    "moment": "2.26.0"
   },
   "devDependencies": {
     "bread-compressor-cli": "1.1.0",
