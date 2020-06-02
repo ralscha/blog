@@ -15,8 +15,8 @@ import {NgxEchartsModule} from 'ngx-echarts';
   imports: [
     IonicModule,
     CommonModule,
-    NgxEchartsModule,
-    TabsPageRoutingModule
+    TabsPageRoutingModule,
+    NgxEchartsModule.forChild()
   ],
   declarations: [TabsPage, Chart1Page, Chart2Page, Chart3Page, Chart4Page, Chart5Page, Chart6Page]
 })

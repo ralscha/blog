@@ -1,7 +1,6 @@
 import {Component} from '@angular/core';
 
 @Component({
-  selector: 'page-chart3',
   templateUrl: 'chart3.html',
   styleUrls: ['chart3.scss']
 })

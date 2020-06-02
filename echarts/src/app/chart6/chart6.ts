@@ -19,7 +19,7 @@ export class Chart6Page {
     },
     tooltip: {
       trigger: 'axis',
-      formatter: function (params) {
+      formatter: params => {
         params = params[0];
         const date = new Date(params.name);
         return date.getDate() + '/' + (date.getMonth() + 1) + '/' + date.getFullYear() + ' : ' + params.value[1];
@@ -55,7 +55,7 @@ export class Chart6Page {
     },
     tooltip: {
       trigger: 'axis',
-      formatter: function (params) {
+      formatter: params => {
         params = params[0];
         const date = new Date(params.name);
         return date.getDate() + '/' + (date.getMonth() + 1) + '/' + date.getFullYear() + ' : ' + params.value[1];

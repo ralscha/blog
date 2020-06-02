@@ -2,7 +2,6 @@ import {Component} from '@angular/core';
 import format from 'date-fns/format'
 
 @Component({
-  selector: 'page-chart5',
   templateUrl: 'chart5.html',
   styleUrls: ['chart5.scss']
 })
@@ -11,9 +10,7 @@ export class Chart5Page {
   options = {
     tooltip: {
       position: 'top',
-      formatter: function (p) {
-        return p.data[0] + ': ' + p.data[1];
-      }
+      formatter: p => p.data[0] + ': ' + p.data[1]
     },
     visualMap: {
       min: 0,
@@ -23,7 +20,6 @@ export class Chart5Page {
       left: 'center',
       bottom: 0,
     },
-
     calendar: [{
       cellSize: [10, 'auto'],
       bottom: 45,

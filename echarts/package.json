@@ -6,6 +6,7 @@
     "start": "ng serve",
     "build": "ng build",
     "build-prod": "ng build --prod --base-href /echarts/",
+    "build-prod-local": "ng build --prod",
     "postbuild-prod": "bread-compressor dist/app",
     "serve-dist": "ws --hostname localhost -d dist/app -p 1234 -o --log.format stats",
     "lint": "ng lint"
@@ -22,9 +23,9 @@
     "@ionic/angular": "5.1.1",
     "date-fns": "2.14.0",
     "echarts": "4.8.0",
-    "ngx-echarts": "4.2.2",
+    "ngx-echarts": "5.0.0",
     "rxjs": "6.5.5",
-    "tslib": "1.12.0",
+    "tslib": "1.13.0",
     "zone.js": "0.10.3"
   },
   "devDependencies": {
@@ -33,7 +34,7 @@
     "@angular/compiler-cli": "9.1.9",
     "@angular/language-service": "9.1.9",
     "@ionic/angular-toolkit": "2.2.0",
-    "@types/node": "14.0.6",
+    "@types/node": "14.0.9",
     "bread-compressor-cli": "1.1.0",
     "codelyzer": "5.2.2",
     "local-web-server": "4.2.0",
