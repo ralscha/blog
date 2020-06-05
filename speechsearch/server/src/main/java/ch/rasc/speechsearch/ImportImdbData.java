@@ -17,9 +17,11 @@ import java.util.zip.GZIPInputStream;
 import org.bson.Document;
 import org.springframework.util.StringUtils;
 
-import com.mongodb.MongoClient;
-import com.mongodb.MongoClientOptions;
+import com.mongodb.ConnectionString;
+import com.mongodb.MongoClientSettings;
 import com.mongodb.WriteConcern;
+import com.mongodb.client.MongoClient;
+import com.mongodb.client.MongoClients;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.model.Filters;
@@ -55,9 +57,12 @@ public class ImportImdbData {
     settings.setHeaderExtractionEnabled(true);
     TsvParser parser = new TsvParser(settings);
 
-    MongoClientOptions options = MongoClientOptions.builder()
-        .writeConcern(WriteConcern.UNACKNOWLEDGED).build();
-    try (MongoClient mongoClient = new MongoClient("localhost", options)) {
+    ConnectionString connectionString = new ConnectionString("mongodb://localhost:27107");
+    MongoClientSettings mongoClientSettings = MongoClientSettings.builder()
+        .applyConnectionString(connectionString).writeConcern(WriteConcern.UNACKNOWLEDGED)
+        .build();
+
+    try (MongoClient mongoClient = MongoClients.create(mongoClientSettings)) {
       MongoDatabase database = mongoClient.getDatabase("imdb");
       MongoCollection<Document> actorsCollection = database.getCollection("actors");
 

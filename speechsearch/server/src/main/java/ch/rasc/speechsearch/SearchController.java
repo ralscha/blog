@@ -34,7 +34,11 @@ import com.google.cloud.speech.v1.SpeechRecognitionAlternative;
 import com.google.cloud.speech.v1.SpeechRecognitionResult;
 import com.google.cloud.speech.v1.SpeechSettings;
 import com.google.protobuf.ByteString;
-import com.mongodb.MongoClient;
+import com.mongodb.ConnectionString;
+import com.mongodb.MongoClientSettings;
+import com.mongodb.WriteConcern;
+import com.mongodb.client.MongoClient;
+import com.mongodb.client.MongoClients;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoCursor;
 import com.mongodb.client.MongoDatabase;
@@ -55,7 +59,11 @@ public class SearchController {
   private final SpeechClient speech;
 
   public SearchController(AppConfig appConfig) throws IOException {
-    this.mongoClient = new MongoClient("localhost");
+    ConnectionString connectionString = new ConnectionString("mongodb://localhost:27107");
+    MongoClientSettings mongoClientSettings = MongoClientSettings.builder()
+        .applyConnectionString(connectionString).writeConcern(WriteConcern.UNACKNOWLEDGED)
+        .build();
+    this.mongoClient = MongoClients.create(mongoClientSettings);
     this.mongoDatabase = this.mongoClient.getDatabase("imdb");
 
     ServiceAccountCredentials credentials = ServiceAccountCredentials
