@@ -23,7 +23,8 @@ export class HomePage {
   }
 
   takePhoto() {
-    const camera: any = navigator['camera'];
+    // @ts-ignore
+    const camera: any = navigator.camera;
     camera.getPicture(imageData => {
       this.myPhoto = this.convertFileSrc(imageData);
       this.changeDetectorRef.detectChanges();
@@ -38,7 +39,8 @@ export class HomePage {
   }
 
   selectPhoto(): void {
-    const camera: any = navigator['camera'];
+    // @ts-ignore
+    const camera: any = navigator.camera;
     camera.getPicture(imageData => {
       this.myPhoto = this.convertFileSrc(imageData);
       this.uploadPhoto(imageData);
@@ -55,13 +57,16 @@ export class HomePage {
       return url;
     }
     if (url.startsWith('/')) {
-      return window['WEBVIEW_SERVER_URL'] + '/_app_file_' + url;
+      // @ts-ignore
+      return window.WEBVIEW_SERVER_URL + '/_app_file_' + url;
     }
     if (url.startsWith('file://')) {
-      return window['WEBVIEW_SERVER_URL'] + url.replace('file://', '/_app_file_');
+      // @ts-ignore
+      return window.WEBVIEW_SERVER_URL + url.replace('file://', '/_app_file_');
     }
     if (url.startsWith('content://')) {
-      return window['WEBVIEW_SERVER_URL'] + url.replace('content:/', '/_app_content_');
+      // @ts-ignore
+      return window.WEBVIEW_SERVER_URL + url.replace('content:/', '/_app_content_');
     }
     return url;
   }
@@ -74,9 +79,10 @@ export class HomePage {
 
     this.loading.present();
 
-    window['resolveLocalFileSystemURL'](imageFileUri,
+    // @ts-ignore
+    window.resolveLocalFileSystemURL(imageFileUri,
       entry => {
-        entry['file'](file => this.readFile(file));
+        entry.file(file => this.readFile(file));
       });
   }
 

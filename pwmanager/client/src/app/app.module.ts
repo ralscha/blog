@@ -22,7 +22,6 @@ const routes: Routes = [
 
 @NgModule({
   declarations: [AppComponent, HomePage, LoginPage, EditPage],
-  entryComponents: [],
   imports: [BrowserModule,
     CommonModule,
     HttpClientModule,

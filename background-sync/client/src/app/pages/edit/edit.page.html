@@ -8,7 +8,7 @@
     </ion-buttons>
     <ion-buttons slot="end">
       <ion-button (click)="deleteTodo()">
-        <ion-icon name="trash-outline" size="large"></ion-icon>
+        <ion-icon name="trash-outline" [size]="'large'"></ion-icon>
       </ion-button>
     </ion-buttons>
   </ion-toolbar>
@@ -19,7 +19,7 @@
     <ion-list>
       <ion-item>
         <ion-label position="stacked">Subject *</ion-label>
-        <ion-input #subject="ngModel" [ngModel]="todo?.subject" name="subject" required></ion-input>
+        <ion-input #subject="ngModel" [ngModel]="todo?.subject" name="subject" [required]="true" ></ion-input>
       </ion-item>
 
       <ion-item>
@@ -27,7 +27,7 @@
         <ion-input [ngModel]="todo?.description" name="description"></ion-input>
       </ion-item>
     </ion-list>
-    <ion-button [disabled]="!f.valid" expand="full" size="medium" type="submit">Save</ion-button>
+    <ion-button [disabled]="!f.valid" expand="full" [size]="'default'" type="submit">Save</ion-button>
     <div *ngIf="!subject.valid && subject.touched" class="errorMessage ion-margin-top">Please enter a Subject</div>
   </form>
 </ion-content>

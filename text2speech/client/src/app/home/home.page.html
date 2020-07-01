@@ -29,7 +29,7 @@
   </ion-item>
   <ion-item>
     <ion-label position="stacked">Speaking Rate: {{speakingRateRange.value | number:'1.0-2'}}</ion-label>
-    <ion-range min="0.25" max="4" step="0.01" #speakingRateRange color="secondary" style="width:100%"
+    <ion-range [min]="0.25" [max]="4" [step]="0.01" #speakingRateRange color="secondary" style="width:100%"
                name="speakingRate" [(ngModel)]="speakingRate">
       <div slot="start" class="ion-margin-end">0.25</div>
       <div slot="end" class="ion-margin-start">4</div>
@@ -37,7 +37,7 @@
   </ion-item>
   <ion-item>
     <ion-label position="stacked">Pitch: {{pitchRange.value | number:'1.0-1'}}</ion-label>
-    <ion-range min="-20" max="20" step="0.1" #pitchRange color="secondary" style="width:100%" name="pitch"
+    <ion-range [min]="-20" [max]="20" [step]="0.1" #pitchRange color="secondary" style="width:100%" name="pitch"
                [(ngModel)]="pitch">
       <div slot="start" class="ion-margin-end">-20</div>
       <div slot="end" class="ion-margin-start">20</div>
@@ -45,7 +45,7 @@
   </ion-item>
   <ion-item lines="full">
     <ion-label position="stacked">Text</ion-label>
-    <ion-textarea rows="4" [(ngModel)]="text"></ion-textarea>
+    <ion-textarea [rows]="4" [(ngModel)]="text"></ion-textarea>
   </ion-item>
 
   <ion-button class="ion-margin-top" expand="full" (click)="speakWithGoogle()">Speak with Google Text-to-Speech</ion-button>

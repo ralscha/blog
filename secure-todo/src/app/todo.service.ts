@@ -89,13 +89,13 @@ export class TodoService {
 
     this.aesKey = await
       window.crypto.subtle.deriveKey({
-          'name': 'PBKDF2',
-          'salt': this.textEncoder.encode(this.salt),
-          'iterations': this.iterations,
-          'hash': 'SHA-256'
+          name: 'PBKDF2',
+          salt: this.textEncoder.encode(this.salt),
+          iterations: this.iterations,
+          hash: 'SHA-256'
         },
         baseKey,
-        {'name': 'AES-GCM', 'length': 128},
+        {name: 'AES-GCM', length: 128},
         false,
         ['encrypt', 'decrypt']);
   }
@@ -117,7 +117,7 @@ export class TodoService {
         data[i - this.ivLen] = byte;
       }
     });
-    return {iv: iv, data: data};
+    return {iv, data};
   }
 
   private async encrypt(data) {

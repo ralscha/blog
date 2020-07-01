@@ -89,7 +89,7 @@ export class EarthquakeService {
           const intersection = results[0].filter(id => results[1].includes(id));
           const result: Earthquake[] = [];
           intersection.forEach(id => {
-            store.get(id).onsuccess = e => result.push((<any>e.target).result);
+            store.get(id).onsuccess = e => result.push((e.target as any).result);
           });
           tx.oncomplete = e => resolve(result);
         });

@@ -21,28 +21,28 @@
          style="display: none;">
 
   <ion-list *ngIf="visionResult !== null && detail === null">
-    <ion-item *ngIf="visionResult?.faces && visionResult.faces.length > 0" detail="true" (click)="showDetail('faces')">
+    <ion-item *ngIf="visionResult?.faces && visionResult.faces.length > 0" [detail]="true" (click)="showDetail('faces')">
       <ion-label>Faces</ion-label>
     </ion-item>
-    <ion-item *ngIf="visionResult?.labels && visionResult.labels.length > 0" detail="true"
+    <ion-item *ngIf="visionResult?.labels && visionResult.labels.length > 0" [detail]="true"
               (click)="showDetail('labels')">
       <ion-label>Labels</ion-label>
     </ion-item>
-    <ion-item *ngIf="visionResult?.web && visionResult.web.webEntities.length > 0" detail="true"
+    <ion-item *ngIf="visionResult?.web && visionResult.web.webEntities.length > 0" [detail]="true"
               (click)="showDetail('web')">
       <ion-label>Web</ion-label>
     </ion-item>
-    <ion-item detail="true" (click)="showDetail('safeSearch')">
+    <ion-item [detail]="true" (click)="showDetail('safeSearch')">
       <ion-label>Safe Search</ion-label>
     </ion-item>
-    <ion-item *ngIf="visionResult?.logos && visionResult.logos.length > 0" detail="true" (click)="showDetail('logos')">
+    <ion-item *ngIf="visionResult?.logos && visionResult.logos.length > 0" [detail]="true" (click)="showDetail('logos')">
       <ion-label>Logos</ion-label>
     </ion-item>
-    <ion-item *ngIf="visionResult?.landmarks && visionResult.landmarks.length > 0" detail="true"
+    <ion-item *ngIf="visionResult?.landmarks && visionResult.landmarks.length > 0" [detail]="true"
               (click)="showDetail('landmarks')">
       <ion-label>Landmarks</ion-label>
     </ion-item>
-    <ion-item *ngIf="visionResult?.texts && visionResult.texts.length > 0" detail="true" (click)="showDetail('texts')">
+    <ion-item *ngIf="visionResult?.texts && visionResult.texts.length > 0" [detail]="true" (click)="showDetail('texts')">
       <ion-label>Texts</ion-label>
     </ion-item>
   </ion-list>

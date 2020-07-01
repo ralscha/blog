@@ -67,7 +67,7 @@ export class SignupPage {
 
       toast.present();
 
-      this.usernameModel.control.setErrors({'usernameTaken': true});
+      this.usernameModel.control.setErrors({usernameTaken: true});
     }
   }
 

@@ -11,7 +11,7 @@ export class AgeValidator {
       if (control.value >= minAge) {
         return null;
       }
-      return {'notOldEnough': true};
+      return {notOldEnough: true};
     };
   }
 

@@ -16,7 +16,6 @@ const routes: Routes = [
 
 @NgModule({
   declarations: [AppComponent, HomePage, ProgressBarComponent],
-  entryComponents: [],
   imports: [BrowserModule,
     CommonModule,
     HttpClientModule,

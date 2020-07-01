@@ -22,7 +22,7 @@
     </ion-refresher-content>
   </ion-refresher>
 
-  <ion-virtual-scroll [hidden]="earthquakes.length == 0" [items]="earthquakes" approxItemHeight='128px'>
+  <ion-virtual-scroll [hidden]="earthquakes.length == 0" [items]="earthquakes" [approxItemHeight]="128">
     <ion-item *virtualItem="let earthquake">
       <ion-label>
         <app-detail [earthquake]="earthquake" [referenceLocation]="filter.myLocation"></app-detail>

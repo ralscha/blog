@@ -45,11 +45,14 @@ export class HomePage {
   }
 
   searchCordova() {
-    window['plugins'].speechRecognition.hasPermission(permission => {
+    // @ts-ignore
+    window.plugins.speechRecognition.hasPermission(permission => {
 
       if (!permission) {
-        window['plugins'].speechRecognition.requestPermission(_ => {
-          window['plugins'].speechRecognition.startListening(terms => {
+        // @ts-ignore
+        window.plugins.speechRecognition.requestPermission(_ => {
+          // @ts-ignore
+          window.plugins.speechRecognition.startListening(terms => {
             if (terms && terms.length > 0) {
               this.movieSearch([terms[0]]);
             } else {
@@ -58,7 +61,8 @@ export class HomePage {
           });
         });
       } else {
-        window['plugins'].speechRecognition.startListening(terms => {
+        // @ts-ignore
+        window.plugins.speechRecognition.startListening(terms => {
           if (terms && terms.length > 0) {
             this.movieSearch([terms[0]]);
           } else {

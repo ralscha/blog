@@ -1,7 +1,7 @@
 import {Component, Input} from '@angular/core';
 
 @Component({
-  selector: 'detail',
+  selector: 'app-detail',
   templateUrl: 'detail.html'
 })
 export class DetailComponent {

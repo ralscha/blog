@@ -33,9 +33,7 @@ export class HomePage {
         this.recordRTC.startRecording();
 
       })
-      .catch(function (err) {
-        console.log('An error occured! ' + err);
-      });
+      .catch(err => console.log('An error occured! ' + err));
   }
 
   stop() {

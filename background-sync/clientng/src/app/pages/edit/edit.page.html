@@ -19,7 +19,7 @@
     <ion-list>
       <ion-item>
         <ion-label position="stacked">Subject *</ion-label>
-        <ion-input name="subject" [ngModel]="todo?.subject" required #subject="ngModel"></ion-input>
+        <ion-input name="subject" [ngModel]="todo?.subject" [required]="true" #subject="ngModel"></ion-input>
       </ion-item>
 
       <ion-item>
@@ -27,7 +27,7 @@
         <ion-input name="description" [ngModel]="todo?.description"></ion-input>
       </ion-item>
     </ion-list>
-    <ion-button type="submit" size="medium" expand="full" [disabled]="!f.valid">Save</ion-button>
+    <ion-button type="submit" size="default" expand="full" [disabled]="!f.valid">Save</ion-button>
     <div class="ion-margin-top errorMessage" *ngIf="!subject.valid && subject.touched">Please enter a Subject</div>
   </form>
 </ion-content>

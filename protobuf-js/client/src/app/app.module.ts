@@ -45,7 +45,6 @@ const routes: Routes = [
 
 @NgModule({
   declarations: [AppComponent, TabsPage, ProtobufPage, JsonPage, DetailComponent],
-  entryComponents: [],
   imports: [BrowserModule, HttpClientModule, IonicModule.forRoot(), RouterModule.forRoot(routes, {useHash: true})],
   providers: [
     {provide: RouteReuseStrategy, useClass: IonicRouteStrategy}

@@ -14,10 +14,10 @@
 
 <ion-content>
 
-  <ion-virtual-scroll [items]="earthquakes" approxItemHeight='128px'>
+  <ion-virtual-scroll [items]="earthquakes" [approxItemHeight]="128">
     <ion-item *virtualItem="let earthquake">
       <ion-label>
-        <detail [earthquake]="earthquake"></detail>
+        <app-detail [earthquake]="earthquake"></app-detail>
       </ion-label>
     </ion-item>
   </ion-virtual-scroll>

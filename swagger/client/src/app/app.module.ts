@@ -18,7 +18,7 @@ const routes: Routes = [
   {path: '**', redirectTo: 'home'}
 ];
 
-export function apiConfigFactory (): Configuration {
+export function apiConfigFactory(): Configuration {
   const params: ConfigurationParameters = {
     basePath: environment.basePath
   };
@@ -27,7 +27,6 @@ export function apiConfigFactory (): Configuration {
 
 @NgModule({
   declarations: [AppComponent, HomePage, EditPage],
-  entryComponents: [],
   imports: [BrowserModule,
     CommonModule,
     HttpClientModule,

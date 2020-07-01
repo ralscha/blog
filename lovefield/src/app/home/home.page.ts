@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {FilterPopover} from './filter';
+import {FilterPopoverComponent} from './filter';
 import {PopoverController} from '@ionic/angular';
 import {EarthquakeService} from '../services/earthquake';
 import {Filter} from '../filter';
@@ -43,7 +43,7 @@ export class HomePage implements OnInit {
   }
 
   async presentPopover(event) {
-    const popover = await this.popoverCtrl.create({component: FilterPopover, event: event, componentProps: {filter: this.filter}});
+    const popover = await this.popoverCtrl.create({component: FilterPopoverComponent, event, componentProps: {filter: this.filter}});
     await popover.present();
 
     popover.onDidDismiss().then(evt => {

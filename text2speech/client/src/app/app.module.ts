@@ -13,7 +13,6 @@ const routes: Routes = [
 
 @NgModule({
   declarations: [AppComponent, HomePage],
-  entryComponents: [],
   imports: [BrowserModule,
     CommonModule,
     FormsModule, IonicModule.forRoot(), RouterModule.forRoot(routes, {useHash: true})],

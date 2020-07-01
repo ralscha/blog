@@ -64,7 +64,7 @@ export class EarthquakeService {
     return Promise.resolve();
   }
 
-  insertData(parsedData): Promise<Array<Object>> {
+  insertData(parsedData): Promise<Array<object>> {
     const rows = [];
     for (const parsedRow of parsedData.data) {
 

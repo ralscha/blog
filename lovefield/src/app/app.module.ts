@@ -6,7 +6,7 @@ import {AppComponent} from './app.component';
 import {HomePage} from './home/home.page';
 import {CommonModule} from '@angular/common';
 import {FormsModule} from '@angular/forms';
-import {FilterPopover} from './home/filter';
+import {FilterPopoverComponent} from './home/filter';
 import {DetailComponent} from './home/detail';
 import {HttpClientModule} from '@angular/common/http';
 
@@ -16,8 +16,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  declarations: [AppComponent, HomePage, DetailComponent, FilterPopover],
-  entryComponents: [FilterPopover],
+  declarations: [AppComponent, HomePage, DetailComponent, FilterPopoverComponent],
   imports: [BrowserModule,
     CommonModule,
     HttpClientModule,

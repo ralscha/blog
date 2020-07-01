@@ -20,8 +20,10 @@ export class AppGlobalErrorhandler implements ErrorHandler {
       language: navigator.language,
       platform: navigator.platform,
       userAgent: navigator.userAgent,
-      connectionDownlink: navigator['connection'].downlink,
-      connectionEffectiveType: navigator['connection'].effectiveType
+      // @ts-ignore
+      connectionDownlink: navigator.connection.downlink,
+      // @ts-ignore
+      connectionEffectiveType: navigator.connection.effectiveType
     };
     const stackTrace = await StackTrace.fromError(error, {offline: true});
     const body = JSON.stringify({ts: Date.now(), userAgent, stackTrace});
@@ -76,7 +78,7 @@ export class AppGlobalErrorhandler implements ErrorHandler {
 
         const response = await fetch(`${environment.serverURL}/clientError`, {
           method: 'POST',
-          body: body,
+          body,
           headers: {
             'content-type': 'application/json'
           }

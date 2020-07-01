@@ -5,7 +5,7 @@ import {Filter} from '../filter';
 @Component({
   templateUrl: 'filter.html'
 })
-export class FilterPopover implements OnInit {
+export class FilterPopoverComponent implements OnInit {
 
   filter: Filter;
 

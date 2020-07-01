@@ -28,7 +28,7 @@ export class UsernameValidator {
         this.http.get<boolean>(`${environment.serverURL}/checkUsername?value=${control.value}`)
           .subscribe(flag => {
               if (flag) {
-                resolve({'usernameTaken': true});
+                resolve({usernameTaken: true});
               } else {
                 resolve(null);
               }

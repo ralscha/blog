@@ -27,13 +27,12 @@ export function tokenGetter() {
 
 @NgModule({
   declarations: [AppComponent, HomePage, LoginPage, SignupPage],
-  entryComponents: [],
   imports: [BrowserModule,
     CommonModule,
     HttpClientModule,
     JwtModule.forRoot({
       config: {
-        tokenGetter: tokenGetter,
+        tokenGetter,
         whitelistedDomains: environment.whitelistedDomains
       }
     }),

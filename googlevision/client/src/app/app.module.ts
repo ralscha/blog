@@ -15,7 +15,6 @@ const routes: Routes = [
 
 @NgModule({
   declarations: [AppComponent, HomePage],
-  entryComponents: [],
   imports: [BrowserModule,
     AgmCoreModule.forRoot({
       apiKey: 'AIzaSyAZjJ216B4aJGdXTwXNevmXesob9RUSlPc'

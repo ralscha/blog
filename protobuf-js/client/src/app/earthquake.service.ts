@@ -23,7 +23,7 @@ export class EarthquakeService {
   }
 
   fetchProtobuf(): Observable<IEarthquake[]> {
-    const headers = new HttpHeaders({'Accept': 'application/x-protobuf'});
+    const headers = new HttpHeaders({Accept: 'application/x-protobuf'});
     return this.http.get(`${environment.SERVER_URL}/earthquakes`, {headers, responseType: 'arraybuffer'})
       .pipe(map(res => this.parseProtobuf(res)),
         catchError(this.handleError)

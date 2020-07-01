@@ -68,8 +68,8 @@ export class HomePage {
 
   private forwardPropagation(imageData: number[]): number[] {
     const inputs: number[][] = [];
-    for (let r = 0; r < imageData.length; r++) {
-      inputs.push([imageData[r]]);
+    for (const id of imageData) {
+      inputs.push([id]);
     }
 
     const hiddenInputs = math.multiply(this.weightsInputHidden, inputs);

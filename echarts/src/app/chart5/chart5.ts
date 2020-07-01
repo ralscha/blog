@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import format from 'date-fns/format'
+import format from 'date-fns/format';
 
 @Component({
   templateUrl: 'chart5.html',
