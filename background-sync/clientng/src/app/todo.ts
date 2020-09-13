@@ -1,7 +1,7 @@
 import Dexie from 'dexie';
 
 export class TodoDb extends Dexie {
-  todos: Dexie.Table<Todo, string>;
+  todos!: Dexie.Table<Todo, string>;
 
   constructor() {
     super('Todo');
@@ -12,7 +12,7 @@ export class TodoDb extends Dexie {
 }
 
 export interface Todo {
-  id: string;
+  id: string | null;
   subject: string;
   description?: string;
   ts: number;

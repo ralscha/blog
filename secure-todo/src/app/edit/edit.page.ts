@@ -11,7 +11,7 @@ import {TodoService} from '../todo.service';
 })
 export class EditPage implements OnInit {
 
-  todo: Todo;
+  todo: Todo | undefined;
 
   constructor(private readonly navCtrl: NavController,
               private readonly route: ActivatedRoute,
@@ -19,7 +19,7 @@ export class EditPage implements OnInit {
 
   }
 
-  ngOnInit() {
+  ngOnInit(): void {
     const id = this.route.snapshot.paramMap.get('id');
     if (id) {
       this.todo = this.todoService.getTodo(parseInt(id, 10));
@@ -31,8 +31,10 @@ export class EditPage implements OnInit {
     }
   }
 
-  save() {
-    this.todoService.save(this.todo);
+  save(): void {
+    if (this.todo) {
+      this.todoService.save(this.todo);
+    }
     this.navCtrl.navigateBack(['home']);
   }
 

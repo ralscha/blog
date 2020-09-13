@@ -10,13 +10,13 @@ import {v4} from 'uuid';
 })
 export class EditPage implements OnInit {
 
-  todo: Todo;
+  todo!: Todo;
 
   constructor(private readonly navCtrl: NavController,
               private readonly todoService: TodoServiceService) {
   }
 
-  ngOnInit() {
+  ngOnInit(): void {
     const todo = this.todoService.selectedTodo;
     if (todo) {
       this.todo = todo;
@@ -29,7 +29,7 @@ export class EditPage implements OnInit {
     }
   }
 
-  save() {
+  save(): void {
     this.todoService.saveUsingPOST(this.todo).subscribe(() => this.navCtrl.navigateBack(['home']));
   }
 

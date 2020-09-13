@@ -11,44 +11,47 @@
   </ion-toolbar>
 </ion-header>
 
-<div class="ion-text-center canvasContainer" #canvasContainer>
+<div #canvasContainer class="ion-text-center canvasContainer">
   <canvas #canvas></canvas>
 </div>
 
 <ion-content class="ion-padding">
 
-  <input #fileSelector type="file" accept="image/*" (change)="onFileCange($event)"
-         style="display: none;">
+  <input #fileSelector (change)="onFileCange($event)" accept="image/*" style="display: none;"
+         type="file">
 
   <ion-list *ngIf="visionResult !== null && detail === null">
-    <ion-item *ngIf="visionResult?.faces && visionResult.faces.length > 0" [detail]="true" (click)="showDetail('faces')">
+    <ion-item (click)="showDetail('faces')" *ngIf="visionResult?.faces && visionResult.faces.length > 0"
+              [detail]="true">
       <ion-label>Faces</ion-label>
     </ion-item>
-    <ion-item *ngIf="visionResult?.labels && visionResult.labels.length > 0" [detail]="true"
-              (click)="showDetail('labels')">
+    <ion-item (click)="showDetail('labels')" *ngIf="visionResult?.labels && visionResult.labels.length > 0"
+              [detail]="true">
       <ion-label>Labels</ion-label>
     </ion-item>
-    <ion-item *ngIf="visionResult?.web && visionResult.web.webEntities.length > 0" [detail]="true"
-              (click)="showDetail('web')">
+    <ion-item (click)="showDetail('web')" *ngIf="visionResult?.web && visionResult.web.webEntities.length > 0"
+              [detail]="true">
       <ion-label>Web</ion-label>
     </ion-item>
-    <ion-item [detail]="true" (click)="showDetail('safeSearch')">
+    <ion-item (click)="showDetail('safeSearch')" [detail]="true">
       <ion-label>Safe Search</ion-label>
     </ion-item>
-    <ion-item *ngIf="visionResult?.logos && visionResult.logos.length > 0" [detail]="true" (click)="showDetail('logos')">
+    <ion-item (click)="showDetail('logos')" *ngIf="visionResult?.logos && visionResult.logos.length > 0"
+              [detail]="true">
       <ion-label>Logos</ion-label>
     </ion-item>
-    <ion-item *ngIf="visionResult?.landmarks && visionResult.landmarks.length > 0" [detail]="true"
-              (click)="showDetail('landmarks')">
+    <ion-item (click)="showDetail('landmarks')" *ngIf="visionResult?.landmarks && visionResult.landmarks.length > 0"
+              [detail]="true">
       <ion-label>Landmarks</ion-label>
     </ion-item>
-    <ion-item *ngIf="visionResult?.texts && visionResult.texts.length > 0" [detail]="true" (click)="showDetail('texts')">
+    <ion-item (click)="showDetail('texts')" *ngIf="visionResult?.texts && visionResult.texts.length > 0"
+              [detail]="true">
       <ion-label>Texts</ion-label>
     </ion-item>
   </ion-list>
 
   <ion-list *ngIf="visionResult !== null && detail === 'faces' && selectedFace === null">
-    <ion-item *ngFor="let face of visionResult?.faces; index as i" (click)="onFaceClick(face)">
+    <ion-item (click)="onFaceClick(face)" *ngFor="let face of visionResult?.faces; index as i">
       <ion-label>
         {{i + 1}}. Face (Detection Confidence: {{face?.detectionConfidence | number: '1.2-2'}})
         <ul>
@@ -108,7 +111,7 @@
   </ion-list>
 
   <ion-list *ngIf="visionResult !== null && detail === 'faces' && selectedFace !== null">
-    <ion-item *ngFor="let landmark of selectedFace.landmarks" (click)="onFaceLandmarkClick(landmark)">
+    <ion-item (click)="onFaceLandmarkClick(landmark)" *ngFor="let landmark of selectedFace.landmarks">
       <ion-item>
         <ion-label class="smallerFont">
           {{landmark.type}}
@@ -123,7 +126,7 @@
         <ion-col size="10">
           {{label.description}}
         </ion-col>
-        <ion-col size="2" class="ion-text-right">
+        <ion-col class="ion-text-right" size="2">
           {{label.score | number: '1.2-2'}}
         </ion-col>
       </ion-row>
@@ -136,7 +139,7 @@
         <ion-col size="10">
           {{we.description}}
         </ion-col>
-        <ion-col size="2" class="ion-text-right">
+        <ion-col class="ion-text-right" size="2">
           {{we.score | number: '1.2-2'}}
         </ion-col>
       </ion-row>
@@ -145,7 +148,7 @@
     <ion-list *ngFor="let we of visionResult?.web?.fullMatchingImages">
       <ion-item>
         <ion-label>
-          <a target="_blank" [href]="we.url">{{we.url}}</a>
+          <a [href]="we.url" target="_blank">{{we.url}}</a>
         </ion-label>
       </ion-item>
     </ion-list>
@@ -153,7 +156,7 @@
     <ion-list *ngFor="let we of visionResult?.web?.partialMatchingImages">
       <ion-item>
         <ion-label>
-          <a target="_blank" [href]="we.url">{{we.url}}</a>
+          <a [href]="we.url" target="_blank">{{we.url}}</a>
         </ion-label>
       </ion-item>
     </ion-list>
@@ -161,14 +164,14 @@
     <ion-list *ngFor="let we of visionResult?.web?.pagesWithMatchingImages">
       <ion-item>
         <ion-label>
-          <a target="_blank" [href]="we.url">{{we.url}}</a>
+          <a [href]="we.url" target="_blank">{{we.url}}</a>
         </ion-label>
       </ion-item>
     </ion-list>
   </ul>
 
   <ion-list *ngIf="visionResult !== null && detail === 'texts'">
-    <ion-item *ngFor="let text of visionResult?.texts" (click)="onTextClick(text)">
+    <ion-item (click)="onTextClick(text)" *ngFor="let text of visionResult?.texts">
       <ion-label>
         {{text.description}}
       </ion-label>
@@ -176,13 +179,13 @@
   </ion-list>
 
   <ion-list *ngIf="visionResult !== null && detail === 'logos'">
-    <ion-item *ngFor="let logo of visionResult?.logos" (click)="onLogoClick(logo)">
+    <ion-item (click)="onLogoClick(logo)" *ngFor="let logo of visionResult?.logos">
       <ion-label>
         <ion-row>
           <ion-col size="10">
             {{logo.description}}
           </ion-col>
-          <ion-col size="2" class="ion-text-right">
+          <ion-col class="ion-text-right" size="2">
             {{logo.score | number: '1.2-2'}}
           </ion-col>
         </ion-row>
@@ -191,13 +194,13 @@
   </ion-list>
 
   <ion-list *ngIf="visionResult !== null && detail === 'landmarks'">
-    <ion-item *ngFor="let landmark of visionResult?.landmarks" (click)="onLandmarkClick(landmark)">
+    <ion-item (click)="onLandmarkClick(landmark)" *ngFor="let landmark of visionResult?.landmarks">
       <ion-label>
         <ion-row>
           <ion-col size="10">
             {{landmark.description}}
           </ion-col>
-          <ion-col size="2" class="ion-text-right">
+          <ion-col class="ion-text-right" size="2">
             {{landmark.score | number: '1.2-2'}}
           </ion-col>
         </ion-row>
@@ -205,10 +208,10 @@
     </ion-item>
   </ion-list>
 
-  <agm-map [zoom]="zoom"
+  <agm-map *ngIf="markers.length > 0 && lat && lng"
            [fullscreenControl]="true"
-           *ngIf="markers.length > 0"
-           [latitude]="lat" [longitude]="lng">
+           [latitude]="lat"
+           [longitude]="lng" [zoom]="zoom">
     <agm-marker *ngFor="let m of markers" [latitude]="m.lat" [longitude]="m.lng"></agm-marker>
   </agm-map>
 
@@ -219,7 +222,7 @@
           Adult
         </ion-col>
         <ion-col size="6">
-          {{visionResult?.safeSearch.adult}}
+          {{visionResult?.safeSearch!.adult}}
         </ion-col>
       </ion-row>
     </li>
@@ -229,7 +232,7 @@
           Spoof
         </ion-col>
         <ion-col size="6">
-          {{visionResult?.safeSearch.spoof}}
+          {{visionResult?.safeSearch!.spoof}}
         </ion-col>
       </ion-row>
     </li>
@@ -239,7 +242,7 @@
           Medical
         </ion-col>
         <ion-col size="6">
-          {{visionResult?.safeSearch.medical}}
+          {{visionResult?.safeSearch!.medical}}
         </ion-col>
       </ion-row>
     </li>
@@ -249,7 +252,7 @@
           Violence
         </ion-col>
         <ion-col size="6">
-          {{visionResult?.safeSearch.violence}}
+          {{visionResult?.safeSearch!.violence}}
         </ion-col>
       </ion-row>
     </li>
@@ -257,6 +260,6 @@
 
 </ion-content>
 
-<ion-footer class="ion-text-center" *ngIf="detail !== null">
+<ion-footer *ngIf="detail !== null" class="ion-text-center">
   <ion-button (click)="showDetail(null)">Back</ion-button>
 </ion-footer>

@@ -9,10 +9,10 @@
     <ion-list>
       <ion-item>
         <ion-label position="stacked">Username</ion-label>
-        <ion-input type="text" name="username" ngModel [required]="true" #username="ngModel"
-                   [class.invalid]="username.errors && username.dirty"></ion-input>
+        <ion-input #username="ngModel" [class.invalid]="username.errors && username.dirty" [required]="true" name="username" ngModel
+                   type="text"></ion-input>
       </ion-item>
-      <ion-item class="error-message" *ngIf="username.errors?.required && username.dirty">
+      <ion-item *ngIf="username.errors?.required && username.dirty" class="error-message">
         <ion-label>
           Username is required
         </ion-label>
@@ -20,21 +20,21 @@
 
       <ion-item>
         <ion-label position="stacked">Password</ion-label>
-        <ion-input type="password" name="password" ngModel [required]="true" #password="ngModel"
-                   [class.invalid]="password.errors && password.dirty"></ion-input>
+        <ion-input #password="ngModel" [class.invalid]="password.errors && password.dirty" [required]="true" name="password" ngModel
+                   type="password"></ion-input>
       </ion-item>
-      <ion-item class="error-message" *ngIf="password.errors?.required && password.dirty">
+      <ion-item *ngIf="password.errors?.required && password.dirty" class="error-message">
         <ion-label>
           Password is required
         </ion-label>
       </ion-item>
 
       <div class="ion-padding">
-        <ion-button color="primary" expand="block" type="submit" [disabled]="!form.valid">Login</ion-button>
+        <ion-button [disabled]="!form.valid" color="primary" expand="block" type="submit">Login</ion-button>
       </div>
 
       <div class="ion-padding">
-        <ion-button color="secondary" expand="block" type="button" (click)="signup()">Sign up</ion-button>
+        <ion-button (click)="signup()" color="secondary" expand="block" type="button">Sign up</ion-button>
       </div>
     </ion-list>
   </form>

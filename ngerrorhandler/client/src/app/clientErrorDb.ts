@@ -2,7 +2,7 @@ import Dexie from 'dexie';
 
 
 export class ClientErrorDb extends Dexie {
-  errors: Dexie.Table<ClientError, string>;
+  errors!: Dexie.Table<ClientError, string>;
 
   constructor() {
     super('ClientErrors');

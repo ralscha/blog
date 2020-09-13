@@ -7,30 +7,30 @@
 </ion-header>
 
 <ion-content class="ion-padding">
-  <form [formGroup]="registrationForm" (submit)="register()" novalidate>
+  <form (submit)="register()" [formGroup]="registrationForm" novalidate>
 
     <ion-list>
 
       <ion-item>
         <ion-label position="stacked">Username</ion-label>
-        <ion-input formControlName="username" type="text" [class.invalid]="isInvalidAndDirty('username')"></ion-input>
+        <ion-input [class.invalid]="isInvalidAndDirty('username')" formControlName="username" type="text"></ion-input>
       </ion-item>
-      <ion-item class="error-message" *ngIf="hasError('username', 'required')">
+      <ion-item *ngIf="hasError('username', 'required')" class="error-message">
         <ion-label>
           Username is required
         </ion-label>
       </ion-item>
-      <ion-item class="error-message" *ngIf="hasError('username', 'minlength')">
+      <ion-item *ngIf="hasError('username', 'minlength')" class="error-message">
         <ion-label>
           Username must be at least 2 characters long
         </ion-label>
       </ion-item>
-      <ion-item class="error-message" *ngIf="hasError('username', 'maxlength')">
+      <ion-item *ngIf="hasError('username', 'maxlength')" class="error-message">
         <ion-label>
           Username cannot be longer than 30 characters
         </ion-label>
       </ion-item>
-      <ion-item class="error-message" *ngIf="hasError('username', 'usernameTaken')">
+      <ion-item *ngIf="hasError('username', 'usernameTaken')" class="error-message">
         <ion-label>
           Username is already taken
         </ion-label>
@@ -38,14 +38,14 @@
 
       <ion-item>
         <ion-label position="stacked">Email</ion-label>
-        <ion-input formControlName="email" type="email" [class.invalid]="isInvalidAndDirty('email')"></ion-input>
+        <ion-input [class.invalid]="isInvalidAndDirty('email')" formControlName="email" type="email"></ion-input>
       </ion-item>
-      <ion-item class="error-message" *ngIf="hasError('email', 'required')">
+      <ion-item *ngIf="hasError('email', 'required')" class="error-message">
         <ion-label>
           Email is required
         </ion-label>
       </ion-item>
-      <ion-item class="error-message" *ngIf="hasError('email', 'pattern')">
+      <ion-item *ngIf="hasError('email', 'pattern')" class="error-message">
         <ion-label>
           Email is not valid
         </ion-label>
@@ -53,14 +53,14 @@
 
       <ion-item>
         <ion-label position="stacked">Age</ion-label>
-        <ion-input formControlName="age" type="number" [class.invalid]="isInvalidAndDirty('age')"></ion-input>
+        <ion-input [class.invalid]="isInvalidAndDirty('age')" formControlName="age" type="number"></ion-input>
       </ion-item>
-      <ion-item class="error-message" *ngIf="hasError('age', 'required')">
+      <ion-item *ngIf="hasError('age', 'required')" class="error-message">
         <ion-label>
           Age is required
         </ion-label>
       </ion-item>
-      <ion-item class="error-message" *ngIf="hasError('age', 'notOldEnough')">
+      <ion-item *ngIf="hasError('age', 'notOldEnough')" class="error-message">
         <ion-label>
           You must be at least {{minAge}} years old!
         </ion-label>
@@ -68,7 +68,7 @@
 
     </ion-list>
 
-    <ion-button expand="block" type="submit" [disabled]="!registrationForm.valid">
+    <ion-button [disabled]="!registrationForm.valid" expand="block" type="submit">
       Create an Account
     </ion-button>
 

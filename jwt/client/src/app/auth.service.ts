@@ -13,7 +13,7 @@ export class AuthService {
 
   private readonly jwtTokenName = 'jwt_token';
 
-  private authUser = new ReplaySubject<any>(1);
+  private authUser = new ReplaySubject<string | null>(1);
   public authUserObservable = this.authUser.asObservable();
 
   constructor(private readonly httpClient: HttpClient,
@@ -48,18 +48,18 @@ export class AuthService {
     }
   }
 
-  login(values: any): Observable<string> {
+  login(values: { username: string, password: string }): Observable<string> {
     return this.httpClient.post(`${environment.serverURL}/login`, values, {responseType: 'text'})
       .pipe(tap(jwt => this.handleJwtResponse(jwt)));
   }
 
-  logout() {
+  logout(): void {
     localStorage.removeItem(this.jwtTokenName);
     this.authUser.next(null);
     this.navCtrl.navigateRoot('login', {replaceUrl: true});
   }
 
-  signup(values: any): Observable<string> {
+  signup(values: { name: string, email: string, username: string, password: string }): Observable<string> {
     return this.httpClient.post(`${environment.serverURL}/signup`, values, {responseType: 'text'})
       .pipe(tap(jwt => {
         if (jwt !== 'EXISTS') {

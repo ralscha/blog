@@ -2,9 +2,10 @@ import {ChangeDetectorRef, Component} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {LoadingController, ToastController} from '@ionic/angular';
 import {catchError, finalize} from 'rxjs/operators';
-import {throwError} from 'rxjs';
+import {Observable, throwError} from 'rxjs';
 import {environment} from '../../environments/environment';
 
+// tslint:disable:no-any
 @Component({
   selector: 'app-home',
   templateUrl: './home.page.html',
@@ -13,7 +14,7 @@ import {environment} from '../../environments/environment';
 export class HomePage {
 
   public myPhoto: any;
-  public error: string;
+  public error: string | null = null;
   private loading: any;
 
   constructor(private readonly http: HttpClient,
@@ -22,15 +23,15 @@ export class HomePage {
               private readonly changeDetectorRef: ChangeDetectorRef) {
   }
 
-  takePhoto() {
+  takePhoto(): void {
     // @ts-ignore
     const camera: any = navigator.camera;
-    camera.getPicture(imageData => {
+    camera.getPicture((imageData: any) => {
       this.myPhoto = this.convertFileSrc(imageData);
       this.changeDetectorRef.detectChanges();
       this.changeDetectorRef.markForCheck();
       this.uploadPhoto(imageData);
-    }, error => this.error = JSON.stringify(error), {
+    }, (error: any) => this.error = JSON.stringify(error), {
       quality: 100,
       destinationType: camera.DestinationType.FILE_URI,
       sourceType: camera.PictureSourceType.CAMERA,
@@ -41,10 +42,10 @@ export class HomePage {
   selectPhoto(): void {
     // @ts-ignore
     const camera: any = navigator.camera;
-    camera.getPicture(imageData => {
+    camera.getPicture((imageData: any) => {
       this.myPhoto = this.convertFileSrc(imageData);
       this.uploadPhoto(imageData);
-    }, error => this.error = JSON.stringify(error), {
+    }, (error: any) => this.error = JSON.stringify(error), {
       sourceType: camera.PictureSourceType.PHOTOLIBRARY,
       destinationType: camera.DestinationType.FILE_URI,
       quality: 100,
@@ -71,7 +72,7 @@ export class HomePage {
     return url;
   }
 
-  private async uploadPhoto(imageFileUri: any) {
+  private async uploadPhoto(imageFileUri: any): Promise<void> {
     this.error = null;
     this.loading = await this.loadingCtrl.create({
       message: 'Uploading...'
@@ -81,23 +82,25 @@ export class HomePage {
 
     // @ts-ignore
     window.resolveLocalFileSystemURL(imageFileUri,
-      entry => {
-        entry.file(file => this.readFile(file));
+      (entry: any) => {
+        entry.file((file: any) => this.readFile(file));
       });
   }
 
-  private readFile(file: any) {
+  private readFile(file: any): void {
     const reader = new FileReader();
     reader.onloadend = () => {
       const formData = new FormData();
-      const imgBlob = new Blob([reader.result], {type: file.type});
-      formData.append('file', imgBlob, file.name);
-      this.postData(formData);
+      if (reader.result) {
+        const imgBlob = new Blob([reader.result], {type: file.type});
+        formData.append('file', imgBlob, file.name);
+        this.postData(formData);
+      }
     };
     reader.readAsArrayBuffer(file);
   }
 
-  private postData(formData: FormData) {
+  private postData(formData: FormData): void {
     this.http.post<boolean>(`${environment.serverURL}/upload`, formData)
       .pipe(
         catchError(e => this.handleError(e)),
@@ -106,7 +109,7 @@ export class HomePage {
       .subscribe(ok => this.showToast(ok));
   }
 
-  private async showToast(ok: boolean | {}) {
+  private async showToast(ok: boolean | {}): Promise<void> {
     if (ok === true) {
       const toast = await this.toastCtrl.create({
         message: 'Upload successful',
@@ -124,7 +127,7 @@ export class HomePage {
     }
   }
 
-  private handleError(error: any) {
+  private handleError(error: any): Observable<never> {
     const errMsg = error.message ? error.message : error.toString();
     this.error = errMsg;
     this.changeDetectorRef.detectChanges();

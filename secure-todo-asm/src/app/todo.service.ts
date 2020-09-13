@@ -9,10 +9,10 @@ import {Pbkdf2HmacSha256} from 'asmcrypto.js/dist_es5/pbkdf2/pbkdf2-hmac-sha256'
 })
 export class TodoService {
 
-  private todos: Map<number, Todo> = null;
+  private todos: Map<number, Todo> | null = null;
 
   private lastId = 0;
-  private aesKey: any;
+  private aesKey: Uint8Array | null = null;
 
   private salt = string_to_bytes('This is the salt. It does not have to be secret');
   private iterations = 4096;
@@ -23,47 +23,52 @@ export class TodoService {
   }
 
   getTodos(): Todo[] {
-    return [...this.todos.values()];
+    if (this.todos !== null) {
+      return [...this.todos.values()];
+    }
+    return [];
   }
 
   hasTodos(): boolean {
     return this.todos !== null;
   }
 
-  getTodo(id: number): Todo {
-    return this.todos.get(id);
+  getTodo(id: number): Todo | undefined {
+    return this.todos?.get(id);
   }
 
-  deleteTodo(todo: Todo) {
-    const deleted = this.todos.delete(todo.id);
-    if (deleted) {
-      this.encryptAndSaveTodos();
+  deleteTodo(todo: Todo): void {
+    if (todo.id) {
+      const deleted = this.todos?.delete(todo.id);
+      if (deleted) {
+        this.encryptAndSaveTodos();
+      }
     }
   }
 
-  save(todo: Todo) {
+  save(todo: Todo): void {
     if (!todo.id) {
       todo.id = ++this.lastId;
       localStorage.setItem('lastTodoId', JSON.stringify(this.lastId));
     }
 
-    this.todos.set(todo.id, todo);
+    this.todos?.set(todo.id, todo);
     this.encryptAndSaveTodos();
   }
 
-  setPassword(password: string) {
+  setPassword(password: string): void {
     const value = localStorage.getItem('lastTodoId');
     if (value) {
       this.lastId = JSON.parse(value);
     } else {
-      this.lastId = null;
+      this.lastId = 0;
     }
 
     this.deriveAesKey(password);
     return this.decryptTodos();
   }
 
-  decryptTodos() {
+  decryptTodos(): void {
     const binaryString = localStorage.getItem('todos');
     if (binaryString) {
       const encryptedTodos = string_to_bytes(binaryString);
@@ -72,7 +77,7 @@ export class TodoService {
         const decryptedString = bytes_to_string(encryptedBytes);
         this.todos = new Map(JSON.parse(decryptedString));
       } catch (err) {
-        return Promise.reject(err);
+        throw err;
       }
     } else {
       this.todos = new Map();
@@ -80,9 +85,11 @@ export class TodoService {
   }
 
   encryptAndSaveTodos(): void {
-    const todosString = JSON.stringify([...this.todos]);
-    const encrypted = this.encrypt(string_to_bytes(todosString));
-    localStorage.setItem('todos', bytes_to_string(encrypted));
+    if (this.todos) {
+      const todosString = JSON.stringify([...this.todos]);
+      const encrypted = this.encrypt(string_to_bytes(todosString));
+      localStorage.setItem('todos', bytes_to_string(encrypted));
+    }
   }
 
   deriveAesKey(password: string): void {
@@ -110,6 +117,10 @@ export class TodoService {
   }
 
   encrypt(data: Uint8Array): Uint8Array {
+    if (this.aesKey === null) {
+      throw new Error('aes key not set');
+    }
+
     const nonce = new Uint8Array(this.nonceLen);
     this.getRandomValues(nonce);
 
@@ -118,9 +129,12 @@ export class TodoService {
   }
 
   decrypt(buffer: Uint8Array): Uint8Array {
+    if (this.aesKey === null) {
+      throw new Error('aes key not set');
+    }
+
     const parts = this.separateNonceFromData(buffer);
-    const decrypted = AES_GCM.decrypt(parts.data, this.aesKey, parts.nonce);
-    return decrypted;
+    return AES_GCM.decrypt(parts.data, this.aesKey, parts.nonce);
   }
 
   getRandomValues(buf: Uint32Array | Uint8Array): void {

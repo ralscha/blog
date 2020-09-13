@@ -9,19 +9,20 @@
     <ion-list>
       <ion-item>
         <ion-label position="stacked">Username</ion-label>
-        <ion-input ngModel #username="ngModel" [required]="true" name="username"></ion-input>
+        <ion-input #username="ngModel" [required]="true" name="username" ngModel></ion-input>
       </ion-item>
 
       <ion-item>
         <ion-label position="stacked">Password</ion-label>
-        <ion-input (keydown.enter)="login(username.value, password.value)" type="password" ngModel #password="ngModel"
-                   [required]="true" name="password"></ion-input>
+        <ion-input #password="ngModel" (keydown.enter)="login(username.value, password.value)" [required]="true"
+                   name="password"
+                   ngModel type="password"></ion-input>
       </ion-item>
 
     </ion-list>
 
-    <ion-button type="submit" expand="full"
-                [disabled]="!username.valid || !password.valid">Login
+    <ion-button [disabled]="!username.valid || !password.valid" expand="full"
+                type="submit">Login
     </ion-button>
   </form>
 </ion-content>

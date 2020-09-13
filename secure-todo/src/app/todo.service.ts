@@ -6,10 +6,10 @@ import {Todo} from './todo';
 })
 export class TodoService {
 
-  private todos: Map<number, Todo> = null;
+  private todos: Map<number, Todo> | null = null;
 
   private lastId = 0;
-  private aesKey: any;
+  private aesKey: CryptoKey | null = null;
 
   private salt = 'This is the salt. It does not have to be secret';
   private iterations = 1000;
@@ -22,46 +22,51 @@ export class TodoService {
   }
 
   getTodos(): Todo[] {
-    return [...this.todos.values()];
+    if (this.todos !== null) {
+      return [...this.todos.values()];
+    }
+    return [];
   }
 
   hasTodos(): boolean {
     return this.todos !== null;
   }
 
-  getTodo(id: number): Todo {
-    return this.todos.get(id);
+  getTodo(id: number): Todo | undefined {
+    return this.todos?.get(id);
   }
 
-  deleteTodo(todo: Todo) {
-    const deleted = this.todos.delete(todo.id);
-    if (deleted) {
-      this.encryptAndSaveTodos();
+  deleteTodo(todo: Todo): void {
+    if (todo.id) {
+      const deleted = this.todos?.delete(todo.id);
+      if (deleted) {
+        this.encryptAndSaveTodos();
+      }
     }
   }
 
-  save(todo: Todo) {
+  save(todo: Todo): void {
     if (!todo.id) {
       todo.id = ++this.lastId;
       localStorage.setItem('lastTodoId', JSON.stringify(this.lastId));
     }
 
-    this.todos.set(todo.id, todo);
+    this.todos?.set(todo.id, todo);
     this.encryptAndSaveTodos();
   }
 
-  async setPassword(password: string) {
+  async setPassword(password: string): Promise<void> {
     const value = localStorage.getItem('lastTodoId');
     if (value) {
       this.lastId = JSON.parse(value);
     } else {
-      this.lastId = null;
+      this.lastId = 0;
     }
     await this.deriveAesKey(password);
     return this.decryptTodos();
   }
 
-  async decryptTodos() {
+  async decryptTodos(): Promise<void> {
     const storedValue = localStorage.getItem('todos');
     if (storedValue) {
       const encryptedTodos = new Uint8Array(JSON.parse(storedValue));
@@ -73,13 +78,15 @@ export class TodoService {
     }
   }
 
-  async encryptAndSaveTodos() {
-    const todosString = JSON.stringify([...this.todos]);
-    const encrypted = await this.encrypt(this.textEncoder.encode(todosString));
-    localStorage.setItem('todos', JSON.stringify(Array.from(encrypted)));
+  async encryptAndSaveTodos(): Promise<void> {
+    if (this.todos) {
+      const todosString = JSON.stringify([...this.todos]);
+      const encrypted = await this.encrypt(this.textEncoder.encode(todosString));
+      localStorage.setItem('todos', JSON.stringify(Array.from(encrypted)));
+    }
   }
 
-  async deriveAesKey(password: string) {
+  async deriveAesKey(password: string): Promise<void> {
     const baseKey = await window.crypto.subtle.importKey(
       'raw',
       this.textEncoder.encode(password),
@@ -120,7 +127,11 @@ export class TodoService {
     return {iv, data};
   }
 
-  private async encrypt(data) {
+  private async encrypt(data: Uint8Array): Promise<Uint8Array> {
+    if (this.aesKey === null) {
+      throw new Error('aes key not set');
+    }
+
     const initializationVector = new Uint8Array(this.ivLen);
     crypto.getRandomValues(initializationVector);
 
@@ -136,6 +147,10 @@ export class TodoService {
   }
 
   private decrypt(buffer: Uint8Array): PromiseLike<ArrayBuffer> {
+    if (this.aesKey === null) {
+      throw new Error('aes key not set');
+    }
+
     const parts = this.separateIvFromData(buffer);
     return window.crypto.subtle.decrypt({
         name: 'AES-GCM',

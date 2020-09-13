@@ -12,7 +12,7 @@ import {finalize} from 'rxjs/operators';
 export class SignupPage {
 
   @ViewChild('username')
-  usernameModel: NgModel;
+  usernameModel!: NgModel;
 
   constructor(private readonly navCtrl: NavController,
               private readonly authService: AuthService,
@@ -20,7 +20,7 @@ export class SignupPage {
               private readonly toastCtrl: ToastController) {
   }
 
-  async signup(value: any) {
+  async signup(value: { name: string, email: string, username: string, password: string }): Promise<void> {
     const loading = await this.loadingCtrl.create({
       spinner: 'bubbles',
       message: 'Signing up ...'
@@ -36,8 +36,9 @@ export class SignupPage {
         err => this.handleError(err));
   }
 
-  async handleError(error: any) {
-    const message = 'Unexpected error occurred';
+  // tslint:disable-next-line:no-any
+  async handleError(error: any): Promise<void> {
+    const message = 'Unexpected error occurred: ' + error;
 
     const toast = await this.toastCtrl.create({
       message,
@@ -48,7 +49,7 @@ export class SignupPage {
     toast.present();
   }
 
-  private async showSuccesToast(jwt) {
+  private async showSuccesToast(jwt: string): Promise<void> {
     if (jwt !== 'EXISTS') {
       const toast = await this.toastCtrl.create({
         message: 'Sign up successful',

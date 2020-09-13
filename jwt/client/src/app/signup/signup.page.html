@@ -13,10 +13,10 @@
     <ion-list>
       <ion-item>
         <ion-label position="stacked">Name</ion-label>
-        <ion-input type="text" name="name" ngModel [required]="true" #name="ngModel"
-                   [class.invalid]="name.errors && name.dirty"></ion-input>
+        <ion-input #name="ngModel" [class.invalid]="name.errors && name.dirty" [required]="true" name="name" ngModel
+                   type="text"></ion-input>
       </ion-item>
-      <ion-item class="error-message" *ngIf="name.errors?.required && name.dirty">
+      <ion-item *ngIf="name.errors?.required && name.dirty" class="error-message">
         <ion-label>
           Name is required
         </ion-label>
@@ -24,15 +24,15 @@
 
       <ion-item>
         <ion-label position="stacked">Email</ion-label>
-        <ion-input type="email" name="email" ngModel [required]="true" email #email="ngModel"
-                   [class.invalid]="email.errors && email.dirty"></ion-input>
+        <ion-input #email="ngModel" [class.invalid]="email.errors && email.dirty" [required]="true" email name="email" ngModel
+                   type="email"></ion-input>
       </ion-item>
-      <ion-item class="error-message" *ngIf="email.errors?.required && email.dirty">
+      <ion-item *ngIf="email.errors?.required && email.dirty" class="error-message">
         <ion-label>
           Email is required
         </ion-label>
       </ion-item>
-      <ion-item class="error-message" *ngIf="email.errors?.email && email.dirty">
+      <ion-item *ngIf="email.errors?.email && email.dirty" class="error-message">
         <ion-label>
           Email is not valid
         </ion-label>
@@ -40,15 +40,15 @@
 
       <ion-item>
         <ion-label position="stacked">Username</ion-label>
-        <ion-input type="text" name="username" ngModel [required]="true" #username="ngModel"
-                   [class.invalid]="username.errors && username.dirty"></ion-input>
+        <ion-input #username="ngModel" [class.invalid]="username.errors && username.dirty" [required]="true" name="username" ngModel
+                   type="text"></ion-input>
       </ion-item>
-      <ion-item class="error-message" *ngIf="username.errors?.required && username.dirty">
+      <ion-item *ngIf="username.errors?.required && username.dirty" class="error-message">
         <ion-label>
           Username is required
         </ion-label>
       </ion-item>
-      <ion-item class="error-message" *ngIf="username.errors?.usernameTaken">
+      <ion-item *ngIf="username.errors?.usernameTaken" class="error-message">
         <ion-label>
           Username already taken
         </ion-label>
@@ -56,17 +56,17 @@
 
       <ion-item>
         <ion-label position="stacked">Password</ion-label>
-        <ion-input type="password" name="password" ngModel [required]="true" #password="ngModel"
-                   [class.invalid]="password.errors && password.dirty"></ion-input>
+        <ion-input #password="ngModel" [class.invalid]="password.errors && password.dirty" [required]="true" name="password" ngModel
+                   type="password"></ion-input>
       </ion-item>
-      <ion-item class="error-message" *ngIf="password.errors?.required && password.dirty">
+      <ion-item *ngIf="password.errors?.required && password.dirty" class="error-message">
         <ion-label>
           Password is required
         </ion-label>
       </ion-item>
 
       <div class="ion-padding">
-        <ion-button color="primary" expand="block" type="submit" [disabled]="!form.valid">Sign up</ion-button>
+        <ion-button [disabled]="!form.valid" color="primary" expand="block" type="submit">Sign up</ion-button>
       </div>
 
     </ion-list>

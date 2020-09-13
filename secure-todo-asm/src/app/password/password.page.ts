@@ -14,7 +14,7 @@ export class PasswordPage {
               private readonly toastCtrl: ToastController) {
   }
 
-  async showTodos(password: string) {
+  async showTodos(password: string): Promise<void> {
     try {
       await this.todoService.setPassword(password);
       this.navCtrl.navigateRoot('home', {replaceUrl: true});

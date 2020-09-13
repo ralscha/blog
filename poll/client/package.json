@@ -19,7 +19,7 @@
     "event-source-polyfill": "1.0.17",
     "muicss": "0.10.2",
     "uuid": "8.3.0",
-    "whatwg-fetch": "3.4.0"
+    "whatwg-fetch": "3.4.1"
   },
   "browserslist": [
     "> 1%",

@@ -25,11 +25,11 @@
         <ion-label>{{todo.title}}</ion-label>
       </ion-item>
       <ion-item-options>
-        <ion-button color="primary" (click)="editTodo(slidingItem, todo)">
+        <ion-button (click)="editTodo(slidingItem, todo)" color="primary">
           <ion-icon name="create-outline"></ion-icon>
           Edit
         </ion-button>
-        <ion-button color="danger" (click)="deleteTodo(slidingItem, todo)">
+        <ion-button (click)="deleteTodo(slidingItem, todo)" color="danger">
           <ion-icon name="trash-outline"></ion-icon>
           Delete
         </ion-button>

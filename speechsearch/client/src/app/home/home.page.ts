@@ -1,9 +1,11 @@
 import {ChangeDetectorRef, Component} from '@angular/core';
 import {Movie} from '../movie';
 import {LoadingController} from '@ionic/angular';
+// @ts-ignore
 import * as RecordRTC from 'recordrtc';
 import {environment} from '../../environments/environment';
 
+// tslint:disable:no-any
 declare var webkitSpeechRecognition: any;
 
 @Component({
@@ -22,19 +24,19 @@ export class HomePage {
               private readonly loadingCtrl: LoadingController) {
   }
 
-  async movieSearch(searchTerms: string[]) {
+  async movieSearch(searchTerms: string[]): Promise<void> {
     if (searchTerms && searchTerms.length > 0) {
 
       const loading = await this.loadingCtrl.create({
         message: 'Please wait...'
-    });
+      });
       loading.present();
 
       this.matches = searchTerms;
       let queryParams = '';
       searchTerms.forEach(term => {
         queryParams += `term=${term}&`;
-    });
+      });
       const response = await fetch(`${environment.serverUrl}/search?${queryParams}`);
       this.movies = await response.json();
       loading.dismiss();
@@ -44,7 +46,7 @@ export class HomePage {
     }
   }
 
-  searchCordova() {
+  searchCordova(): void {
     // @ts-ignore
     window.plugins.speechRecognition.hasPermission(permission => {
 
@@ -57,7 +59,7 @@ export class HomePage {
               this.movieSearch([terms[0]]);
             } else {
               this.movieSearch(terms);
-    }
+            }
           });
         });
       } else {
@@ -67,16 +69,16 @@ export class HomePage {
             this.movieSearch([terms[0]]);
           } else {
             this.movieSearch(terms);
-    }
+          }
         });
-    }
+      }
     });
-    }
+  }
 
-  searchWebSpeech() {
+  searchWebSpeech(): void {
     if (!('webkitSpeechRecognition' in window)) {
       return;
-  }
+    }
 
     const recognition = new webkitSpeechRecognition();
     recognition.continuous = false;
@@ -86,13 +88,13 @@ export class HomePage {
       this.changeDetectorRef.detectChanges();
     };
 
-    recognition.onerror = event => console.log('error', event);
+    recognition.onerror = (event: any) => console.log('error', event);
     recognition.onend = () => {
       this.isWebSpeechRecording = false;
       this.changeDetectorRef.detectChanges();
     };
 
-    recognition.onresult = event => {
+    recognition.onresult = (event: any) => {
       const terms = [];
       if (event.results) {
         for (const result of event.results) {
@@ -100,7 +102,7 @@ export class HomePage {
             terms.push(ra.transcript);
           }
         }
-  }
+      }
 
       this.movieSearch(terms);
     };
@@ -109,10 +111,10 @@ export class HomePage {
   }
 
 
-  async searchGoogleCloudSpeech() {
+  async searchGoogleCloudSpeech(): Promise<void> {
     if (this.isRecording) {
       if (this.recorder) {
-        this.recorder.stopRecording(async _ => {
+        this.recorder.stopRecording(async (_: any) => {
           const recordedBlob = this.recorder.getBlob();
 
           const headers = new Headers();

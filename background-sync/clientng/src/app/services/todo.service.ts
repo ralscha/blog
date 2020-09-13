@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {Todo, TodoDb} from '../todo';
-import { v4 as uuidv4 } from 'uuid';
+import {v4 as uuidv4} from 'uuid';
 
 @Injectable({
   providedIn: 'root'
@@ -17,16 +17,16 @@ export class TodoService {
     return this.db.todos.where('ts').notEqual(-1).toArray();
   }
 
-  getTodo(id: string): Promise<Todo> {
+  getTodo(id: string): Promise<Todo | undefined> {
     return this.db.todos.get(id);
   }
 
-  deleteTodo(todo: Todo) {
+  deleteTodo(todo: Todo): void {
     todo.ts = -1;
     this.db.todos.put(todo).then(() => this.requestSync());
   }
 
-  async save(todo: Todo) {
+  async save(todo: Todo): Promise<void> {
     if (!todo.id) {
       todo.id = uuidv4();
       todo.ts = 0;
@@ -40,17 +40,14 @@ export class TodoService {
     }
   }
 
-  requestSync() {
+  requestSync(): void {
     navigator.serviceWorker.ready.then(swRegistration => swRegistration.sync.register('todo_updated'));
   }
 
-  private changed(oldTodo: Todo, newTodo: Todo) {
-    if (oldTodo.subject !== newTodo.subject) {
+  private changed(oldTodo: Todo | undefined, newTodo: Todo): boolean {
+    if (!oldTodo || oldTodo.subject !== newTodo.subject) {
       return true;
     }
-    if (oldTodo.description !== newTodo.description) {
-      return true;
-    }
-    return false;
+    return oldTodo.description !== newTodo.description;
   }
 }

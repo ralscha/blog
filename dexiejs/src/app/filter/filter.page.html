@@ -27,7 +27,8 @@
 
       <ion-item>
         <ion-label>
-          <ion-range [dualKnobs]="true" [min]="0" [max]="20000" name="distance" [ngModel]="filter.distance" class="ion-no-padding">
+          <ion-range [dualKnobs]="true" [max]="20000" [min]="0" [ngModel]="filter.distance" class="ion-no-padding"
+                     name="distance">
             <ion-label slot="start">0 km</ion-label>
             <ion-label slot="end">20,000 km</ion-label>
           </ion-range>
@@ -43,7 +44,7 @@
       </ion-item-divider>
       <ion-item>
         <ion-label>
-          <ion-range [dualKnobs]="true" [min]="-1" [max]="10" name="mag" [ngModel]="filter.mag" class="ion-no-padding">
+          <ion-range [dualKnobs]="true" [max]="10" [min]="-1" [ngModel]="filter.mag" class="ion-no-padding" name="mag">
             <ion-label slot="start">-1</ion-label>
             <ion-label slot="end">10</ion-label>
           </ion-range>

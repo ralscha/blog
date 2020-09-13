@@ -2,6 +2,8 @@ import {Component} from '@angular/core';
 import {environment} from '../../environments/environment';
 import {LoadingController} from '@ionic/angular';
 
+declare type Voice = { name: string, gender: string, language: string };
+
 @Component({
   selector: 'app-home',
   templateUrl: './home.page.html',
@@ -11,18 +13,18 @@ export class HomePage {
 
   languages: string[] = [];
   genders: string[] = [];
-  voices: any = [];
-  voicesResponse: any;
+  voices: Voice[] = [];
+  voicesResponse: Voice[] = [];
 
-  selectedGender: string;
-  selectedLanguage: string;
-  selectedVoice: string;
+  selectedGender: string | null = null;
+  selectedLanguage: string | null = null;
+  selectedVoice: string | null = null;
 
   pitch = 0;
   speakingRate = 1;
   text = '';
 
-  selectedClientVoice: SpeechSynthesisVoice;
+  selectedClientVoice: SpeechSynthesisVoice | null = null;
   clientVoices: SpeechSynthesisVoice[];
 
   constructor(private readonly loadingController: LoadingController) {
@@ -31,13 +33,17 @@ export class HomePage {
     speechSynthesis.onvoiceschanged = () => this.clientVoices = speechSynthesis.getVoices().sort((a, b) => a.name > b.name ? 1 : -1);
   }
 
-  async speakWithWebSpeechAPI() {
+  async speakWithWebSpeechAPI(): Promise<void> {
     const utterance = new SpeechSynthesisUtterance(this.text);
     utterance.voice = this.selectedClientVoice;
     speechSynthesis.speak(utterance);
   }
 
-  async speakWithGoogle() {
+  async speakWithGoogle(): Promise<void> {
+    if (this.selectedLanguage === null || this.selectedVoice === null) {
+      return Promise.reject('no language or voice selected');
+    }
+
     const formData = new FormData();
     formData.append('language', this.selectedLanguage);
     formData.append('voice', this.selectedVoice);
@@ -59,15 +65,14 @@ export class HomePage {
       });
       mp3Bytes = await response.arrayBuffer();
     } finally {
-      loadingElement.dismiss();
+      await loadingElement.dismiss();
     }
 
     if (mp3Bytes !== null) {
       const audioContext = new AudioContext();
       const audioBufferSource = audioContext.createBufferSource();
 
-      const decodedData = await audioContext.decodeAudioData(mp3Bytes);
-      audioBufferSource.buffer = decodedData;
+      audioBufferSource.buffer = await audioContext.decodeAudioData(mp3Bytes);
 
       audioBufferSource.connect(audioContext.destination);
       audioBufferSource.loop = false;
@@ -75,19 +80,19 @@ export class HomePage {
     }
   }
 
-  languageChanged(event) {
-    this.selectedLanguage = event.target.value;
+  languageChanged(event: Event): void {
+    this.selectedLanguage = (event as CustomEvent).detail.value;
     this.voices = this.voicesResponse.filter(this.matches.bind(this));
     setTimeout(() => this.selectedVoice = this.voices[0].name, 1);
   }
 
-  genderChanged(event) {
-    this.selectedGender = event.target.value;
+  genderChanged(event: Event): void {
+    this.selectedGender = (event as CustomEvent).detail.value;
     this.voices = this.voicesResponse.filter(this.matches.bind(this));
     setTimeout(() => this.selectedVoice = this.voices[0].name, 1);
   }
 
-  private async loadVoices() {
+  private async loadVoices(): Promise<void> {
     const response = await fetch(`${environment.SERVER_URL}/voices`);
     this.voicesResponse = await response.json();
     this.languages = this.voicesResponse.map(v => v.language).filter(this.onlyUnique).sort();
@@ -100,13 +105,13 @@ export class HomePage {
     this.voices = this.voicesResponse.filter(this.matches.bind(this));
   }
 
-  private matches(voice) {
+  private matches(voice: Voice): boolean {
     const matchesGender = !this.selectedGender || this.selectedGender === voice.gender;
     const matchesLanguage = !this.selectedLanguage || this.selectedLanguage === voice.language;
     return matchesGender && matchesLanguage;
   }
 
-  private onlyUnique(value, index, self) {
+  private onlyUnique(value: string, index: number, self: string[]): boolean {
     return self.indexOf(value) === index;
   }
 

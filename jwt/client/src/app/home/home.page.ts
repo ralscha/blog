@@ -11,8 +11,8 @@ import {environment} from '../../environments/environment';
 })
 export class HomePage implements OnInit {
 
-  user: string;
-  message: string;
+  user!: string | null;
+  message: string | null = null;
 
   constructor(private readonly authService: AuthService,
               jwtHelper: JwtHelperService,
@@ -29,14 +29,14 @@ export class HomePage implements OnInit {
 
   }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.httpClient.get(`${environment.serverURL}/secret`, {responseType: 'text'}).subscribe(
       text => this.message = text,
       err => console.log(err)
     );
   }
 
-  logout() {
+  logout(): void {
     this.authService.logout();
   }
 

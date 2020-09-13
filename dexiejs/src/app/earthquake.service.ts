@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {Earthquake, EarthquakeDb} from './earthquake-db';
 import {Filter} from './filter-interface';
-import Papa from 'papaparse';
+import {parse} from 'papaparse';
 import * as geolib from 'geolib';
 
 @Injectable({
@@ -23,7 +23,7 @@ export class EarthquakeService {
 
   async initProvider(): Promise<number> {
     if (!navigator.onLine) {
-      return;
+      return Promise.resolve(-1);
     }
 
     const lastUpdate = localStorage.getItem('lastUpdate');
@@ -100,17 +100,29 @@ export class EarthquakeService {
     }
 
     if (filter.sort === 'distance') {
-      return filtered.sort((a, b) => a.distance - b.distance);
+      return filtered.sort((a, b) => {
+        if (a.distance && b.distance) {
+          return a.distance - b.distance;
+        } else if (!a.distance && b.distance) {
+          return -1;
+        } else if (a.distance && !b.distance) {
+          return 1;
+        } else {
+          return 0;
+        }
+      });
     }
 
     return filtered.sort((a, b) => b.time - a.time);
   }
 
-  private async loadData(dataUrl) {
+  private async loadData(dataUrl: string): Promise<void> {
     const response = await fetch(dataUrl);
     const text = await response.text();
-    const data = Papa.parse(text, {header: true});
-
+    const data = parse<{
+      id: string, time: string, place: string, mag: string,
+      depth: string, latitude: string, longitude: string
+    }>(text, {header: true});
     const earthquakes: Earthquake[] = [];
 
     for (const row of data.data) {
@@ -133,7 +145,7 @@ export class EarthquakeService {
 
   }
 
-  private deleteOldRecords() {
+  private deleteOldRecords(): Promise<number> {
     const thirtyDaysAgo = Date.now() - EarthquakeService.THIRTY_DAYS;
     return this.db.earthquakes.where('time').below(thirtyDaysAgo).delete();
   }

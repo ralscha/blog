@@ -1,22 +1,23 @@
 import {Injectable} from '@angular/core';
 import {Filter} from './filter-interface';
-import Papa from 'papaparse';
+import {parse} from 'papaparse';
 import * as geolib from 'geolib';
 import {map} from 'rxjs/operators';
 import {HttpClient} from '@angular/common/http';
 import {Earthquake} from './earthquake';
-
+// tslint:disable:no-any
 @Injectable({
   providedIn: 'root'
 })
 export class EarthquakeService {
+
   private static readonly FOURTYFIVE_MINUTES = 30 * 60 * 1000;
   private static readonly ONE_HOUR = 60 * 60 * 1000;
   private static readonly ONE_DAY = 24 * 60 * 60 * 1000;
   private static readonly SEVEN_DAYS = 7 * 24 * 60 * 60 * 1000;
   private static readonly THIRTY_DAYS = 30 * 24 * 60 * 60 * 1000;
 
-  private db: IDBDatabase;
+  private db!: IDBDatabase;
 
   constructor(private readonly http: HttpClient) {
   }
@@ -56,8 +57,8 @@ export class EarthquakeService {
   filter(filter: Filter): Promise<Earthquake[]> {
     const tx = this.db.transaction('earthquakes', 'readonly');
     const store = tx.objectStore('earthquakes');
-    const magIndex: any = store.index('mag');
-    const timeIndex: any = store.index('time');
+    const magIndex: IDBIndex = store.index('mag');
+    const timeIndex: IDBIndex = store.index('time');
 
     const hasMagFilter = !(filter.mag.lower === -1 && filter.mag.upper === 10);
     const hasDistanceFilter = !(filter.distance.lower === 0 && filter.distance.upper === 20000);
@@ -66,23 +67,23 @@ export class EarthquakeService {
     let promise = new Promise<Earthquake[]>(resolve => {
       if (hasMagFilter && !hasTimeFilter) {
         magIndex.getAll(IDBKeyRange.bound(filter.mag.lower, filter.mag.upper))
-          .onsuccess = e => resolve(e.target.result);
+          .onsuccess = e => resolve((e.target as any).result);
       } else if (!hasMagFilter && hasTimeFilter) {
         const now = new Date();
         now.setHours(now.getHours() - parseInt(filter.time, 10));
         timeIndex.getAll(IDBKeyRange.lowerBound(now.getTime()))
-          .onsuccess = e => resolve(e.target.result);
+          .onsuccess = e => resolve((e.target as any).result);
       } else if (hasMagFilter && hasTimeFilter) {
         const magPromise = new Promise<string[]>(res => {
           magIndex.getAllKeys(IDBKeyRange.bound(filter.mag.lower, filter.mag.upper))
-            .onsuccess = e => res(e.target.result);
+            .onsuccess = e => res((e.target as any).result);
         });
 
         const now = new Date();
         now.setHours(now.getHours() - parseInt(filter.time, 10));
         const timePromise = new Promise<string[]>(res => {
           timeIndex.getAllKeys(IDBKeyRange.lowerBound(now.getTime()))
-            .onsuccess = e => res(e.target.result);
+            .onsuccess = e => res((e.target as any).result);
         });
 
         Promise.all([magPromise, timePromise]).then(results => {
@@ -91,11 +92,11 @@ export class EarthquakeService {
           intersection.forEach(id => {
             store.get(id).onsuccess = e => result.push((e.target as any).result);
           });
-          tx.oncomplete = e => resolve(result);
+          tx.oncomplete = () => resolve(result);
         });
       } else {
         magIndex.getAll()
-          .onsuccess = e => resolve(e.target.result);
+          .onsuccess = e => resolve((e.target as any).result);
       }
     });
 
@@ -130,7 +131,17 @@ export class EarthquakeService {
     }
 
     if (filter.sort === 'distance') {
-      return promise.then(e => e.sort((a, b) => a.distance - b.distance));
+      return promise.then(e => e.sort((a, b) => {
+        if (a.distance && b.distance) {
+          return a.distance - b.distance;
+        } else if (!a.distance && b.distance) {
+          return -1;
+        } else if (a.distance && !b.distance) {
+          return 1;
+        } else {
+          return 0;
+        }
+      }));
     }
 
     return promise.then(e => e.sort((a, b) => b.time - a.time));
@@ -145,8 +156,8 @@ export class EarthquakeService {
       const openRequest = indexedDB.open('Earthquake', 1);
 
       openRequest.onupgradeneeded = event => {
-        const target: any = event.target;
-        const db = target.result;
+        const target: EventTarget | null = event.target;
+        const db = (target as any).result;
         const store = db.createObjectStore('earthquakes', {keyPath: 'id'});
         store.createIndex('mag', 'mag');
         store.createIndex('time', 'time');
@@ -164,9 +175,12 @@ export class EarthquakeService {
     });
   }
 
-  private loadData(dataUrl): Promise<void> {
+  private loadData(dataUrl: string): Promise<void> {
     return new Promise(resolve => {
-      const response = this.http.get(dataUrl, {responseType: 'text'}).pipe(map(data => Papa.parse(data, {header: true})));
+      const response = this.http.get(dataUrl, {responseType: 'text'}).pipe(map(data => parse<{
+        id: string, time: string, place: string, mag: string,
+        depth: string, latitude: string, longitude: string
+      }>(data, {header: true})));
       response
         .subscribe(data => {
           const tx = this.db.transaction('earthquakes', 'readwrite');
@@ -185,7 +199,7 @@ export class EarthquakeService {
             }
           }
 
-          tx.oncomplete = e => {
+          tx.oncomplete = () => {
             localStorage.setItem('lastUpdate', Date.now().toString());
             resolve();
           };
@@ -196,18 +210,18 @@ export class EarthquakeService {
   private deleteOldRecords(): Promise<void> {
     const tx = this.db.transaction('earthquakes', 'readwrite');
     const store = tx.objectStore('earthquakes');
-    const timeIndex: any = store.index('time');
+    const timeIndex: IDBIndex = store.index('time');
     const thirtyDaysAgo = Date.now() - EarthquakeService.THIRTY_DAYS;
 
     return new Promise(resolve => {
       timeIndex.openCursor(IDBKeyRange.upperBound(thirtyDaysAgo)).onsuccess = event => {
-        const cursor = event.target.result;
+        const cursor = (event.target as any).result;
         if (cursor) {
           cursor.delete();
           cursor.continue();
         }
       };
-      tx.oncomplete = e => resolve();
+      tx.oncomplete = () => resolve();
     });
   }
 }

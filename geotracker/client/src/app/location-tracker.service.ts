@@ -2,6 +2,7 @@ import {ApplicationRef, Injectable} from '@angular/core';
 import {ServerPushService} from './server-push.service';
 import {AppPosition} from './app-position';
 
+// tslint:disable:no-any
 declare var BackgroundGeolocation: any;
 
 @Injectable({
@@ -9,7 +10,7 @@ declare var BackgroundGeolocation: any;
 })
 export class LocationTrackerService {
 
-  pos: AppPosition = null;
+  pos: AppPosition | null = null;
 
   constructor(private serverPush: ServerPushService,
               private readonly appRef: ApplicationRef) {
@@ -60,8 +61,8 @@ export class LocationTrackerService {
       activitiesInterval: 80000
     });
 
-    BackgroundGeolocation.on('location', location => {
-      BackgroundGeolocation.startTask(taskKey => {
+    BackgroundGeolocation.on('location', (location: any) => {
+      BackgroundGeolocation.startTask((taskKey: any) => {
         if (location) {
           this.pos = {
             accuracy: location.accuracy,
@@ -78,13 +79,13 @@ export class LocationTrackerService {
       });
     });
 
-    BackgroundGeolocation.on('stationary', stationaryLocation => {
+    BackgroundGeolocation.on('stationary', (stationaryLocation: any) => {
       // handle stationary locations here
     });
 
-    BackgroundGeolocation.on('error', error => this.serverPush.pushError(error));
+    BackgroundGeolocation.on('error', (error: any) => this.serverPush.pushError(error));
 
-    BackgroundGeolocation.checkStatus(status => {
+    BackgroundGeolocation.checkStatus((status: any) => {
       console.log('[INFO] BackgroundGeolocation service is running', status.isRunning);
       console.log('[INFO] BackgroundGeolocation services enabled', status.locationServicesEnabled);
       console.log('[INFO] BackgroundGeolocation auth status: ' + status.authorization);

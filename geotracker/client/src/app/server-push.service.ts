@@ -11,7 +11,7 @@ export class ServerPushService {
   constructor(private readonly httpClient: HttpClient) {
   }
 
-  pushPosition(pos: AppPosition): void {
+  pushPosition(pos: AppPosition | null): void {
     this.httpClient.post(`${environment.serverURL}/pos`, pos)
       .subscribe(() => {
       }, error => this.pushError(error));

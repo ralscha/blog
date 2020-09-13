@@ -1,6 +1,6 @@
 import {Component, ViewChild} from '@angular/core';
 import {DrawableDirective} from '../drawable.directive';
-import * as math from 'mathjs';
+import {multiply} from 'mathjs';
 
 @Component({
   selector: 'app-home',
@@ -9,11 +9,11 @@ import * as math from 'mathjs';
 })
 export class HomePage {
 
-  @ViewChild(DrawableDirective) drawable: DrawableDirective;
+  @ViewChild(DrawableDirective) drawable!: DrawableDirective;
   detections: number[] = [];
-  detectedNumber: number;
-  private weightsInputHidden: number[][];
-  private weightsHiddenOutput: number[][];
+  detectedNumber: number | null;
+  private weightsInputHidden!: number[][];
+  private weightsHiddenOutput!: number[][];
 
   constructor() {
     const fetchInputHidden = fetch('assets/weights-input-hidden.json');
@@ -27,11 +27,11 @@ export class HomePage {
     });
   }
 
-  sigmoid(t) {
+  sigmoid(t): number {
     return 1 / (1 + Math.exp(-t));
   }
 
-  detect(canvas) {
+  detect(canvas): void {
     const canvasCopy = document.createElement('canvas');
     canvasCopy.width = 28;
     canvasCopy.height = 28;
@@ -60,7 +60,7 @@ export class HomePage {
     this.detectedNumber = this.indexMax(this.detections);
   }
 
-  erase() {
+  erase(): void {
     this.detections = [];
     this.detectedNumber = null;
     this.drawable.clear();
@@ -72,9 +72,9 @@ export class HomePage {
       inputs.push([id]);
     }
 
-    const hiddenInputs = math.multiply(this.weightsInputHidden, inputs);
+    const hiddenInputs = multiply(this.weightsInputHidden, inputs);
     const hiddenOutputs = hiddenInputs.map(value => this.sigmoid(value));
-    const finalInputs = math.multiply(this.weightsHiddenOutput, hiddenOutputs);
+    const finalInputs = multiply(this.weightsHiddenOutput, hiddenOutputs);
     return finalInputs.map(value => this.sigmoid(value));
   }
 

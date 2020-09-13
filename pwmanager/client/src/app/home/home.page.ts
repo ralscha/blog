@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {NavController} from '@ionic/angular';
+import {NavController, ViewDidEnter} from '@ionic/angular';
 import {PasswordService} from '../password.service';
 import {Password} from '../password';
 
@@ -8,18 +8,19 @@ import {Password} from '../password';
   templateUrl: './home.page.html',
   styleUrls: ['./home.page.scss']
 })
-export class HomePage {
+export class HomePage implements ViewDidEnter {
   passwords: Password[] = [];
 
   constructor(private readonly navCtrl: NavController,
               private readonly passwordService: PasswordService) {
   }
 
-  ionViewDidEnter() {
+  ionViewDidEnter(): void {
     this.passwords = this.passwordService.getPasswords();
   }
 
-  filter(event) {
+  // tslint:disable-next-line:no-any
+  filter(event: any): void {
     const query = event.target.value;
     if (query !== undefined) {
       this.passwords = this.passwordService.getPasswords().filter(pw => (pw.url.includes(query)
@@ -29,15 +30,15 @@ export class HomePage {
     }
   }
 
-  addPassword() {
+  addPassword(): void {
     this.navCtrl.navigateForward(['edit']);
   }
 
-  editPassword(password: Password) {
+  editPassword(password: Password): void {
     this.navCtrl.navigateForward(['edit', password.id]);
   }
 
-  logout() {
+  logout(): void {
     this.passwordService.clearPasswords();
     this.navCtrl.navigateRoot(['login'], {replaceUrl: true});
   }

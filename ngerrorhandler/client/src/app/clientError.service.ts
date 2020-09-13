@@ -21,7 +21,7 @@ export class ClientErrorService {
   }
 
   async getAll(): Promise<ClientError[]> {
-    return await this.db.errors.toArray();
+    return this.db.errors.toArray();
   }
 
 }

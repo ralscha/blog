@@ -4,7 +4,7 @@ import {precacheAndRoute} from 'workbox-precaching';
 import {clientsClaim, skipWaiting} from 'workbox-core';
 import {registerRoute} from 'workbox-routing';
 import {CacheFirst} from 'workbox-strategies';
-import {TodoDb} from './app/todo';
+import {Todo, TodoDb} from './app/todo';
 
 declare const self: ServiceWorkerGlobalScope;
 
@@ -27,20 +27,24 @@ self.addEventListener('sync', event => {
   }
 });
 
-async function serverSync() {
+async function serverSync(): Promise<void> {
   const syncViewResponse = await fetch(`${syncURL}/syncview`);
   const syncView = await syncViewResponse.json();
 
   const serverMap = new Map();
   Object.entries(syncView).forEach(kv => serverMap.set(kv[0], kv[1]));
 
-  const syncRequest = {
+  const syncRequest: {
+    update: Todo[],
+    remove: string[],
+    get: string[]
+  } = {
     update: [],
     remove: [],
     get: []
   };
 
-  const deleteLocal = [];
+  const deleteLocal: string[] = [];
 
   await db.todos.toCollection().each(todo => {
     const serverTimestamp = serverMap.get(todo.id);
@@ -105,7 +109,7 @@ async function serverSync() {
         Object.entries(sync.updated).forEach(async (kv) => await db.todos.update(kv[0], {ts: kv[1]}));
       }
       if (sync.removed) {
-        sync.removed.forEach(async (id) => await db.todos.delete(id));
+        sync.removed.forEach(async (id: string) => await db.todos.delete(id));
       }
     });
 
@@ -115,7 +119,7 @@ async function serverSync() {
   return Promise.reject('sync failed: ' + syncResponse.status);
 }
 
-async function notifyClients() {
+async function notifyClients(): Promise<void> {
   const clients = await self.clients.matchAll({includeUncontrolled: true});
   for (const client of clients) {
     client.postMessage('sync_finished');

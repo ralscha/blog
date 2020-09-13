@@ -1,7 +1,7 @@
 import Dexie from 'dexie';
 
 export class EarthquakeDb extends Dexie {
-  earthquakes: Dexie.Table<Earthquake, string>;
+  earthquakes!: Dexie.Table<Earthquake, string>;
 
   constructor() {
     super('Earthquake');

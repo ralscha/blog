@@ -8,6 +8,6 @@ import {Component, Input} from '@angular/core';
 export class ProgressBarComponent {
 
   @Input()
-  progress;
+  progress!: number;
 
 }

@@ -10,30 +10,31 @@ import {Face, FaceLandmark, Landmark, Logo, Text, Vertex, VisionResult} from '..
 })
 export class HomePage implements OnInit {
 
-  @ViewChild('fileSelector') fileInput: ElementRef;
-  @ViewChild('canvas', {static: true}) canvas: ElementRef;
-  @ViewChild('canvasContainer') canvasContainer: ElementRef;
+  @ViewChild('fileSelector') fileInput!: ElementRef;
+  @ViewChild('canvas', {static: true}) canvas!: ElementRef;
+  @ViewChild('canvasContainer') canvasContainer!: ElementRef;
 
-  visionResult: VisionResult = null;
-  detail: string = null;
-  selectedFace: Face = null;
-  lat: number = null;
-  lng: number = null;
+  visionResult: VisionResult | null = null;
+  detail: string | null = null;
+  selectedFace: Face | null = null;
+  lat: number | null = null;
+  lng: number | null = null;
   zoom = 8;
   markers: { lat: number, lng: number }[] = [];
-  private ratio: number;
-  private ctx: CanvasRenderingContext2D;
-  private selectedFile: File;
-  private image: any;
+  private ratio!: number;
+  private ctx!: CanvasRenderingContext2D;
+  private selectedFile: File | null = null;
+  // tslint:disable-next-line:no-any
+  private image: any = null;
 
   constructor(private readonly loadingController: LoadingController) {
   }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.ctx = this.canvas.nativeElement.getContext('2d');
   }
 
-  showDetail(detail: string) {
+  showDetail(detail: string | null): void {
     if (detail === null && this.selectedFace !== null) {
       this.selectedFace = null;
       this.redrawImage();
@@ -46,20 +47,24 @@ export class HomePage implements OnInit {
     }
   }
 
-  onTextClick(text: Text) {
+  onTextClick(text: Text): void {
     this.drawVertices(text.boundingPoly);
   }
 
-  onLogoClick(logo: Logo) {
+  onLogoClick(logo: Logo): void {
     this.drawVertices(logo.boundingPoly);
   }
 
-  onFaceClick(face: Face) {
+  onFaceClick(face: Face): void {
     this.selectedFace = face;
     this.drawVertices(face.boundingPoly);
   }
 
-  onFaceLandmarkClick(landmark: FaceLandmark) {
+  onFaceLandmarkClick(landmark: FaceLandmark): void {
+    if (this.selectedFace === null) {
+      return;
+    }
+
     this.redrawImage();
     this.drawVertices(this.selectedFace.boundingPoly);
 
@@ -73,7 +78,7 @@ export class HomePage implements OnInit {
     this.ctx.stroke();
   }
 
-  onLandmarkClick(landmark: Landmark) {
+  onLandmarkClick(landmark: Landmark): void {
     if (landmark.locations && landmark.locations.length > 0) {
       this.lat = landmark.locations[0].lat;
       this.lng = landmark.locations[0].lng;
@@ -85,13 +90,13 @@ export class HomePage implements OnInit {
     }
   }
 
-  redrawImage() {
+  redrawImage(): void {
     if (this.image) {
       this.drawImageScaled(this.image);
     }
   }
 
-  drawVertices(vertices: Vertex[]) {
+  drawVertices(vertices: Vertex[]): void {
     if (vertices) {
       this.redrawImage();
 
@@ -107,7 +112,8 @@ export class HomePage implements OnInit {
     }
   }
 
-  onFileCange(event) {
+  onFileCange(event: Event): void {
+    // @ts-ignore
     this.selectedFile = event.target.files[0];
     const url = URL.createObjectURL(this.selectedFile);
 
@@ -135,11 +141,15 @@ export class HomePage implements OnInit {
     this.image.src = url;
   }
 
-  clickFileSelector() {
+  clickFileSelector(): void {
     this.fileInput.nativeElement.click();
   }
 
-  private async fetchSignUrl() {
+  private async fetchSignUrl(): Promise<void> {
+    if (this.selectedFile === null) {
+      return Promise.reject('no file selected');
+    }
+
     const formData = new FormData();
     formData.append('contentType', this.selectedFile.type);
 
@@ -153,7 +163,11 @@ export class HomePage implements OnInit {
     await this.initiateGoogleVision(uuid);
   }
 
-  private async uploadToGoogleCloudStorage(signURL: string) {
+  private async uploadToGoogleCloudStorage(signURL: string): Promise<void> {
+    if (this.selectedFile === null) {
+      return Promise.reject('no file selected');
+    }
+
     await fetch(signURL, {
       method: 'PUT',
       headers: {
@@ -163,7 +177,7 @@ export class HomePage implements OnInit {
     });
   }
 
-  private async initiateGoogleVision(uuid: string) {
+  private async initiateGoogleVision(uuid: string): Promise<void> {
     const formData = new FormData();
     formData.append('uuid', uuid);
 
@@ -174,7 +188,8 @@ export class HomePage implements OnInit {
     this.visionResult = await response.json();
   }
 
-  private drawImageScaled(img) {
+  // tslint:disable-next-line:no-any
+  private drawImageScaled(img: any): void {
     const width = this.canvasContainer.nativeElement.clientWidth;
     const height = this.canvasContainer.nativeElement.clientHeight;
 

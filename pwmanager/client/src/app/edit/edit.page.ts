@@ -11,21 +11,23 @@ import {ActivatedRoute} from '@angular/router';
   styleUrls: ['./edit.page.scss']
 })
 export class EditPage implements OnInit {
-  password: Password;
+  password: Password | undefined = undefined;
 
   constructor(private readonly navCtrl: NavController,
               private readonly route: ActivatedRoute,
               private readonly passwordService: PasswordService) {
-
   }
 
-  ngOnInit() {
+  ngOnInit(): void {
     const id = this.route.snapshot.paramMap.get('id');
     if (id) {
       this.password = this.passwordService.getPassword(id);
+      if (this.password === undefined) {
+        this.navCtrl.navigateBack(['home']);
+      }
     } else {
       this.password = {
-        id: null,
+        id: '',
         url: '',
         username: '',
         password: '',
@@ -34,7 +36,11 @@ export class EditPage implements OnInit {
     }
   }
 
-  async save() {
+  async save(): Promise<void> {
+    if (this.password === undefined) {
+      return Promise.reject('password empty');
+    }
+
     if (!this.password.id) {
       this.password.id = v4();
     }
@@ -42,8 +48,8 @@ export class EditPage implements OnInit {
     this.navCtrl.navigateBack(['home']);
   }
 
-  deletePassword() {
-    if (this.password.id) {
+  deletePassword(): void {
+    if (this.password?.id) {
       this.passwordService.deletePassword(this.password);
       this.navCtrl.navigateBack(['home']);
     }

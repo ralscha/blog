@@ -7,7 +7,7 @@ if (environment.production) {
   enableProdMode();
 }
 
-function loadServiceWorker() {
+function loadServiceWorker(): void {
   // if (environment.production && ('serviceWorker' in navigator)) {
   if ('serviceWorker' in navigator) {
     navigator.serviceWorker.register('service-worker.js')

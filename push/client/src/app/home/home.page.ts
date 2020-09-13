@@ -4,6 +4,7 @@ import {Platform} from '@ionic/angular';
 import {timeout} from 'rxjs/operators';
 import {environment} from '../../environments/environment';
 
+// tslint:disable:no-any
 declare var cordova: any;
 
 @Component({
@@ -16,7 +17,7 @@ export class HomePage {
   allowPush: boolean;
   allowPersonal: boolean;
   items: { id: number, text: string }[] = [];
-  token: string;
+  token: string | null = null;
   private readonly TOPIC_NAME = 'chuck';
 
   constructor(private readonly http: HttpClient,
@@ -38,7 +39,7 @@ export class HomePage {
     this.allowPersonal = personalFlag != null ? JSON.parse(personalFlag) : false;
   }
 
-  async initFcm() {
+  async initFcm(): Promise<void> {
     await cordova.plugins.firebase.messaging.requestPermission();
     this.token = await cordova.plugins.firebase.messaging.getToken();
 
@@ -47,12 +48,12 @@ export class HomePage {
       this.token = await cordova.plugins.firebase.messaging.getToken();
     });
 
-    cordova.plugins.firebase.messaging.onMessage(payload => {
+    cordova.plugins.firebase.messaging.onMessage((payload: any) => {
       console.log('New foreground message: ', payload);
       this.handleNotification(payload);
     });
 
-    cordova.plugins.firebase.messaging.onBackgroundMessage(payload => {
+    cordova.plugins.firebase.messaging.onBackgroundMessage((payload: any) => {
       console.log('New background message: ', payload);
       this.handleNotification(payload);
     });
@@ -61,25 +62,29 @@ export class HomePage {
     this.onPmChange();
   }
 
-  register() {
-    const formData = new FormData();
-    formData.append('token', this.token);
-    this.http.post(`${environment.serverURL}/register`, formData)
-      .pipe(timeout(10000))
-      .subscribe(() => localStorage.setItem('allowPersonal', JSON.stringify(this.allowPersonal)),
-        _ => this.allowPersonal = !this.allowPersonal);
+  register(): void {
+    if (this.token !== null) {
+      const formData = new FormData();
+      formData.append('token', this.token);
+      this.http.post(`${environment.serverURL}/register`, formData)
+        .pipe(timeout(10000))
+        .subscribe(() => localStorage.setItem('allowPersonal', JSON.stringify(this.allowPersonal)),
+          _ => this.allowPersonal = !this.allowPersonal);
+    }
   }
 
-  unregister() {
-    const formData = new FormData();
-    formData.append('token', this.token);
-    this.http.post(`${environment.serverURL}/unregister`, formData)
-      .pipe(timeout(10000))
-      .subscribe(() => localStorage.setItem('allowPersonal', JSON.stringify(this.allowPersonal)),
-        _ => this.allowPersonal = !this.allowPersonal);
+  unregister(): void {
+    if (this.token !== null) {
+      const formData = new FormData();
+      formData.append('token', this.token);
+      this.http.post(`${environment.serverURL}/unregister`, formData)
+        .pipe(timeout(10000))
+        .subscribe(() => localStorage.setItem('allowPersonal', JSON.stringify(this.allowPersonal)),
+          _ => this.allowPersonal = !this.allowPersonal);
+    }
   }
 
-  onChange() {
+  onChange(): void {
     localStorage.setItem('allowPush', JSON.stringify(this.allowPush));
 
     if (this.allowPush) {
@@ -89,7 +94,7 @@ export class HomePage {
     }
   }
 
-  onPmChange() {
+  onPmChange(): void {
     if (this.allowPersonal) {
       this.register();
     } else {
@@ -97,7 +102,7 @@ export class HomePage {
     }
   }
 
-  handleNotification(data) {
+  handleNotification(data: any): void {
     if (!data.text) {
       return;
     }

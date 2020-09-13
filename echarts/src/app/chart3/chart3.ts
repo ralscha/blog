@@ -14,12 +14,12 @@ export class Chart3Page {
       data: [{value: 50, name: 'Sensor'}]
     }]
   };
-  datas: any = null;
-  private interval = null;
+  datas: { series: [{ data: [{ value: number }] }] } | null = null;
+  private interval: number | null = null;
 
-  start() {
+  start(): void {
     this.running = true;
-    this.interval = setInterval(() => {
+    this.interval = window.setInterval(() => {
       this.datas = {
         series: [{
           data: [{value: Number((Math.random() * 100).toFixed(1))}]
@@ -28,9 +28,11 @@ export class Chart3Page {
     }, 2000);
   }
 
-  stop() {
+  stop(): void {
     this.running = false;
-    clearInterval(this.interval);
+    if (this.interval) {
+      clearInterval(this.interval);
+    }
   }
 
 }

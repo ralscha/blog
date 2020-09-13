@@ -9,15 +9,15 @@ import {Earthquake} from '../earthquake-db';
 export class DetailComponent {
 
   @Input()
-  earthquake: Earthquake;
+  earthquake!: Earthquake;
 
   @Input()
-  referenceLocation: {
+  referenceLocation!: {
     latitude: number;
     longitude: number
   };
 
-  distanceToReference(earthquake: Earthquake) {
+  distanceToReference(earthquake: Earthquake): number | null {
     if (earthquake.distance) {
       return earthquake.distance;
     }

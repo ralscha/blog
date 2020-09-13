@@ -9,14 +9,13 @@
  * https://github.com/swagger-api/swagger-codegen.git
  * Do not edit the class manually.
  */
-/* tslint:disable:no-unused-variable member-ordering */
-
+/* tslint:disable */
 import {Inject, Injectable, Optional} from '@angular/core';
 import {HttpClient, HttpEvent, HttpHeaders, HttpResponse} from '@angular/common/http';
 
 import {Observable} from 'rxjs';
 
-import {Todo} from '../model/todo';
+import {Todo} from '..';
 
 import {BASE_PATH} from '../variables';
 import {Configuration} from '../configuration';
@@ -25,7 +24,7 @@ import {Configuration} from '../configuration';
 @Injectable()
 export class TodoServiceService {
 
-  public selectedTodo: Todo;
+  public selectedTodo: Todo | null = null;
 
   public defaultHeaders = new HttpHeaders();
   public configuration = new Configuration();
@@ -63,7 +62,7 @@ export class TodoServiceService {
     let headers = this.defaultHeaders;
 
     // to determine the Accept header
-    const httpHeaderAccepts: string[] = [
+    let httpHeaderAccepts: string[] = [
       '*/*'
     ];
     const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
@@ -104,7 +103,7 @@ export class TodoServiceService {
     let headers = this.defaultHeaders;
 
     // to determine the Accept header
-    const httpHeaderAccepts: string[] = [
+    let httpHeaderAccepts: string[] = [
       '*/*'
     ];
     const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
@@ -147,7 +146,7 @@ export class TodoServiceService {
     let headers = this.defaultHeaders;
 
     // to determine the Accept header
-    const httpHeaderAccepts: string[] = [
+    let httpHeaderAccepts: string[] = [
       '*/*'
     ];
     const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);

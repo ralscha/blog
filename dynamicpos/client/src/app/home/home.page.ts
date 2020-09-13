@@ -8,12 +8,6 @@ import {circleMarker, latLng, LatLngBounds, LayerGroup, layerGroup, Map, tileLay
   styleUrls: ['./home.page.scss']
 })
 export class HomePage implements AfterViewInit {
-  private map: Map;
-  private markerGroup: LayerGroup = null;
-
-  constructor(private readonly httpClient: HttpClient) {
-  }
-
   options = {
     layers: [
       tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
@@ -24,12 +18,17 @@ export class HomePage implements AfterViewInit {
     zoom: 5,
     center: latLng([46.879966, -121.726909])
   };
+  private map!: Map;
+  private markerGroup: LayerGroup | null = null;
 
-  ngAfterViewInit() {
+  constructor(private readonly httpClient: HttpClient) {
+  }
+
+  ngAfterViewInit(): void {
     setTimeout(() => this.map.invalidateSize(), 10);
   }
 
-  onMapReady(map: Map) {
+  onMapReady(map: Map): void {
     this.map = map;
     this.loadEarthquakes(map.getBounds());
 
@@ -37,18 +36,18 @@ export class HomePage implements AfterViewInit {
     map.on('moveend', evt => this.loadEarthquakes(evt.target.getBounds()));
   }
 
-  private loadEarthquakes(bounds: LatLngBounds) {
+  private loadEarthquakes(bounds: LatLngBounds): void {
     const southWest = bounds.getSouthWest();
     const northEast = bounds.getNorthEast();
     this.httpClient.get<Earthquake[]>(`http://127.0.0.1:8080/earthquakes/${southWest.lng}/${southWest.lat}/${northEast.lng}/${northEast.lat}`)
       .subscribe(data => this.drawCircles(data));
   }
 
-  private drawCircles(earthquakes) {
+  private drawCircles(earthquakes: Earthquake[]): void {
     if (this.markerGroup) {
       this.markerGroup.removeFrom(this.map);
     }
-    this.markerGroup = layerGroup(null).addTo(this.map);
+    this.markerGroup = layerGroup().addTo(this.map);
     for (const earthquake of earthquakes) {
       const info = `${earthquake.time}<br>${earthquake.place}<br>${earthquake.mag}`;
 
@@ -64,7 +63,7 @@ export class HomePage implements AfterViewInit {
     }
   }
 
-  private getFillColor(mag: number) {
+  private getFillColor(mag: number): string {
     if (mag < 3) {
       return '#FFC0CB';
     } else if (mag < 4) {

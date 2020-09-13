@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {IonItemSliding, NavController} from '@ionic/angular';
+import {IonItemSliding, NavController, ViewDidEnter} from '@ionic/angular';
 import {TodoService} from '../todo.service';
 import {Todo} from '../todo';
 
@@ -8,7 +8,7 @@ import {Todo} from '../todo';
   templateUrl: './home.page.html',
   styleUrls: ['./home.page.scss']
 })
-export class HomePage {
+export class HomePage implements ViewDidEnter {
 
   todos: Todo[] = [];
 
@@ -16,26 +16,26 @@ export class HomePage {
               private readonly todoService: TodoService) {
   }
 
-  ionViewDidEnter() {
+  ionViewDidEnter(): void {
     this.todos = this.todoService.getTodos();
   }
 
-  addTodo() {
+  addTodo(): void {
     this.navCtrl.navigateForward(['edit']);
   }
 
-  editTodo(slidingItem: IonItemSliding, todo: Todo) {
+  editTodo(slidingItem: IonItemSliding, todo: Todo): void {
     slidingItem.close();
     this.navCtrl.navigateForward(['edit', todo.id]);
   }
 
-  deleteTodo(slidingItem: IonItemSliding, todo: Todo) {
+  deleteTodo(slidingItem: IonItemSliding, todo: Todo): void {
     slidingItem.close();
     this.todoService.deleteTodo(todo);
     this.ionViewDidEnter();
   }
 
-  exit() {
+  exit(): void {
     this.todoService.exit();
     this.navCtrl.navigateRoot(['password'], {replaceUrl: true});
   }

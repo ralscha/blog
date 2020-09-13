@@ -16,11 +16,11 @@ export class LoginPage {
               private readonly toastCtrl: ToastController) {
   }
 
-  signup() {
+  signup(): void {
     this.navCtrl.navigateRoot(['signup']);
   }
 
-  async login(value: any) {
+  async login(value: { username: string, password: string }): Promise<void> {
     const loading = await this.loadingCtrl.create({
       spinner: 'bubbles',
       message: 'Logging in ...'
@@ -38,7 +38,8 @@ export class LoginPage {
         err => this.handleError(err));
   }
 
-  async handleError(error: any) {
+  // tslint:disable-next-line:no-any
+  async handleError(error: any): Promise<void> {
     let message: string;
     if (error.status && error.status === 401) {
       message = 'Login failed';

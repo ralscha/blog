@@ -18,7 +18,7 @@ export class EarthquakeService {
   }
 
   fetchJson(): Observable<IEarthquake[]> {
-    return this.http.get<any>(`${environment.SERVER_URL}/earthquakes`)
+    return this.http.get<{ earthquakes: IEarthquake[] }>(`${environment.SERVER_URL}/earthquakes`)
       .pipe(map(res => res.earthquakes), catchError(e => this.handleError(e)));
   }
 
@@ -31,13 +31,16 @@ export class EarthquakeService {
   }
 
   parseProtobuf(response: ArrayBuffer): IEarthquake[] {
+    // tslint:disable-next-line:no-console
     console.time('decodeprotobuf');
     const earthquakes = Earthquakes.decode(new Uint8Array(response));
+    // tslint:disable-next-line:no-console
     console.timeEnd('decodeprotobuf');
     return earthquakes.earthquakes;
   }
 
-  handleError(error): Observable<any> {
+  // tslint:disable-next-line:no-any
+  handleError(error: any): Observable<any> {
     console.error(error);
     return throwError(error || 'Server error');
   }

@@ -5,13 +5,13 @@
     </ion-title>
     <ion-buttons slot="start">
       <ion-button (click)="logout()">
-        <ion-icon slot="icon-only" name="exit-outline">
+        <ion-icon name="exit-outline" slot="icon-only">
         </ion-icon>
       </ion-button>
     </ion-buttons>
     <ion-buttons slot="end">
       <ion-button (click)="addPassword()">
-        <ion-icon slot="icon-only" name="add-outline">
+        <ion-icon name="add-outline" slot="icon-only">
         </ion-icon>
       </ion-button>
     </ion-buttons>
@@ -20,7 +20,7 @@
 
 <ion-content class="ion-padding">
   <ion-searchbar (ionInput)="filter($event)"></ion-searchbar>
-  <ion-card *ngFor="let password of passwords" (click)="editPassword(password)">
+  <ion-card (click)="editPassword(password)" *ngFor="let password of passwords">
     <ion-card-header>
       {{password.url}}
     </ion-card-header>

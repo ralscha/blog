@@ -13,7 +13,7 @@ export class LoginPage {
               private readonly passwordService: PasswordService) {
   }
 
-  async login(username: string, password: string) {
+  async login(username: string, password: string): Promise<void> {
     await this.passwordService.fetchPasswords(username, password);
     this.navCtrl.navigateRoot(['home'], {replaceUrl: true});
   }

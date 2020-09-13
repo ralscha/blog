@@ -9,6 +9,6 @@ import {IEarthquake} from '../protos/earthquake';
 export class DetailComponent {
 
   @Input()
-  earthquake: IEarthquake;
+  earthquake!: IEarthquake;
 
 }

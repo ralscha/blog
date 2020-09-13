@@ -17,19 +17,20 @@ export class HomePage implements OnInit {
     });
   }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.listCache();
   }
 
-  async listCache() {
+  async listCache(): Promise<void> {
     this.pictures = [];
     const cache = await caches.open('images');
     const responses = await cache.matchAll();
-    responses.forEach(async response => {
+    for (const response of responses) {
       const ab = await response.arrayBuffer();
+      // @ts-ignore
       const imageStr = 'data:image/jpeg;base64,' + btoa(String.fromCharCode.apply(null, new Uint8Array(ab)));
       this.pictures.push(imageStr);
-    });
+    }
   }
 
 

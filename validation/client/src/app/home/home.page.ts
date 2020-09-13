@@ -47,31 +47,33 @@ export class HomePage {
      */
   }
 
-  hasError(field: string, error: string) {
+  hasError(field: string, error: string): boolean {
     const ctrl = this.registrationForm.get(field);
-    return ctrl.dirty && ctrl.hasError(error);
+    return ctrl !== null && ctrl.dirty && ctrl.hasError(error);
   }
 
-  isInvalidAndDirty(field: string) {
+  isInvalidAndDirty(field: string): boolean {
     const ctrl = this.registrationForm.get(field);
-    return !ctrl.valid && ctrl.dirty;
+    return ctrl !== null && !ctrl.valid && ctrl.dirty;
   }
 
-  register() {
+  register(): void {
     console.log(this.registrationForm.value);
-    this.http.post<object>(`${environment.serverURL}/register`, this.registrationForm.value)
+    this.http.post<{ [key: string]: string[] }>(`${environment.serverURL}/register`, this.registrationForm.value)
       .subscribe(async (data) => {
         for (const fieldName of Object.keys(data)) {
           const serverErrors = data[fieldName];
 
-          const errors = {};
+          const errors: { [key: string]: boolean } = {};
           for (const serverError of serverErrors) {
             errors[serverError] = true;
           }
 
           const control = this.registrationForm.get(fieldName);
-          control.setErrors(errors);
-          control.markAsDirty();
+          if (control !== null) {
+            control.setErrors(errors);
+            control.markAsDirty();
+          }
         }
 
         if (this.registrationForm.valid) {
@@ -79,7 +81,7 @@ export class HomePage {
             message: 'Registration successful',
             duration: 3000
           });
-          toast.present();
+          await toast.present();
         }
       });
   }

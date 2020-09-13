@@ -13,7 +13,8 @@ export class AppGlobalErrorhandler implements ErrorHandler {
     window.addEventListener('online', () => this.sendStoredErrors());
   }
 
-  async handleError(error) {
+  // tslint:disable-next-line:no-any
+  async handleError(error: any): Promise<void> {
     console.error(error);
 
     const userAgent = {
@@ -30,13 +31,13 @@ export class AppGlobalErrorhandler implements ErrorHandler {
 
     const wasOK = await this.sendError(body);
     if (!wasOK) {
-      this.clientErrorService.store(body);
+      await this.clientErrorService.store(body);
       setTimeout(() => this.sendStoredErrors(), 60_000);
     }
 
   }
 
-  private async sendStoredErrors() {
+  private async sendStoredErrors(): Promise<void> {
     if (this.isRetryRunning) {
       return;
     }
@@ -50,7 +51,13 @@ export class AppGlobalErrorhandler implements ErrorHandler {
 
       const wasOK = await this.sendError(errors.map(error => error.error));
       if (wasOK) {
-        await this.clientErrorService.delete(errors.map(error => error.id));
+        const deleteIds: number[] = [];
+        for (const error of errors) {
+          if (error.id) {
+            deleteIds.push(error.id);
+          }
+        }
+        await this.clientErrorService.delete(deleteIds);
         this.isRetryRunning = false;
         return;
       }

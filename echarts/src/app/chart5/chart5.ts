@@ -10,7 +10,7 @@ export class Chart5Page {
   options = {
     tooltip: {
       position: 'top',
-      formatter: p => p.data[0] + ': ' + p.data[1]
+      formatter: (p: { data: string[] }) => p.data[0] + ': ' + p.data[1]
     },
     visualMap: {
       min: 0,
@@ -52,12 +52,11 @@ export class Chart5Page {
     }]
   };
 
-  private getVirtulData(year) {
-    year = year || '2017';
+  private getVirtulData(year: number = 2020): [string, number][] {
     const date = new Date(year, 0, 1).getTime();
     const end = new Date(year, 11, 31).getTime();
     const dayTime = 3600 * 24 * 1000;
-    const data = [];
+    const data: [string, number][] = [];
     for (let time = date; time <= end; time += dayTime) {
       data.push([
         format(time, 'yyyy-MM-dd'),

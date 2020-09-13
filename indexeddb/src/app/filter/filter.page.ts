@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {ModalController, NavParams} from '@ionic/angular';
 import {Filter} from '../filter-interface';
+import {NgForm} from '@angular/forms';
 
 @Component({
   selector: 'app-filter',
@@ -9,21 +10,22 @@ import {Filter} from '../filter-interface';
 })
 export class FilterPage implements OnInit {
 
-  filter: Filter;
+  filter!: Filter;
 
   constructor(private readonly navParams: NavParams,
               private readonly modalCtrl: ModalController) {
   }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.filter = this.navParams.get('filter');
   }
 
-  applyFilters({value}) {
+  applyFilters({value}: NgForm): void {
     this.dismiss(value);
   }
 
-  dismiss(data?: any) {
+  // tslint:disable-next-line:no-any
+  dismiss(data?: any): void {
     if (data) {
       data.myLocation = this.filter.myLocation;
     }

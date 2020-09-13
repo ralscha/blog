@@ -9,23 +9,23 @@ import {IEarthquake} from '../protos/earthquake';
 })
 export class JsonPage implements OnInit {
 
-  earthquakes: IEarthquake[];
+  earthquakes: IEarthquake[] = [];
 
   constructor(private readonly earthquakeService: EarthquakeService) {
   }
 
-  doRefresh(event) {
+  doRefresh(event: Event): void {
     this.earthquakeService.refresh().subscribe(() => {
       this.earthquakeService
         .fetchJson()
         .subscribe(data => {
           this.earthquakes = data;
-          event.target.complete();
+          (event as CustomEvent).detail.complete();
         });
     });
   }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.earthquakeService.fetchJson().subscribe(data => this.earthquakes = data);
   }
 

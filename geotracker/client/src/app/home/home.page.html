@@ -9,7 +9,8 @@
 <ion-content class="ion-padding">
   <ion-button (click)="start()" [disabled]="tracking" color="primary" expand="block" size="large">Start Tracking
   </ion-button>
-  <ion-button (click)="stop()" [disabled]="!tracking" color="danger" expand="block" class="ion-margin-top" size="large">Stop
+  <ion-button (click)="stop()" [disabled]="!tracking" class="ion-margin-top" color="danger" expand="block" size="large">
+    Stop
     Tracking
   </ion-button>
 
@@ -22,5 +23,5 @@
     <div>Time: {{locationTracker.pos?.time | date:'medium'}}</div>
   </div>
 
-  <ion-button (click)="clear()" color="primary" expand="block" class="ion-margin-top">Clear Data</ion-button>
+  <ion-button (click)="clear()" class="ion-margin-top" color="primary" expand="block">Clear Data</ion-button>
 </ion-content>

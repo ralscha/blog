@@ -10,54 +10,56 @@
 
   <ion-item>
     <ion-label position="stacked">Language</ion-label>
-    <ion-select interface="action-sheet" (ionChange)="languageChanged($event)" [(ngModel)]="selectedLanguage">
+    <ion-select (ionChange)="languageChanged($event)" [(ngModel)]="selectedLanguage" interface="action-sheet">
       <ion-select-option *ngFor="let language of languages" [value]="language">{{language}}</ion-select-option>
     </ion-select>
   </ion-item>
   <ion-item>
     <ion-label position="stacked">Gender</ion-label>
-    <ion-select interface="action-sheet" (ionChange)="genderChanged($event)" [(ngModel)]="selectedGender">
+    <ion-select (ionChange)="genderChanged($event)" [(ngModel)]="selectedGender" interface="action-sheet">
       <ion-select-option *ngFor="let gender of genders" [value]="gender">{{gender}}</ion-select-option>
     </ion-select>
   </ion-item>
   <ion-item>
     <ion-label position="stacked">Voice</ion-label>
-    <ion-select interface="action-sheet" [(ngModel)]="selectedVoice">
+    <ion-select [(ngModel)]="selectedVoice" interface="action-sheet">
       <ion-select-option *ngFor="let voice of voices" [value]="voice.name">{{voice.name}} ({{voice.gender}})
       </ion-select-option>
     </ion-select>
   </ion-item>
   <ion-item>
     <ion-label position="stacked">Speaking Rate: {{speakingRateRange.value | number:'1.0-2'}}</ion-label>
-    <ion-range [min]="0.25" [max]="4" [step]="0.01" #speakingRateRange color="secondary" style="width:100%"
-               name="speakingRate" [(ngModel)]="speakingRate">
-      <div slot="start" class="ion-margin-end">0.25</div>
-      <div slot="end" class="ion-margin-start">4</div>
+    <ion-range #speakingRateRange [(ngModel)]="speakingRate" [max]="4" [min]="0.25" [step]="0.01" color="secondary"
+               name="speakingRate" style="width:100%">
+      <div class="ion-margin-end" slot="start">0.25</div>
+      <div class="ion-margin-start" slot="end">4</div>
     </ion-range>
   </ion-item>
   <ion-item>
     <ion-label position="stacked">Pitch: {{pitchRange.value | number:'1.0-1'}}</ion-label>
-    <ion-range [min]="-20" [max]="20" [step]="0.1" #pitchRange color="secondary" style="width:100%" name="pitch"
-               [(ngModel)]="pitch">
-      <div slot="start" class="ion-margin-end">-20</div>
-      <div slot="end" class="ion-margin-start">20</div>
+    <ion-range #pitchRange [(ngModel)]="pitch" [max]="20" [min]="-20" [step]="0.1" color="secondary" name="pitch"
+               style="width:100%">
+      <div class="ion-margin-end" slot="start">-20</div>
+      <div class="ion-margin-start" slot="end">20</div>
     </ion-range>
   </ion-item>
   <ion-item lines="full">
     <ion-label position="stacked">Text</ion-label>
-    <ion-textarea [rows]="4" [(ngModel)]="text"></ion-textarea>
+    <ion-textarea [(ngModel)]="text" [rows]="4"></ion-textarea>
   </ion-item>
 
-  <ion-button class="ion-margin-top" expand="full" (click)="speakWithGoogle()">Speak with Google Text-to-Speech</ion-button>
+  <ion-button (click)="speakWithGoogle()" class="ion-margin-top" expand="full">Speak with Google Text-to-Speech
+  </ion-button>
 
   <h1 style="margin-top:50px;">Web Speech API</h1>
   <ion-item class="ion-margin-top">
     <ion-label position="stacked">Voice</ion-label>
-    <ion-select interface="popover" [(ngModel)]="selectedClientVoice">
+    <ion-select [(ngModel)]="selectedClientVoice" interface="popover">
       <ion-select-option *ngFor="let voice of clientVoices" [value]="voice">{{voice.name}} ({{voice.lang}})
       </ion-select-option>
     </ion-select>
   </ion-item>
-  <ion-button class="ion-margin-top" expand="full" (click)="speakWithWebSpeechAPI()">Speak with Web Speech API</ion-button>
+  <ion-button (click)="speakWithWebSpeechAPI()" class="ion-margin-top" expand="full">Speak with Web Speech API
+  </ion-button>
 
 </ion-content>

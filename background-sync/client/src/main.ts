@@ -8,7 +8,7 @@ if (environment.production) {
   enableProdMode();
 }
 
-function loadServiceWorker() {
+function loadServiceWorker(): void {
   if ('serviceWorker' in navigator) {
     const wb = new Workbox('service-worker.js');
     wb.register();

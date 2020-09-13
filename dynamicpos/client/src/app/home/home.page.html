@@ -7,9 +7,9 @@
 </ion-header>
 
 <ion-content class="ion-padding">
-  <div id="map"
-       leaflet
-       (leafletMapReady)="onMapReady($event)"
-       [leafletOptions]="options">
+  <div (leafletMapReady)="onMapReady($event)"
+       [leafletOptions]="options"
+       id="map"
+       leaflet>
   </div>
 </ion-content>

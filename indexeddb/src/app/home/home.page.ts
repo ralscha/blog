@@ -13,9 +13,9 @@ import {Earthquake} from '../earthquake';
 export class HomePage implements OnInit {
 
   earthquakes: Earthquake[] = [];
-  elapsedTime: number;
+  elapsedTime!: number;
 
-  geoWatchId: number;
+  geoWatchId!: number;
 
   filter: Filter = {
     mag: {
@@ -28,7 +28,10 @@ export class HomePage implements OnInit {
     },
     time: '-1',
     sort: 'time',
-    myLocation: null
+    myLocation: {
+      latitude: 0,
+      longitude: 0
+    }
   };
 
   constructor(private readonly earthquakeService: EarthquakeService,
@@ -36,7 +39,7 @@ export class HomePage implements OnInit {
               private readonly loadingCtrl: LoadingController) {
   }
 
-  ngOnInit() {
+  ngOnInit(): void {
     const storedFilter = localStorage.getItem('filter');
     if (storedFilter) {
       this.filter = JSON.parse(storedFilter);
@@ -48,7 +51,7 @@ export class HomePage implements OnInit {
         .then(() => this.filterEarthquakes())
         .catch(err => console.log(err));
 
-    }, error => {
+    }, () => {
       this.filter.myLocation = {longitude: 7.5663964, latitude: 46.9268287};
       this.earthquakeService.initProvider()
         .then(() => this.filterEarthquakes())
@@ -64,13 +67,13 @@ export class HomePage implements OnInit {
     });
   }
 
-  doRefresh(event) {
+  doRefresh(event: Event): void {
     this.earthquakeService.initProvider()
       .then(() => this.filterEarthquakes(true))
-      .then(() => event.target.complete());
+      .then(() => (event as CustomEvent).detail.complete());
   }
 
-  async filterEarthquakes(hideLoading = false) {
+  async filterEarthquakes(hideLoading = false): Promise<void> {
     localStorage.setItem('filter', JSON.stringify(this.filter));
 
     let loading = null;
@@ -84,7 +87,6 @@ export class HomePage implements OnInit {
 
     const start = performance.now();
     this.earthquakes = await this.earthquakeService.filter(this.filter);
-
     this.elapsedTime = performance.now() - start;
 
     if (loading) {
@@ -92,7 +94,7 @@ export class HomePage implements OnInit {
     }
   }
 
-  async presentFilterPage() {
+  async presentFilterPage(): Promise<void> {
     const filterPage = await this.modalCtrl.create(
       {
         component: FilterPage,

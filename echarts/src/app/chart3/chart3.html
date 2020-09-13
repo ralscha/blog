@@ -5,10 +5,10 @@
 </ion-header>
 
 <ion-content>
-  <div echarts [options]="options" [merge]="datas" class="demo-chart"></div>
+  <div [merge]="datas" [options]="options" class="demo-chart" echarts></div>
 </ion-content>
 
 <ion-footer>
-  <ion-button expand="block" [disabled]="running" (click)="start()" color="secondary">Start</ion-button>
-  <ion-button expand="block" [disabled]="!running" (click)="stop()" color="danger">Stop</ion-button>
+  <ion-button (click)="start()" [disabled]="running" color="secondary" expand="block">Start</ion-button>
+  <ion-button (click)="stop()" [disabled]="!running" color="danger" expand="block">Stop</ion-button>
 </ion-footer>

@@ -8,13 +8,16 @@ import {Injectable} from '@angular/core';
 })
 export class UsernameValidator {
 
-  private timeout;
+  private timeout: number | null = null;
 
   constructor(private readonly http: HttpClient) {
   }
 
-  validate(control: AbstractControl): Promise<{ [key: string]: boolean }> {
-    clearTimeout(this.timeout);
+  validate(control: AbstractControl): Promise<{ [key: string]: boolean } | null> {
+    if (this.timeout !== null) {
+      clearTimeout(this.timeout);
+      this.timeout = null;
+    }
 
     const value = control.value;
 
@@ -23,7 +26,7 @@ export class UsernameValidator {
       return Promise.resolve(null);
     }
 
-    return new Promise((resolve, reject) => {
+    return new Promise((resolve) => {
       this.timeout = setTimeout(() => {
         this.http.get<boolean>(`${environment.serverURL}/checkUsername?value=${control.value}`)
           .subscribe(flag => {

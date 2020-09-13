@@ -8,7 +8,6 @@ import {NgxEchartsModule} from 'ngx-echarts';
 
 // Import all modules from echarts
 // import * as echarts from 'echarts';
-
 // Custom build
 import * as echarts from './custom-echarts';
 

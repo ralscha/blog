@@ -21,7 +21,7 @@ const routes: Routes = [
   {path: '**', redirectTo: '/home'}
 ];
 
-export function tokenGetter() {
+export function tokenGetter(): string | null {
   return localStorage.getItem('jwt_token');
 }
 
@@ -33,7 +33,7 @@ export function tokenGetter() {
     JwtModule.forRoot({
       config: {
         tokenGetter,
-        whitelistedDomains: environment.whitelistedDomains
+        allowedDomains: environment.allowedDomains
       }
     }),
     FormsModule,

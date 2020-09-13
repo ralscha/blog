@@ -11,20 +11,20 @@ import {NgForm} from '@angular/forms';
 })
 export class EditPage implements OnInit {
 
-  todo: Todo;
+  todo: Todo | undefined;
 
   constructor(private readonly route: ActivatedRoute,
               private readonly todoService: TodoService,
               private readonly router: Router) {
   }
 
-  async ngOnInit() {
+  async ngOnInit(): Promise<void> {
     const todoId = this.route.snapshot.paramMap.get('id');
     if (todoId) {
       this.todo = await this.todoService.getTodo(todoId);
     } else {
       this.todo = {
-        id: null,
+        id: '',
         subject: '',
         description: '',
         ts: 0
@@ -32,17 +32,19 @@ export class EditPage implements OnInit {
     }
   }
 
-  deleteTodo() {
-    if (this.todo.id) {
+  deleteTodo(): void {
+    if (this.todo?.id) {
       this.todoService.deleteTodo(this.todo);
     }
     this.router.navigateByUrl('/');
   }
 
-  save(form: NgForm) {
-    this.todo.subject = form.value.subject;
-    this.todo.description = form.value.description;
-    this.todoService.save(this.todo);
+  save(form: NgForm): void {
+    if (this.todo) {
+      this.todo.subject = form.value.subject;
+      this.todo.description = form.value.description;
+      this.todoService.save(this.todo);
+    }
     this.router.navigateByUrl('/');
   }
 

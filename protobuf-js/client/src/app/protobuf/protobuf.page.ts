@@ -9,23 +9,23 @@ import {EarthquakeService} from '../earthquake.service';
 })
 export class ProtobufPage implements OnInit {
 
-  earthquakes: IEarthquake[];
+  earthquakes: IEarthquake[] = [];
 
   constructor(private readonly earthquakeService: EarthquakeService) {
   }
 
-  doRefresh(event) {
+  doRefresh(event: Event): void {
     this.earthquakeService.refresh().subscribe(() => {
       this.earthquakeService
         .fetchProtobuf()
         .subscribe(data => {
           this.earthquakes = data;
-          event.target.complete();
+          (event as CustomEvent).detail.complete();
         });
     });
   }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.earthquakeService.fetchProtobuf().subscribe(data => this.earthquakes = data);
   }
 

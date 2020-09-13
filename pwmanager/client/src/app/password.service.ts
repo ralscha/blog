@@ -11,8 +11,8 @@ export class PasswordService {
   private ivLen = 12;
 
   private passwords = new Map<string, Password>();
-  private masterKey: CryptoKey;
-  private authenticationKey: Uint8Array;
+  private masterKey: CryptoKey | null = null;
+  private authenticationKey: Uint8Array | null = null;
   private textEncoder = new TextEncoder('utf-8');
   private loggedIn = false;
 
@@ -20,7 +20,7 @@ export class PasswordService {
     return [...this.passwords.values()];
   }
 
-  getPassword(id: string): Password {
+  getPassword(id: string): Password | undefined {
     return this.passwords.get(id);
   }
 
@@ -35,7 +35,7 @@ export class PasswordService {
     return this.loggedIn;
   }
 
-  async fetchPasswords(username: string, password: string) {
+  async fetchPasswords(username: string, password: string): Promise<void> {
     await this.initKeys(username, password);
 
     const headers = new Headers();
@@ -54,14 +54,14 @@ export class PasswordService {
     this.loggedIn = true;
   }
 
-  deletePassword(password: Password) {
+  deletePassword(password: Password): void {
     const deleted = this.passwords.delete(password.id);
     if (deleted) {
       this.encryptAndStore();
     }
   }
 
-  savePassword(password: Password) {
+  savePassword(password: Password): Promise<void> {
     this.passwords.set(password.id, password);
     return this.encryptAndStore();
   }
@@ -127,6 +127,10 @@ export class PasswordService {
   }
 
   private async encryptAndStore(): Promise<void> {
+    if (this.authenticationKey === null) {
+      return Promise.reject('authentication key is null');
+    }
+
     const encryptedData = await this.encrypt();
     const authKeyAndData = this.concatUint8Array(this.authenticationKey, encryptedData);
 
@@ -142,6 +146,10 @@ export class PasswordService {
   }
 
   private async encrypt(): Promise<Uint8Array> {
+    if (this.masterKey === null) {
+      return Promise.reject('master key is null');
+    }
+
     const compressed = LZUTF8.compress(JSON.stringify([...this.passwords]));
 
     const initializationVector = new Uint8Array(this.ivLen);
@@ -159,6 +167,10 @@ export class PasswordService {
   }
 
   private async decrypt(buffer: ArrayBuffer): Promise<void> {
+    if (this.masterKey === null) {
+      return Promise.reject('master key is null');
+    }
+
     const iv = buffer.slice(0, this.ivLen);
     const data = buffer.slice(this.ivLen);
 

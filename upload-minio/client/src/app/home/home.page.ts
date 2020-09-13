@@ -5,6 +5,7 @@ import {catchError, finalize} from 'rxjs/operators';
 import {Observable, throwError} from 'rxjs';
 import {environment} from '../../environments/environment';
 
+// tslint:disable:no-any
 @Component({
   selector: 'app-home',
   templateUrl: './home.page.html',
@@ -13,7 +14,7 @@ import {environment} from '../../environments/environment';
 export class HomePage {
 
   public myPhoto: any;
-  public error: string;
+  public error: string | null = null;
   private loading: any;
 
   constructor(private readonly http: HttpClient,
@@ -21,13 +22,13 @@ export class HomePage {
               private readonly toastCtrl: ToastController) {
   }
 
-  takePhoto() {
+  takePhoto(): void {
     // @ts-ignore
     const camera: any = navigator.camera;
-    camera.getPicture(imageData => {
+    camera.getPicture((imageData: any) => {
       this.myPhoto = this.convertFileSrc(imageData);
       this.uploadPhoto(imageData);
-    }, error => this.error = JSON.stringify(error), {
+    }, (error: any) => this.error = JSON.stringify(error), {
       quality: 100,
       destinationType: camera.DestinationType.FILE_URI,
       sourceType: camera.PictureSourceType.CAMERA,
@@ -38,15 +39,19 @@ export class HomePage {
   selectPhoto(): void {
     // @ts-ignore
     const camera: any = navigator.camera;
-    camera.getPicture(imageData => {
+    camera.getPicture((imageData: any) => {
       this.myPhoto = this.convertFileSrc(imageData);
       this.uploadPhoto(imageData);
-    }, error => this.error = JSON.stringify(error), {
+    }, (error: any) => this.error = JSON.stringify(error), {
       sourceType: camera.PictureSourceType.PHOTOLIBRARY,
       destinationType: camera.DestinationType.FILE_URI,
       quality: 100,
       encodingType: camera.EncodingType.JPEG,
     });
+  }
+
+  fetchPresignUrl(fileName: string): Observable<string> {
+    return this.http.get(`${environment.serverURL}/getPreSignUrl?fileName=${fileName}`, {responseType: 'text'});
   }
 
   private convertFileSrc(url: string): string {
@@ -68,7 +73,7 @@ export class HomePage {
     return url;
   }
 
-  private async uploadPhoto(imageFileUri: any) {
+  private async uploadPhoto(imageFileUri: any): Promise<void> {
     this.error = null;
     this.loading = await this.loadingCtrl.create({
       message: 'Uploading...'
@@ -78,26 +83,24 @@ export class HomePage {
 
     // @ts-ignore
     window.resolveLocalFileSystemURL(imageFileUri,
-      entry => {
-        entry.file(file => this.readFile(file));
+      (entry: any) => {
+        entry.file((file: any) => this.readFile(file));
       });
   }
 
-  private readFile(file: any) {
+  private readFile(file: any): void {
     const fileName = file.name;
     const reader = new FileReader();
     reader.onloadend = () => {
-      const imgBlob = new Blob([reader.result], {type: file.type});
-      this.fetchPresignUrl(fileName).subscribe(url => this.postData(url, imgBlob));
+      if (reader.result) {
+        const imgBlob = new Blob([reader.result], {type: file.type});
+        this.fetchPresignUrl(fileName).subscribe(url => this.postData(url, imgBlob));
+      }
     };
     reader.readAsArrayBuffer(file);
   }
 
-  fetchPresignUrl(fileName: string): Observable<string> {
-    return this.http.get(`${environment.serverURL}/getPreSignUrl?fileName=${fileName}`, {responseType: 'text'});
-  }
-
-  private postData(url: string, blob: Blob) {
+  private postData(url: string, blob: Blob): void {
     this.http.put(url, blob, {observe: 'response', responseType: 'text'})
       .pipe(catchError(e => this.handleError(e)),
         finalize(() => this.loading.dismiss())
@@ -107,7 +110,7 @@ export class HomePage {
       });
   }
 
-  private async showToast(ok: boolean | {}) {
+  private async showToast(ok: boolean | {}): Promise<void> {
     if (ok === true) {
       const toast = await this.toastCtrl.create({
         message: 'Upload successful',
@@ -125,7 +128,7 @@ export class HomePage {
     }
   }
 
-  private handleError(error: Response | any) {
+  private handleError(error: Response | any): Observable<never> {
     let errMsg: string;
     if (error instanceof Response) {
       const body: any = error.json() || '';
