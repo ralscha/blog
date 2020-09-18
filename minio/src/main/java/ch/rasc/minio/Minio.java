@@ -9,27 +9,30 @@ import java.nio.file.StandardCopyOption;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 
+import io.minio.BucketExistsArgs;
+import io.minio.MakeBucketArgs;
 import io.minio.MinioClient;
-import io.minio.PutObjectOptions;
+import io.minio.UploadObjectArgs;
 import io.minio.errors.MinioException;
 
 public class Minio {
 
-  public static void main(String[] args) throws InvalidKeyException,
-      NoSuchAlgorithmException, IOException {
+  public static void main(String[] args)
+      throws InvalidKeyException, NoSuchAlgorithmException, IOException {
     try {
       String accessKey = "EY9QX8JV680F69KF1RZJ";
       String secretKey = "eobizOIujzVW5+y4Z6oYP2OsTAgmpf4imzWfeTby";
 
-      MinioClient minioClient = new MinioClient("http://127.0.0.1:9000", accessKey,
-          secretKey);
+      MinioClient minioClient = MinioClient.builder().endpoint("http://127.0.0.1:9000")
+          .credentials(accessKey, secretKey).build();
 
-      boolean isExist = minioClient.bucketExists("cats");
+      boolean isExist = minioClient
+          .bucketExists(BucketExistsArgs.builder().bucket("cats").build());
       if (isExist) {
         System.out.println("Bucket already exists.");
       }
       else {
-        minioClient.makeBucket("cats");
+        minioClient.makeBucket(MakeBucketArgs.builder().bucket("cats").build());
       }
 
       minioClient.listBuckets().forEach(b -> System.out.println(b.name()));
@@ -41,8 +44,10 @@ public class Minio {
         Files.copy(in, tempFile, StandardCopyOption.REPLACE_EXISTING);
       }
 
-      minioClient.putObject("cats", "cat.jpg", tempFile.toString(),
-          new PutObjectOptions(Files.size(tempFile), -1));
+      UploadObjectArgs.Builder builder = UploadObjectArgs.builder().bucket("cats")
+          .object("cat.jpg").filename(tempFile.toString());
+      minioClient.uploadObject(builder.build());
+
       Files.delete(tempFile);
     }
     catch (MinioException e) {
