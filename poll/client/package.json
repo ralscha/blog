@@ -16,7 +16,7 @@
     "classlist-polyfill": "1.2.0",
     "core-js": "3.6.5",
     "echarts": "4.9.0",
-    "event-source-polyfill": "1.0.19",
+    "event-source-polyfill": "1.0.20",
     "muicss": "0.10.2",
     "uuid": "8.3.0",
     "whatwg-fetch": "3.4.1"
