@@ -9,7 +9,7 @@
   },
   "dependencies": {
     "date-fns": "2.16.1",
-    "moment": "2.29.0"
+    "moment": "2.29.1"
   },
   "devDependencies": {
     "bread-compressor-cli": "1.1.0",

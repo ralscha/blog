@@ -17,7 +17,7 @@
   "dependencies": {
     "echarts": "4.9.0",
     "event-source-polyfill": "1.0.20",
-    "uuid": "8.3.0"
+    "uuid": "8.3.1"
   },
   "browserslist": [
     "> 1%",
