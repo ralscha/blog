@@ -13,6 +13,13 @@ import {TodoServiceService} from './api/todoService.service';
     TodoServiceService]
 })
 export class ApiModule {
+  public static forRoot(configurationFactory: () => Configuration): ModuleWithProviders {
+    return {
+      ngModule: ApiModule,
+      providers: [{provide: Configuration, useFactory: configurationFactory}]
+    };
+  }
+
   constructor(@Optional() @SkipSelf() parentModule: ApiModule,
               @Optional() http: HttpClient) {
     if (parentModule) {
@@ -22,13 +29,5 @@ export class ApiModule {
       throw new Error('You need to import the HttpClientModule in your AppModule! \n' +
         'See also https://github.com/angular/angular/issues/20575');
     }
-  }
-
-  // @ts-ignore
-  public static forRoot(configurationFactory: () => Configuration): ModuleWithProviders {
-    return {
-      ngModule: ApiModule,
-      providers: [{provide: Configuration, useFactory: configurationFactory}]
-    };
   }
 }
