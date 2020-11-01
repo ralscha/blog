@@ -38,7 +38,7 @@
     "hashmark": "5.0.0",
     "http-server": "0.11.1",
     "map-replace": "1.0.2",
-    "shx": "0.3.2",
+    "shx": "0.3.3",
     "typescript": "2.7.2",
     "workbox-cli": "3.6.3"
   },
