@@ -20,7 +20,7 @@ const routes: Routes = [
     HttpClientModule,
     LeafletModule,
     IonicModule.forRoot(),
-    RouterModule.forRoot(routes, {useHash: true})],
+    RouterModule.forRoot(routes, { useHash: true, relativeLinkResolution: 'legacy' })],
   providers: [
     {provide: RouteReuseStrategy, useClass: IonicRouteStrategy}
   ],
