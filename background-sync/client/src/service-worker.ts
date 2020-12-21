@@ -1,7 +1,7 @@
 /// <reference lib="es2018" />
 /// <reference lib="webworker" />
 import {precacheAndRoute} from 'workbox-precaching';
-import {clientsClaim, skipWaiting} from 'workbox-core';
+import {clientsClaim} from 'workbox-core';
 import {registerRoute} from 'workbox-routing';
 import {CacheFirst} from 'workbox-strategies';
 import {Todo, TodoDb} from './app/todo';
@@ -10,7 +10,7 @@ declare const self: ServiceWorkerGlobalScope;
 
 const syncURL = 'http://localhost:8080';
 
-skipWaiting();
+self.skipWaiting();
 clientsClaim();
 
 if (process.env.NODE_ENV === 'production') {
