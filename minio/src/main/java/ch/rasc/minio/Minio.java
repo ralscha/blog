@@ -38,7 +38,7 @@ public class Minio {
       minioClient.listBuckets().forEach(b -> System.out.println(b.name()));
 
       URL url = new URL(
-          "http://www.cutestpaw.com/wp-content/uploads/2015/11/My-Cute-Baby-Cat.jpg");
+          "https://64.media.tumblr.com/5e714e960546f510d2b8aa5547a2f307/ae970ff79148e082-5c/s1280x1920/ec309af12b3d2af2b8804bec90df94cb7fbd576d.jpg");
       Path tempFile = Files.createTempFile("cat", ".jpg");
       try (InputStream in = url.openStream()) {
         Files.copy(in, tempFile, StandardCopyOption.REPLACE_EXISTING);
