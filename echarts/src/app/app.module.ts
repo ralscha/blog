@@ -7,7 +7,8 @@ import {AppComponent} from './app.component';
 import {NgxEchartsModule} from 'ngx-echarts';
 
 // Import all modules from echarts
-// import * as echarts from 'echarts';
+// @ts-ignore
+// import * as echarts from 'echarts/echarts.all.js';
 // Custom build
 // @ts-ignore
 import * as echarts from './custom-echarts';
