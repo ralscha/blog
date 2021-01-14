@@ -9,6 +9,7 @@ import {NgxEchartsModule} from 'ngx-echarts';
 // Import all modules from echarts
 // import * as echarts from 'echarts';
 // Custom build
+// @ts-ignore
 import * as echarts from './custom-echarts';
 
 @NgModule({
