@@ -22,7 +22,7 @@
     "lovefield": "2.1.12",
     "papaparse": "5.3.0",
     "rxjs": "6.6.3",
-    "tslib": "2.0.3",
+    "tslib": "2.1.0",
     "zone.js": "0.10.3"
   },
   "devDependencies": {
@@ -30,7 +30,7 @@
     "@angular/cli": "11.0.7",
     "@angular/compiler-cli": "11.0.9",
     "@ionic/angular-toolkit": "3.0.0",
-    "@types/node": "14.14.20",
+    "@types/node": "14.14.21",
     "codelyzer": "6.0.1",
     "local-web-server": "4.2.1",
     "tslint": "6.1.3",

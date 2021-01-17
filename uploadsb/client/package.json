@@ -25,7 +25,7 @@
     "@ionic/angular": "5.5.2",
     "cordova-android": "9.0.0",
     "rxjs": "6.6.3",
-    "tslib": "2.0.3",
+    "tslib": "2.1.0",
     "zone.js": "0.10.3"
   },
   "devDependencies": {
@@ -33,7 +33,7 @@
     "@angular/cli": "11.0.7",
     "@angular/compiler-cli": "11.0.9",
     "@ionic/angular-toolkit": "3.0.0",
-    "@types/node": "14.14.20",
+    "@types/node": "14.14.21",
     "codelyzer": "6.0.1",
     "cordova-plugin-camera": "5.0.1",
     "cordova-plugin-device": "2.0.3",
