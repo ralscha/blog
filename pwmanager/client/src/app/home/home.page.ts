@@ -19,7 +19,7 @@ export class HomePage implements ViewDidEnter {
     this.passwords = this.passwordService.getPasswords();
   }
 
-  // tslint:disable-next-line:no-any
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   filter(event: any): void {
     const query = event.target.value;
     if (query !== undefined) {
