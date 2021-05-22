@@ -37,8 +37,9 @@ export class HomePage implements AfterViewInit {
   }
 
   private loadEarthquakes(bounds: LatLngBounds): void {
-    const southWest = bounds.getSouthWest();
-    const northEast = bounds.getNorthEast();
+    const wrappedBounds = this.map.wrapLatLngBounds(bounds);
+    const southWest = wrappedBounds.getSouthWest();
+    const northEast = wrappedBounds.getNorthEast();
     this.httpClient.get<Earthquake[]>(`http://127.0.0.1:8080/earthquakes/${southWest.lng}/${southWest.lat}/${northEast.lng}/${northEast.lat}`)
       .subscribe(data => this.drawCircles(data));
   }
