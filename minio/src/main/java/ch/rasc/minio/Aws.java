@@ -20,8 +20,8 @@ import com.amazonaws.services.s3.model.Bucket;
 
 public class Aws {
   public static void main(String[] args) throws IOException {
-    String accessKey = "EY9QX8JV680F69KF1RZJ";
-    String secretKey = "eobizOIujzVW5+y4Z6oYP2OsTAgmpf4imzWfeTby";
+    String accessKey = "minioadmin";
+    String secretKey = "minioadmin";
 
     AWSCredentials credentials = new BasicAWSCredentials(accessKey, secretKey);
 
@@ -48,7 +48,7 @@ public class Aws {
     buckets.forEach(b -> System.out.println(b.getName()));
 
     URL url = new URL(
-        "https://64.media.tumblr.com/5e714e960546f510d2b8aa5547a2f307/ae970ff79148e082-5c/s1280x1920/ec309af12b3d2af2b8804bec90df94cb7fbd576d.jpg");
+        "https://preview.redd.it/7i4g79z1ih071.jpg?width=640&crop=smart&auto=webp&s=139c4dc2c873d538316519031dc7c8ea8bd86c36");
     Path tempFile = Files.createTempFile("cat", ".jpg");
     try (InputStream in = url.openStream()) {
       Files.copy(in, tempFile, StandardCopyOption.REPLACE_EXISTING);
