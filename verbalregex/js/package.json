@@ -3,6 +3,6 @@
   "version": "1.0.0",
   "private": true,
   "dependencies": {
-    "verbal-expressions": "^0.3.0"
+    "verbal-expressions": "^1.0.2"
   }
 }
