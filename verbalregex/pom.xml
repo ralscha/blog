@@ -21,8 +21,8 @@
 				<version>3.8.1</version>
 				<configuration>
 					<debug>true</debug>
-					<source>1.8</source>
-					<target>1.8</target>
+					<source>16</source>
+					<target>16</target>
 					<parameters>true</parameters>
 				</configuration>
 			</plugin>
