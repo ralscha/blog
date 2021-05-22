@@ -28,7 +28,7 @@
     </ion-select>
   </ion-item>
   <ion-item>
-    <ion-label position="stacked">Speaking Rate: {{speakingRateRange.value.toString() | number:'1.0-2'}}</ion-label>
+    <ion-label position="stacked">Speaking Rate: {{speakingRateRange.value}}</ion-label>
     <ion-range #speakingRateRange [(ngModel)]="speakingRate" [max]="4" [min]="0.25" [step]="0.01" color="secondary"
                name="speakingRate" style="width:100%">
       <div class="ion-margin-end" slot="start">0.25</div>
@@ -36,7 +36,7 @@
     </ion-range>
   </ion-item>
   <ion-item>
-    <ion-label position="stacked">Pitch: {{pitchRange.value.toString() | number:'1.0-1'}}</ion-label>
+    <ion-label position="stacked">Pitch: {{pitchRange.value}}</ion-label>
     <ion-range #pitchRange [(ngModel)]="pitch" [max]="20" [min]="-20" [step]="0.1" color="secondary" name="pitch"
                style="width:100%">
       <div class="ion-margin-end" slot="start">-20</div>

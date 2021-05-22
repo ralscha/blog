@@ -57,9 +57,8 @@ public class ImportImdbData {
     settings.setHeaderExtractionEnabled(true);
     TsvParser parser = new TsvParser(settings);
 
-    ConnectionString connectionString = new ConnectionString("mongodb://localhost:27107");
     MongoClientSettings mongoClientSettings = MongoClientSettings.builder()
-        .applyConnectionString(connectionString).writeConcern(WriteConcern.UNACKNOWLEDGED)
+        .writeConcern(WriteConcern.UNACKNOWLEDGED)
         .build();
 
     try (MongoClient mongoClient = MongoClients.create(mongoClientSettings)) {

@@ -5,7 +5,7 @@ import {LoadingController} from '@ionic/angular';
 import * as RecordRTC from 'recordrtc';
 import {environment} from '../../environments/environment';
 
-// tslint:disable:no-any
+/* eslint-disable @typescript-eslint/no-explicit-any */
 declare var webkitSpeechRecognition: any;
 
 @Component({

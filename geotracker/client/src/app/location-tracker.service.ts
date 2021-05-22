@@ -2,7 +2,7 @@ import {ApplicationRef, Injectable} from '@angular/core';
 import {ServerPushService} from './server-push.service';
 import {AppPosition} from './app-position';
 
-// tslint:disable:no-any
+/* eslint-disable @typescript-eslint/no-explicit-any */
 declare var BackgroundGeolocation: any;
 
 @Injectable({

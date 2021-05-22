@@ -4,7 +4,7 @@ import {Platform} from '@ionic/angular';
 import {timeout} from 'rxjs/operators';
 import {environment} from '../../environments/environment';
 
-// tslint:disable:no-any
+/* eslint-disable @typescript-eslint/no-explicit-any */
 declare var cordova: any;
 
 @Component({
