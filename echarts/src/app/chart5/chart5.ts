@@ -1,5 +1,6 @@
 import {Component} from '@angular/core';
 import format from 'date-fns/format';
+import {EChartsOption} from 'echarts';
 
 @Component({
   templateUrl: 'chart5.html',
@@ -7,10 +8,10 @@ import format from 'date-fns/format';
 })
 export class Chart5Page {
 
-  options = {
+  options: EChartsOption = {
     tooltip: {
       position: 'top',
-      formatter: (p: { data: string[] }) => p.data[0] + ': ' + p.data[1]
+      formatter: (p: any) => p.data[0] + ': ' + p.data[1]
     },
     visualMap: {
       min: 0,
@@ -43,16 +44,16 @@ export class Chart5Page {
       type: 'heatmap',
       coordinateSystem: 'calendar',
       calendarIndex: 0,
-      data: this.getVirtulData(2017)
+      data: Chart5Page.getVirtulData(2017)
     }, {
       type: 'heatmap',
       coordinateSystem: 'calendar',
       calendarIndex: 1,
-      data: this.getVirtulData(2018)
+      data: Chart5Page.getVirtulData(2018)
     }]
   };
 
-  private getVirtulData(year: number = 2020): [string, number][] {
+  private static getVirtulData(year: number = 2020): [string, number][] {
     const date = new Date(year, 0, 1).getTime();
     const end = new Date(year, 11, 31).getTime();
     const dayTime = 3600 * 24 * 1000;

@@ -39,7 +39,7 @@
     "@typescript-eslint/eslint-plugin": "4.24.0",
     "@typescript-eslint/parser": "4.24.0",
     "bread-compressor-cli": "1.1.0",
-    "eslint": "7.26.0",
+    "eslint": "7.27.0",
     "local-web-server": "4.2.1",
     "typescript": "4.2.4"
   }

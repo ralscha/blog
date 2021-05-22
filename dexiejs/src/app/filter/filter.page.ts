@@ -24,7 +24,7 @@ export class FilterPage implements OnInit {
     this.dismiss(value);
   }
 
-  // tslint:disable-next-line:no-any
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   dismiss(data?: any): void {
     if (data) {
       data.myLocation = this.filter.myLocation;

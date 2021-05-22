@@ -1,4 +1,5 @@
 import {Component} from '@angular/core';
+import {EChartsOption} from 'echarts';
 
 @Component({
   templateUrl: 'chart3.html',
@@ -7,14 +8,14 @@ import {Component} from '@angular/core';
 export class Chart3Page {
 
   running = false;
-  options = {
+  options: EChartsOption = {
     series: [{
       type: 'gauge',
       detail: {formatter: '{value}%'},
       data: [{value: 50, name: 'Sensor'}]
     }]
   };
-  datas: { series: [{ data: [{ value: number }] }] } | null = null;
+  datas: EChartsOption = {};
   private interval: number | null = null;
 
   start(): void {

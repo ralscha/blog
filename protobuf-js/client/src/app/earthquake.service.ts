@@ -31,15 +31,15 @@ export class EarthquakeService {
   }
 
   parseProtobuf(response: ArrayBuffer): IEarthquake[] {
-    // tslint:disable-next-line:no-console
+    // eslint-disable-next-line no-console
     console.time('decodeprotobuf');
     const earthquakes = Earthquakes.decode(new Uint8Array(response));
-    // tslint:disable-next-line:no-console
+    // eslint-disable-next-line no-console
     console.timeEnd('decodeprotobuf');
     return earthquakes.earthquakes;
   }
 
-  // tslint:disable-next-line:no-any
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   handleError(error: any): Observable<any> {
     console.error(error);
     return throwError(error || 'Server error');

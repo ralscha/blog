@@ -1,4 +1,5 @@
 import {Component} from '@angular/core';
+import {EChartsOption} from 'echarts';
 
 @Component({
   templateUrl: 'chart2.html',
@@ -6,7 +7,7 @@ import {Component} from '@angular/core';
 })
 export class Chart2Page {
 
-  options = {
+  options: EChartsOption = {
     legend: {
       data: ['Profit', 'Expenses', 'Income']
     },
@@ -33,10 +34,8 @@ export class Chart2Page {
         name: 'Profit',
         type: 'bar',
         label: {
-          normal: {
-            show: true,
-            position: 'inside'
-          }
+          show: true,
+          position: 'inside'
         },
         data: [200, 170, 240, 244, 200, 220, 210]
       },
@@ -45,9 +44,7 @@ export class Chart2Page {
         type: 'bar',
         stack: 'Total',
         label: {
-          normal: {
-            show: true
-          }
+          show: true
         },
         data: [320, 302, 341, 374, 390, 450, 420]
       },
@@ -56,10 +53,8 @@ export class Chart2Page {
         type: 'bar',
         stack: 'Total',
         label: {
-          normal: {
-            show: true,
-            position: 'left'
-          }
+          show: true,
+          position: 'left'
         },
         data: [-120, -132, -101, -134, -190, -230, -210]
       }

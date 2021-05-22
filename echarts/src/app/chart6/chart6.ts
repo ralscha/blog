@@ -1,5 +1,6 @@
 import {Component} from '@angular/core';
 import {ViewWillEnter, ViewWillLeave} from '@ionic/angular';
+import {EChartsOption} from 'echarts';
 
 type DataType = { name: string, value: [string, number] };
 
@@ -14,16 +15,16 @@ export class Chart6Page implements ViewWillEnter, ViewWillLeave {
   data2: DataType[] = [];
   updateOptions1!: { series: { data: DataType[] }[] };
   updateOptions2!: { series: { data: DataType[] }[] };
-  options1 = {
+  options1: EChartsOption = {
     title: {
       text: 'Dynamic Data 1'
     },
     tooltip: {
       trigger: 'axis',
-      formatter: (params: { name: string, value: number[] }[]) => {
-        const param = params[0];
-        const date = new Date(param.name);
-        return date.getDate() + '/' + (date.getMonth() + 1) + '/' + date.getFullYear() + ' : ' + param.value[1];
+      formatter: (params: any) => {
+          const param = params[0];
+          const date = new Date(param.name);
+          return date.getDate() + '/' + (date.getMonth() + 1) + '/' + date.getFullYear() + ' : ' + param.value[1];
       },
       axisPointer: {
         animation: false
@@ -46,17 +47,16 @@ export class Chart6Page implements ViewWillEnter, ViewWillLeave {
       name: 'Sumulation Data',
       type: 'line',
       showSymbol: false,
-      hoverAnimation: false,
       data: this.data1
     }]
   };
-  options2 = {
+  options2: EChartsOption = {
     title: {
       text: 'Dynamic Data 2'
     },
     tooltip: {
       trigger: 'axis',
-      formatter: (params: { name: string, value: number[] }[]) => {
+      formatter: (params: any) => {
         const param = params[0];
         const date = new Date(param.name);
         return date.getDate() + '/' + (date.getMonth() + 1) + '/' + date.getFullYear() + ' : ' + param.value[1];
@@ -82,7 +82,6 @@ export class Chart6Page implements ViewWillEnter, ViewWillLeave {
       name: 'Sumulation Data',
       type: 'line',
       showSymbol: false,
-      hoverAnimation: false,
       data: this.data2
     }]
   };

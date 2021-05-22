@@ -1,5 +1,5 @@
 minio:
-  endpoint: https://60e75fad.ngrok.io
-  access-key: CFB6CJIX0BBUL49NLK6R
-  secret-key: EbvEqw9BDVaqsfgdjEX5FtPf1DbHeolHBKWFv2Qu
+  endpoint: https://a8b95aa6e22d.ngrok.io
+  access-key: minioadmin
+  secret-key: minioadmin
   region: us-east-1

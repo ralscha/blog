@@ -6,12 +6,16 @@ import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
 import {NgxEchartsModule} from 'ngx-echarts';
 
-// Import all modules from echarts
-// @ts-ignore
-// import * as echarts from 'echarts/echarts.all.js';
-// Custom build
-// @ts-ignore
-import * as echarts from './custom-echarts';
+import * as echarts from 'echarts/core';
+import {BarChart, GaugeChart, GraphChart, HeatmapChart, LineChart} from 'echarts/charts';
+import {CalendarComponent, LegendComponent, TitleComponent, TooltipComponent, VisualMapComponent} from 'echarts/components';
+import {CanvasRenderer} from 'echarts/renderers';
+import 'echarts/theme/dark.js';
+
+echarts.use(
+  [BarChart, LineChart, GaugeChart, GraphChart, HeatmapChart, TitleComponent,
+    TooltipComponent, LegendComponent, CalendarComponent, VisualMapComponent, CanvasRenderer]
+);
 
 @NgModule({
   declarations: [AppComponent],

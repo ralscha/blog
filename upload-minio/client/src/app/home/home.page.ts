@@ -5,7 +5,7 @@ import {catchError, finalize} from 'rxjs/operators';
 import {Observable, throwError} from 'rxjs';
 import {environment} from '../../environments/environment';
 
-// tslint:disable:no-any
+/* eslint-disable @typescript-eslint/no-explicit-any */
 @Component({
   selector: 'app-home',
   templateUrl: './home.page.html',

@@ -1,4 +1,5 @@
 import {Component} from '@angular/core';
+import {EChartsOption} from 'echarts';
 
 
 @Component({
@@ -7,7 +8,7 @@ import {Component} from '@angular/core';
 })
 export class Chart4Page {
 
-  options = {
+  options: EChartsOption = {
     title: {
       text: 'Graph Example'
     },
@@ -18,19 +19,10 @@ export class Chart4Page {
         symbolSize: 50,
         roam: true,
         label: {
-          normal: {
             show: true
-          }
         },
         edgeSymbol: ['circle', 'arrow'],
         edgeSymbolSize: [4, 10],
-        edgeLabel: {
-          normal: {
-            textStyle: {
-              fontSize: 20
-            }
-          }
-        },
         data: [{
           name: 'Node 1',
           x: 300,
@@ -54,26 +46,20 @@ export class Chart4Page {
           target: 1,
           symbolSize: [5, 20],
           label: {
-            normal: {
               show: true
-            }
           },
           lineStyle: {
-            normal: {
               width: 5,
               curveness: 0.2
-            }
           }
         }, {
           source: 'Node 2',
           target: 'Node 1',
           label: {
-            normal: {
               show: true
-            }
           },
           lineStyle: {
-            normal: {curveness: 0.2}
+            curveness: 0.2
           }
         }, {
           source: 'Node 1',
@@ -89,11 +75,9 @@ export class Chart4Page {
           target: 'Node 4'
         }],
         lineStyle: {
-          normal: {
             opacity: 0.9,
             width: 2,
             curveness: 0
-          }
         }
       }
     ]

@@ -48,7 +48,7 @@ public class ToNormal {
           });
 
       collStats = db.runCommand(new Document("collStats", "log"));
-      System.out.println(collStats.get("capped")); // falses
+      System.out.println(collStats.get("capped")); // false
 
       db.getCollection("logOld").drop();
 
