@@ -94,7 +94,7 @@
 					</execution>
 				</executions>
 				<configuration>
-					<nodeVersion>v14.16.0</nodeVersion>
+					<nodeVersion>v16.2.0</nodeVersion>
 					<workingDirectory>src/main/frontend</workingDirectory>					
 					<NODE_ENV>production</NODE_ENV>
 				</configuration>

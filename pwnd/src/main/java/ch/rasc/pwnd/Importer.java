@@ -21,7 +21,7 @@ public class Importer {
 
   public static void main(String[] args) {
 
-    final long totalLines = 517238891L;
+    final long totalLines = 613584246L;
 
     try (Environment env = Environments.newInstance("e:/temp/pwnd")) {
       env.executeInTransaction((@NotNull final Transaction txn) -> {

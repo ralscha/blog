@@ -13,7 +13,7 @@ export class AppGlobalErrorhandler implements ErrorHandler {
     window.addEventListener('online', () => this.sendStoredErrors());
   }
 
-  // tslint:disable-next-line:no-any
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   async handleError(error: any): Promise<void> {
     console.error(error);
 

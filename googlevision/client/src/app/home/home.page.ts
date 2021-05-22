@@ -24,7 +24,7 @@ export class HomePage implements OnInit {
   private ratio!: number;
   private ctx!: CanvasRenderingContext2D;
   private selectedFile: File | null = null;
-  // tslint:disable-next-line:no-any
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   private image: any = null;
 
   constructor(private readonly loadingController: LoadingController) {
@@ -188,7 +188,7 @@ export class HomePage implements OnInit {
     this.visionResult = await response.json();
   }
 
-  // tslint:disable-next-line:no-any
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   private drawImageScaled(img: any): void {
     const width = this.canvasContainer.nativeElement.clientWidth;
     const height = this.canvasContainer.nativeElement.clientHeight;

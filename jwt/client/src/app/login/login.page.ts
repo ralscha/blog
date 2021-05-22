@@ -38,7 +38,7 @@ export class LoginPage {
         err => this.handleError(err));
   }
 
-  // tslint:disable-next-line:no-any
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   async handleError(error: any): Promise<void> {
     let message: string;
     if (error.status && error.status === 401) {

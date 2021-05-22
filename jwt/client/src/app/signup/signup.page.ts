@@ -36,7 +36,7 @@ export class SignupPage {
         err => this.handleError(err));
   }
 
-  // tslint:disable-next-line:no-any
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   async handleError(error: any): Promise<void> {
     const message = 'Unexpected error occurred: ' + error;
 
