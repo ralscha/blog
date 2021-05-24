@@ -1,10 +1,14 @@
-import echarts from 'echarts/lib/echarts';
-import 'echarts/lib/chart/pie';
-import 'echarts/lib/component/tooltip';
-import 'echarts/lib/component/title';
+import * as echarts from 'echarts/core';
+import { PieChart } from 'echarts/charts';
+import { TooltipComponent } from 'echarts/components';
+import { TitleComponent } from 'echarts/components';
+import { CanvasRenderer } from 'echarts/renderers';
+
 import { v4 as uuidv4 } from 'uuid';
 
+echarts.use([PieChart, TooltipComponent, TitleComponent, CanvasRenderer]);
 const oss = ["Windows", "macOS", "Linux", "Other"];
+
 
 export function init() {
 

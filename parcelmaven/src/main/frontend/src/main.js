@@ -1,9 +1,13 @@
-import echarts from 'echarts/lib/echarts';
-import 'echarts/lib/chart/gauge';
+import * as echarts from 'echarts/core';
+import { GaugeChart } from 'echarts/charts';
+import { CanvasRenderer } from 'echarts/renderers';
+
 import { NativeEventSource, EventSourcePolyfill } from 'event-source-polyfill';
 import { v4 as uuidv4 } from 'uuid';
 
 const EventSource = NativeEventSource || EventSourcePolyfill;
+
+echarts.use([GaugeChart, CanvasRenderer]);
 
 const gauge = echarts.init(document.getElementById('chart'));
 gauge.setOption({
