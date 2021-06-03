@@ -5,14 +5,16 @@
   "scripts": {
     "prebuild": "shx rm -rf dist/*",
     "build": "parcel build src/index.html --public-url ./",
+		"postbuild": "bread-compressor dist",
     "watch": "parcel watch src/index.html --public-url ./"
   },
   "devDependencies": {
+    "bread-compressor-cli": "1.1.0",
     "parcel": "2.0.0-beta.3.1",
     "shx": "0.3.3"
   },
   "dependencies": {
-    "core-js": "3.12.1",
+    "core-js": "3.13.1",
     "echarts": "5.1.1",
     "event-source-polyfill": "1.0.24",
     "muicss": "0.10.3",
