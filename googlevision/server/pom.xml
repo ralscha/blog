@@ -28,13 +28,13 @@
 		<dependency>
 			<groupId>com.google.cloud</groupId>
 			<artifactId>google-cloud-storage</artifactId>
-			<version>1.114.0</version>
+			<version>1.116.0</version>
 		</dependency>
 
 		<dependency>
 			<groupId>com.google.cloud</groupId>
 			<artifactId>google-cloud-vision</artifactId>
-			<version>1.102.3</version>
+			<version>1.103.5</version>
 		</dependency>
 
 		<dependency>
