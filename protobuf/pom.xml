@@ -21,13 +21,13 @@
 		<dependency>
 			<groupId>org.springframework.integration</groupId>
 			<artifactId>spring-integration-core</artifactId>
-			<version>5.5.0</version>
+			<version>5.5.1</version>
 		</dependency>
 
 		<dependency>
 			<groupId>org.springframework.integration</groupId>
 			<artifactId>spring-integration-ip</artifactId>
-			<version>5.5.0</version>
+			<version>5.5.1</version>
 		</dependency>
 
 		<dependency>
@@ -60,7 +60,7 @@
 							<goal>run</goal>
 						</goals>
 						<configuration>
-							<protocVersion>3.17.2</protocVersion>
+							<protocVersion>3.17.3</protocVersion>
 							<inputDirectories>
 								<include>src/main/protobuf</include>
 							</inputDirectories>
