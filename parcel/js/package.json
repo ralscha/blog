@@ -10,10 +10,10 @@
     "watch": "parcel watch src/index.html --public-url ./"
   },
   "devDependencies": {
-    "autoprefixer": "10.2.6",
+    "autoprefixer": "10.3.1",
     "parcel-bundler": "1.12.3",
     "parcel-plugin-compress": "2.0.2",
-    "sass": "1.35.1",
+    "sass": "1.38.0",
     "shx": "0.3.3"
   },
   "dependencies": {
