@@ -2,27 +2,23 @@
   "name": "poll-client",
   "version": "1.0.0",
   "private": true,
+  "source": "src/index.html",
+  "browserslist": "> 0.5%, last 2 versions, not dead",
   "scripts": {
-    "prebuild": "shx rm -rf dist/*",
-    "build": "parcel build src/index.html --public-url ./",
-    "postbuild": "bread-compressor dist",
-    "watch": "parcel watch src/index.html --public-url ./"
+    "build": "parcel build",
+    "watch": "parcel watch src/index.html"
   },
   "devDependencies": {
-    "bread-compressor-cli": "1.1.0",
-    "parcel": "2.0.0-rc.0",
-    "shx": "0.3.3"
+    "@parcel/compressor-brotli": "2.0.0",
+    "@parcel/compressor-gzip": "2.0.0",
+    "parcel": "2.0.0"
   },
   "dependencies": {
-    "core-js": "3.18.1",
+    "core-js": "3.18.3",
     "echarts": "5.2.1",
     "event-source-polyfill": "1.0.25",
     "muicss": "0.10.3",
     "uuid": "8.3.2",
     "whatwg-fetch": "3.6.2"
-  },
-  "browserslist": [
-    "> 1%",
-    "last 2 versions"
-  ]
+  }
 }
