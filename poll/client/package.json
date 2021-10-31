@@ -6,19 +6,16 @@
   "browserslist": "> 0.5%, last 2 versions, not dead",
   "scripts": {
     "build": "parcel build",
-    "watch": "parcel watch src/index.html"
+    "watch": "parcel watch"
+  },
+  "dependencies": {
+    "echarts": "5.2.1",
+    "muicss": "0.10.3",
+    "uuid": "8.3.2"
   },
   "devDependencies": {
     "@parcel/compressor-brotli": "2.0.0",
     "@parcel/compressor-gzip": "2.0.0",
     "parcel": "2.0.0"
-  },
-  "dependencies": {
-    "core-js": "3.18.3",
-    "echarts": "5.2.1",
-    "event-source-polyfill": "1.0.25",
-    "muicss": "0.10.3",
-    "uuid": "8.3.2",
-    "whatwg-fetch": "3.6.2"
   }
 }

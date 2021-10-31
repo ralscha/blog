@@ -93,3 +93,5 @@ function getChartOption() {
     };
 }
 
+init();
+

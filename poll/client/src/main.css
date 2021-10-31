@@ -1,9 +1,9 @@
 @import '../node_modules/muicss/dist/css/mui.min.css';
 
 body {
-  font-family: "Roboto", "Helvetica Neue", Helvetica, Arial;
+  font-family: "Roboto", "Helvetica Neue", Helvetica, Arial, serif;
 }
 
-.hidden { 
-  display: none; 
+.hidden {
+  display: none;
 }
