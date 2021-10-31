@@ -16,7 +16,7 @@ target/
 *.ipr
 
 node_modules/
-.cache/
+.parcel-cache/
 node/
 dist/
 /.sts4-cache/

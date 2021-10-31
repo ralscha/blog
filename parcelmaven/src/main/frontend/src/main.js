@@ -2,10 +2,8 @@ import * as echarts from 'echarts/core';
 import { GaugeChart } from 'echarts/charts';
 import { CanvasRenderer } from 'echarts/renderers';
 
-import { NativeEventSource, EventSourcePolyfill } from 'event-source-polyfill';
 import { v4 as uuidv4 } from 'uuid';
 
-const EventSource = NativeEventSource || EventSourcePolyfill;
 
 echarts.use([GaugeChart, CanvasRenderer]);
 
@@ -28,10 +26,8 @@ gauge.setOption({
         title: {
             show: true,
             offsetCenter: [ '0%', '-70%' ],
-            textStyle: {
-                color: 'black',
-                fontSize: 40
-            }
+            color: 'black',
+            fontSize: 40
         },
         axisLine: {
             lineStyle: {
@@ -42,23 +38,21 @@ gauge.setOption({
         axisTick: {
             length: 13,
             lineStyle: {
-                color: 'auto'
+                color: 'inherit'
             }
         },
         splitLine: {
             length: 15,
             lineStyle: {
-                color: 'auto'
+                color: 'inherit'
             }
         },
         detail: {
             show: true,
             offsetCenter: [ '0%', '-50%' ],
-            textStyle: {
-                color: 'auto',
-                fontSize: 50,
-                fontStyle: 'bold'
-            }
+            color: 'inherit',
+            fontSize: 50,
+            fontStyle: 'bold'
         }
 
     } ]
