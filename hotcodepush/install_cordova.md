@@ -1,3 +1,0 @@
-- npm install
-- ionic cordova prepare android
-- ionic cordova plugin add cordova-hot-code-push-plugin
