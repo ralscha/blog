@@ -20,7 +20,7 @@
     "@angular/platform-browser": "12.2.13",
     "@angular/platform-browser-dynamic": "12.2.13",
     "@angular/router": "12.2.13",
-    "@ionic/angular": "5.9.1",
+    "@ionic/angular": "5.9.2",
     "date-fns": "2.26.0",
     "echarts": "5.2.2",
     "ngx-echarts": "7.0.2",

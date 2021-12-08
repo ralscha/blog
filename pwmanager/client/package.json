@@ -18,7 +18,7 @@
     "@angular/platform-browser": "12.2.13",
     "@angular/platform-browser-dynamic": "12.2.13",
     "@angular/router": "12.2.13",
-    "@ionic/angular": "5.9.1",
+    "@ionic/angular": "5.9.2",
     "lzutf8": "0.6.0",
     "rxjs": "7.4.0",
     "stream": "0.0.2",
