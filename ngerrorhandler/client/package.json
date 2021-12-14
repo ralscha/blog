@@ -11,6 +11,7 @@
   },
   "private": true,
   "dependencies": {
+<<<<<<< HEAD
     "@angular/common": "13.1.0",
     "@angular/compiler": "13.1.0",
     "@angular/core": "13.1.0",
@@ -19,6 +20,16 @@
     "@angular/platform-browser-dynamic": "13.1.0",
     "@angular/router": "13.1.0",
     "@ionic/angular": "6.0.0",
+=======
+    "@angular/common": "12.2.13",
+    "@angular/compiler": "12.2.13",
+    "@angular/core": "12.2.13",
+    "@angular/forms": "12.2.13",
+    "@angular/platform-browser": "12.2.13",
+    "@angular/platform-browser-dynamic": "12.2.13",
+    "@angular/router": "12.2.13",
+    "@ionic/angular": "5.9.2",
+>>>>>>> 04a646cdde10d3d522d99228d70299095f6525b1
     "dexie": "3.2.0",
     "rxjs": "7.4.0",
     "stacktrace-js": "2.0.2",
