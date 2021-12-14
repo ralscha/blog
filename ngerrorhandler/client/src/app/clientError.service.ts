@@ -16,7 +16,7 @@ export class ClientErrorService {
     await this.db.errors.add({error: body});
   }
 
-  async delete(ids: number[]): Promise<void> {
+  async delete(ids: string[]): Promise<void> {
     await this.db.errors.bulkDelete(ids);
   }
 

@@ -41,6 +41,7 @@ export class TodoService {
   }
 
   requestSync(): void {
+    // @ts-ignore
     navigator.serviceWorker.ready.then(swRegistration => swRegistration.sync.register('todo_updated'));
   }
 

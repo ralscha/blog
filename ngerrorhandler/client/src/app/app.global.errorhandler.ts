@@ -51,10 +51,10 @@ export class AppGlobalErrorhandler implements ErrorHandler {
 
       const wasOK = await this.sendError(errors.map(error => error.error));
       if (wasOK) {
-        const deleteIds: number[] = [];
+        const deleteIds: string[] = [];
         for (const error of errors) {
           if (error.id) {
-            deleteIds.push(error.id);
+            deleteIds.push(String(error.id));
           }
         }
         await this.clientErrorService.delete(deleteIds);

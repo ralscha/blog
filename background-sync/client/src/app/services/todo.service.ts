@@ -42,6 +42,7 @@ export class TodoService {
 
   async requestSync(): Promise<void> {
     const swRegistration = await navigator.serviceWorker.ready;
+    // @ts-ignore
     await swRegistration.sync.register('todo_updated');
   }
 

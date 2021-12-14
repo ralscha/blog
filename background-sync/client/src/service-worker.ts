@@ -13,7 +13,7 @@ const syncURL = 'http://localhost:8080';
 self.skipWaiting();
 clientsClaim();
 
-if (process.env.NODE_ENV === 'production') {
+if (process.env['NODE_ENV'] === 'production') {
   registerRoute(/assets\/icons\/.+\.png$/, new CacheFirst({cacheName: 'icons'}));
   precacheAndRoute(self.__WB_MANIFEST);
 }
@@ -22,7 +22,9 @@ if (process.env.NODE_ENV === 'production') {
 const db = new TodoDb();
 
 self.addEventListener('sync', event => {
+  // @ts-ignore
   if (event.tag === 'todo_updated') {
+    // @ts-ignore
     event.waitUntil(serverSync());
   }
 });

@@ -11,7 +11,7 @@ export class HomePage {
 
   @ViewChild(DrawableDirective) drawable!: DrawableDirective;
   detections: number[] = [];
-  detectedNumber: number | null;
+  detectedNumber: number | null | undefined;
   private weightsInputHidden!: number[][];
   private weightsHiddenOutput!: number[][];
 
@@ -27,11 +27,11 @@ export class HomePage {
     });
   }
 
-  sigmoid(t): number {
+  sigmoid(t: any): number {
     return 1 / (1 + Math.exp(-t));
   }
 
-  detect(canvas): void {
+  detect(canvas: any): void {
     const canvasCopy = document.createElement('canvas');
     canvasCopy.width = 28;
     canvasCopy.height = 28;
@@ -46,9 +46,9 @@ export class HomePage {
     const dx = (28 - scaledSourceWidth) / 2;
     const dy = (28 - scaledSourceHeight) / 2;
 
-    copyContext.drawImage(canvas, drawBox[0] - 16, drawBox[1] - 16, drawBox[2] - drawBox[0] + 16, drawBox[3] - drawBox[1] + 16,
+    copyContext!.drawImage(canvas, drawBox[0] - 16, drawBox[1] - 16, drawBox[2] - drawBox[0] + 16, drawBox[3] - drawBox[1] + 16,
       dx, dy, scaledSourceWidth, scaledSourceHeight);
-    const imageData = copyContext.getImageData(0, 0, 28, 28);
+    const imageData = copyContext!.getImageData(0, 0, 28, 28);
 
     const numPixels = imageData.width * imageData.height;
     const values = new Array<number>(numPixels);
