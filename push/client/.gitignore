@@ -1,8 +1,4 @@
+/.angular/cache
 /node_modules
 .idea/
-www/
-/platforms/
-/plugins/
-/resources/
-/config.xml
-/google-services.json
+dist/

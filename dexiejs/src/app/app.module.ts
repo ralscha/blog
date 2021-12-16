@@ -8,6 +8,7 @@ import {CommonModule} from '@angular/common';
 import {FormsModule} from '@angular/forms';
 import {DetailComponent} from './detail/detail.component';
 import {FilterPage} from './filter/filter.page';
+import {ScrollingModule} from '@angular/cdk/scrolling';
 
 const routes: Routes = [
   {path: '', redirectTo: 'home', pathMatch: 'full'},
@@ -18,6 +19,7 @@ const routes: Routes = [
   declarations: [AppComponent, HomePage, DetailComponent, FilterPage],
   imports: [BrowserModule,
     CommonModule,
+    ScrollingModule,
     FormsModule,
     IonicModule.forRoot(),
     RouterModule.forRoot(routes, { useHash: true, relativeLinkResolution: 'legacy' })],

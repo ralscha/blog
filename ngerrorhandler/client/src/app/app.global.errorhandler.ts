@@ -17,14 +17,14 @@ export class AppGlobalErrorhandler implements ErrorHandler {
   async handleError(error: any): Promise<void> {
     console.error(error);
 
+    // @ts-ignore
+    const connection = navigator.connection;
+
     const userAgent = {
       language: navigator.language,
       platform: navigator.platform,
       userAgent: navigator.userAgent,
-      // @ts-ignore
-      connectionDownlink: navigator.connection.downlink,
-      // @ts-ignore
-      connectionEffectiveType: navigator.connection.effectiveType
+      connectionType: connection?.type,
     };
     const stackTrace = await StackTrace.fromError(error, {offline: true});
     const body = JSON.stringify({ts: Date.now(), userAgent, stackTrace});

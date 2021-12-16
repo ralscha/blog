@@ -115,7 +115,7 @@ export class HomePage implements OnInit {
   onFileCange(event: Event): void {
     // @ts-ignore
     this.selectedFile = event.target.files[0];
-    const url = URL.createObjectURL(this.selectedFile);
+    const url = URL.createObjectURL(this.selectedFile!);
 
     this.image = new Image();
     this.image.onload = async () => {

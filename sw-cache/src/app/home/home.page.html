@@ -1,15 +1,13 @@
 <ion-header>
   <ion-toolbar>
     <ion-title>
-      Ionic Blank
+      Cache Example
     </ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content class="ion-padding">
-  <ion-slides [pager]="true">
-    <ion-slide *ngFor="let pic of pictures">
-      <img [src]="pic">
-    </ion-slide>
-  </ion-slides>
+  <swiper [pagination]="true">
+    <ng-template swiperSlide *ngFor="let pic of pictures"><img [src]="pic" alt="pic"></ng-template>
+  </swiper>
 </ion-content>

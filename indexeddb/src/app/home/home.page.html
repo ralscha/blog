@@ -22,12 +22,14 @@
     </ion-refresher-content>
   </ion-refresher>
 
-  <ion-virtual-scroll [approxItemHeight]="128" [hidden]="earthquakes.length === 0" [items]="earthquakes">
-    <ion-item *virtualItem="let earthquake">
-      <ion-label>
-        <app-detail [earthquake]="earthquake" [referenceLocation]="filter.myLocation"></app-detail>
-      </ion-label>
-    </ion-item>
-  </ion-virtual-scroll>
+  <cdk-virtual-scroll-viewport itemSize="128" maxBufferPx="1350" minBufferPx="900">
+    <ion-list>
+      <ion-item *cdkVirtualFor="let earthquake of earthquakes">
+        <ion-label>
+          <app-detail [earthquake]="earthquake" [referenceLocation]="filter.myLocation"></app-detail>
+        </ion-label>
+      </ion-item>
+    </ion-list>
+  </cdk-virtual-scroll-viewport>
 
 </ion-content>

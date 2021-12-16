@@ -11,6 +11,7 @@ import {FilterPage} from './filter/filter.page';
 import {HttpClientModule} from '@angular/common/http';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
+import {ScrollingModule} from '@angular/cdk/scrolling';
 
 const routes: Routes = [
   {path: '', redirectTo: 'home', pathMatch: 'full'},
@@ -21,6 +22,7 @@ const routes: Routes = [
   declarations: [AppComponent, HomePage, DetailComponent, FilterPage],
   imports: [BrowserModule,
     CommonModule,
+    ScrollingModule,
     FormsModule,
     HttpClientModule,
     IonicModule.forRoot(),

@@ -33,68 +33,6 @@
 			<groupId>com.google.firebase</groupId>
 			<artifactId>firebase-admin</artifactId>
 			<version>8.1.0</version>
-			<exclusions>
-				<exclusion>
-					<groupId>org.codehaus.jackson</groupId>
-					<artifactId>jackson-core-asl</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>com.google.http-client</groupId>
-					<artifactId>google-http-client-jackson</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>com.google.http-client</groupId>
-					<artifactId>google-http-client-gson</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>com.google.api-client</groupId>
-					<artifactId>google-api-client-gson</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>joda-time</groupId>
-					<artifactId>joda-time</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>com.google.code.gson</groupId>
-					<artifactId>gson</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>com.google.auto.value</groupId>
-					<artifactId>auto-value</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>org.threeten</groupId>
-					<artifactId>threetenbp</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>org.json</groupId>
-					<artifactId>json</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>com.google.cloud</groupId>
-					<artifactId>google-cloud-firestore</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>com.google.apis</groupId>
-					<artifactId>google-api-services-storage</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>org.apache.httpcomponents</groupId>
-					<artifactId>httpclient</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>org.apache.httpcomponents</groupId>
-					<artifactId>httpcore</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>com.google.api</groupId>
-					<artifactId>gax</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>com.google.cloud</groupId>
-					<artifactId>google-cloud-storage</artifactId>
-				</exclusion>
-			</exclusions>
 		</dependency>
 		<dependency>
 			<groupId>com.google.code.findbugs</groupId>
