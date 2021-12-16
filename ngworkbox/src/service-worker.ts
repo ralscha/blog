@@ -10,7 +10,7 @@ declare const self: ServiceWorkerGlobalScope;
 self.skipWaiting();
 clientsClaim();
 
-if (process.env.NODE_ENV === 'production') {
+if (process.env['NODE_ENV'] === 'production') {
   registerRoute(
     /assets\/images\/icons\/icon-.+\.png$/,
     new CacheFirst({

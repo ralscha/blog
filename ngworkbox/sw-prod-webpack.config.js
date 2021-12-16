@@ -4,7 +4,7 @@ module.exports = {
   mode: 'production',
   entry: path.join(__dirname, 'src', 'service-worker.ts'),
   output: {
-    path: path.join(__dirname, 'dist', 'ngworkbox'),
+    path: path.join(__dirname, 'dist', 'app'),
     filename: 'service-worker.js'
   },
   module: {

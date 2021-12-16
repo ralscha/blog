@@ -7,10 +7,10 @@
     "start": "ng serve -o",
     "build": "ng build",
     "postbuild": "npm run sw-prod-webpack",
-    "serve-dist": "ws --hostname localhost -d dist/ngworkbox -p 1234 -o --log.format stats",
+    "serve-dist": "ws --hostname localhost -d dist/app -p 1234 -o --log.format stats",
     "lint": "ng lint",
     "sw-dev-webpack": "rimraf ./src/service-worker.js && webpack --config ./sw-dev-webpack.config.js",
-    "sw-prod-webpack": "rimraf ./dist/ngworkbox/service-worker.js && webpack --config ./sw-prod-webpack.config.js --progress --color && workbox injectManifest ./workbox-config.js"
+    "sw-prod-webpack": "rimraf ./dist/app/service-worker.js && webpack --config ./sw-prod-webpack.config.js --progress --color && workbox injectManifest ./workbox-config.js"
   },
   "private": true,
   "dependencies": {
