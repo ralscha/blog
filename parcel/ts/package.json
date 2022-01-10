@@ -11,11 +11,11 @@
   "devDependencies": {
     "parcel-bundler": "1.12.3",
     "parcel-plugin-compress": "2.0.2",
-    "shx": "0.3.3",
+    "shx": "0.3.4",
     "typescript": "4.5.4"
   },
   "dependencies": {
-    "core-js": "3.20.1",
+    "core-js": "3.20.2",
     "whatwg-fetch": "3.6.2"
   }
 }
