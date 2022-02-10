@@ -10,9 +10,9 @@
     "watch": "parcel watch"
   },
   "devDependencies": {
-    "@parcel/compressor-brotli": "2.2.1",
-    "@parcel/compressor-gzip": "2.2.1",
-    "parcel": "2.2.1"
+    "@parcel/compressor-brotli": "2.3.0",
+    "@parcel/compressor-gzip": "2.3.0",
+    "parcel": "2.3.0"
   },
   "dependencies": {
     "echarts": "5.3.0",
