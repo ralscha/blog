@@ -15,7 +15,7 @@
     "typescript": "4.5.5"
   },
   "dependencies": {
-    "core-js": "3.21.0",
+    "core-js": "3.21.1",
     "whatwg-fetch": "3.6.2"
   }
 }
