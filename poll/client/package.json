@@ -14,8 +14,8 @@
     "uuid": "8.3.2"
   },
   "devDependencies": {
-    "@parcel/compressor-brotli": "2.5.0",
-    "@parcel/compressor-gzip": "2.5.0",
-    "parcel": "2.5.0"
+    "@parcel/compressor-brotli": "2.6.0",
+    "@parcel/compressor-gzip": "2.6.0",
+    "parcel": "2.6.0"
   }
 }
