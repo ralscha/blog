@@ -8,7 +8,6 @@ import {CommonModule} from '@angular/common';
 import {FormsModule} from '@angular/forms';
 import {HttpClientModule} from '@angular/common/http';
 import {SwiperModule} from 'swiper/angular';
-import 'swiper/css/bundle';
 
 const routes: Routes = [
   {path: '', redirectTo: 'home', pathMatch: 'full'},

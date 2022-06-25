@@ -63,8 +63,8 @@
               "extractLicenses": false,
               "sourceMap": true,
               "namedChunks": true
-          }
-        },
+            }
+          },
           "defaultConfiguration": "production"
         },
         "serve": {
@@ -91,9 +91,10 @@
       }
     }
   },
-  "defaultProject": "app",
   "cli": {
-    "defaultCollection": "@ionic/angular-toolkit"
+    "schematicCollections": [
+      "@ionic/angular-toolkit"
+    ]
   },
   "schematics": {
     "@ionic/angular-toolkit:component": {
