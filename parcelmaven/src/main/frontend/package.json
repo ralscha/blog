@@ -15,7 +15,7 @@
     "parcel": "2.7.0"
   },
   "dependencies": {
-    "echarts": "5.3.3",
+    "echarts": "5.4.0",
     "uuid": "9.0.0"
   }
 }

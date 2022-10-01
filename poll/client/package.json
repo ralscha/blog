@@ -9,7 +9,7 @@
     "watch": "parcel watch"
   },
   "dependencies": {
-    "echarts": "5.3.3",
+    "echarts": "5.4.0",
     "muicss": "0.10.3",
     "uuid": "9.0.0"
   },
