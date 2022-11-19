@@ -12,10 +12,10 @@
     "parcel-bundler": "1.12.3",
     "parcel-plugin-compress": "2.0.2",
     "shx": "0.3.4",
-    "typescript": "4.8.4"
+    "typescript": "4.9.3"
   },
   "dependencies": {
-    "core-js": "3.26.0",
+    "core-js": "3.26.1",
     "whatwg-fetch": "3.6.2"
   }
 }
