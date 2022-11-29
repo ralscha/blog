@@ -6,7 +6,7 @@ import * as RecordRTC from 'recordrtc';
 import {environment} from '../../environments/environment';
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
-declare var webkitSpeechRecognition: any;
+declare let webkitSpeechRecognition: any;
 
 @Component({
   selector: 'app-home',
@@ -52,7 +52,7 @@ export class HomePage {
 
       if (!permission) {
         // @ts-ignore
-        window.plugins.speechRecognition.requestPermission(_ => {
+        window.plugins.speechRecognition.requestPermission(() => {
           // @ts-ignore
           window.plugins.speechRecognition.startListening(terms => {
             if (terms && terms.length > 0) {
@@ -114,6 +114,7 @@ export class HomePage {
   async searchGoogleCloudSpeech(): Promise<void> {
     if (this.isRecording) {
       if (this.recorder) {
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
         this.recorder.stopRecording(async (_: any) => {
           const recordedBlob = this.recorder.getBlob();
 

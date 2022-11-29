@@ -8,7 +8,7 @@ import {Injectable} from '@angular/core';
 })
 export class UsernameValidator {
 
-  private timeout: number | null = null;
+  private timeout: any = null;
 
   constructor(private readonly http: HttpClient) {
   }

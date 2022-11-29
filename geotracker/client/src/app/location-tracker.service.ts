@@ -3,7 +3,7 @@ import {ServerPushService} from './server-push.service';
 import {AppPosition} from './app-position';
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
-declare var BackgroundGeolocation: any;
+declare let BackgroundGeolocation: any;
 
 @Injectable({
   providedIn: 'root'

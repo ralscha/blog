@@ -26,7 +26,7 @@ const routes: Routes = [
     FormsModule,
     HttpClientModule,
     IonicModule.forRoot(),
-    RouterModule.forRoot(routes, { useHash: true, relativeLinkResolution: 'legacy' }),
+    RouterModule.forRoot(routes, { useHash: true }),
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })],
   providers: [
     {provide: RouteReuseStrategy, useClass: IonicRouteStrategy}

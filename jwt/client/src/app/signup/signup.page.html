@@ -16,7 +16,7 @@
         <ion-input #name="ngModel" [class.invalid]="name.errors && name.dirty" [required]="true" name="name" ngModel
                    type="text"></ion-input>
       </ion-item>
-      <ion-item *ngIf="name.errors?.required && name.dirty" class="error-message">
+      <ion-item *ngIf="name.errors?.['required'] && name.dirty" class="error-message">
         <ion-label>
           Name is required
         </ion-label>
@@ -27,12 +27,12 @@
         <ion-input #email="ngModel" [class.invalid]="email.errors && email.dirty" [required]="true" email name="email" ngModel
                    type="email"></ion-input>
       </ion-item>
-      <ion-item *ngIf="email.errors?.required && email.dirty" class="error-message">
+      <ion-item *ngIf="email.errors?.['required'] && email.dirty" class="error-message">
         <ion-label>
           Email is required
         </ion-label>
       </ion-item>
-      <ion-item *ngIf="email.errors?.email && email.dirty" class="error-message">
+      <ion-item *ngIf="email.errors?.['email'] && email.dirty" class="error-message">
         <ion-label>
           Email is not valid
         </ion-label>
@@ -43,12 +43,12 @@
         <ion-input #username="ngModel" [class.invalid]="username.errors && username.dirty" [required]="true" name="username" ngModel
                    type="text"></ion-input>
       </ion-item>
-      <ion-item *ngIf="username.errors?.required && username.dirty" class="error-message">
+      <ion-item *ngIf="username.errors?.['required'] && username.dirty" class="error-message">
         <ion-label>
           Username is required
         </ion-label>
       </ion-item>
-      <ion-item *ngIf="username.errors?.usernameTaken" class="error-message">
+      <ion-item *ngIf="username.errors?.['usernameTaken']" class="error-message">
         <ion-label>
           Username already taken
         </ion-label>
@@ -59,7 +59,7 @@
         <ion-input #password="ngModel" [class.invalid]="password.errors && password.dirty" [required]="true" name="password" ngModel
                    type="password"></ion-input>
       </ion-item>
-      <ion-item *ngIf="password.errors?.required && password.dirty" class="error-message">
+      <ion-item *ngIf="password.errors?.['required'] && password.dirty" class="error-message">
         <ion-label>
           Password is required
         </ion-label>

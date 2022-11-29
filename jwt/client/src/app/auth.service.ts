@@ -26,17 +26,19 @@ export class AuthService {
 
     if (jwt && !this.jwtHelper.isTokenExpired(jwt)) {
 
-      return new Promise((resolve, _) => {
+      return new Promise((resolve) => {
 
         this.httpClient.get(`${environment.serverURL}/authenticate`)
-          .subscribe(() => {
+          .subscribe({
+            next: () => {
               this.authUser.next(jwt);
               resolve(true);
             },
-            err => {
+            error: () => {
               this.logout();
               resolve(false);
-            });
+            }
+          });
       });
 
       // OR

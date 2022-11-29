@@ -72,13 +72,9 @@ export class TodoService {
     const binaryString = localStorage.getItem('todos');
     if (binaryString) {
       const encryptedTodos = string_to_bytes(binaryString);
-      try {
-        const encryptedBytes = this.decrypt(encryptedTodos);
-        const decryptedString = bytes_to_string(encryptedBytes);
-        this.todos = new Map(JSON.parse(decryptedString));
-      } catch (err) {
-        throw err;
-      }
+      const encryptedBytes = this.decrypt(encryptedTodos);
+      const decryptedString = bytes_to_string(encryptedBytes);
+      this.todos = new Map(JSON.parse(decryptedString));
     } else {
       this.todos = new Map();
     }

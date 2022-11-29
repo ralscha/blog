@@ -26,16 +26,15 @@ export class LoginPage {
       message: 'Logging in ...'
     });
 
-    loading.present();
+    await loading.present();
 
     this.authService
       .login(value)
       .pipe(finalize(() => loading.dismiss()))
-      .subscribe(
-        _ => {
-          this.navCtrl.navigateRoot(['home'], {replaceUrl: true});
-        },
-        err => this.handleError(err));
+      .subscribe({
+        next: () => this.navCtrl.navigateRoot(['home'], {replaceUrl: true}),
+        error: err => this.handleError(err)
+      });
   }
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -53,7 +52,7 @@ export class LoginPage {
       position: 'bottom'
     });
 
-    toast.present();
+    await toast.present();
   }
 
 }

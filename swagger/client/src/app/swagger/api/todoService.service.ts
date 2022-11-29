@@ -66,7 +66,7 @@ export class TodoServiceService {
   public deleteUsingPOST(id: string, observe?: 'body', reportProgress?: boolean): Observable<any>;
   public deleteUsingPOST(id: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
   public deleteUsingPOST(id: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
-  public deleteUsingPOST(id: string, observe: any = 'body', reportProgress: boolean = false): Observable<any> {
+  public deleteUsingPOST(id: string, observe: any = 'body', reportProgress = false): Observable<any> {
 
     if (id === null || id === undefined) {
       throw new Error('Required parameter id was null or undefined when calling deleteUsingPOST.');
@@ -75,7 +75,7 @@ export class TodoServiceService {
     let headers = this.defaultHeaders;
 
     // to determine the Accept header
-    let httpHeaderAccepts: string[] = [
+    const httpHeaderAccepts: string[] = [
       '*/*'
     ];
     const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
@@ -108,12 +108,12 @@ export class TodoServiceService {
   public listUsingGET(observe?: 'body', reportProgress?: boolean): Observable<Array<Todo>>;
   public listUsingGET(observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Array<Todo>>>;
   public listUsingGET(observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Array<Todo>>>;
-  public listUsingGET(observe: any = 'body', reportProgress: boolean = false): Observable<any> {
+  public listUsingGET(observe: any = 'body', reportProgress = false): Observable<any> {
 
     let headers = this.defaultHeaders;
 
     // to determine the Accept header
-    let httpHeaderAccepts: string[] = [
+    const httpHeaderAccepts: string[] = [
       '*/*'
     ];
     const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
@@ -144,7 +144,7 @@ export class TodoServiceService {
   public saveUsingPOST(todo: Todo, observe?: 'body', reportProgress?: boolean): Observable<any>;
   public saveUsingPOST(todo: Todo, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
   public saveUsingPOST(todo: Todo, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
-  public saveUsingPOST(todo: Todo, observe: any = 'body', reportProgress: boolean = false): Observable<any> {
+  public saveUsingPOST(todo: Todo, observe: any = 'body', reportProgress = false): Observable<any> {
 
     if (todo === null || todo === undefined) {
       throw new Error('Required parameter todo was null or undefined when calling saveUsingPOST.');
@@ -153,7 +153,7 @@ export class TodoServiceService {
     let headers = this.defaultHeaders;
 
     // to determine the Accept header
-    let httpHeaderAccepts: string[] = [
+    const httpHeaderAccepts: string[] = [
       '*/*'
     ];
     const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);

@@ -12,7 +12,7 @@
         <ion-input #username="ngModel" [class.invalid]="username.errors && username.dirty" [required]="true" name="username" ngModel
                    type="text"></ion-input>
       </ion-item>
-      <ion-item *ngIf="username.errors?.required && username.dirty" class="error-message">
+      <ion-item *ngIf="username.errors?.['required'] && username.dirty" class="error-message">
         <ion-label>
           Username is required
         </ion-label>
@@ -23,7 +23,7 @@
         <ion-input #password="ngModel" [class.invalid]="password.errors && password.dirty" [required]="true" name="password" ngModel
                    type="password"></ion-input>
       </ion-item>
-      <ion-item *ngIf="password.errors?.required && password.dirty" class="error-message">
+      <ion-item *ngIf="password.errors?.['required'] && password.dirty" class="error-message">
         <ion-label>
           Password is required
         </ion-label>

@@ -25,7 +25,7 @@ const routes: Routes = [
     CommonModule,
     FormsModule,
     IonicModule.forRoot(),
-    RouterModule.forRoot(routes, { useHash: true, relativeLinkResolution: 'legacy' })],
+    RouterModule.forRoot(routes, { useHash: true })],
   providers: [
     {provide: RouteReuseStrategy, useClass: IonicRouteStrategy}
   ],

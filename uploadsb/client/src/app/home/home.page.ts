@@ -109,7 +109,7 @@ export class HomePage {
       .subscribe(ok => this.showToast(ok));
   }
 
-  private async showToast(ok: boolean | {}): Promise<void> {
+  private async showToast(ok: boolean | Record<string, unknown>): Promise<void> {
     if (ok === true) {
       const toast = await this.toastCtrl.create({
         message: 'Upload successful',

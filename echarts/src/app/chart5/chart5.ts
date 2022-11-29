@@ -53,7 +53,7 @@ export class Chart5Page {
     }]
   };
 
-  private static getVirtulData(year: number = 2020): [string, number][] {
+  private static getVirtulData(year = 2020): [string, number][] {
     const date = new Date(year, 0, 1).getTime();
     const end = new Date(year, 11, 31).getTime();
     const dayTime = 3600 * 24 * 1000;

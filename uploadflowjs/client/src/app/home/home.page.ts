@@ -29,7 +29,7 @@ export class HomePage {
         await this.videoElement.nativeElement.play();
 
         const options = {
-          mimeType: 'video/webm\;codecs=vp9',
+          mimeType: 'video/webm;codecs=vp9',
           recorderType: RecordRTC.MediaStreamRecorder
         };
         this.recordRTC = RecordRTC(stream, options);

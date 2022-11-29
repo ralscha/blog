@@ -5,7 +5,7 @@ import {timeout} from 'rxjs/operators';
 import {environment} from '../../environments/environment';
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
-declare var cordova: any;
+declare let cordova: any;
 
 @Component({
   selector: 'app-home',
@@ -69,7 +69,7 @@ export class HomePage {
       this.http.post(`${environment.serverURL}/register`, formData)
         .pipe(timeout(10000))
         .subscribe(() => localStorage.setItem('allowPersonal', JSON.stringify(this.allowPersonal)),
-          _ => this.allowPersonal = !this.allowPersonal);
+          () => this.allowPersonal = !this.allowPersonal);
     }
   }
 
@@ -80,7 +80,7 @@ export class HomePage {
       this.http.post(`${environment.serverURL}/unregister`, formData)
         .pipe(timeout(10000))
         .subscribe(() => localStorage.setItem('allowPersonal', JSON.stringify(this.allowPersonal)),
-          _ => this.allowPersonal = !this.allowPersonal);
+          () => this.allowPersonal = !this.allowPersonal);
     }
   }
 
