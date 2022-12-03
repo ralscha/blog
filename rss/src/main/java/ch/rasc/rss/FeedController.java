@@ -117,7 +117,7 @@ public class FeedController {
   private static WireFeed createWireFeed(String feedType) {
 
     SyndFeed feed;
-    if (feedType.equals("rss_2.0")) {
+    if ("rss_2.0".equals(feedType)) {
       feed = new CustomFeedEntry();
     }
     else {
@@ -132,7 +132,7 @@ public class FeedController {
     feed.setUri("https://golb.hplar.ch/");
 
     AtomNSModule atomNSModule = new AtomNSModuleImpl();
-    String link = feedType.equals("rss_2.0") ? "/synd_rss" : "/synd_atom";
+    String link = "rss_2.0".equals(feedType) ? "/synd_rss" : "/synd_atom";
     atomNSModule.setLink("https://golb.hplar.ch" + link);
     feed.getModules().add(atomNSModule);
 
@@ -141,7 +141,7 @@ public class FeedController {
     List<SyndEntry> entries = new ArrayList<>();
 
     SyndEntry entry;
-    if (feedType.equals("rss_2.0")) {
+    if ("rss_2.0".equals(feedType)) {
       entry = new CustomSyndEntry();
     }
     else {

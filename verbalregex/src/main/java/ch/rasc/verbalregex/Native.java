@@ -6,7 +6,7 @@ import java.util.regex.Pattern;
 public class Native {
 
   public static void main(String[] args) {
-    String[] inputs = new String[] { "AB-0.z", "ABC-99.y", "BB-789.x", "ab-999.x" };
+    String[] inputs = { "AB-0.z", "ABC-99.y", "BB-789.x", "ab-999.x" };
 
     Pattern pattern = Pattern.compile("^([A-Z]{2,3})-(\\d{1,3})\\.([xyz])$");
 

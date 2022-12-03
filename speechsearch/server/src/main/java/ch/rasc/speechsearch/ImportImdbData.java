@@ -17,7 +17,6 @@ import java.util.zip.GZIPInputStream;
 import org.bson.Document;
 import org.springframework.util.StringUtils;
 
-import com.mongodb.ConnectionString;
 import com.mongodb.MongoClientSettings;
 import com.mongodb.WriteConcern;
 import com.mongodb.client.MongoClient;
@@ -58,8 +57,7 @@ public class ImportImdbData {
     TsvParser parser = new TsvParser(settings);
 
     MongoClientSettings mongoClientSettings = MongoClientSettings.builder()
-        .writeConcern(WriteConcern.UNACKNOWLEDGED)
-        .build();
+        .writeConcern(WriteConcern.UNACKNOWLEDGED).build();
 
     try (MongoClient mongoClient = MongoClients.create(mongoClientSettings)) {
       MongoDatabase database = mongoClient.getDatabase("imdb");

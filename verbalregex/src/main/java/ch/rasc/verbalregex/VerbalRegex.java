@@ -8,19 +8,13 @@ import ru.lanwen.verbalregex.VerbalExpression;
 public class VerbalRegex {
 
   public static void main(String[] args) {
-    VerbalExpression regex = VerbalExpression.regex()
-        .startOfLine()
-        .capture().range("A", "Z").count(2, 3).endCapture()
-        .then("-")
-        .capture().digit().count(1, 3).endCapture()
-        .then(".")
-        .capture().anyOf("xzy").endCapture()
-        .endOfLine()
-        .build();
+    VerbalExpression regex = VerbalExpression.regex().startOfLine().capture()
+        .range("A", "Z").count(2, 3).endCapture().then("-").capture().digit().count(1, 3)
+        .endCapture().then(".").capture().anyOf("xzy").endCapture().endOfLine().build();
 
     System.out.println(regex.toString());
 
-    String[] inputs = new String[] { "AB-0.z", "ABC-99.y", "BB-789.x", "ab-999.x" };
+    String[] inputs = { "AB-0.z", "ABC-99.y", "BB-789.x", "ab-999.x" };
 
     Pattern pattern = Pattern.compile(regex.toString());
 

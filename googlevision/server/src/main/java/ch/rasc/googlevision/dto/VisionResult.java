@@ -5,84 +5,84 @@ import java.util.Set;
 
 public class VisionResult {
 
-	private String error;
+  private String error;
 
-	private List<Label> labels;
+  private List<Label> labels;
 
-	private SafeSearch safeSearch;
+  private SafeSearch safeSearch;
 
-	private List<Logo> logos;
+  private List<Logo> logos;
 
-	private List<Landmark> landmarks;
+  private List<Landmark> landmarks;
 
-	private Set<Text> texts;
+  private Set<Text> texts;
 
-	private List<Face> faces;
+  private List<Face> faces;
 
-	private Web web;
+  private Web web;
 
-	public List<Label> getLabels() {
-		return this.labels;
-	}
+  public List<Label> getLabels() {
+    return this.labels;
+  }
 
-	public void setLabels(List<Label> labels) {
-		this.labels = labels;
-	}
+  public void setLabels(List<Label> labels) {
+    this.labels = labels;
+  }
 
-	public SafeSearch getSafeSearch() {
-		return this.safeSearch;
-	}
+  public SafeSearch getSafeSearch() {
+    return this.safeSearch;
+  }
 
-	public void setSafeSearch(SafeSearch safeSearch) {
-		this.safeSearch = safeSearch;
-	}
+  public void setSafeSearch(SafeSearch safeSearch) {
+    this.safeSearch = safeSearch;
+  }
 
-	public List<Logo> getLogos() {
-		return this.logos;
-	}
+  public List<Logo> getLogos() {
+    return this.logos;
+  }
 
-	public void setLogos(List<Logo> logos) {
-		this.logos = logos;
-	}
+  public void setLogos(List<Logo> logos) {
+    this.logos = logos;
+  }
 
-	public List<Landmark> getLandmarks() {
-		return this.landmarks;
-	}
+  public List<Landmark> getLandmarks() {
+    return this.landmarks;
+  }
 
-	public void setLandmarks(List<Landmark> landmarks) {
-		this.landmarks = landmarks;
-	}
+  public void setLandmarks(List<Landmark> landmarks) {
+    this.landmarks = landmarks;
+  }
 
-	public Set<Text> getTexts() {
-		return this.texts;
-	}
+  public Set<Text> getTexts() {
+    return this.texts;
+  }
 
-	public void setTexts(Set<Text> texts) {
-		this.texts = texts;
-	}
+  public void setTexts(Set<Text> texts) {
+    this.texts = texts;
+  }
 
-	public List<Face> getFaces() {
-		return this.faces;
-	}
+  public List<Face> getFaces() {
+    return this.faces;
+  }
 
-	public void setFaces(List<Face> faces) {
-		this.faces = faces;
-	}
+  public void setFaces(List<Face> faces) {
+    this.faces = faces;
+  }
 
-	public Web getWeb() {
-		return this.web;
-	}
+  public Web getWeb() {
+    return this.web;
+  }
 
-	public void setWeb(Web web) {
-		this.web = web;
-	}
+  public void setWeb(Web web) {
+    this.web = web;
+  }
 
-	public String getError() {
-		return this.error;
-	}
+  public String getError() {
+    return this.error;
+  }
 
-	public void setError(String error) {
-		this.error = error;
-	}
+  public void setError(String error) {
+    this.error = error;
+  }
 
 }

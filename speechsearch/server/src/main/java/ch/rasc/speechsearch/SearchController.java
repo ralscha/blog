@@ -59,8 +59,7 @@ public class SearchController {
 
   public SearchController(AppConfig appConfig) throws IOException {
     MongoClientSettings mongoClientSettings = MongoClientSettings.builder()
-        .writeConcern(WriteConcern.UNACKNOWLEDGED)
-        .build();
+        .writeConcern(WriteConcern.UNACKNOWLEDGED).build();
     this.mongoClient = MongoClients.create(mongoClientSettings);
     this.mongoDatabase = this.mongoClient.getDatabase("imdb");
 

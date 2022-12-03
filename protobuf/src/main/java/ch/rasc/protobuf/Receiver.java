@@ -8,7 +8,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.integration.config.EnableIntegration;
 import org.springframework.integration.dsl.IntegrationFlow;
-import org.springframework.integration.dsl.IntegrationFlows;
 import org.springframework.integration.ip.dsl.Udp;
 import org.springframework.messaging.Message;
 
@@ -29,7 +28,7 @@ public class Receiver {
 
   @Bean
   public IntegrationFlow flow() {
-    return IntegrationFlows.from(Udp.inboundAdapter(9992))
+    return IntegrationFlow.from(Udp.inboundAdapter(9992))
         .transform(this::transformMessage).handle(this::handleMessage).get();
   }
 

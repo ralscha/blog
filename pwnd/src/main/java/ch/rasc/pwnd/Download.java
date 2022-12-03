@@ -26,13 +26,11 @@ public class Download {
     Request request = new Request.Builder().url(torrentURL).build();
     try (Response response = client.newCall(request).execute();
         ResponseBody body = response.body()) {
-      if (body != null) {
-        Files.copy(body.byteStream(), torrentFile, StandardCopyOption.REPLACE_EXISTING);
-      }
-      else {
+      if (body == null) {
         System.out.println("could not download torrent file");
         return;
       }
+      Files.copy(body.byteStream(), torrentFile, StandardCopyOption.REPLACE_EXISTING);
     }
 
     Path outputDir = Paths.get("e:/temp");

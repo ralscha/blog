@@ -9,51 +9,51 @@ import java.net.http.HttpResponse;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import javax.annotation.PostConstruct;
-
 import org.springframework.stereotype.Service;
 
 import com.univocity.parsers.common.record.Record;
 import com.univocity.parsers.csv.CsvParser;
 import com.univocity.parsers.csv.CsvParserSettings;
 
+import jakarta.annotation.PostConstruct;
+
 @Service
 public class EarthquakeImporter {
 
-	private final ReactiveEarthquakeRepository repository;
+  private final ReactiveEarthquakeRepository repository;
 
-	private final CsvParser parser;
+  private final CsvParser parser;
 
-	EarthquakeImporter(ReactiveEarthquakeRepository repository) {
-		this.repository = repository;
+  EarthquakeImporter(ReactiveEarthquakeRepository repository) {
+    this.repository = repository;
 
-		CsvParserSettings settings = new CsvParserSettings();
-		settings.setHeaderExtractionEnabled(true);
-		settings.setLineSeparatorDetectionEnabled(true);
-		this.parser = new CsvParser(settings);
-	}
+    CsvParserSettings settings = new CsvParserSettings();
+    settings.setHeaderExtractionEnabled(true);
+    settings.setLineSeparatorDetectionEnabled(true);
+    this.parser = new CsvParser(settings);
+  }
 
-	@PostConstruct
-	public void read() throws IOException, InterruptedException {
-		HttpClient httpClient = HttpClient.newHttpClient();
+  @PostConstruct
+  public void read() throws IOException, InterruptedException {
+    HttpClient httpClient = HttpClient.newHttpClient();
 
-		HttpRequest request = HttpRequest.newBuilder().GET().uri(URI.create(
-				"https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/2.5_month.csv"))
-				.build();
+    HttpRequest request = HttpRequest.newBuilder().GET()
+        .uri(URI.create(
+            "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/2.5_month.csv"))
+        .build();
 
-		HttpResponse<String> response = httpClient.send(request,
-				HttpResponse.BodyHandlers.ofString());
+    HttpResponse<String> response = httpClient.send(request,
+        HttpResponse.BodyHandlers.ofString());
 
-		List<Record> records = this.parser
-				.parseAllRecords(new StringReader(response.body()));
-		List<Earthquake> earthquakes = records.stream().map(Earthquake::new)
-				.collect(Collectors.toList());
-		insertData(earthquakes);
-	}
+    List<Record> records = this.parser.parseAllRecords(new StringReader(response.body()));
+    List<Earthquake> earthquakes = records.stream().map(Earthquake::new)
+        .collect(Collectors.toList());
+    insertData(earthquakes);
+  }
 
-	private void insertData(List<Earthquake> earthquakes) {
-		this.repository.deleteAll().then(this.repository.saveAll(earthquakes).then())
-				.subscribe();
-	}
+  private void insertData(List<Earthquake> earthquakes) {
+    this.repository.deleteAll().then(this.repository.saveAll(earthquakes).then())
+        .subscribe();
+  }
 
 }

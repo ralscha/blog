@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class ErrorController {
 
   @PostMapping("/clientError")
-  public void clientError(@RequestBody List<ClientError> clientErrors) {    
+  public void clientError(@RequestBody List<ClientError> clientErrors) {
     for (ClientError cl : clientErrors) {
       System.out.println(cl);
     }

@@ -5,8 +5,6 @@ import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.util.concurrent.TimeUnit;
 
-import javax.annotation.PostConstruct;
-
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -23,6 +21,7 @@ import io.minio.errors.InvalidResponseException;
 import io.minio.errors.ServerException;
 import io.minio.errors.XmlParserException;
 import io.minio.http.Method;
+import jakarta.annotation.PostConstruct;
 
 @RestController
 public class PreSignController {
@@ -35,9 +34,10 @@ public class PreSignController {
   }
 
   @PostConstruct
-  public void createBucket() throws InvalidKeyException, NoSuchAlgorithmException,
-      InsufficientDataException, ErrorResponseException, InternalException, IOException,
-      InvalidResponseException, IllegalArgumentException, XmlParserException, ServerException {
+  public void createBucket()
+      throws InvalidKeyException, NoSuchAlgorithmException, InsufficientDataException,
+      ErrorResponseException, InternalException, IOException, InvalidResponseException,
+      IllegalArgumentException, XmlParserException, ServerException {
 
     if (!this.minioClient
         .bucketExists(BucketExistsArgs.builder().bucket(BUCKET_NAME).build())) {

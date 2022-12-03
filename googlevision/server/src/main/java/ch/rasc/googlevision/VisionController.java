@@ -70,358 +70,335 @@ import ch.rasc.googlevision.dto.WebUrl;
 @CrossOrigin
 public class VisionController {
 
-	private static final String BUCKET_NAME = "rasc_visiondemo_2020";
-	private Storage storage;
-	private ImageAnnotatorSettings imageAnnotatorSettings;
+  private static final String BUCKET_NAME = "rasc_visiondemo_2020";
+  private Storage storage;
+  private ImageAnnotatorSettings imageAnnotatorSettings;
 
-	public VisionController(AppConfig appConfig) {
-		Path serviceAccountFile = Paths.get(appConfig.getServiceAccountFile());
+  public VisionController(AppConfig appConfig) {
+    Path serviceAccountFile = Paths.get(appConfig.getServiceAccountFile());
 
-		try (InputStream is = Files.newInputStream(serviceAccountFile)) {
-			GoogleCredentials credentials = GoogleCredentials.fromStream(is);
-			StorageOptions options = StorageOptions.newBuilder()
-					.setCredentials(credentials).build();
-			this.storage = options.getService();
+    try (InputStream is = Files.newInputStream(serviceAccountFile)) {
+      GoogleCredentials credentials = GoogleCredentials.fromStream(is);
+      StorageOptions options = StorageOptions.newBuilder().setCredentials(credentials)
+          .build();
+      this.storage = options.getService();
 
-			Bucket bucket = this.storage.get(BUCKET_NAME);
-			if (bucket == null) {
+      Bucket bucket = this.storage.get(BUCKET_NAME);
+      if (bucket == null) {
 
-				Cors cors = Cors.newBuilder().setMaxAgeSeconds(3600)
-						.setMethods(Collections.singleton(HttpMethod.PUT))
-						.setOrigins(appConfig.getOrigins().stream().map(Origin::of)
-								.collect(Collectors.toList()))
-						.setResponseHeaders(Arrays.asList("Content-Type",
-								"Access-Control-Allow-Origin"))
-						.build();
+        Cors cors = Cors.newBuilder().setMaxAgeSeconds(3600)
+            .setMethods(Collections.singleton(HttpMethod.PUT))
+            .setOrigins(appConfig.getOrigins().stream().map(Origin::of)
+                .collect(Collectors.toList()))
+            .setResponseHeaders(
+                Arrays.asList("Content-Type", "Access-Control-Allow-Origin"))
+            .build();
 
-				this.storage.create(BucketInfo.newBuilder(BUCKET_NAME)
-						.setCors(Collections.singleton(cors)).build());
-			}
+        this.storage.create(BucketInfo.newBuilder(BUCKET_NAME)
+            .setCors(Collections.singleton(cors)).build());
+      }
 
-			this.imageAnnotatorSettings = ImageAnnotatorSettings.newBuilder()
-					.setCredentialsProvider(FixedCredentialsProvider.create(credentials))
-					.build();
+      this.imageAnnotatorSettings = ImageAnnotatorSettings.newBuilder()
+          .setCredentialsProvider(FixedCredentialsProvider.create(credentials)).build();
 
-		}
-		catch (IOException e) {
-			LoggerFactory.getLogger(VisionController.class)
-					.error("error constructing VisionController", e);
-		}
-	}
+    }
+    catch (IOException e) {
+      LoggerFactory.getLogger(VisionController.class)
+          .error("error constructing VisionController", e);
+    }
+  }
 
-	@PostMapping("/signurl")
-	public SignUrlResponse getSignUrl(@RequestParam("contentType") String contentType) {
-		String uuid = UUID.randomUUID().toString();
-		String url = this.storage.signUrl(
-				BlobInfo.newBuilder(BUCKET_NAME, uuid).setContentType(contentType)
-						.build(),
-				3, TimeUnit.MINUTES, SignUrlOption.httpMethod(HttpMethod.PUT),
-				SignUrlOption.withContentType()).toString();
-		return new SignUrlResponse(uuid, url);
-	}
+  @PostMapping("/signurl")
+  public SignUrlResponse getSignUrl(@RequestParam("contentType") String contentType) {
+    String uuid = UUID.randomUUID().toString();
+    String url = this.storage.signUrl(
+        BlobInfo.newBuilder(BUCKET_NAME, uuid).setContentType(contentType).build(), 3,
+        TimeUnit.MINUTES, SignUrlOption.httpMethod(HttpMethod.PUT),
+        SignUrlOption.withContentType()).toString();
+    return new SignUrlResponse(uuid, url);
+  }
 
-	@PostMapping("/vision")
-	public VisionResult vision(@RequestParam("uuid") String uuid) throws IOException {
+  @PostMapping("/vision")
+  public VisionResult vision(@RequestParam("uuid") String uuid) throws IOException {
 
-		try (ImageAnnotatorClient vision = ImageAnnotatorClient
-				.create(this.imageAnnotatorSettings)) {
+    try (ImageAnnotatorClient vision = ImageAnnotatorClient
+        .create(this.imageAnnotatorSettings)) {
 
-			Image img = Image.newBuilder().setSource(ImageSource.newBuilder()
-					.setImageUri("gs://" + BUCKET_NAME + "/" + uuid)).build();
+      Image img = Image.newBuilder()
+          .setSource(
+              ImageSource.newBuilder().setImageUri("gs://" + BUCKET_NAME + "/" + uuid))
+          .build();
 
-			AnnotateImageRequest request = AnnotateImageRequest.newBuilder()
-					.addFeatures(
-							Feature.newBuilder().setType(Type.FACE_DETECTION).build())
-					.addFeatures(
-							Feature.newBuilder().setType(Type.LANDMARK_DETECTION).build())
-					.addFeatures(
-							Feature.newBuilder().setType(Type.LOGO_DETECTION).build())
-					.addFeatures(Feature.newBuilder().setType(Type.LABEL_DETECTION)
-							.setMaxResults(20).build())
-					.addFeatures(
-							Feature.newBuilder().setType(Type.TEXT_DETECTION).build())
-					.addFeatures(Feature.newBuilder().setType(Type.SAFE_SEARCH_DETECTION)
-							.build())
-					.addFeatures(Feature.newBuilder().setType(Type.WEB_DETECTION)
-							.setMaxResults(10).build())
-					.setImage(img).build();
+      AnnotateImageRequest request = AnnotateImageRequest.newBuilder()
+          .addFeatures(Feature.newBuilder().setType(Type.FACE_DETECTION).build())
+          .addFeatures(Feature.newBuilder().setType(Type.LANDMARK_DETECTION).build())
+          .addFeatures(Feature.newBuilder().setType(Type.LOGO_DETECTION).build())
+          .addFeatures(Feature.newBuilder().setType(Type.LABEL_DETECTION)
+              .setMaxResults(20).build())
+          .addFeatures(Feature.newBuilder().setType(Type.TEXT_DETECTION).build())
+          .addFeatures(Feature.newBuilder().setType(Type.SAFE_SEARCH_DETECTION).build())
+          .addFeatures(
+              Feature.newBuilder().setType(Type.WEB_DETECTION).setMaxResults(10).build())
+          .setImage(img).build();
 
-			// More Features:
-			// DOCUMENT_TEXT_DETECTION
-			// IMAGE_PROPERTIES
-			// CROP_HINTS
-			// PRODUCT_SEARCH
-			// OBJECT_LOCALIZATION
+      // More Features:
+      // DOCUMENT_TEXT_DETECTION
+      // IMAGE_PROPERTIES
+      // CROP_HINTS
+      // PRODUCT_SEARCH
+      // OBJECT_LOCALIZATION
 
-			List<AnnotateImageRequest> requests = new ArrayList<>();
-			requests.add(request);
+      List<AnnotateImageRequest> requests = new ArrayList<>();
+      requests.add(request);
 
-			// Performs label detection on the image file
-			BatchAnnotateImagesResponse response = vision.batchAnnotateImages(requests);
-			List<AnnotateImageResponse> responses = response.getResponsesList();
+      // Performs label detection on the image file
+      BatchAnnotateImagesResponse response = vision.batchAnnotateImages(requests);
+      List<AnnotateImageResponse> responses = response.getResponsesList();
 
-			VisionResult result = new VisionResult();
-			AnnotateImageResponse resp = responses.get(0);
+      VisionResult result = new VisionResult();
+      AnnotateImageResponse resp = responses.get(0);
 
-			if (resp.hasError()) {
-				result.setError(resp.getError().getMessage());
-				return result;
-			}
+      if (resp.hasError()) {
+        result.setError(resp.getError().getMessage());
+        return result;
+      }
 
-			if (resp.getLabelAnnotationsList() != null) {
-				List<Label> labels = new ArrayList<>();
-				for (EntityAnnotation ea : resp.getLabelAnnotationsList()) {
-					Label l = new Label();
-					l.setScore(ea.getScore());
-					l.setDescription(ea.getDescription());
-					labels.add(l);
-				}
-				result.setLabels(labels);
-			}
+      if (resp.getLabelAnnotationsList() != null) {
+        List<Label> labels = new ArrayList<>();
+        for (EntityAnnotation ea : resp.getLabelAnnotationsList()) {
+          Label l = new Label();
+          l.setScore(ea.getScore());
+          l.setDescription(ea.getDescription());
+          labels.add(l);
+        }
+        result.setLabels(labels);
+      }
 
-			if (resp.getLandmarkAnnotationsList() != null) {
-				List<Landmark> landmarks = new ArrayList<>();
-				for (EntityAnnotation ea : resp.getLandmarkAnnotationsList()) {
-					Landmark l = new Landmark();
-					l.setScore(ea.getScore());
-					l.setDescription(ea.getDescription());
+      if (resp.getLandmarkAnnotationsList() != null) {
+        List<Landmark> landmarks = new ArrayList<>();
+        for (EntityAnnotation ea : resp.getLandmarkAnnotationsList()) {
+          Landmark l = new Landmark();
+          l.setScore(ea.getScore());
+          l.setDescription(ea.getDescription());
 
-					if (ea.getBoundingPoly() != null) {
-						l.setBoundingPoly(
-								ea.getBoundingPoly().getVerticesList().stream().map(v -> {
-									Vertex vertex = new Vertex();
-									vertex.setX(v.getX());
-									vertex.setY(v.getY());
-									return vertex;
-								}).collect(Collectors.toList()));
-					}
-					if (ea.getLocationsList() != null) {
-						l.setLocations(ea.getLocationsList().stream().map(loc -> {
-							LngLat ll = new LngLat();
-							ll.setLng(loc.getLatLng().getLongitude());
-							ll.setLat(loc.getLatLng().getLatitude());
-							return ll;
-						}).collect(Collectors.toList()));
-					}
-					landmarks.add(l);
-				}
-				result.setLandmarks(landmarks);
-			}
+          if (ea.getBoundingPoly() != null) {
+            l.setBoundingPoly(ea.getBoundingPoly().getVerticesList().stream().map(v -> {
+              Vertex vertex = new Vertex();
+              vertex.setX(v.getX());
+              vertex.setY(v.getY());
+              return vertex;
+            }).collect(Collectors.toList()));
+          }
+          if (ea.getLocationsList() != null) {
+            l.setLocations(ea.getLocationsList().stream().map(loc -> {
+              LngLat ll = new LngLat();
+              ll.setLng(loc.getLatLng().getLongitude());
+              ll.setLat(loc.getLatLng().getLatitude());
+              return ll;
+            }).collect(Collectors.toList()));
+          }
+          landmarks.add(l);
+        }
+        result.setLandmarks(landmarks);
+      }
 
-			if (resp.getLogoAnnotationsList() != null) {
-				List<Logo> logos = new ArrayList<>();
-				for (EntityAnnotation ea : resp.getLogoAnnotationsList()) {
-					Logo l = new Logo();
-					l.setScore(ea.getScore());
-					l.setDescription(ea.getDescription());
+      if (resp.getLogoAnnotationsList() != null) {
+        List<Logo> logos = new ArrayList<>();
+        for (EntityAnnotation ea : resp.getLogoAnnotationsList()) {
+          Logo l = new Logo();
+          l.setScore(ea.getScore());
+          l.setDescription(ea.getDescription());
 
-					if (ea.getBoundingPoly() != null) {
-						l.setBoundingPoly(
-								ea.getBoundingPoly().getVerticesList().stream().map(v -> {
-									Vertex vertex = new Vertex();
-									vertex.setX(v.getX());
-									vertex.setY(v.getY());
-									return vertex;
-								}).collect(Collectors.toList()));
-					}
-					logos.add(l);
-				}
-				result.setLogos(logos);
-			}
+          if (ea.getBoundingPoly() != null) {
+            l.setBoundingPoly(ea.getBoundingPoly().getVerticesList().stream().map(v -> {
+              Vertex vertex = new Vertex();
+              vertex.setX(v.getX());
+              vertex.setY(v.getY());
+              return vertex;
+            }).collect(Collectors.toList()));
+          }
+          logos.add(l);
+        }
+        result.setLogos(logos);
+      }
 
-			if (resp.getTextAnnotationsList() != null) {
-				Set<Text> texts = new HashSet<>();
-				for (EntityAnnotation ea : resp.getTextAnnotationsList()) {
-					Text t = new Text();
-					t.setDescription(ea.getDescription().trim());
+      if (resp.getTextAnnotationsList() != null) {
+        Set<Text> texts = new HashSet<>();
+        for (EntityAnnotation ea : resp.getTextAnnotationsList()) {
+          Text t = new Text();
+          t.setDescription(ea.getDescription().trim());
 
-					if (ea.getBoundingPoly() != null) {
-						t.setBoundingPoly(ea.getBoundingPoly().getVerticesList().stream()
-								.filter(Objects::nonNull).map(v -> {
-									Vertex vertex = new Vertex();
-									vertex.setX(v.getX());
-									vertex.setY(v.getY());
-									return vertex;
-								}).collect(Collectors.toList()));
-					}
+          if (ea.getBoundingPoly() != null) {
+            t.setBoundingPoly(ea.getBoundingPoly().getVerticesList().stream()
+                .filter(Objects::nonNull).map(v -> {
+                  Vertex vertex = new Vertex();
+                  vertex.setX(v.getX());
+                  vertex.setY(v.getY());
+                  return vertex;
+                }).collect(Collectors.toList()));
+          }
 
-					texts.add(t);
-				}
-				result.setTexts(texts);
-			}
+          texts.add(t);
+        }
+        result.setTexts(texts);
+      }
 
-			if (resp.getFaceAnnotationsList() != null) {
-				List<Face> faces = new ArrayList<>();
-				for (FaceAnnotation fa : resp.getFaceAnnotationsList()) {
-					Face face = new Face();
-					face.setRollAngle(fa.getRollAngle());
-					face.setPanAngle(fa.getPanAngle());
-					face.setTiltAngle(fa.getTiltAngle());
-					face.setDetectionConfidence(fa.getDetectionConfidence());
-					face.setLandmarkingConfidence(fa.getLandmarkingConfidence());
+      if (resp.getFaceAnnotationsList() != null) {
+        List<Face> faces = new ArrayList<>();
+        for (FaceAnnotation fa : resp.getFaceAnnotationsList()) {
+          Face face = new Face();
+          face.setRollAngle(fa.getRollAngle());
+          face.setPanAngle(fa.getPanAngle());
+          face.setTiltAngle(fa.getTiltAngle());
+          face.setDetectionConfidence(fa.getDetectionConfidence());
+          face.setLandmarkingConfidence(fa.getLandmarkingConfidence());
 
-					face.setJoy(fa.getJoyLikelihood());
-					face.setJoyRating(likelihoodToNumber(fa.getJoyLikelihood()));
+          face.setJoy(fa.getJoyLikelihood());
+          face.setJoyRating(likelihoodToNumber(fa.getJoyLikelihood()));
 
-					face.setSorrow(fa.getSorrowLikelihood());
-					face.setSorrowRating(likelihoodToNumber(fa.getSorrowLikelihood()));
+          face.setSorrow(fa.getSorrowLikelihood());
+          face.setSorrowRating(likelihoodToNumber(fa.getSorrowLikelihood()));
 
-					face.setAnger(fa.getAngerLikelihood());
-					face.setAngerRating(likelihoodToNumber(fa.getAngerLikelihood()));
+          face.setAnger(fa.getAngerLikelihood());
+          face.setAngerRating(likelihoodToNumber(fa.getAngerLikelihood()));
 
-					face.setSurprise(fa.getSurpriseLikelihood());
-					face.setSurpriseRating(
-							likelihoodToNumber(fa.getSurpriseLikelihood()));
+          face.setSurprise(fa.getSurpriseLikelihood());
+          face.setSurpriseRating(likelihoodToNumber(fa.getSurpriseLikelihood()));
 
-					face.setUnderExposed(fa.getUnderExposedLikelihood());
-					face.setUnderExposedRating(
-							likelihoodToNumber(fa.getUnderExposedLikelihood()));
+          face.setUnderExposed(fa.getUnderExposedLikelihood());
+          face.setUnderExposedRating(likelihoodToNumber(fa.getUnderExposedLikelihood()));
 
-					face.setBlurred(fa.getBlurredLikelihood());
-					face.setBlurredRating(likelihoodToNumber(fa.getBlurredLikelihood()));
+          face.setBlurred(fa.getBlurredLikelihood());
+          face.setBlurredRating(likelihoodToNumber(fa.getBlurredLikelihood()));
 
-					face.setHeadwear(fa.getHeadwearLikelihood());
-					face.setHeadwearRating(
-							likelihoodToNumber(fa.getHeadwearLikelihood()));
+          face.setHeadwear(fa.getHeadwearLikelihood());
+          face.setHeadwearRating(likelihoodToNumber(fa.getHeadwearLikelihood()));
 
-					if (fa.getBoundingPoly() != null) {
-						face.setBoundingPoly(
-								fa.getBoundingPoly().getVerticesList().stream().map(v -> {
-									Vertex vertex = new Vertex();
-									vertex.setX(v.getX());
-									vertex.setY(v.getY());
-									return vertex;
-								}).collect(Collectors.toList()));
-					}
+          if (fa.getBoundingPoly() != null) {
+            face.setBoundingPoly(
+                fa.getBoundingPoly().getVerticesList().stream().map(v -> {
+                  Vertex vertex = new Vertex();
+                  vertex.setX(v.getX());
+                  vertex.setY(v.getY());
+                  return vertex;
+                }).collect(Collectors.toList()));
+          }
 
-					if (fa.getFdBoundingPoly() != null) {
-						face.setFdBoundingPoly(fa.getFdBoundingPoly().getVerticesList()
-								.stream().map(v -> {
-									Vertex vertex = new Vertex();
-									vertex.setX(v.getX());
-									vertex.setY(v.getY());
-									return vertex;
-								}).collect(Collectors.toList()));
-					}
+          if (fa.getFdBoundingPoly() != null) {
+            face.setFdBoundingPoly(
+                fa.getFdBoundingPoly().getVerticesList().stream().map(v -> {
+                  Vertex vertex = new Vertex();
+                  vertex.setX(v.getX());
+                  vertex.setY(v.getY());
+                  return vertex;
+                }).collect(Collectors.toList()));
+          }
 
-					if (fa.getLandmarksList() != null) {
-						face.setLandmarks(fa.getLandmarksList().stream().map(l -> {
-							FaceLandmark fl = new FaceLandmark();
-							fl.setType(l.getType());
-							fl.setX(l.getPosition().getX());
-							fl.setY(l.getPosition().getY());
-							fl.setZ(l.getPosition().getZ());
-							return fl;
-						}).collect(Collectors.toList()));
-					}
+          if (fa.getLandmarksList() != null) {
+            face.setLandmarks(fa.getLandmarksList().stream().map(l -> {
+              FaceLandmark fl = new FaceLandmark();
+              fl.setType(l.getType());
+              fl.setX(l.getPosition().getX());
+              fl.setY(l.getPosition().getY());
+              fl.setZ(l.getPosition().getZ());
+              return fl;
+            }).collect(Collectors.toList()));
+          }
 
-					faces.add(face);
-				}
-				result.setFaces(faces);
-			}
+          faces.add(face);
+        }
+        result.setFaces(faces);
+      }
 
-			SafeSearchAnnotation safeSearchAnnotation = resp.getSafeSearchAnnotation();
-			if (safeSearchAnnotation != null) {
-				SafeSearch safeSearch = new SafeSearch();
-				safeSearch.setAdult(safeSearchAnnotation.getAdult());
-				safeSearch.setAdultRating(
-						likelihoodToNumber(safeSearchAnnotation.getAdult()));
-				safeSearch.setMedical(safeSearchAnnotation.getMedical());
-				safeSearch.setMedicalRating(
-						likelihoodToNumber(safeSearchAnnotation.getMedical()));
-				safeSearch.setSpoof(safeSearchAnnotation.getSpoof());
-				safeSearch.setSpoofRating(
-						likelihoodToNumber(safeSearchAnnotation.getSpoof()));
-				safeSearch.setViolence(safeSearchAnnotation.getViolence());
-				safeSearch.setViolenceRating(
-						likelihoodToNumber(safeSearchAnnotation.getViolence()));
+      SafeSearchAnnotation safeSearchAnnotation = resp.getSafeSearchAnnotation();
+      if (safeSearchAnnotation != null) {
+        SafeSearch safeSearch = new SafeSearch();
+        safeSearch.setAdult(safeSearchAnnotation.getAdult());
+        safeSearch.setAdultRating(likelihoodToNumber(safeSearchAnnotation.getAdult()));
+        safeSearch.setMedical(safeSearchAnnotation.getMedical());
+        safeSearch
+            .setMedicalRating(likelihoodToNumber(safeSearchAnnotation.getMedical()));
+        safeSearch.setSpoof(safeSearchAnnotation.getSpoof());
+        safeSearch.setSpoofRating(likelihoodToNumber(safeSearchAnnotation.getSpoof()));
+        safeSearch.setViolence(safeSearchAnnotation.getViolence());
+        safeSearch
+            .setViolenceRating(likelihoodToNumber(safeSearchAnnotation.getViolence()));
 
-				result.setSafeSearch(safeSearch);
-			}
+        result.setSafeSearch(safeSearch);
+      }
 
-			WebDetection webDetection = resp.getWebDetection();
-			if (webDetection != null) {
-				Web web = new Web();
-				List<WebImage> fullMatchingImagesList = webDetection
-						.getFullMatchingImagesList();
-				List<WebPage> pagesWithMatchingImagesList = webDetection
-						.getPagesWithMatchingImagesList();
-				List<WebImage> partialMatchingImagesList = webDetection
-						.getPartialMatchingImagesList();
-				List<com.google.cloud.vision.v1.WebDetection.WebEntity> webEntitiesList = webDetection
-						.getWebEntitiesList();
+      WebDetection webDetection = resp.getWebDetection();
+      if (webDetection != null) {
+        Web web = new Web();
+        List<WebImage> fullMatchingImagesList = webDetection.getFullMatchingImagesList();
+        List<WebPage> pagesWithMatchingImagesList = webDetection
+            .getPagesWithMatchingImagesList();
+        List<WebImage> partialMatchingImagesList = webDetection
+            .getPartialMatchingImagesList();
+        List<com.google.cloud.vision.v1.WebDetection.WebEntity> webEntitiesList = webDetection
+            .getWebEntitiesList();
 
-				if (fullMatchingImagesList != null) {
-					web.setFullMatchingImages(fullMatchingImagesList.stream().map(e -> {
-						WebUrl wu = new WebUrl();
-						wu.setScore(e.getScore());
-						wu.setUrl(e.getUrl());
-						return wu;
-					}).collect(Collectors.toList()));
-				}
+        if (fullMatchingImagesList != null) {
+          web.setFullMatchingImages(fullMatchingImagesList.stream().map(e -> {
+            WebUrl wu = new WebUrl();
+            wu.setScore(e.getScore());
+            wu.setUrl(e.getUrl());
+            return wu;
+          }).collect(Collectors.toList()));
+        }
 
-				if (pagesWithMatchingImagesList != null) {
-					web.setPagesWithMatchingImages(
-							pagesWithMatchingImagesList.stream().map(e -> {
-								WebUrl wu = new WebUrl();
-								wu.setScore(e.getScore());
-								wu.setUrl(e.getUrl());
-								return wu;
-							}).collect(Collectors.toList()));
-				}
+        if (pagesWithMatchingImagesList != null) {
+          web.setPagesWithMatchingImages(pagesWithMatchingImagesList.stream().map(e -> {
+            WebUrl wu = new WebUrl();
+            wu.setScore(e.getScore());
+            wu.setUrl(e.getUrl());
+            return wu;
+          }).collect(Collectors.toList()));
+        }
 
-				if (partialMatchingImagesList != null) {
-					web.setPartialMatchingImages(
-							partialMatchingImagesList.stream().map(e -> {
-								WebUrl wu = new WebUrl();
-								wu.setScore(e.getScore());
-								wu.setUrl(e.getUrl());
-								return wu;
-							}).collect(Collectors.toList()));
-				}
+        if (partialMatchingImagesList != null) {
+          web.setPartialMatchingImages(partialMatchingImagesList.stream().map(e -> {
+            WebUrl wu = new WebUrl();
+            wu.setScore(e.getScore());
+            wu.setUrl(e.getUrl());
+            return wu;
+          }).collect(Collectors.toList()));
+        }
 
-				if (webEntitiesList != null) {
-					web.setWebEntities(webEntitiesList.stream().map(e -> {
-						if (StringUtils.hasText(e.getDescription())) {
-							WebEntity we = new WebEntity();
-							we.setDescription(e.getDescription());
-							we.setEntityId(e.getEntityId());
-							we.setScore(e.getScore());
-							return we;
-						}
-						return null;
-					}).filter(Objects::nonNull).collect(Collectors.toList()));
-				}
+        if (webEntitiesList != null) {
+          web.setWebEntities(webEntitiesList.stream().map(e -> {
+            if (StringUtils.hasText(e.getDescription())) {
+              WebEntity we = new WebEntity();
+              we.setDescription(e.getDescription());
+              we.setEntityId(e.getEntityId());
+              we.setScore(e.getScore());
+              return we;
+            }
+            return null;
+          }).filter(Objects::nonNull).collect(Collectors.toList()));
+        }
 
-				result.setWeb(web);
-			}
+        result.setWeb(web);
+      }
 
-			return result;
-		}
-		finally {
-			this.storage.delete(BlobId.of(BUCKET_NAME, uuid));
-		}
-	}
+      return result;
+    }
+    finally {
+      this.storage.delete(BlobId.of(BUCKET_NAME, uuid));
+    }
+  }
 
-	private static float likelihoodToNumber(Likelihood likelihood) {
-		switch (likelihood) {
-		case UNKNOWN:
-			return 0f;
-		case VERY_UNLIKELY:
-			return 0.2f;
-		case UNLIKELY:
-			return 0.4f;
-		case POSSIBLE:
-			return 0.6f;
-		case LIKELY:
-			return 0.8f;
-		case VERY_LIKELY:
-			return 1f;
-		case UNRECOGNIZED:
-			return 0f;
-		default:
-			return 0f;
-		}
-	}
+  private static float likelihoodToNumber(Likelihood likelihood) {
+    return switch (likelihood) {
+    case UNKNOWN -> 0f;
+    case VERY_UNLIKELY -> 0.2f;
+    case UNLIKELY -> 0.4f;
+    case POSSIBLE -> 0.6f;
+    case LIKELY -> 0.8f;
+    case VERY_LIKELY -> 1f;
+    case UNRECOGNIZED -> 0f;
+    default -> 0f;
+    };
+  }
 
 }

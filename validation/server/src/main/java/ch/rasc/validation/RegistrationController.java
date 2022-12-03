@@ -5,8 +5,6 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-import javax.validation.Valid;
-
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -15,6 +13,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
+import jakarta.validation.Valid;
 
 @RestController
 @CrossOrigin
@@ -45,16 +45,16 @@ public class RegistrationController {
     for (FieldError fieldError : result.getFieldErrors()) {
       String code = fieldError.getCode();
       String field = fieldError.getField();
-      if (code.equals("NotBlank") || code.equals("NotNull")) {
+      if ("NotBlank".equals(code) || "NotNull".equals(code)) {
         errors.computeIfAbsent(field, key -> new HashSet<>()).add("required");
       }
-      else if (code.equals("Email") && field.equals("email")) {
+      else if ("Email".equals(code) && "email".equals(field)) {
         errors.computeIfAbsent(field, key -> new HashSet<>()).add("pattern");
       }
-      else if (code.equals("Min") && field.equals("age")) {
+      else if ("Min".equals(code) && "age".equals(field)) {
         errors.computeIfAbsent(field, key -> new HashSet<>()).add("notOldEnough");
       }
-      else if (code.equals("Size") && field.equals("username")) {
+      else if ("Size".equals(code) && "username".equals(field)) {
         if (registration.getUsername().length() < 2) {
           errors.computeIfAbsent(field, key -> new HashSet<>()).add("minlength");
         }

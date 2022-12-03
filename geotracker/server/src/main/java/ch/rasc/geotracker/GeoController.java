@@ -4,8 +4,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import javax.servlet.http.HttpServletResponse;
-
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -23,6 +21,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import ch.rasc.sse.eventbus.SseEvent;
 import ch.rasc.sse.eventbus.SseEventBus;
+import jakarta.servlet.http.HttpServletResponse;
 
 @RestController
 @CrossOrigin
@@ -50,8 +49,9 @@ public class GeoController {
   }
 
   @GetMapping("/register/{id}")
-  public SseEmitter eventbus(@PathVariable("id") String id, HttpServletResponse response) {
-	  response.setHeader("Cache-Control", "no-store");
+  public SseEmitter eventbus(@PathVariable("id") String id,
+      HttpServletResponse response) {
+    response.setHeader("Cache-Control", "no-store");
     return this.eventBus.createSseEmitter(id, "pos", "clear");
   }
 

@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 @CrossOrigin
 public class PwManagerController {
 
-  private Map<ByteBuffer, byte[]> db = new ConcurrentHashMap<>();
+  private final Map<ByteBuffer, byte[]> db = new ConcurrentHashMap<>();
 
   @PostMapping("/fetch")
   public byte[] fetch(@RequestBody byte[] authenticationKey) {

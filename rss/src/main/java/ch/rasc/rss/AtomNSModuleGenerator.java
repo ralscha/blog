@@ -31,7 +31,7 @@ public class AtomNSModuleGenerator implements ModuleGenerator {
 
   @Override
   public void generate(Module module, Element element) {
-    boolean atomFeed = element.getName().equals("feed");
+    boolean atomFeed = "feed".equals(element.getName());
 
     AtomNSModule atomNSModule = (AtomNSModule) module;
 
