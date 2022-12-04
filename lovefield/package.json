@@ -21,7 +21,7 @@
     "@ionic/angular": "6.3.9",
     "lovefield": "2.1.12",
     "papaparse": "5.3.2",
-    "rxjs": "7.5.7",
+    "rxjs": "7.6.0",
     "tslib": "2.4.1",
     "zone.js": "0.12.0"
   },

@@ -19,7 +19,7 @@
     "@angular/router": "15.0.2",
     "@ionic/angular": "6.3.9",
     "dexie": "3.2.2",
-    "rxjs": "7.5.7",
+    "rxjs": "7.6.0",
     "stacktrace-js": "2.0.2",
     "tslib": "2.4.1",
     "zone.js": "0.12.0"

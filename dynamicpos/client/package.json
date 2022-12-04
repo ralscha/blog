@@ -20,7 +20,7 @@
     "@asymmetrik/ngx-leaflet": "15.0.1",
     "@ionic/angular": "6.3.9",
     "leaflet": "1.9.3",
-    "rxjs": "7.5.7",
+    "rxjs": "7.6.0",
     "tslib": "2.4.1",
     "zone.js": "0.12.0"
   },

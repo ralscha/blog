@@ -22,7 +22,7 @@
     "@angular/platform-browser": "15.0.2",
     "@angular/platform-browser-dynamic": "15.0.2",
     "@angular/router": "15.0.2",
-    "rxjs": "7.5.7",
+    "rxjs": "7.6.0",
     "tslib": "2.4.1",
     "workbox-core": "6.5.4",
     "workbox-precaching": "6.5.4",

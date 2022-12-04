@@ -23,7 +23,7 @@
     "@ionic-native/status-bar": "5.36.0",
     "@ionic/angular": "6.3.9",
     "cordova-android": "11.0.0",
-    "rxjs": "7.5.7",
+    "rxjs": "7.6.0",
     "tslib": "2.4.1",
     "zone.js": "0.12.0"
   },
