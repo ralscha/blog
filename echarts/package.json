@@ -22,7 +22,7 @@
     "@ionic/angular": "6.3.9",
     "date-fns": "2.29.3",
     "echarts": "5.4.0",
-    "ngx-echarts": "15.0.0",
+    "ngx-echarts": "15.0.1",
     "rxjs": "7.6.0",
     "tslib": "2.4.1",
     "zone.js": "0.12.0"
