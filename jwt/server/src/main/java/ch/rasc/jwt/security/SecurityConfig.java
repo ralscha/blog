@@ -6,13 +6,13 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationServiceException;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.annotation.web.configurers.CsrfConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.web.context.SecurityContextPersistenceFilter;
+import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.context.SecurityContextHolderFilter;
 
 @Configuration
-public class SecurityConfig extends WebSecurityConfigurerAdapter {
+public class SecurityConfig {
 
   private final TokenProvider tokenProvider;
 
@@ -21,25 +21,25 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
   }
 
   @Bean
-  @Override
-  protected AuthenticationManager authenticationManager() throws Exception {
+  AuthenticationManager authenticationManager() {
     return authentication -> {
       throw new AuthenticationServiceException("Cannot authenticate " + authentication);
     };
   }
 
-  @Override
-  protected void configure(HttpSecurity http) throws Exception {
+  @Bean
+  public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
     http.csrf(CsrfConfigurer::disable).cors(Customizer.withDefaults()).sessionManagement(
         customizer -> customizer.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
         // optional, if you want to access the
         // services from a browser
         // .httpBasic(Customizer.withDefaults())
-        .authorizeRequests(customizer -> {
-          customizer.antMatchers("/signup", "/login", "/public").permitAll();
+        .authorizeHttpRequests(customizer -> {
+          customizer.requestMatchers("/signup", "/login", "/public").permitAll();
           customizer.anyRequest().authenticated();
         }).addFilterAfter(new JWTFilter(this.tokenProvider),
-            SecurityContextPersistenceFilter.class);
+            SecurityContextHolderFilter.class);
+    return http.build();
   }
 
 }
