@@ -2,9 +2,6 @@ package ch.rasc.demo.poll;
 
 import java.util.concurrent.ConcurrentMap;
 
-import javax.annotation.PreDestroy;
-import javax.servlet.http.HttpServletResponse;
-
 import org.mapdb.DB;
 import org.mapdb.DBMaker;
 import org.mapdb.Serializer;
@@ -20,6 +17,8 @@ import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 
 import ch.rasc.sse.eventbus.SseEvent;
 import ch.rasc.sse.eventbus.SseEventBus;
+import jakarta.annotation.PreDestroy;
+import jakarta.servlet.http.HttpServletResponse;
 
 @Controller
 @CrossOrigin
