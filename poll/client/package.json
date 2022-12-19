@@ -9,14 +9,14 @@
     "watch": "parcel watch"
   },
   "dependencies": {
-    "echarts": "5.4.0",
+    "echarts": "5.4.1",
     "muicss": "0.10.3",
     "uuid": "9.0.0"
   },
   "devDependencies": {
-    "@parcel/compressor-brotli": "2.8.0",
-    "@parcel/compressor-gzip": "2.8.0",
+    "@parcel/compressor-brotli": "2.8.2",
+    "@parcel/compressor-gzip": "2.8.2",
     "buffer": "^5.7.1",
-    "parcel": "2.8.0"
+    "parcel": "2.8.2"
   }
 }

@@ -10,12 +10,12 @@
     "watch": "parcel watch"
   },
   "devDependencies": {
-    "@parcel/compressor-brotli": "2.8.0",
-    "@parcel/compressor-gzip": "2.8.0",
-    "parcel": "2.8.0"
+    "@parcel/compressor-brotli": "2.8.2",
+    "@parcel/compressor-gzip": "2.8.2",
+    "parcel": "2.8.2"
   },
   "dependencies": {
-    "echarts": "5.4.0",
+    "echarts": "5.4.1",
     "uuid": "9.0.0"
   }
 }
