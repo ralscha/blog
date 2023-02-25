@@ -14,7 +14,7 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>3.0.2</version>
+		<version>3.0.3</version>
 		<relativePath />
 	</parent>
 
@@ -44,13 +44,6 @@
 			<groupId>ch.rasc</groupId>
 			<artifactId>sse-eventbus</artifactId>
 			<version>2.0.0</version>
-		</dependency>
-
-		<dependency>
-			<groupId>com.google.code.findbugs</groupId>
-			<artifactId>jsr305</artifactId>
-			<version>3.0.2</version>
-			<optional>true</optional>
 		</dependency>
 	</dependencies>
 
