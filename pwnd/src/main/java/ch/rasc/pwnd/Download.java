@@ -1,51 +1,52 @@
 package ch.rasc.pwnd;
 
-import java.io.IOException;
-import java.net.InetAddress;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.nio.file.StandardCopyOption;
-import java.security.NoSuchAlgorithmException;
-
-import com.turn.ttorrent.client.Client;
-import com.turn.ttorrent.client.SharedTorrent;
-
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 import okhttp3.ResponseBody;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
 public class Download {
 
-  public static void main(String[] args) throws IOException, NoSuchAlgorithmException {
-    String torrentURL = "https://downloads.pwnedpasswords.com/passwords/pwned-passwords-sha1-ordered-by-hash-v8.7z.torrent";
+  private final static String RANGE_API = "https://api.pwnedpasswords.com/range/";
 
-    Path torrentFile = Paths.get("e:/temp/pwned.torrent");
-    OkHttpClient client = new OkHttpClient();
-    Request request = new Request.Builder().url(torrentURL).build();
-    try (Response response = client.newCall(request).execute();
-        ResponseBody body = response.body()) {
-      if (body == null) {
-        System.out.println("could not download torrent file");
-        return;
-      }
-      Files.copy(body.byteStream(), torrentFile, StandardCopyOption.REPLACE_EXISTING);
+  public static void main(String[] args) throws IOException {
+    int numThreads = Runtime.getRuntime().availableProcessors() * 8;
+
+    OkHttpClient httpClient = new OkHttpClient();
+    ExecutorService executor = Executors.newFixedThreadPool(numThreads);
+
+    Path outputDir = Paths.get("./pwned");
+    Files.createDirectories(outputDir);
+
+    int max = 1024 * 1024;
+    for (int i = 0; i < max; i++) {
+      String range = getRange(i);
+      executor.execute(() -> downloadRange(httpClient, range, outputDir));
     }
+  }
 
-    Path outputDir = Paths.get("e:/temp");
+  private static void downloadRange(OkHttpClient httpClient, String hashPrefix, Path outputDir) {
+    Request request = new Request.Builder().url(RANGE_API + hashPrefix).build();
+    try (Response response = httpClient.newCall(request).execute();
+        ResponseBody body = response.body()) {
+      Files.copy(body.byteStream(), outputDir.resolve(hashPrefix), StandardCopyOption.REPLACE_EXISTING);
+    }
+    catch (IOException e) {
+      e.printStackTrace();
+    }
+  }
 
-    Client torrentClient = new Client(InetAddress.getLocalHost(),
-        SharedTorrent.fromFile(torrentFile.toFile(), outputDir.toFile()));
-
-    torrentClient.addObserver((observable, data) -> {
-      float progress = ((Client) observable).getTorrent().getCompletion();
-      System.out.println(progress + "%");
-    });
-
-    torrentClient.download();
-    torrentClient.waitForCompletion();
-
+  private static String getRange(int i) {
+    String hex = Integer.toHexString(i);
+    return ("00000".substring(hex.length()) + hex).toUpperCase();
   }
 
 }

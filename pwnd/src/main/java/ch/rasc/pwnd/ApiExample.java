@@ -36,19 +36,17 @@ public class ApiExample {
     Request request = new Request.Builder().url(url).build();
     try (Response response = client.newCall(request).execute();
         ResponseBody body = response.body()) {
-      if (body != null) {
-        String hashes = body.string();
-        String lines[] = hashes.split("\\r?\\n");
+      String hashes = body.string();
+      String[] lines = hashes.split("\\r?\\n");
 
-        for (String line : lines) {
-          if (line.startsWith(suffixHash)) {
-            System.out.println(
-                "password found, count: " + line.substring(line.indexOf(":") + 1));
-            return;
-          }
+      for (String line : lines) {
+        if (line.startsWith(suffixHash)) {
+          System.out.println(
+              "password found, count: " + line.substring(line.indexOf(":") + 1));
+          return;
         }
-        System.out.println("password not found");
       }
+      System.out.println("password not found");
 
     }
 

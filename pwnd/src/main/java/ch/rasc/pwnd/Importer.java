@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.atomic.AtomicLong;
 
 import org.jetbrains.annotations.NotNull;
@@ -21,41 +23,63 @@ public class Importer {
 
   public static void main(String[] args) {
 
-    final long totalLines = 847_223_402L;
-
-    try (Environment env = Environments.newInstance("e:/temp/pwnd")) {
+    try (Environment env = Environments.newInstance("./pwned_db")) {
       env.executeInTransaction((@NotNull final Transaction txn) -> {
         Store store = env.openStore("passwords", StoreConfig.WITHOUT_DUPLICATES, txn);
-        Path inputFile = Paths.get("E:/temp/pwned-passwords-ordered-by-hash.txt");
-        try {
-          AtomicLong round = new AtomicLong();
-          AtomicLong counter = new AtomicLong();
-          Files.lines(inputFile).forEach(line -> {
-            long c = counter.incrementAndGet();
-            if (c > 10_500_000) {
-              txn.flush();
-              System.out.printf("Imported: %3.1f%% %n",
-                  (double) (round.incrementAndGet() * 10_500_000) / (double) totalLines
-                      * 100.0d);
-              counter.set(0);
-            }
-            handleLine(store, txn, line);
-          });
+        Path inputDir = Paths.get("./pwned");
 
-          txn.commit();
+        final AtomicLong importCounter = new AtomicLong(0L);
+        final AtomicLong fileCounter = new AtomicLong(0L);
+
+        List<String> hashFiles = listAllFiles(inputDir);
+        int totalFiles = hashFiles.size();
+        for (String hashFile : hashFiles) {
+          Path inputFile = Paths.get(hashFile);
+          try (var linesReader = Files.lines(inputFile)) {
+            linesReader.forEach(line -> {
+              long c = importCounter.incrementAndGet();
+              if (c > 10_500_000) {
+                txn.flush();
+                System.out.println("Processed no of files " + fileCounter.get() + " of " + totalFiles);
+                importCounter.set(0L);
+              }
+              handleLine(store, txn, hashFile, line);
+            });
+
+          } catch (IOException e) {
+            throw new RuntimeException(e);
+          }
+
+          fileCounter.incrementAndGet();
         }
-        catch (IOException e) {
-          e.printStackTrace();
-        }
+
+        txn.commit();
       });
     }
   }
 
-  static void handleLine(Store store, Transaction txn, String line) {
-    String sha1 = line.substring(0, 40);
-    int count = Integer.parseInt(line.substring(41).trim());
+  static List<String> listAllFiles(Path inputDir) {
+    List<String> files = new ArrayList<>();
+    try (var walker = Files.walk(inputDir)) {
+      walker.forEach(filePath -> {
+        if (Files.isRegularFile(filePath)) {
+          files.add(filePath.toString());
+        }
+      });
+    }
+    catch (IOException e) {
+      e.printStackTrace();
+    }
 
-    ByteIterable key = new ArrayByteIterable(hexStringToByteArray(sha1));
+    files.sort(String::compareTo);
+    return files;
+  }
+
+  static void handleLine(Store store, Transaction txn, String prefix, String line) {
+    String sha1 = line.substring(0, 35);
+    int count = Integer.parseInt(line.substring(36).trim());
+
+    ByteIterable key = new ArrayByteIterable(hexStringToByteArray(prefix+sha1));
     store.putRight(txn, key, IntegerBinding.intToCompressedEntry(count));
   }
 

@@ -25,7 +25,7 @@ public class Search {
   }
 
   public static void main(String[] args) {
-    try (Environment env = Environments.newInstance("e:/temp/pwnd")) {
+    try (Environment env = Environments.newInstance("./pwned_db")) {
       for (String pw : Arrays.asList("123456", "password", "654321", "qwerty",
           "letmein")) {
         long start = System.currentTimeMillis();
