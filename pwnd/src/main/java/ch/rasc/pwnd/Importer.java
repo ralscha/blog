@@ -34,7 +34,7 @@ public class Importer {
         List<String> hashFiles = listAllFiles(inputDir);
         int totalFiles = hashFiles.size();
         for (String hashFile : hashFiles) {
-          Path inputFile = Paths.get(hashFile);
+          Path inputFile = inputDir.resolve(Paths.get(hashFile));
           try (var linesReader = Files.lines(inputFile)) {
             linesReader.forEach(line -> {
               long c = importCounter.incrementAndGet();
@@ -66,7 +66,7 @@ public class Importer {
     try (var walker = Files.walk(inputDir)) {
       walker.forEach(filePath -> {
         if (Files.isRegularFile(filePath)) {
-          files.add(filePath.toString());
+          files.add(filePath.getFileName().toString());
         }
       });
     }
