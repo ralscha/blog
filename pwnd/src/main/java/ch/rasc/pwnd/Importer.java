@@ -38,15 +38,18 @@ public class Importer {
           try (var linesReader = Files.lines(inputFile)) {
             linesReader.forEach(line -> {
               long c = importCounter.incrementAndGet();
-              if (c > 10_500_000) {
+              if (c > 10_000_000) {
                 txn.flush();
-                System.out.println("Processed no of files " + fileCounter.get() + " of " + totalFiles);
+                System.out.println(
+                    "Processed no of files " + fileCounter.get() + " of " + totalFiles);
                 importCounter.set(0L);
               }
-              handleLine(store, txn, hashFile, line);
+              String hashPrefix = hashFile.substring(0, hashFile.lastIndexOf("."));
+              handleLine(store, txn, hashPrefix, line);
             });
 
-          } catch (IOException e) {
+          }
+          catch (IOException e) {
             throw new RuntimeException(e);
           }
 
@@ -79,7 +82,7 @@ public class Importer {
     String sha1 = line.substring(0, 35);
     int count = Integer.parseInt(line.substring(36).trim());
 
-    ByteIterable key = new ArrayByteIterable(hexStringToByteArray(prefix+sha1));
+    ByteIterable key = new ArrayByteIterable(hexStringToByteArray(prefix + sha1));
     store.putRight(txn, key, IntegerBinding.intToCompressedEntry(count));
   }
 

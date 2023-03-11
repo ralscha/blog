@@ -20,7 +20,7 @@
     "@angular/router": "15.2.2",
     "@ionic/angular": "6.6.1",
     "lovefield": "2.1.12",
-    "papaparse": "5.3.2",
+    "papaparse": "5.4.0",
     "rxjs": "7.8.0",
     "tslib": "2.5.0",
     "zone.js": "0.13.0"
@@ -37,7 +37,7 @@
     "@ionic/angular-toolkit": "8.0.0",
     "@typescript-eslint/eslint-plugin": "5.54.1",
     "@typescript-eslint/parser": "5.54.1",
-    "eslint": "8.35.0",
+    "eslint": "8.36.0",
     "local-web-server": "5.3.0",
     "typescript": "4.9.5"
   }

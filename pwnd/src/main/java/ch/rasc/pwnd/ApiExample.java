@@ -41,8 +41,8 @@ public class ApiExample {
 
       for (String line : lines) {
         if (line.startsWith(suffixHash)) {
-          System.out.println(
-              "password found, count: " + line.substring(line.indexOf(":") + 1));
+          System.out
+              .println("password found, count: " + line.substring(line.indexOf(":") + 1));
           return;
         }
       }
