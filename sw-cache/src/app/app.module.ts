@@ -1,4 +1,4 @@
-import {NgModule} from '@angular/core';
+import {CUSTOM_ELEMENTS_SCHEMA, NgModule} from '@angular/core';
 import {BrowserModule} from '@angular/platform-browser';
 import {RouteReuseStrategy, RouterModule, Routes} from '@angular/router';
 import {IonicModule, IonicRouteStrategy} from '@ionic/angular';
@@ -7,7 +7,6 @@ import {HomePage} from './home/home.page';
 import {CommonModule} from '@angular/common';
 import {FormsModule} from '@angular/forms';
 import {HttpClientModule} from '@angular/common/http';
-import {SwiperModule} from 'swiper/angular';
 
 const routes: Routes = [
   {path: '', redirectTo: 'home', pathMatch: 'full'},
@@ -15,14 +14,14 @@ const routes: Routes = [
 ];
 
 @NgModule({
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
   declarations: [AppComponent, HomePage],
   imports: [BrowserModule,
     CommonModule,
-    SwiperModule,
     HttpClientModule,
     FormsModule,
     IonicModule.forRoot(),
-    RouterModule.forRoot(routes, { useHash: true })],
+    RouterModule.forRoot(routes, {useHash: true})],
   providers: [
     {provide: RouteReuseStrategy, useClass: IonicRouteStrategy}
   ],

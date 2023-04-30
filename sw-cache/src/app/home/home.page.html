@@ -7,7 +7,7 @@
 </ion-header>
 
 <ion-content class="ion-padding">
-  <swiper [pagination]="true">
-    <ng-template swiperSlide *ngFor="let pic of pictures"><img [src]="pic" alt="pic"></ng-template>
-  </swiper>
+  <swiper-container [modules]="swiperModules" [pagination]="true">
+    <swiper-slide *ngFor="let pic of pictures"><img [src]="pic" alt="pic"></swiper-slide>
+  </swiper-container>
 </ion-content>

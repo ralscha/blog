@@ -1,7 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import SwiperCore, { Autoplay, Keyboard, Pagination, Scrollbar, Zoom } from 'swiper';
-
-SwiperCore.use([Autoplay, Keyboard, Pagination, Scrollbar, Zoom]);
+import {IonicSlides} from '@ionic/angular';
 
 @Component({
   selector: 'app-home',
@@ -9,7 +7,7 @@ SwiperCore.use([Autoplay, Keyboard, Pagination, Scrollbar, Zoom]);
   styleUrls: ['./home.page.scss']
 })
 export class HomePage implements OnInit {
-
+  swiperModules = [IonicSlides];
   pictures: string[] = [];
 
   constructor() {
