@@ -33,11 +33,11 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
-				<version>3.10.1</version>
+				<version>3.11.0</version>
 				<configuration>
 					<debug>true</debug>
-					<source>19</source>
-					<target>19</target>
+					<target>20</target>
+					<source>20</source>
 					<parameters>true</parameters>
 				</configuration>
 			</plugin>

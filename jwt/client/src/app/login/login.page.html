@@ -6,27 +6,19 @@
 
 <ion-content class="ion-padding">
   <form #form="ngForm" (ngSubmit)="login(form.value)" novalidate>
-    <ion-list>
+    <ion-list lines="none">
       <ion-item>
-        <ion-label position="stacked">Username</ion-label>
-        <ion-input #username="ngModel" [class.invalid]="username.errors && username.dirty" [required]="true" name="username" ngModel
+        <ion-input #username="ngModel" [class.invalid]="username.errors && username.dirty" [required]="true"
+                   errorText="Username is required" label="Username"
+                   labelPlacement="stacked" name="username" ngModel
                    type="text"></ion-input>
-      </ion-item>
-      <ion-item *ngIf="username.errors?.['required'] && username.dirty" class="error-message">
-        <ion-label>
-          Username is required
-        </ion-label>
       </ion-item>
 
       <ion-item>
-        <ion-label position="stacked">Password</ion-label>
-        <ion-input #password="ngModel" [class.invalid]="password.errors && password.dirty" [required]="true" name="password" ngModel
+        <ion-input #password="ngModel" [class.invalid]="password.errors && password.dirty" [required]="true"
+                   errorText="Password is required" label="Password"
+                   labelPlacement="stacked" name="password" ngModel
                    type="password"></ion-input>
-      </ion-item>
-      <ion-item *ngIf="password.errors?.['required'] && password.dirty" class="error-message">
-        <ion-label>
-          Password is required
-        </ion-label>
       </ion-item>
 
       <div class="ion-padding">

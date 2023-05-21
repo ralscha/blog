@@ -5,6 +5,7 @@ import * as geolib from 'geolib';
 import {map} from 'rxjs/operators';
 import {HttpClient} from '@angular/common/http';
 import {Earthquake} from './earthquake';
+
 /* eslint-disable @typescript-eslint/no-explicit-any */
 @Injectable({
   providedIn: 'root'

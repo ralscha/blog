@@ -7,7 +7,7 @@ import {Filter} from '../filter';
 })
 export class FilterPopoverComponent implements OnInit {
 
-  filter: Filter;
+  filter!: Filter;
 
   constructor(private readonly navParams: NavParams,
               private readonly popoverController: PopoverController) {
@@ -17,7 +17,7 @@ export class FilterPopoverComponent implements OnInit {
     this.filter = this.navParams.get('filter');
   }
 
-  apply({value}) {
+  apply({value}: { value: any }) {
     this.popoverController.dismiss(value);
   }
 }

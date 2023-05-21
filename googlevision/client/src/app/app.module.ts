@@ -6,7 +6,7 @@ import {AppComponent} from './app.component';
 import {HomePage} from './home/home.page';
 import {CommonModule} from '@angular/common';
 import {FormsModule} from '@angular/forms';
-import {AgmCoreModule} from '@agm/core';
+import {GoogleMapsModule} from "@angular/google-maps";
 
 const routes: Routes = [
   {path: '', redirectTo: 'home', pathMatch: 'full'},
@@ -16,9 +16,7 @@ const routes: Routes = [
 @NgModule({
   declarations: [AppComponent, HomePage],
   imports: [BrowserModule,
-    AgmCoreModule.forRoot({
-      apiKey: 'AIzaSyAZjJ216B4aJGdXTwXNevmXesob9RUSlPc'
-    }),
+    GoogleMapsModule,
     CommonModule,
     FormsModule,
     IonicModule.forRoot(),

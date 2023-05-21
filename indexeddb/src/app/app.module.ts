@@ -9,8 +9,8 @@ import {FormsModule} from '@angular/forms';
 import {DetailComponent} from './detail/detail.component';
 import {FilterPage} from './filter/filter.page';
 import {HttpClientModule} from '@angular/common/http';
-import { ServiceWorkerModule } from '@angular/service-worker';
-import { environment } from '../environments/environment';
+import {ServiceWorkerModule} from '@angular/service-worker';
+import {environment} from '../environments/environment';
 import {ScrollingModule} from '@angular/cdk/scrolling';
 
 const routes: Routes = [
@@ -26,8 +26,8 @@ const routes: Routes = [
     FormsModule,
     HttpClientModule,
     IonicModule.forRoot(),
-    RouterModule.forRoot(routes, { useHash: true }),
-    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })],
+    RouterModule.forRoot(routes, {useHash: true}),
+    ServiceWorkerModule.register('ngsw-worker.js', {enabled: environment.production})],
   providers: [
     {provide: RouteReuseStrategy, useClass: IonicRouteStrategy}
   ],

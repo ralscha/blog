@@ -17,23 +17,21 @@
 
   <ion-list>
     <ion-item>
-      <ion-label position="stacked">URL</ion-label>
-      <ion-input [(ngModel)]="password!.url" [required]="true" type="text"></ion-input>
+      <ion-input [(ngModel)]="password!.url" [required]="true" label="URL" labelPlacement="stacked"
+                 type="text"></ion-input>
     </ion-item>
 
     <ion-item>
-      <ion-label position="stacked">Username</ion-label>
-      <ion-input [(ngModel)]="password!.username" type="text"></ion-input>
+      <ion-input [(ngModel)]="password!.username" label="Username" labelPlacement="stacked" type="text"></ion-input>
     </ion-item>
 
     <ion-item>
-      <ion-label position="stacked">Password</ion-label>
-      <ion-input [(ngModel)]="password!.password" type="text"></ion-input>
+      <ion-input [(ngModel)]="password!.password" label="Password" labelPlacement="stacked" type="text"></ion-input>
     </ion-item>
 
     <ion-item>
-      <ion-label position="stacked">Description</ion-label>
-      <ion-input [(ngModel)]="password!.description" type="text"></ion-input>
+      <ion-input [(ngModel)]="password!.description" label="Description" labelPlacement="stacked"
+                 type="text"></ion-input>
     </ion-item>
   </ion-list>
 

@@ -208,12 +208,12 @@
     </ion-item>
   </ion-list>
 
-  <agm-map *ngIf="markers.length > 0 && lat && lng"
-           [fullscreenControl]="true"
-           [latitude]="lat"
-           [longitude]="lng" [zoom]="zoom">
-    <agm-marker *ngFor="let m of markers" [latitude]="m.lat" [longitude]="m.lng"></agm-marker>
-  </agm-map>
+  <div id="map">
+    <google-map *ngIf="markers.length > 0" [options]="mapOptions">
+      <map-marker *ngFor="let m of markers"
+                  [position]="{lat: m.lat, lng: m.lng}"></map-marker>
+    </google-map>
+  </div>
 
   <ul *ngIf="visionResult !== null && detail === 'safeSearch'">
     <li>

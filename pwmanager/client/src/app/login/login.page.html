@@ -8,13 +8,13 @@
   <form (ngSubmit)="login(username.value, password.value)">
     <ion-list>
       <ion-item>
-        <ion-label position="stacked">Username</ion-label>
-        <ion-input #username="ngModel" [required]="true" name="username" ngModel></ion-input>
+        <ion-input #username="ngModel" [required]="true" label="Username" labelPlacement="stacked" name="username"
+                   ngModel></ion-input>
       </ion-item>
 
       <ion-item>
-        <ion-label position="stacked">Password</ion-label>
         <ion-input #password="ngModel" (keydown.enter)="login(username.value, password.value)" [required]="true"
+                   label="Password" labelPlacement="stacked"
                    name="password"
                    ngModel type="password"></ion-input>
       </ion-item>

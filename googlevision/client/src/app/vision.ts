@@ -9,7 +9,14 @@ export interface VisionResult {
   web: Web;
 }
 
-export type Likelihood = 'UNKNOWN' | 'VERY_UNLIKELY' | 'UNLIKELY' | 'POSSIBLE' | 'LIKELY' | 'VERY_LIKELY' | 'UNRECOGNIZED';
+export type Likelihood =
+  'UNKNOWN'
+  | 'VERY_UNLIKELY'
+  | 'UNLIKELY'
+  | 'POSSIBLE'
+  | 'LIKELY'
+  | 'VERY_LIKELY'
+  | 'UNRECOGNIZED';
 
 export interface Face {
   rollAngle: number;

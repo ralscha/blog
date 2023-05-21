@@ -12,8 +12,9 @@
     <ion-list>
 
       <ion-item>
-        <ion-label position="stacked">Username</ion-label>
-        <ion-input [class.invalid]="isInvalidAndDirty('username')" formControlName="username" type="text"></ion-input>
+        <ion-input [class.invalid]="isInvalidAndDirty('username')"
+                   formControlName="username" label="Username"
+                   labelPlacement="stacked" type="text"></ion-input>
       </ion-item>
       <ion-item *ngIf="hasError('username', 'required')" class="error-message">
         <ion-label>
@@ -37,8 +38,9 @@
       </ion-item>
 
       <ion-item>
-        <ion-label position="stacked">Email</ion-label>
-        <ion-input [class.invalid]="isInvalidAndDirty('email')" formControlName="email" type="email"></ion-input>
+        <ion-input [class.invalid]="isInvalidAndDirty('email')"
+                   formControlName="email" label="Email"
+                   labelPlacement="stacked" type="email"></ion-input>
       </ion-item>
       <ion-item *ngIf="hasError('email', 'required')" class="error-message">
         <ion-label>
@@ -52,8 +54,9 @@
       </ion-item>
 
       <ion-item>
-        <ion-label position="stacked">Age</ion-label>
-        <ion-input [class.invalid]="isInvalidAndDirty('age')" formControlName="age" type="number"></ion-input>
+        <ion-input [class.invalid]="isInvalidAndDirty('age')"
+                   formControlName="age" label="Age"
+                   labelPlacement="stacked" type="number"></ion-input>
       </ion-item>
       <ion-item *ngIf="hasError('age', 'required')" class="error-message">
         <ion-label>

@@ -24,9 +24,9 @@
 
   <cdk-virtual-scroll-viewport itemSize="128" minBufferPx="900" maxBufferPx="1350">
     <ion-item *cdkVirtualFor="let earthquake of earthquakes">
-      <ion-label>
+      <ion-grid>
         <app-detail [earthquake]="earthquake" [referenceLocation]="filter.myLocation"></app-detail>
-      </ion-label>
+      </ion-grid>
     </ion-item>
   </cdk-virtual-scroll-viewport>
 </ion-content>

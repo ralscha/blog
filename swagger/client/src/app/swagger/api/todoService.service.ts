@@ -42,21 +42,6 @@ export class TodoServiceService {
   }
 
   /**
-   * @param consumes string[] mime-types
-   * @return true: consumes contains 'multipart/form-data', false: otherwise
-   */
-  private canConsumeForm(consumes: string[]): boolean {
-    const form = 'multipart/form-data';
-    for (const consume of consumes) {
-      if (form === consume) {
-        return true;
-      }
-    }
-    return false;
-  }
-
-
-  /**
    * Deletes a todo entry
    *
    * @param id Primary key of the todo entity
@@ -64,8 +49,11 @@ export class TodoServiceService {
    * @param reportProgress flag to report request and response progress.
    */
   public deleteUsingPOST(id: string, observe?: 'body', reportProgress?: boolean): Observable<any>;
+
   public deleteUsingPOST(id: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
+
   public deleteUsingPOST(id: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
+
   public deleteUsingPOST(id: string, observe: any = 'body', reportProgress = false): Observable<any> {
 
     if (id === null || id === undefined) {
@@ -106,8 +94,11 @@ export class TodoServiceService {
    * @param reportProgress flag to report request and response progress.
    */
   public listUsingGET(observe?: 'body', reportProgress?: boolean): Observable<Array<Todo>>;
+
   public listUsingGET(observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Array<Todo>>>;
+
   public listUsingGET(observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Array<Todo>>>;
+
   public listUsingGET(observe: any = 'body', reportProgress = false): Observable<any> {
 
     let headers = this.defaultHeaders;
@@ -142,8 +133,11 @@ export class TodoServiceService {
    * @param reportProgress flag to report request and response progress.
    */
   public saveUsingPOST(todo: Todo, observe?: 'body', reportProgress?: boolean): Observable<any>;
+
   public saveUsingPOST(todo: Todo, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
+
   public saveUsingPOST(todo: Todo, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
+
   public saveUsingPOST(todo: Todo, observe: any = 'body', reportProgress = false): Observable<any> {
 
     if (todo === null || todo === undefined) {
@@ -179,6 +173,20 @@ export class TodoServiceService {
         reportProgress: reportProgress
       }
     );
+  }
+
+  /**
+   * @param consumes string[] mime-types
+   * @return true: consumes contains 'multipart/form-data', false: otherwise
+   */
+  private canConsumeForm(consumes: string[]): boolean {
+    const form = 'multipart/form-data';
+    for (const consume of consumes) {
+      if (form === consume) {
+        return true;
+      }
+    }
+    return false;
   }
 
 }

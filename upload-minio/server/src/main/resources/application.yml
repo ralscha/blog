@@ -1,5 +1,5 @@
 minio:
-  endpoint: https://a8b95aa6e22d.ngrok.io
+  endpoint: http://127.0.0.1:9000
   access-key: minioadmin
   secret-key: minioadmin
   region: us-east-1

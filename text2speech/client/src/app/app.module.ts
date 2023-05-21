@@ -15,7 +15,7 @@ const routes: Routes = [
   declarations: [AppComponent, HomePage],
   imports: [BrowserModule,
     CommonModule,
-    FormsModule, IonicModule.forRoot(), RouterModule.forRoot(routes, { useHash: true })],
+    FormsModule, IonicModule.forRoot(), RouterModule.forRoot(routes, {useHash: true})],
   providers: [
     {provide: RouteReuseStrategy, useClass: IonicRouteStrategy}
   ],

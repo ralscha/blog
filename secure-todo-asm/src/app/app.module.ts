@@ -1,4 +1,4 @@
-import {NgModule} from '@angular/core';
+import {inject, NgModule} from '@angular/core';
 import {BrowserModule} from '@angular/platform-browser';
 import {RouteReuseStrategy, RouterModule, Routes} from '@angular/router';
 import {IonicModule, IonicRouteStrategy} from '@ionic/angular';
@@ -12,10 +12,10 @@ import {EditPage} from './edit/edit.page';
 
 const routes: Routes = [
   {path: '', redirectTo: 'home', pathMatch: 'full'},
-  {path: 'home', component: HomePage, canActivate: [AuthGuard]},
+  {path: 'home', component: HomePage, canActivate: [() => inject(AuthGuard).canActivate()]},
   {path: 'password', component: PasswordPage},
-  {path: 'edit', component: EditPage, canActivate: [AuthGuard]},
-  {path: 'edit/:id', component: EditPage, canActivate: [AuthGuard]},
+  {path: 'edit', component: EditPage, canActivate: [() => inject(AuthGuard).canActivate()]},
+  {path: 'edit/:id', component: EditPage, canActivate: [() => inject(AuthGuard).canActivate()]},
   {path: '**', redirectTo: '/home'}
 ];
 
@@ -25,7 +25,7 @@ const routes: Routes = [
     CommonModule,
     FormsModule,
     IonicModule.forRoot(),
-    RouterModule.forRoot(routes, { useHash: true })],
+    RouterModule.forRoot(routes, {useHash: true})],
   providers: [
     {provide: RouteReuseStrategy, useClass: IonicRouteStrategy}
   ],

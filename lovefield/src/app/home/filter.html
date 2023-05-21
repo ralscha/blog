@@ -1,26 +1,27 @@
 <form #f="ngForm" (ngSubmit)="apply(f)" class="ion-padding">
   <ion-item-group>
     <ion-item-divider color="light">
-      <ion-label>Filter Magnitude: <strong>{{f.controls.mag?.value?.lower}} - {{f.controls.mag?.value?.upper}}</strong>
+      <ion-label>Filter Magnitude: <strong>{{f.controls['mag']?.value?.lower}}
+        - {{f.controls['mag']?.value?.upper}}</strong>
       </ion-label>
     </ion-item-divider>
 
-    <ion-range [ngModel]="filter.mag" [dualKnobs]="true" [max]="10" [min]="-1" name="mag" class="ion-no-padding">
+    <ion-range [dualKnobs]="true" [max]="10" [min]="-1" [ngModel]="filter.mag" class="ion-no-padding" name="mag">
       <ion-label slot="start">-1</ion-label>
-      <ion-label slot="end" class="ion-text-right">10</ion-label>
+      <ion-label class="ion-text-right" slot="end">10</ion-label>
     </ion-range>
 
   </ion-item-group>
 
   <ion-item-group>
     <ion-item-divider color="light">
-      <ion-label>Filter Depth: <strong>{{f.controls.depth?.value?.lower}} - {{f.controls.depth?.value?.upper}}
+      <ion-label>Filter Depth: <strong>{{f.controls['depth']?.value?.lower}} - {{f.controls['depth']?.value?.upper}}
         km</strong></ion-label>
     </ion-item-divider>
 
-    <ion-range [ngModel]="filter.depth" [dualKnobs]="true" [max]="800" [min]="-10" name="depth" class="ion-no-padding">
+    <ion-range [dualKnobs]="true" [max]="800" [min]="-10" [ngModel]="filter.depth" class="ion-no-padding" name="depth">
       <ion-label slot="start">-10 km</ion-label>
-      <ion-label slot="end" class="ion-text-right">800 km</ion-label>
+      <ion-label class="ion-text-right" slot="end">800 km</ion-label>
     </ion-range>
 
   </ion-item-group>
@@ -32,7 +33,7 @@
       </ion-item-divider>
 
       <ion-select [ngModel]="filter.time" name="time">
-        <ion-select-option selected='true' value="-1">All</ion-select-option>
+        <ion-select-option value="-1">All</ion-select-option>
         <ion-select-option value="1">Last hour</ion-select-option>
         <ion-select-option value="6">Last 6 hours</ion-select-option>
         <ion-select-option value="12">Last 12 hours</ion-select-option>
@@ -44,22 +45,19 @@
     </ion-radio-group>
   </ion-item-group>
 
-  <ion-item-group name="sort">
+  <ion-item-group>
     <ion-radio-group [ngModel]="filter.sort" name="sort">
       <ion-item-divider color="light">
         <ion-label>Sort by</ion-label>
       </ion-item-divider>
       <ion-item>
-        <ion-label>Magnitude</ion-label>
-        <ion-radio slot="start" value="mag"></ion-radio>
+        <ion-radio slot="start" value="mag">Magnitude</ion-radio>
       </ion-item>
       <ion-item>
-        <ion-label>Depth</ion-label>
-        <ion-radio slot="start" value="depth"></ion-radio>
+        <ion-radio slot="start" value="depth">Depth</ion-radio>
       </ion-item>
       <ion-item>
-        <ion-label>Time</ion-label>
-        <ion-radio slot="start" value="time"></ion-radio>
+        <ion-radio slot="start" value="time">Time</ion-radio>
       </ion-item>
     </ion-radio-group>
   </ion-item-group>

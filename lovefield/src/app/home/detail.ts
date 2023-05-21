@@ -7,6 +7,6 @@ import {Component, Input} from '@angular/core';
 export class DetailComponent {
 
   @Input()
-  earthquake;
+  earthquake: any;
 
 }

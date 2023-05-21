@@ -10,8 +10,8 @@ import {Filter} from '../filter';
   styleUrls: ['./home.page.scss']
 })
 export class HomePage implements OnInit {
-  earthquakes = [];
-  elapsedTime: number;
+  earthquakes: any = [];
+  elapsedTime!: number;
 
   filter: Filter = {
     mag: {
@@ -42,8 +42,13 @@ export class HomePage implements OnInit {
     });
   }
 
-  async presentPopover(event) {
-    const popover = await this.popoverCtrl.create({component: FilterPopoverComponent, event, componentProps: {filter: this.filter}});
+
+  async presentPopover(event: any) {
+    const popover = await this.popoverCtrl.create({
+      component: FilterPopoverComponent,
+      event,
+      componentProps: {filter: this.filter}
+    });
     await popover.present();
 
     popover.onDidDismiss().then(evt => {

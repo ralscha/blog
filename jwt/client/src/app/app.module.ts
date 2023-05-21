@@ -1,4 +1,4 @@
-import {NgModule} from '@angular/core';
+import {inject, NgModule} from '@angular/core';
 import {BrowserModule} from '@angular/platform-browser';
 import {RouteReuseStrategy, RouterModule, Routes} from '@angular/router';
 import {IonicModule, IonicRouteStrategy} from '@ionic/angular';
@@ -15,7 +15,7 @@ import {AuthGuard} from './auth.guard';
 
 const routes: Routes = [
   {path: '', redirectTo: 'home', pathMatch: 'full'},
-  {path: 'home', component: HomePage, canActivate: [AuthGuard]},
+  {path: 'home', component: HomePage, canActivate: [() => inject(AuthGuard).canActivate()]},
   {path: 'login', component: LoginPage},
   {path: 'signup', component: SignupPage},
   {path: '**', redirectTo: '/home'}
@@ -38,7 +38,7 @@ export function tokenGetter(): string | null {
     }),
     FormsModule,
     IonicModule.forRoot(),
-    RouterModule.forRoot(routes, { useHash: true })],
+    RouterModule.forRoot(routes, {useHash: true})],
   providers: [
     {provide: RouteReuseStrategy, useClass: IonicRouteStrategy}
   ],

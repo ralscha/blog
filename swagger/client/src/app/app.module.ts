@@ -33,7 +33,7 @@ export function apiConfigFactory(): Configuration {
     ApiModule.forRoot(apiConfigFactory),
     FormsModule,
     IonicModule.forRoot(),
-    RouterModule.forRoot(routes, { useHash: true })],
+    RouterModule.forRoot(routes, {useHash: true})],
   providers: [
     {provide: RouteReuseStrategy, useClass: IonicRouteStrategy}
   ],

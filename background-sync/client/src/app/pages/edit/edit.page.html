@@ -16,18 +16,20 @@
 
 <ion-content class="ion-padding">
   <form #f="ngForm" (ngSubmit)="save(f)">
-    <ion-list>
+    <ion-list lines="none">
       <ion-item>
-        <ion-label position="stacked">Subject *</ion-label>
-        <ion-input #subject="ngModel" [ngModel]="todo?.subject" name="subject" [required]="true" ></ion-input>
+        <ion-input #subject="ngModel" [ngModel]="todo?.subject" [required]="true" errorText="Subject is required"
+                   label="Subject" labelPlacement="stacked" name="subject"></ion-input>
       </ion-item>
 
       <ion-item>
-        <ion-label position="stacked">Description</ion-label>
-        <ion-input [ngModel]="todo?.description" name="description"></ion-input>
+        <ion-input [ngModel]="todo?.description" errorText="Description is required"
+                   label="Description" labelPlacement="stacked"
+                   name="description"
+        ></ion-input>
       </ion-item>
     </ion-list>
-    <ion-button [disabled]="!f.valid" expand="full" [size]="'default'" type="submit">Save</ion-button>
+    <ion-button [disabled]="!f.valid" [size]="'default'" expand="full" type="submit">Save</ion-button>
     <div *ngIf="!subject.valid && subject.touched" class="errorMessage ion-margin-top">Please enter a Subject</div>
   </form>
 </ion-content>

@@ -1,9 +1,10 @@
 import {Injectable} from '@angular/core';
-import Papa from 'papaparse';
+import {parse, ParseResult} from 'papaparse';
 import * as lf from 'lovefield';
 import {HttpClient} from '@angular/common/http';
 import {map} from 'rxjs/operators';
 import {Filter} from '../filter';
+import {firstValueFrom} from "rxjs";
 
 @Injectable({
   providedIn: 'root'
@@ -12,9 +13,9 @@ export class EarthquakeService {
 
   private readonly DATA_URL = 'https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_month.csv';
   // private readonly DATA_URL = 'assets/data/all_month.csv';
-  private schemaBuilder;
-  private earthquakeDb;
-  private eqTbl;
+  private schemaBuilder!: lf.schema.Builder;
+  private earthquakeDb!: lf.Database;
+  private eqTbl!: lf.schema.Table;
 
   constructor(private readonly http: HttpClient) {
   }
@@ -56,15 +57,15 @@ export class EarthquakeService {
 
     this.earthquakeDb = await this.schemaBuilder.connect();
     this.eqTbl = this.earthquakeDb.getSchema().table('Earthquakes');
-    const result = await this.earthquakeDb.select(this.eqTbl.id).from(this.eqTbl).limit(1).exec();
+    const result = await this.earthquakeDb.select(this.eqTbl['id']).from(this.eqTbl).limit(1).exec();
 
     if (result.length === 0) {
-      return this.loadAndInsertData().toPromise();
+      return firstValueFrom(this.loadAndInsertData());
     }
     return Promise.resolve();
   }
 
-  insertData(parsedData): Promise<Array<object>> {
+  insertData(parsedData: ParseResult<EarthquakeRow>): Promise<Array<object>> {
     const rows = [];
     for (const parsedRow of parsedData.data) {
 
@@ -108,44 +109,44 @@ export class EarthquakeService {
   loadAndInsertData() {
     return this.http.get(this.DATA_URL, {responseType: 'text'})
       .pipe(
-        map(data => Papa.parse(data, {header: true})),
+        map(data => parse<EarthquakeRow>(data, {header: true})),
         map(parsedData => this.insertData(parsedData))
       );
   }
 
   select(filter: Filter) {
 
-    const query = this.earthquakeDb.select(this.eqTbl.id, this.eqTbl.mag, this.eqTbl.time,
-      this.eqTbl.place, this.eqTbl.depth)
+    const query = this.earthquakeDb.select(this.eqTbl['id'], this.eqTbl['mag'], this.eqTbl['time'],
+      this.eqTbl['place'], this.eqTbl['depth'])
       .from(this.eqTbl);
 
     switch (filter.sort) {
       case 'time':
-        query.orderBy(this.eqTbl.time, lf.Order.DESC);
+        query.orderBy(this.eqTbl['time'], lf.Order.DESC);
         break;
       case 'mag':
-        query.orderBy(this.eqTbl.mag, lf.Order.DESC);
+        query.orderBy(this.eqTbl['mag'], lf.Order.DESC);
         break;
       case 'depth':
-        query.orderBy(this.eqTbl.depth, lf.Order.ASC);
+        query.orderBy(this.eqTbl['depth'], lf.Order.ASC);
         break;
     }
 
     const whereClauses = [];
     if (!(filter.mag.lower === -1 && filter.mag.upper === 10)) {
-      whereClauses.push(this.eqTbl.mag.gte(filter.mag.lower));
-      whereClauses.push(this.eqTbl.mag.lte(filter.mag.upper));
+      whereClauses.push(this.eqTbl['mag'].gte(filter.mag.lower));
+      whereClauses.push(this.eqTbl['mag'].lte(filter.mag.upper));
     }
 
     if (!(filter.depth.lower === -10 && filter.depth.upper === 800)) {
-      whereClauses.push(this.eqTbl.depth.gte(filter.depth.lower));
-      whereClauses.push(this.eqTbl.depth.lte(filter.depth.upper));
+      whereClauses.push(this.eqTbl['depth'].gte(filter.depth.lower));
+      whereClauses.push(this.eqTbl['depth'].lte(filter.depth.upper));
     }
 
     if (filter.time !== '-1') {
       const now = new Date();
       now.setHours(now.getHours() - parseInt(filter.time, 10));
-      whereClauses.push(this.eqTbl.time.gte(now));
+      whereClauses.push(this.eqTbl['time'].gte(now));
     }
 
     if (whereClauses.length > 0) {
@@ -156,3 +157,28 @@ export class EarthquakeService {
   }
 
 }
+
+type EarthquakeRow = {
+  time: string,
+  latitude: string,
+  longitude: string,
+  depth: string,
+  mag: string,
+  magType: string,
+  nst: string,
+  gap: string,
+  dmin: string,
+  rms: string,
+  net: string,
+  id: string,
+  updated: string,
+  place: string,
+  type: string,
+  horizontalError: string,
+  depthError: string,
+  magError: string,
+  magNst: string,
+  status: string,
+  locationSource: string,
+  magSource: string
+};

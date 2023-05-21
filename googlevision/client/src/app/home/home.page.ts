@@ -17,10 +17,12 @@ export class HomePage implements OnInit {
   visionResult: VisionResult | null = null;
   detail: string | null = null;
   selectedFace: Face | null = null;
-  lat: number | null = null;
-  lng: number | null = null;
-  zoom = 8;
   markers: { lat: number, lng: number }[] = [];
+
+  mapOptions: google.maps.MapOptions = {
+    center: {lat: 40, lng: -20},
+    zoom: 8
+  };
   private ratio!: number;
   private ctx!: CanvasRenderingContext2D;
   private selectedFile: File | null = null;
@@ -80,8 +82,10 @@ export class HomePage implements OnInit {
 
   onLandmarkClick(landmark: Landmark): void {
     if (landmark.locations && landmark.locations.length > 0) {
-      this.lat = landmark.locations[0].lat;
-      this.lng = landmark.locations[0].lng;
+      this.mapOptions.center = {
+        lat: landmark.locations[0].lat,
+        lng: landmark.locations[0].lng
+      };
 
       this.markers = [];
       for (const loc of landmark.locations) {
