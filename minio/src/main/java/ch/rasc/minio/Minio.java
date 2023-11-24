@@ -2,6 +2,7 @@ package ch.rasc.minio;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.URI;
 import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -37,8 +38,8 @@ public class Minio {
 
       minioClient.listBuckets().forEach(b -> System.out.println(b.name()));
 
-      URL url = new URL(
-          "https://preview.redd.it/7i4g79z1ih071.jpg?width=640&crop=smart&auto=webp&s=139c4dc2c873d538316519031dc7c8ea8bd86c36");
+      URL url = URI.create(
+          "https://preview.redd.it/7i4g79z1ih071.jpg?width=640&crop=smart&auto=webp&s=139c4dc2c873d538316519031dc7c8ea8bd86c36").toURL();
       Path tempFile = Files.createTempFile("cat", ".jpg");
       try (InputStream in = url.openStream()) {
         Files.copy(in, tempFile, StandardCopyOption.REPLACE_EXISTING);

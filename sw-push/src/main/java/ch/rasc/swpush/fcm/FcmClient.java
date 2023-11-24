@@ -29,7 +29,7 @@ public class FcmClient {
   public FcmClient(FcmSettings settings) {
     Path p = Paths.get(settings.getServiceAccountFile());
     try (InputStream serviceAccount = Files.newInputStream(p)) {
-      FirebaseOptions options = new FirebaseOptions.Builder()
+      FirebaseOptions options = FirebaseOptions.builder()
           .setCredentials(GoogleCredentials.fromStream(serviceAccount)).build();
 
       FirebaseApp.initializeApp(options);

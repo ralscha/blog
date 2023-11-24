@@ -14,7 +14,7 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>3.1.5</version>
+		<version>3.2.0</version>
 		<relativePath />
 	</parent>
 
@@ -87,11 +87,12 @@
 					</execution>
 				</executions>
 				<configuration>
-					<nodeVersion>v20.9.0</nodeVersion>
-					<workingDirectory>src/main/frontend</workingDirectory>					
-							<environmentVariables>
-								<NODE_ENV>production</NODE_ENV>
-							</environmentVariables>
+					<nodeVersion>v20.10.0</nodeVersion>
+					<workingDirectory>src/main/frontend</workingDirectory>
+					<installDirectory>${basedir}/install</installDirectory>					
+					<environmentVariables>
+						<NODE_ENV>production</NODE_ENV>
+					</environmentVariables>
 				</configuration>
 			</plugin>
 
