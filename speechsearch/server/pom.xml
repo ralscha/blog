@@ -49,13 +49,13 @@
 		<dependency>
 			<groupId>com.google.cloud</groupId>
 			<artifactId>google-cloud-speech</artifactId>
-			<version>4.24.0</version>
+			<version>4.25.0</version>
 		</dependency>
 
 		<dependency>
 			<groupId>net.bramp.ffmpeg</groupId>
 			<artifactId>ffmpeg</artifactId>
-			<version>0.7.0</version>
+			<version>0.8.0</version>
 		</dependency>
 
 		<dependency>
