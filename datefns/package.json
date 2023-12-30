@@ -1,19 +1,17 @@
 {
   "name": "datefns",
   "version": "1.0.0",
+  "type": "module",
   "scripts": {
-    "start": "parcel serve src/index.html",
-    "prebuild": "shx rm -rf dist/*",
-    "build": "parcel build src/index.html --public-url .",
-    "postbuild": "bread-compressor dist"
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
   },
   "dependencies": {
-    "date-fns": "2.30.0",
-    "moment": "2.29.4"
+    "date-fns": "3.0.6",
+    "moment": "2.30.1"
   },
   "devDependencies": {
-    "bread-compressor-cli": "2.0.0",
-    "parcel-bundler": "1.12.3",
-    "shx": "0.3.4"
+    "vite": "5.0.10"
   }
 }

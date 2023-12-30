@@ -15,7 +15,7 @@
 		<dependency>
 			<groupId>ch.qos.logback</groupId>
 			<artifactId>logback-classic</artifactId>
-			<version>1.4.13</version>
+			<version>1.4.14</version>
 		</dependency>		
 	</dependencies>
 
@@ -24,7 +24,7 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
-				<version>3.11.0</version>
+				<version>3.12.1</version>
 				<configuration>
 					<debug>true</debug>
 					<source>17</source>
