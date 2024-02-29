@@ -8,12 +8,19 @@ import {NgxEchartsModule} from 'ngx-echarts';
 
 import * as echarts from 'echarts/core';
 import {BarChart, GaugeChart, GraphChart, HeatmapChart, LineChart} from 'echarts/charts';
-import {CalendarComponent, LegendComponent, TitleComponent, TooltipComponent, VisualMapComponent} from 'echarts/components';
+import {
+  CalendarComponent,
+  GridComponent,
+  LegendComponent,
+  TitleComponent,
+  TooltipComponent,
+  VisualMapComponent
+} from 'echarts/components';
 import {CanvasRenderer} from 'echarts/renderers';
 import 'echarts/theme/dark.js';
 
 echarts.use(
-  [BarChart, LineChart, GaugeChart, GraphChart, HeatmapChart, TitleComponent,
+  [GridComponent, BarChart, LineChart, GaugeChart, GraphChart, HeatmapChart, TitleComponent,
     TooltipComponent, LegendComponent, CalendarComponent, VisualMapComponent, CanvasRenderer]
 );
 
