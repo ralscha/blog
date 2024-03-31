@@ -42,12 +42,12 @@
 		<dependency>
 			<groupId>com.google.protobuf</groupId>
 			<artifactId>protobuf-java</artifactId>
-			<version>3.25.3</version>
+			<version>4.26.1</version>
 		</dependency>
 		<dependency>
 			<groupId>com.google.protobuf</groupId>
 			<artifactId>protobuf-java-util</artifactId>
-			<version>3.25.3</version>
+			<version>4.26.1</version>
 		</dependency>		
 		<dependency>
 			<groupId>com.univocity</groupId>
@@ -79,7 +79,7 @@
 							<goal>run</goal>
 						</goals>
 						<configuration>
-							<protocVersion>3.25.3</protocVersion>
+							<protocVersion>4.26.1</protocVersion>
 							<inputDirectories>
 								<include>src/main/protobuf</include>
 							</inputDirectories>
