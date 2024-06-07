@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {parse, ParseResult} from 'papaparse';
 import * as lf from 'lovefield';
-import {HttpClient} from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import {map} from 'rxjs/operators';
 import {Filter} from '../filter';
 import {firstValueFrom} from "rxjs";

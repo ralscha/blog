@@ -6,7 +6,7 @@ import {AppComponent} from './app.component';
 import {HomePage} from './home/home.page';
 import {CommonModule} from '@angular/common';
 import {FormsModule} from '@angular/forms';
-import {HttpClientModule} from '@angular/common/http';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import {LoginPage} from './login/login.page';
 import {EditPage} from './edit/edit.page';
 import {AuthGuard} from './auth-guard.service';
@@ -20,18 +20,14 @@ const routes: Routes = [
   {path: '**', redirectTo: '/home'}
 ];
 
-@NgModule({
-  declarations: [AppComponent, HomePage, LoginPage, EditPage],
-  imports: [BrowserModule,
-    CommonModule,
-    HttpClientModule,
-    FormsModule,
-    IonicModule.forRoot(),
-    RouterModule.forRoot(routes, {useHash: true})],
-  providers: [
-    {provide: RouteReuseStrategy, useClass: IonicRouteStrategy}
-  ],
-  bootstrap: [AppComponent]
-})
+@NgModule({ declarations: [AppComponent, HomePage, LoginPage, EditPage],
+    bootstrap: [AppComponent], imports: [BrowserModule,
+        CommonModule,
+        FormsModule,
+        IonicModule.forRoot(),
+        RouterModule.forRoot(routes, { useHash: true })], providers: [
+        { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
+        provideHttpClient(withInterceptorsFromDi())
+    ] })
 export class AppModule {
 }

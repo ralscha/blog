@@ -1,5 +1,5 @@
 import {AfterViewInit, Component} from '@angular/core';
-import {HttpClient} from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import {circleMarker, latLng, LatLngBounds, LayerGroup, layerGroup, Map, tileLayer} from 'leaflet';
 
 @Component({

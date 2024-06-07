@@ -6,7 +6,7 @@ import {AppComponent} from './app.component';
 import {TabsPage} from './tabs/tabs.page';
 import {JsonPage} from './json/json.page';
 import {ProtobufPage} from './protobuf/protobuf.page';
-import {HttpClientModule} from '@angular/common/http';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import {DetailComponent} from './detail/detail.component';
 
 
@@ -43,13 +43,10 @@ const routes: Routes = [
   }
 ];
 
-@NgModule({
-  declarations: [AppComponent, TabsPage, ProtobufPage, JsonPage, DetailComponent],
-  imports: [BrowserModule, HttpClientModule, IonicModule.forRoot(), RouterModule.forRoot(routes, { useHash: true })],
-  providers: [
-    {provide: RouteReuseStrategy, useClass: IonicRouteStrategy}
-  ],
-  bootstrap: [AppComponent]
-})
+@NgModule({ declarations: [AppComponent, TabsPage, ProtobufPage, JsonPage, DetailComponent],
+    bootstrap: [AppComponent], imports: [BrowserModule, IonicModule.forRoot(), RouterModule.forRoot(routes, { useHash: true })], providers: [
+        { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
+        provideHttpClient(withInterceptorsFromDi())
+    ] })
 export class AppModule {
 }

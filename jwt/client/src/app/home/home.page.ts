@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {HttpClient} from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import {AuthService} from '../auth.service';
 import {JwtHelperService} from '@auth0/angular-jwt';
 import {environment} from '../../environments/environment';

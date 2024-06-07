@@ -5,7 +5,7 @@ import {IonicModule, IonicRouteStrategy} from '@ionic/angular';
 import {AppComponent} from './app.component';
 import {HomePage} from './home/home.page';
 import {CommonModule} from '@angular/common';
-import {HttpClientModule} from '@angular/common/http';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import {LeafletModule} from '@asymmetrik/ngx-leaflet';
 
 const routes: Routes = [
@@ -13,18 +13,14 @@ const routes: Routes = [
   {path: 'home', component: HomePage},
 ];
 
-@NgModule({
-  declarations: [AppComponent, HomePage],
-  imports: [BrowserModule,
-    CommonModule,
-    HttpClientModule,
-    LeafletModule,
-    IonicModule.forRoot(),
-    RouterModule.forRoot(routes, { useHash: true })],
-  providers: [
-    {provide: RouteReuseStrategy, useClass: IonicRouteStrategy}
-  ],
-  bootstrap: [AppComponent]
-})
+@NgModule({ declarations: [AppComponent, HomePage],
+    bootstrap: [AppComponent], imports: [BrowserModule,
+        CommonModule,
+        LeafletModule,
+        IonicModule.forRoot(),
+        RouterModule.forRoot(routes, { useHash: true })], providers: [
+        { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
+        provideHttpClient(withInterceptorsFromDi())
+    ] })
 export class AppModule {
 }

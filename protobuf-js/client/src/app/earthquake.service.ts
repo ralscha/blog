@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {Observable, throwError} from 'rxjs';
 import {catchError, map} from 'rxjs/operators';
-import {HttpClient, HttpHeaders} from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import {Earthquakes, IEarthquake} from './protos/earthquake';
 import {environment} from '../environments/environment';
 

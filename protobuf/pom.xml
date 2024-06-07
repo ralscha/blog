@@ -33,7 +33,7 @@
 		<dependency>
 			<groupId>com.google.protobuf</groupId>
 			<artifactId>protobuf-java</artifactId>
-			<version>4.26.1</version>
+			<version>4.27.1</version>
 		</dependency>
 
 	</dependencies>
@@ -60,7 +60,7 @@
 							<goal>run</goal>
 						</goals>
 						<configuration>
-							<protocVersion>4.26.1</protocVersion>
+							<protocVersion>4.27.1</protocVersion>
 							<inputDirectories>
 								<include>src/main/protobuf</include>
 							</inputDirectories>

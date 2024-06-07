@@ -6,7 +6,7 @@ import {AppComponent} from './app.component';
 import {HomePage} from './home/home.page';
 import {CommonModule} from '@angular/common';
 import {FormsModule} from '@angular/forms';
-import {HttpClientModule} from '@angular/common/http';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import {EditPage} from './edit/edit.page';
 import {ApiModule, Configuration, ConfigurationParameters} from './swagger';
 import {environment} from '../environments/environment';
@@ -25,19 +25,15 @@ export function apiConfigFactory(): Configuration {
   return new Configuration(params);
 }
 
-@NgModule({
-  declarations: [AppComponent, HomePage, EditPage],
-  imports: [BrowserModule,
-    CommonModule,
-    HttpClientModule,
-    ApiModule.forRoot(apiConfigFactory),
-    FormsModule,
-    IonicModule.forRoot(),
-    RouterModule.forRoot(routes, {useHash: true})],
-  providers: [
-    {provide: RouteReuseStrategy, useClass: IonicRouteStrategy}
-  ],
-  bootstrap: [AppComponent]
-})
+@NgModule({ declarations: [AppComponent, HomePage, EditPage],
+    bootstrap: [AppComponent], imports: [BrowserModule,
+        CommonModule,
+        ApiModule.forRoot(apiConfigFactory),
+        FormsModule,
+        IonicModule.forRoot(),
+        RouterModule.forRoot(routes, { useHash: true })], providers: [
+        { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
+        provideHttpClient(withInterceptorsFromDi())
+    ] })
 export class AppModule {
 }

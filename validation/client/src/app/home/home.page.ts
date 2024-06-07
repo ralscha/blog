@@ -1,6 +1,6 @@
 import {Component} from '@angular/core';
 import {UntypedFormBuilder, UntypedFormGroup, Validators} from '@angular/forms';
-import {HttpClient} from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import {UsernameValidator} from '../username-validator';
 import {ToastController} from '@ionic/angular';
 import {AgeValidator} from '../age-validator';

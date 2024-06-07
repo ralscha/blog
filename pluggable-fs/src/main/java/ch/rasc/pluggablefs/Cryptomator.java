@@ -4,17 +4,19 @@ import java.io.IOException;
 import java.net.URI;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.FileSystem;
-import java.nio.file.FileSystems;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.nio.file.StandardOpenOption;
+import java.security.SecureRandom;
 import java.util.Arrays;
 import java.util.List;
 
 import org.cryptomator.cryptofs.CryptoFileSystemProperties;
 import org.cryptomator.cryptofs.CryptoFileSystemProvider;
-import org.cryptomator.cryptofs.CryptoFileSystemUri;
+import org.cryptomator.cryptolib.api.Masterkey;
+import org.cryptomator.cryptolib.api.MasterkeyLoader;
 
 public class Cryptomator {
 
@@ -22,14 +24,21 @@ public class Cryptomator {
     Path storageLocation = Paths.get("E:\\temp\\vault");
 
     Files.createDirectories(storageLocation);
-    CryptoFileSystemProvider.initialize(storageLocation, "masterkey.cryptomator",
-        "password");
+    SecureRandom csprng = new SecureRandom();
 
-    URI uri = CryptoFileSystemUri.create(storageLocation);
+    Masterkey masterkey = Masterkey.generate(csprng);
+    MasterkeyLoader loader = ignoredUri -> masterkey.copy();
 
-    try (FileSystem fs = FileSystems.newFileSystem(uri,
-        CryptoFileSystemProperties.cryptoFileSystemProperties().withPassphrase("password")
-            // .withFlags(FileSystemFlags.READONLY)
+    Path masterKeyPath = Paths.get("E:\\temp\\vault\\masterkey.cryptomator");
+
+    Files.write(masterKeyPath, masterkey.getEncoded(), StandardOpenOption.CREATE_NEW);
+    URI uri = masterKeyPath.toUri();
+    CryptoFileSystemProperties fsProps = CryptoFileSystemProperties
+        .cryptoFileSystemProperties().withKeyLoader(loader).build();
+    CryptoFileSystemProvider.initialize(storageLocation, fsProps, uri);
+
+    try (FileSystem fs = CryptoFileSystemProvider.newFileSystem(storageLocation,
+        CryptoFileSystemProperties.cryptoFileSystemProperties().withKeyLoader(loader)
             .build())) {
 
       Path p1 = fs.getPath("/one.txt");
@@ -49,7 +58,6 @@ public class Cryptomator {
       Files.write(p3, Arrays.asList("three"));
 
       Files.delete(p1);
-
     }
   }
 

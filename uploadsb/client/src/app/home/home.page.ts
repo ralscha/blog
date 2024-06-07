@@ -1,5 +1,5 @@
 import {ChangeDetectorRef, Component} from '@angular/core';
-import {HttpClient} from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import {LoadingController, ToastController} from '@ionic/angular';
 import {catchError, finalize} from 'rxjs/operators';
 import {Observable, throwError} from 'rxjs';

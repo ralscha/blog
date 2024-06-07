@@ -1,5 +1,5 @@
 import {ChangeDetectorRef, Component} from '@angular/core';
-import {HttpClient} from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import {Platform} from '@ionic/angular';
 import {timeout} from 'rxjs/operators';
 import {environment} from '../../environments/environment';

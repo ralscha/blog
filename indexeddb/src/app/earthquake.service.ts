@@ -3,7 +3,7 @@ import {Filter} from './filter-interface';
 import {parse} from 'papaparse';
 import * as geolib from 'geolib';
 import {map} from 'rxjs/operators';
-import {HttpClient} from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import {Earthquake} from './earthquake';
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
