@@ -9,9 +9,9 @@
     "watch": "parcel watch"
   },
   "dependencies": {
-    "echarts": "5.5.0",
+    "echarts": "5.5.1",
     "muicss": "0.10.3",
-    "uuid": "9.0.1"
+    "uuid": "10.0.0"
   },
   "devDependencies": {
     "@parcel/compressor-brotli": "2.12.0",
