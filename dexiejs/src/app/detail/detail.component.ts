@@ -4,7 +4,8 @@ import {Earthquake} from '../earthquake-db';
 
 @Component({
   selector: 'app-detail',
-  templateUrl: './detail.component.html'
+  templateUrl: './detail.component.html',
+  styles: [ '.magnitude { font-weight: bold; font-size: 1.3em; }']
 })
 export class DetailComponent {
 

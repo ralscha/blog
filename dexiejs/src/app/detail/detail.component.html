@@ -1,18 +1,18 @@
 <ion-row>
-  <ion-col size="3">
-    <h1 class="magnitude">{{earthquake.mag | number:'1.1-1'}}</h1>
+  <ion-col class="ion-no-margin ion-no-padding" size="3">
+    <p class="magnitude">{{earthquake.mag | number:'1.1-1'}}</p>
   </ion-col>
-  <ion-col class="ion-text-right" size="9">
+  <ion-col class="ion-no-margin ion-no-padding ion-text-right" size="9">
     <p>{{earthquake.time | date:'MMM d HH:mm:ss'}}</p>
   </ion-col>
 </ion-row>
 <ion-row>
-  <ion-col>
-    <h2>{{earthquake.place}}</h2>
+  <ion-col  class="ion-no-margin ion-no-padding">
+    <p>{{earthquake.place}}</p>
   </ion-col>
 </ion-row>
 <ion-row>
-  <ion-col>
+  <ion-col class="ion-no-margin ion-no-padding">
     <p>Depth: {{earthquake.depth | number}} km | Distance to me: {{distanceToReference(earthquake) | number:'1.0-0'}}
       km</p>
   </ion-col>

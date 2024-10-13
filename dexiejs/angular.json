@@ -27,10 +27,7 @@
                 "output": "./svg"
               }
             ],
-            "styles": [
-              "src/variables.scss",
-              "src/styles.scss"
-            ],
+            "styles": ["src/global.scss", "src/variables.scss"],
             "scripts": []
           },
           "configurations": {
