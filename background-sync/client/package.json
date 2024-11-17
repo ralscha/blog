@@ -23,7 +23,6 @@
     "@angular/platform-browser-dynamic": "18.2.12",
     "@angular/router": "18.2.12",
     "@ionic/angular": "7.8.6",
-    "@types/uuid": "10.0.0",
     "dexie": "4.0.10",
     "ionicons": "7.4.0",
     "rxjs": "7.8.1",
