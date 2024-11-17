@@ -11,12 +11,12 @@
   "dependencies": {
     "echarts": "5.5.1",
     "muicss": "0.10.3",
-    "uuid": "10.0.0"
+    "uuid": "11.0.3"
   },
   "devDependencies": {
-    "@parcel/compressor-brotli": "2.12.0",
-    "@parcel/compressor-gzip": "2.12.0",
+    "@parcel/compressor-brotli": "2.13.0",
+    "@parcel/compressor-gzip": "2.13.0",
     "buffer": "6.0.3",
-    "parcel": "2.12.0"
+    "parcel": "2.13.0"
   }
 }

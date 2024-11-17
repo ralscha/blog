@@ -17,8 +17,8 @@ public class Application {
     SpringApplication.run(Application.class, args);
   }
 
-  @Bean
-  public PasswordEncoder passwordEncoder() {
+    @Bean
+    PasswordEncoder passwordEncoder() {
     return new Argon2PasswordEncoder(16, 32, 8, 1 << 16, 4);
   }
 

@@ -17,8 +17,6 @@ import ch.rasc.jwt.db.User;
 import ch.rasc.jwt.db.UserService;
 import io.jsonwebtoken.JwtParser;
 import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
-import io.jsonwebtoken.security.Keys;
 
 @Component
 public class TokenProvider {
@@ -32,8 +30,8 @@ public class TokenProvider {
   private final UserService userService;
 
   public TokenProvider(AppConfig config, UserService userService) {
-    this.key = Keys.secretKeyFor(SignatureAlgorithm.HS512);
-    this.jwtParser = Jwts.parserBuilder().setSigningKey(this.key).build();
+    this.key = Jwts.SIG.HS512.key().build();
+    this.jwtParser = Jwts.parser().verifyWith(this.key).build();
     this.tokenValidityInMilliseconds = 1000 * config.getTokenValidityInSeconds();
     this.userService = userService;
   }
@@ -42,12 +40,12 @@ public class TokenProvider {
     Date now = new Date();
     Date validity = new Date(now.getTime() + this.tokenValidityInMilliseconds);
 
-    return Jwts.builder().setId(UUID.randomUUID().toString()).setSubject(username)
-        .setIssuedAt(now).signWith(this.key).setExpiration(validity).compact();
+    return Jwts.builder().id(UUID.randomUUID().toString()).subject(username)
+        .issuedAt(now).signWith(this.key).expiration(validity).compact();
   }
 
   public Authentication getAuthentication(String token) {
-    String username = this.jwtParser.parseClaimsJws(token).getBody().getSubject();
+    String username = this.jwtParser.parseSignedClaims(token).getPayload().getSubject();
 
     User user = this.userService.lookup(username);
     if (user == null) {
