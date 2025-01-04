@@ -4,9 +4,10 @@ import {Filter} from '../filter-interface';
 import {NgForm} from '@angular/forms';
 
 @Component({
-  selector: 'app-filter',
-  templateUrl: './filter.page.html',
-  styleUrls: ['./filter.page.scss'],
+    selector: 'app-filter',
+    templateUrl: './filter.page.html',
+    styleUrls: ['./filter.page.scss'],
+    standalone: false
 })
 export class FilterPage implements OnInit {
 

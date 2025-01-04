@@ -5,8 +5,9 @@ import {EChartsOption} from 'echarts';
 type DataType = { name: string, value: [string, number] };
 
 @Component({
-  templateUrl: 'chart6.html',
-  styleUrls: ['chart6.scss']
+    templateUrl: 'chart6.html',
+    styleUrls: ['chart6.scss'],
+    standalone: false
 })
 export class Chart6Page implements ViewWillEnter, ViewWillLeave {
   private static oneDay = 24 * 3600 * 1000;

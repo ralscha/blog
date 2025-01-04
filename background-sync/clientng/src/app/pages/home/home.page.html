@@ -13,8 +13,10 @@
 
 <ion-content class="ion-padding">
   <ion-list lines="full">
-    <ion-item *ngFor="let todo of todos | async" [detail]="true" routerLink="/edit/{{todo.id}}">
-      <ion-label>{{todo.subject}}</ion-label>
-    </ion-item>
+    @for (todo of todos | async; track todo.id) {
+      <ion-item [detail]="true" routerLink="/edit/{{todo.id}}">
+        <ion-label>{{todo.subject}}</ion-label>
+      </ion-item>
+    }
   </ion-list>
 </ion-content>

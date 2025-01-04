@@ -3,9 +3,10 @@ import {IEarthquake} from '../protos/earthquake';
 import {EarthquakeService} from '../earthquake.service';
 
 @Component({
-  selector: 'app-protobuf',
-  templateUrl: './protobuf.page.html',
-  styleUrls: ['./protobuf.page.scss']
+    selector: 'app-protobuf',
+    templateUrl: './protobuf.page.html',
+    styleUrls: ['./protobuf.page.scss'],
+    standalone: false
 })
 export class ProtobufPage implements OnInit {
 

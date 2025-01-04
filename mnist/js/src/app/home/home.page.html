@@ -16,10 +16,12 @@
   </div>
 
   <table>
-    <tr *ngFor="let detection of detections; index as i">
-      <td>{{i}}</td>
-      <td class="ion-text-end">{{detection * 100 | number:'1.1-1'}} %</td>
-    </tr>
+    @for (detection of detections; track detection; let i = $index) {
+      <tr>
+        <td>{{i}}</td>
+        <td class="ion-text-end">{{detection * 100 | number:'1.1-1'}} %</td>
+      </tr>
+    }
   </table>
 
 </ion-content>

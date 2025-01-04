@@ -8,6 +8,8 @@
 
 <ion-content class="ion-padding">
   <swiper-container [modules]="swiperModules" [pagination]="true">
-    <swiper-slide *ngFor="let pic of pictures"><img [src]="pic" alt="pic"></swiper-slide>
+    @for (pic of pictures; track pic) {
+      <swiper-slide><img [src]="pic" alt="pic"></swiper-slide>
+    }
   </swiper-container>
 </ion-content>

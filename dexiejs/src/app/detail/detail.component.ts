@@ -3,9 +3,10 @@ import * as geolib from 'geolib';
 import {Earthquake} from '../earthquake-db';
 
 @Component({
-  selector: 'app-detail',
-  templateUrl: './detail.component.html',
-  styles: [ '.magnitude { font-weight: bold; font-size: 1.3em; }']
+    selector: 'app-detail',
+    templateUrl: './detail.component.html',
+    styles: ['.magnitude { font-weight: bold; font-size: 1.3em; }'],
+    standalone: false
 })
 export class DetailComponent {
 

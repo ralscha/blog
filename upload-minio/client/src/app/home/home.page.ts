@@ -7,9 +7,10 @@ import {environment} from '../../environments/environment';
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 @Component({
-  selector: 'app-home',
-  templateUrl: './home.page.html',
-  styleUrls: ['./home.page.scss']
+    selector: 'app-home',
+    templateUrl: './home.page.html',
+    styleUrls: ['./home.page.scss'],
+    standalone: false
 })
 export class HomePage {
 

@@ -5,9 +5,10 @@ import {NavController} from '@ionic/angular';
 import {TodoService} from '../todo.service';
 
 @Component({
-  selector: 'app-edit',
-  templateUrl: './edit.page.html',
-  styleUrls: ['./edit.page.scss'],
+    selector: 'app-edit',
+    templateUrl: './edit.page.html',
+    styleUrls: ['./edit.page.scss'],
+    standalone: false
 })
 export class EditPage implements OnInit {
 

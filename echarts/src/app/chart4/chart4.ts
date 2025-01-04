@@ -3,8 +3,9 @@ import {EChartsOption} from 'echarts';
 
 
 @Component({
-  templateUrl: 'chart4.html',
-  styleUrls: ['chart4.scss']
+    templateUrl: 'chart4.html',
+    styleUrls: ['chart4.scss'],
+    standalone: false
 })
 export class Chart4Page {
 

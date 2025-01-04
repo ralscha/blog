@@ -5,9 +5,10 @@ import {NgModel} from '@angular/forms';
 import {finalize} from 'rxjs/operators';
 
 @Component({
-  selector: 'app-signup',
-  templateUrl: './signup.page.html',
-  styleUrls: ['./signup.page.scss'],
+    selector: 'app-signup',
+    templateUrl: './signup.page.html',
+    styleUrls: ['./signup.page.scss'],
+    standalone: false
 })
 export class SignupPage {
 

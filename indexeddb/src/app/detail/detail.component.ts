@@ -3,8 +3,9 @@ import * as geolib from 'geolib';
 import {Earthquake} from '../earthquake';
 
 @Component({
-  selector: 'app-detail',
-  templateUrl: './detail.component.html'
+    selector: 'app-detail',
+    templateUrl: './detail.component.html',
+    standalone: false
 })
 export class DetailComponent {
 

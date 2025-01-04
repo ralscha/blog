@@ -7,9 +7,10 @@ import {ToastController} from '@ionic/angular';
 import {environment} from '../../environments/environment';
 
 @Component({
-  selector: 'app-home',
-  templateUrl: './home.page.html',
-  styleUrls: ['./home.page.scss']
+    selector: 'app-home',
+    templateUrl: './home.page.html',
+    styleUrls: ['./home.page.scss'],
+    standalone: false
 })
 export class HomePage {
   recording = false;

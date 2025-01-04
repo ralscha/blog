@@ -3,8 +3,9 @@ import {format} from 'date-fns';
 import {EChartsOption} from 'echarts';
 
 @Component({
-  templateUrl: 'chart5.html',
-  styleUrls: ['chart5.scss']
+    templateUrl: 'chart5.html',
+    styleUrls: ['chart5.scss'],
+    standalone: false
 })
 export class Chart5Page {
 

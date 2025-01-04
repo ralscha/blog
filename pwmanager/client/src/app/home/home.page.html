@@ -20,23 +20,23 @@
 
 <ion-content class="ion-padding">
   <ion-searchbar (ionInput)="filter($event)"></ion-searchbar>
-  <ion-card (click)="editPassword(password)" *ngFor="let password of passwords">
-    <ion-card-header>
-      {{password.url}}
-    </ion-card-header>
-
-    <ion-card-content>
-      <div>
-        Username: <strong>{{password.username}}</strong>
-      </div>
-      <div>
-        Password: <strong>{{password.password}}</strong>
-      </div>
-      <ion-note>
-        {{password.description}}
-      </ion-note>
-    </ion-card-content>
-
-  </ion-card>
+  @for (password of passwords; track password.url) {
+    <ion-card (click)="editPassword(password)">
+      <ion-card-header>
+        {{password.url}}
+      </ion-card-header>
+      <ion-card-content>
+        <div>
+          Username: <strong>{{password.username}}</strong>
+        </div>
+        <div>
+          Password: <strong>{{password.password}}</strong>
+        </div>
+        <ion-note>
+          {{password.description}}
+        </ion-note>
+      </ion-card-content>
+    </ion-card>
+  }
 
 </ion-content>

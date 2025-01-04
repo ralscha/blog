@@ -14,14 +14,16 @@
     Tracking
   </ion-button>
 
-  <div *ngIf="tracking">
-    <div>Accuracy: {{locationTracker.pos?.accuracy}}</div>
-    <div>Bearing: {{locationTracker.pos?.bearing}}</div>
-    <div>Latitude: {{locationTracker.pos?.latitude}}</div>
-    <div>Longitude: {{locationTracker.pos?.longitude}}</div>
-    <div>Speed: {{locationTracker.pos?.speed}}</div>
-    <div>Time: {{locationTracker.pos?.time | date:'medium'}}</div>
-  </div>
+  @if (tracking) {
+    <div>
+      <div>Accuracy: {{locationTracker.pos?.accuracy}}</div>
+      <div>Bearing: {{locationTracker.pos?.bearing}}</div>
+      <div>Latitude: {{locationTracker.pos?.latitude}}</div>
+      <div>Longitude: {{locationTracker.pos?.longitude}}</div>
+      <div>Speed: {{locationTracker.pos?.speed}}</div>
+      <div>Time: {{locationTracker.pos?.time | date:'medium'}}</div>
+    </div>
+  }
 
   <ion-button (click)="clear()" class="ion-margin-top" color="primary" expand="block">Clear Data</ion-button>
 </ion-content>

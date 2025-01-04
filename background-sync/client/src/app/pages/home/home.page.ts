@@ -5,9 +5,10 @@ import {Router} from '@angular/router';
 import {ViewDidEnter} from '@ionic/angular';
 
 @Component({
-  selector: 'app-page-home',
-  templateUrl: './home.page.html',
-  styleUrls: ['./home.page.scss'],
+    selector: 'app-page-home',
+    templateUrl: './home.page.html',
+    styleUrls: ['./home.page.scss'],
+    standalone: false
 })
 export class HomePage implements ViewDidEnter {
 

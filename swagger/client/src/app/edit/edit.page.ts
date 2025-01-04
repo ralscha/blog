@@ -4,9 +4,10 @@ import {NavController} from '@ionic/angular';
 import {v4} from 'uuid';
 
 @Component({
-  selector: 'app-edit',
-  templateUrl: './edit.page.html',
-  styleUrls: ['./edit.page.scss']
+    selector: 'app-edit',
+    templateUrl: './edit.page.html',
+    styleUrls: ['./edit.page.scss'],
+    standalone: false
 })
 export class EditPage implements OnInit {
 

@@ -2,8 +2,9 @@ import {Component} from '@angular/core';
 import {EChartsOption} from 'echarts';
 
 @Component({
-  templateUrl: 'chart3.html',
-  styleUrls: ['chart3.scss']
+    templateUrl: 'chart3.html',
+    styleUrls: ['chart3.scss'],
+    standalone: false
 })
 export class Chart3Page {
 

@@ -3,7 +3,8 @@ import {NavParams, PopoverController} from '@ionic/angular';
 import {Filter} from '../filter';
 
 @Component({
-  templateUrl: 'filter.html'
+    templateUrl: 'filter.html',
+    standalone: false
 })
 export class FilterPopoverComponent implements OnInit {
 

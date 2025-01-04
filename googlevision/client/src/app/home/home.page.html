@@ -18,248 +18,304 @@
 <ion-content class="ion-padding">
 
   <input #fileSelector (change)="onFileCange($event)" accept="image/*" style="display: none;"
-         type="file">
+    type="file">
 
-  <ion-list *ngIf="visionResult !== null && detail === null">
-    <ion-item (click)="showDetail('faces')" *ngIf="visionResult?.faces && visionResult.faces.length > 0"
-              [detail]="true">
-      <ion-label>Faces</ion-label>
-    </ion-item>
-    <ion-item (click)="showDetail('labels')" *ngIf="visionResult?.labels && visionResult.labels.length > 0"
-              [detail]="true">
-      <ion-label>Labels</ion-label>
-    </ion-item>
-    <ion-item (click)="showDetail('web')" *ngIf="visionResult?.web && visionResult.web.webEntities.length > 0"
-              [detail]="true">
-      <ion-label>Web</ion-label>
-    </ion-item>
-    <ion-item (click)="showDetail('safeSearch')" [detail]="true">
-      <ion-label>Safe Search</ion-label>
-    </ion-item>
-    <ion-item (click)="showDetail('logos')" *ngIf="visionResult?.logos && visionResult.logos.length > 0"
-              [detail]="true">
-      <ion-label>Logos</ion-label>
-    </ion-item>
-    <ion-item (click)="showDetail('landmarks')" *ngIf="visionResult?.landmarks && visionResult.landmarks.length > 0"
-              [detail]="true">
-      <ion-label>Landmarks</ion-label>
-    </ion-item>
-    <ion-item (click)="showDetail('texts')" *ngIf="visionResult?.texts && visionResult.texts.length > 0"
-              [detail]="true">
-      <ion-label>Texts</ion-label>
-    </ion-item>
-  </ion-list>
-
-  <ion-list *ngIf="visionResult !== null && detail === 'faces' && selectedFace === null">
-    <ion-item (click)="onFaceClick(face)" *ngFor="let face of visionResult?.faces; index as i">
-      <ion-label>
-        {{i + 1}}. Face (Detection Confidence: {{face?.detectionConfidence | number: '1.2-2'}})
-        <ul>
-          <li>
-            <ion-row>
-              <ion-col size="6">
-                Joy
-              </ion-col>
-              <ion-col size="6">
-                {{face?.joy}}
-              </ion-col>
-            </ion-row>
-          </li>
-          <li>
-            <ion-row>
-              <ion-col size="6">
-                Sorrow
-              </ion-col>
-              <ion-col size="6">
-                {{face?.sorrow}}
-              </ion-col>
-            </ion-row>
-          </li>
-          <li>
-            <ion-row>
-              <ion-col size="6">
-                Anger
-              </ion-col>
-              <ion-col size="6">
-                {{face?.anger}}
-              </ion-col>
-            </ion-row>
-          </li>
-          <li>
-            <ion-row>
-              <ion-col size="6">
-                Surprise
-              </ion-col>
-              <ion-col size="6">
-                {{face?.surprise}}
-              </ion-col>
-            </ion-row>
-          </li>
-          <li>
-            <ion-row>
-              <ion-col size="6">
-                Headwear
-              </ion-col>
-              <ion-col size="6">
-                {{face?.headwear}}
-              </ion-col>
-            </ion-row>
-          </li>
-        </ul>
-      </ion-label>
-    </ion-item>
-  </ion-list>
-
-  <ion-list *ngIf="visionResult !== null && detail === 'faces' && selectedFace !== null">
-    <ion-item (click)="onFaceLandmarkClick(landmark)" *ngFor="let landmark of selectedFace.landmarks">
-      <ion-item>
-        <ion-label class="smallerFont">
-          {{landmark.type}}
-        </ion-label>
+  @if (visionResult !== null && detail === null) {
+    <ion-list>
+      @if (visionResult?.faces && visionResult.faces.length > 0) {
+        <ion-item (click)="showDetail('faces')"
+          [detail]="true">
+          <ion-label>Faces</ion-label>
+        </ion-item>
+      }
+      @if (visionResult?.labels && visionResult.labels.length > 0) {
+        <ion-item (click)="showDetail('labels')"
+          [detail]="true">
+          <ion-label>Labels</ion-label>
+        </ion-item>
+      }
+      @if (visionResult?.web && visionResult.web.webEntities.length > 0) {
+        <ion-item (click)="showDetail('web')"
+          [detail]="true">
+          <ion-label>Web</ion-label>
+        </ion-item>
+      }
+      <ion-item (click)="showDetail('safeSearch')" [detail]="true">
+        <ion-label>Safe Search</ion-label>
       </ion-item>
-    </ion-item>
-  </ion-list>
-
-  <ul *ngIf="visionResult !== null && detail === 'labels'">
-    <li *ngFor="let label of visionResult?.labels">
-      <ion-row>
-        <ion-col size="10">
-          {{label.description}}
-        </ion-col>
-        <ion-col class="ion-text-right" size="2">
-          {{label.score | number: '1.2-2'}}
-        </ion-col>
-      </ion-row>
-    </li>
-  </ul>
-
-  <ul *ngIf="visionResult !== null && detail === 'web'">
-    <li *ngFor="let we of visionResult?.web?.webEntities">
-      <ion-row>
-        <ion-col size="10">
-          {{we.description}}
-        </ion-col>
-        <ion-col class="ion-text-right" size="2">
-          {{we.score | number: '1.2-2'}}
-        </ion-col>
-      </ion-row>
-    </li>
-    <div class="ion-margin-top ion-text-center">Full Matching Images</div>
-    <ion-list *ngFor="let we of visionResult?.web?.fullMatchingImages">
-      <ion-item>
-        <ion-label>
-          <a [href]="we.url" target="_blank">{{we.url}}</a>
-        </ion-label>
-      </ion-item>
+      @if (visionResult?.logos && visionResult.logos.length > 0) {
+        <ion-item (click)="showDetail('logos')"
+          [detail]="true">
+          <ion-label>Logos</ion-label>
+        </ion-item>
+      }
+      @if (visionResult?.landmarks && visionResult.landmarks.length > 0) {
+        <ion-item (click)="showDetail('landmarks')"
+          [detail]="true">
+          <ion-label>Landmarks</ion-label>
+        </ion-item>
+      }
+      @if (visionResult?.texts && visionResult.texts.length > 0) {
+        <ion-item (click)="showDetail('texts')"
+          [detail]="true">
+          <ion-label>Texts</ion-label>
+        </ion-item>
+      }
     </ion-list>
-    <div class="ion-margin-top ion-text-center">Partial Matching Images</div>
-    <ion-list *ngFor="let we of visionResult?.web?.partialMatchingImages">
-      <ion-item>
-        <ion-label>
-          <a [href]="we.url" target="_blank">{{we.url}}</a>
-        </ion-label>
-      </ion-item>
+  }
+
+  @if (visionResult !== null && detail === 'faces' && selectedFace === null) {
+    <ion-list>
+      @for (face of visionResult?.faces; track face; let i = $index) {
+        <ion-item (click)="onFaceClick(face)">
+          <ion-label>
+            {{i + 1}}. Face (Detection Confidence: {{face?.detectionConfidence | number: '1.2-2'}})
+            <ul>
+              <li>
+                <ion-row>
+                  <ion-col size="6">
+                    Joy
+                  </ion-col>
+                  <ion-col size="6">
+                    {{face?.joy}}
+                  </ion-col>
+                </ion-row>
+              </li>
+              <li>
+                <ion-row>
+                  <ion-col size="6">
+                    Sorrow
+                  </ion-col>
+                  <ion-col size="6">
+                    {{face?.sorrow}}
+                  </ion-col>
+                </ion-row>
+              </li>
+              <li>
+                <ion-row>
+                  <ion-col size="6">
+                    Anger
+                  </ion-col>
+                  <ion-col size="6">
+                    {{face?.anger}}
+                  </ion-col>
+                </ion-row>
+              </li>
+              <li>
+                <ion-row>
+                  <ion-col size="6">
+                    Surprise
+                  </ion-col>
+                  <ion-col size="6">
+                    {{face?.surprise}}
+                  </ion-col>
+                </ion-row>
+              </li>
+              <li>
+                <ion-row>
+                  <ion-col size="6">
+                    Headwear
+                  </ion-col>
+                  <ion-col size="6">
+                    {{face?.headwear}}
+                  </ion-col>
+                </ion-row>
+              </li>
+            </ul>
+          </ion-label>
+        </ion-item>
+      }
     </ion-list>
-    <div class="ion-margin-top ion-text-center">Pages with Matching Images</div>
-    <ion-list *ngFor="let we of visionResult?.web?.pagesWithMatchingImages">
-      <ion-item>
-        <ion-label>
-          <a [href]="we.url" target="_blank">{{we.url}}</a>
-        </ion-label>
-      </ion-item>
+  }
+
+  @if (visionResult !== null && detail === 'faces' && selectedFace !== null) {
+    <ion-list>
+      @for (landmark of selectedFace.landmarks; track landmark) {
+        <ion-item (click)="onFaceLandmarkClick(landmark)">
+          <ion-item>
+            <ion-label class="smallerFont">
+              {{landmark.type}}
+            </ion-label>
+          </ion-item>
+        </ion-item>
+      }
     </ion-list>
-  </ul>
+  }
 
-  <ion-list *ngIf="visionResult !== null && detail === 'texts'">
-    <ion-item (click)="onTextClick(text)" *ngFor="let text of visionResult?.texts">
-      <ion-label>
-        {{text.description}}
-      </ion-label>
-    </ion-item>
-  </ion-list>
+  @if (visionResult !== null && detail === 'labels') {
+    <ul>
+      @for (label of visionResult?.labels; track label) {
+        <li>
+          <ion-row>
+            <ion-col size="10">
+              {{label.description}}
+            </ion-col>
+            <ion-col class="ion-text-right" size="2">
+              {{label.score | number: '1.2-2'}}
+            </ion-col>
+          </ion-row>
+        </li>
+      }
+    </ul>
+  }
 
-  <ion-list *ngIf="visionResult !== null && detail === 'logos'">
-    <ion-item (click)="onLogoClick(logo)" *ngFor="let logo of visionResult?.logos">
-      <ion-label>
-        <ion-row>
-          <ion-col size="10">
-            {{logo.description}}
-          </ion-col>
-          <ion-col class="ion-text-right" size="2">
-            {{logo.score | number: '1.2-2'}}
-          </ion-col>
-        </ion-row>
-      </ion-label>
-    </ion-item>
-  </ion-list>
+  @if (visionResult !== null && detail === 'web') {
+    <ul>
+      @for (we of visionResult?.web?.webEntities; track we) {
+        <li>
+          <ion-row>
+            <ion-col size="10">
+              {{we.description}}
+            </ion-col>
+            <ion-col class="ion-text-right" size="2">
+              {{we.score | number: '1.2-2'}}
+            </ion-col>
+          </ion-row>
+        </li>
+      }
+      <div class="ion-margin-top ion-text-center">Full Matching Images</div>
+      @for (we of visionResult?.web?.fullMatchingImages; track we) {
+        <ion-list>
+          <ion-item>
+            <ion-label>
+              <a [href]="we.url" target="_blank">{{we.url}}</a>
+            </ion-label>
+          </ion-item>
+        </ion-list>
+      }
+      <div class="ion-margin-top ion-text-center">Partial Matching Images</div>
+      @for (we of visionResult?.web?.partialMatchingImages; track we) {
+        <ion-list>
+          <ion-item>
+            <ion-label>
+              <a [href]="we.url" target="_blank">{{we.url}}</a>
+            </ion-label>
+          </ion-item>
+        </ion-list>
+      }
+      <div class="ion-margin-top ion-text-center">Pages with Matching Images</div>
+      @for (we of visionResult?.web?.pagesWithMatchingImages; track we) {
+        <ion-list>
+          <ion-item>
+            <ion-label>
+              <a [href]="we.url" target="_blank">{{we.url}}</a>
+            </ion-label>
+          </ion-item>
+        </ion-list>
+      }
+    </ul>
+  }
 
-  <ion-list *ngIf="visionResult !== null && detail === 'landmarks'">
-    <ion-item (click)="onLandmarkClick(landmark)" *ngFor="let landmark of visionResult?.landmarks">
-      <ion-label>
-        <ion-row>
-          <ion-col size="10">
-            {{landmark.description}}
-          </ion-col>
-          <ion-col class="ion-text-right" size="2">
-            {{landmark.score | number: '1.2-2'}}
-          </ion-col>
-        </ion-row>
-      </ion-label>
-    </ion-item>
-  </ion-list>
+  @if (visionResult !== null && detail === 'texts') {
+    <ion-list>
+      @for (text of visionResult?.texts; track text) {
+        <ion-item (click)="onTextClick(text)">
+          <ion-label>
+            {{text.description}}
+          </ion-label>
+        </ion-item>
+      }
+    </ion-list>
+  }
+
+  @if (visionResult !== null && detail === 'logos') {
+    <ion-list>
+      @for (logo of visionResult?.logos; track logo) {
+        <ion-item (click)="onLogoClick(logo)">
+          <ion-label>
+            <ion-row>
+              <ion-col size="10">
+                {{logo.description}}
+              </ion-col>
+              <ion-col class="ion-text-right" size="2">
+                {{logo.score | number: '1.2-2'}}
+              </ion-col>
+            </ion-row>
+          </ion-label>
+        </ion-item>
+      }
+    </ion-list>
+  }
+
+  @if (visionResult !== null && detail === 'landmarks') {
+    <ion-list>
+      @for (landmark of visionResult?.landmarks; track landmark) {
+        <ion-item (click)="onLandmarkClick(landmark)">
+          <ion-label>
+            <ion-row>
+              <ion-col size="10">
+                {{landmark.description}}
+              </ion-col>
+              <ion-col class="ion-text-right" size="2">
+                {{landmark.score | number: '1.2-2'}}
+              </ion-col>
+            </ion-row>
+          </ion-label>
+        </ion-item>
+      }
+    </ion-list>
+  }
 
   <div id="map">
-    <google-map *ngIf="markers.length > 0" [options]="mapOptions">
-      <map-marker *ngFor="let m of markers"
-                  [position]="{lat: m.lat, lng: m.lng}"></map-marker>
-    </google-map>
+    @if (markers.length > 0) {
+      <google-map [options]="mapOptions">
+        @for (m of markers; track m) {
+          <map-marker
+          [position]="{lat: m.lat, lng: m.lng}"></map-marker>
+        }
+      </google-map>
+    }
   </div>
 
-  <ul *ngIf="visionResult !== null && detail === 'safeSearch'">
-    <li>
-      <ion-row>
-        <ion-col size="6">
-          Adult
-        </ion-col>
-        <ion-col size="6">
-          {{visionResult?.safeSearch!.adult}}
-        </ion-col>
-      </ion-row>
-    </li>
-    <li>
-      <ion-row>
-        <ion-col size="6">
-          Spoof
-        </ion-col>
-        <ion-col size="6">
-          {{visionResult?.safeSearch!.spoof}}
-        </ion-col>
-      </ion-row>
-    </li>
-    <li>
-      <ion-row>
-        <ion-col size="6">
-          Medical
-        </ion-col>
-        <ion-col size="6">
-          {{visionResult?.safeSearch!.medical}}
-        </ion-col>
-      </ion-row>
-    </li>
-    <li>
-      <ion-row>
-        <ion-col size="6">
-          Violence
-        </ion-col>
-        <ion-col size="6">
-          {{visionResult?.safeSearch!.violence}}
-        </ion-col>
-      </ion-row>
-    </li>
-  </ul>
+  @if (visionResult !== null && detail === 'safeSearch') {
+    <ul>
+      <li>
+        <ion-row>
+          <ion-col size="6">
+            Adult
+          </ion-col>
+          <ion-col size="6">
+            {{visionResult?.safeSearch!.adult}}
+          </ion-col>
+        </ion-row>
+      </li>
+      <li>
+        <ion-row>
+          <ion-col size="6">
+            Spoof
+          </ion-col>
+          <ion-col size="6">
+            {{visionResult?.safeSearch!.spoof}}
+          </ion-col>
+        </ion-row>
+      </li>
+      <li>
+        <ion-row>
+          <ion-col size="6">
+            Medical
+          </ion-col>
+          <ion-col size="6">
+            {{visionResult?.safeSearch!.medical}}
+          </ion-col>
+        </ion-row>
+      </li>
+      <li>
+        <ion-row>
+          <ion-col size="6">
+            Violence
+          </ion-col>
+          <ion-col size="6">
+            {{visionResult?.safeSearch!.violence}}
+          </ion-col>
+        </ion-row>
+      </li>
+    </ul>
+  }
 
 </ion-content>
 
-<ion-footer *ngIf="detail !== null" class="ion-text-center">
-  <ion-button (click)="showDetail(null)">Back</ion-button>
-</ion-footer>
+@if (detail !== null) {
+  <ion-footer class="ion-text-center">
+    <ion-button (click)="showDetail(null)">Back</ion-button>
+  </ion-footer>
+}

@@ -6,9 +6,10 @@ import {Password} from '../password';
 import {ActivatedRoute} from '@angular/router';
 
 @Component({
-  selector: 'app-edit',
-  templateUrl: './edit.page.html',
-  styleUrls: ['./edit.page.scss']
+    selector: 'app-edit',
+    templateUrl: './edit.page.html',
+    styleUrls: ['./edit.page.scss'],
+    standalone: false
 })
 export class EditPage implements OnInit {
   password: Password | undefined = undefined;

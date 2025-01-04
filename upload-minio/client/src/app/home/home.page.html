@@ -23,14 +23,18 @@
       </ion-row>
     </ion-label>
   </ion-item>
-  <ion-item *ngIf="error">
-    <ion-label>
-      <strong>{{error}}</strong>
-    </ion-label>
-  </ion-item>
+  @if (error) {
+    <ion-item>
+      <ion-label>
+        <strong>{{error}}</strong>
+      </ion-label>
+    </ion-item>
+  }
   <ion-item>
     <ion-label>
-      <img *ngIf="myPhoto" [src]="myPhoto"/>
+      @if (myPhoto) {
+        <img [src]="myPhoto"/>
+      }
     </ion-label>
   </ion-item>
 </ion-content>

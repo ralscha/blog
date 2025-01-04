@@ -3,9 +3,10 @@ import {NavController, ToastController} from '@ionic/angular';
 import {TodoService} from '../todo.service';
 
 @Component({
-  selector: 'app-password',
-  templateUrl: './password.page.html',
-  styleUrls: ['./password.page.scss'],
+    selector: 'app-password',
+    templateUrl: './password.page.html',
+    styleUrls: ['./password.page.scss'],
+    standalone: false
 })
 export class PasswordPage {
 

@@ -20,21 +20,23 @@
 
 <ion-content class="ion-padding">
   <ion-list>
-    <ion-item-sliding #slidingItem *ngFor="let todo of todos">
-      <ion-item>
-        <ion-label>{{todo.title}}</ion-label>
-      </ion-item>
-      <ion-item-options>
-        <ion-button (click)="editTodo(slidingItem, todo)" color="primary">
-          <ion-icon name="create-outline"></ion-icon>
-          Edit
-        </ion-button>
-        <ion-button (click)="deleteTodo(slidingItem, todo)" color="danger">
-          <ion-icon name="trash-outline"></ion-icon>
-          Delete
-        </ion-button>
-      </ion-item-options>
-    </ion-item-sliding>
+    @for (todo of todos; track todo.id) {
+      <ion-item-sliding #slidingItem>
+        <ion-item>
+          <ion-label>{{todo.title}}</ion-label>
+        </ion-item>
+        <ion-item-options>
+          <ion-button (click)="editTodo(slidingItem, todo)" color="primary">
+            <ion-icon name="create-outline"></ion-icon>
+            Edit
+          </ion-button>
+          <ion-button (click)="deleteTodo(slidingItem, todo)" color="danger">
+            <ion-icon name="trash-outline"></ion-icon>
+            Delete
+          </ion-button>
+        </ion-item-options>
+      </ion-item-sliding>
+    }
 
 
   </ion-list>

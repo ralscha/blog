@@ -3,9 +3,10 @@ import {EarthquakeService} from '../earthquake.service';
 import {IEarthquake} from '../protos/earthquake';
 
 @Component({
-  selector: 'app-json',
-  templateUrl: './json.page.html',
-  styleUrls: ['./json.page.scss']
+    selector: 'app-json',
+    templateUrl: './json.page.html',
+    styleUrls: ['./json.page.scss'],
+    standalone: false
 })
 export class JsonPage implements OnInit {
 

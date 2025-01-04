@@ -2,7 +2,8 @@ import {Directive, ElementRef, EventEmitter, HostListener, OnInit, Output, Rende
 import {Platform} from '@ionic/angular';
 
 @Directive({
-  selector: '[appDrawable]'
+    selector: '[appDrawable]',
+    standalone: false
 })
 export class DrawableDirective implements OnInit {
 

@@ -4,9 +4,10 @@ import {TodoService} from '../todo.service';
 import {Todo} from '../todo';
 
 @Component({
-  selector: 'app-home',
-  templateUrl: './home.page.html',
-  styleUrls: ['./home.page.scss']
+    selector: 'app-home',
+    templateUrl: './home.page.html',
+    styleUrls: ['./home.page.scss'],
+    standalone: false
 })
 export class HomePage implements ViewDidEnter {
 

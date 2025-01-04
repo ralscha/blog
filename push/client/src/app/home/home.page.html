@@ -23,10 +23,12 @@
   </ion-grid>
 
   <ion-list>
-    <ion-item *ngFor="let item of items">
-      <ion-label class="ion-text-wrap">
-        {{item.id}}. {{item.text}}
-      </ion-label>
-    </ion-item>
+    @for (item of items; track item.id) {
+      <ion-item>
+        <ion-label class="ion-text-wrap">
+          {{item.id}}. {{item.text}}
+        </ion-label>
+      </ion-item>
+    }
   </ion-list>
 </ion-content>

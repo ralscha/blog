@@ -7,27 +7,35 @@
 </ion-header>
 
 <ion-content class="ion-padding">
-  <ion-card *ngIf="matches && matches.length > 0">
-    <ion-card-content>
-      {{matches.join(', ')}}
-    </ion-card-content>
-  </ion-card>
-  <ion-list *ngIf="movies && movies.length > 0">
-    <ion-card *ngFor="let movie of movies">
-      <ion-card-header> {{ movie.title }}</ion-card-header>
+  @if (matches && matches.length > 0) {
+    <ion-card>
       <ion-card-content>
-        <p>{{ movie.genres }}</p>
-        <p *ngIf="movie.runtimeMinutes">Runtime: {{ movie.runtimeMinutes }} minutes</p>
-        <p>{{ movie.actors.join(', ') }}</p>
+        {{matches.join(', ')}}
       </ion-card-content>
     </ion-card>
-  </ion-list>
+  }
+  @if (movies && movies.length > 0) {
+    <ion-list>
+      @for (movie of movies; track movie.title) {
+        <ion-card>
+          <ion-card-header> {{ movie.title }}</ion-card-header>
+          <ion-card-content>
+            <p>{{ movie.genres }}</p>
+            @if (movie.runtimeMinutes) {
+              <p>Runtime: {{ movie.runtimeMinutes }} minutes</p>
+            }
+            <p>{{ movie.actors.join(', ') }}</p>
+          </ion-card-content>
+        </ion-card>
+      }
+    </ion-list>
+  }
 </ion-content>
 
 <ion-footer class="ion-padding">
   <ion-button color="secondary" (click)="searchCordova()">Cordova</ion-button>
   <ion-button color="secondary" (click)="searchWebSpeech()" [disabled]="isWebSpeechRecording">Web Speech</ion-button>
   <ion-button [color]="isRecording ? 'danger' : 'secondary'"
-              (click)="searchGoogleCloudSpeech()">{{isRecording ? 'Stop' : 'Cloud Speech'}}
-          </ion-button>
+    (click)="searchGoogleCloudSpeech()">{{isRecording ? 'Stop' : 'Cloud Speech'}}
+  </ion-button>
 </ion-footer>
