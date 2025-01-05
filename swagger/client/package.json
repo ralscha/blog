@@ -3,9 +3,9 @@
   "version": "0.0.1",
   "scripts": {
     "build": "ng build",
-    "start": "ng serve",
     "ng": "ng",
-    "serve-dist": "ws --hostname localhost -d dist/app -p 1234 -o --log.format stats"
+    "serve-dist": "ws --hostname localhost -d dist/app -p 1234 -o --log.format stats",
+    "start": "ng serve"
   },
   "private": true,
   "dependencies": {
@@ -16,7 +16,7 @@
     "@angular/platform-browser": "19.0.5",
     "@angular/platform-browser-dynamic": "19.0.5",
     "@angular/router": "19.0.5",
-    "@ionic/angular": "7.8.6",
+    "@ionic/angular": "8.4.1",
     "ionicons": "7.4.0",
     "rxjs": "7.8.1",
     "tslib": "2.8.1",

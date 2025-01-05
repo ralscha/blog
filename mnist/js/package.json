@@ -2,11 +2,11 @@
   "name": "mnist",
   "version": "0.0.1",
   "scripts": {
-    "ng": "ng",
-    "start": "ng serve",
     "build": "ng build --base-href /mnist/",
+    "ng": "ng",
     "postbuild": "bread-compressor dist/app",
-    "serve-dist": "ws --hostname localhost -d dist/app -p 1234 -o --log.format stats"
+    "serve-dist": "ws --hostname localhost -d dist/app -p 1234 -o --log.format stats",
+    "start": "ng serve"
   },
   "private": true,
   "dependencies": {
@@ -17,7 +17,7 @@
     "@angular/platform-browser": "19.0.5",
     "@angular/platform-browser-dynamic": "19.0.5",
     "@angular/router": "19.0.5",
-    "@ionic/angular": "7.8.6",
+    "@ionic/angular": "8.4.1",
     "ionicons": "7.4.0",
     "mathjs": "14.0.1",
     "rxjs": "7.8.1",

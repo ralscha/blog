@@ -2,10 +2,10 @@
   "name": "uploadflowjs",
   "version": "0.0.1",
   "scripts": {
-    "ng": "ng",
-    "start": "ng serve",
     "build": "ng build",
-    "serve-dist": "ws --hostname localhost -d dist/app -p 1234 -o --log.format stats"
+    "ng": "ng",
+    "serve-dist": "ws --hostname localhost -d dist/app -p 1234 -o --log.format stats",
+    "start": "ng serve"
   },
   "private": true,
   "dependencies": {
@@ -17,7 +17,7 @@
     "@angular/platform-browser-dynamic": "19.0.5",
     "@angular/router": "19.0.5",
     "@flowjs/flow.js": "2.14.1",
-    "@ionic/angular": "7.8.6",
+    "@ionic/angular": "8.4.1",
     "ionicons": "7.4.0",
     "recordrtc": "5.6.2",
     "rxjs": "7.8.1",
