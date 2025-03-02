@@ -33,6 +33,6 @@
     "@ionic/angular-toolkit": "12.1.1",
     "@types/papaparse": "5.3.15",
     "local-web-server": "5.4.0",
-    "typescript": "5.7.3"
+    "typescript": "5.8.2"
   }
 }

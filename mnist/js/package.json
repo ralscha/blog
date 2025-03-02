@@ -31,6 +31,6 @@
     "@ionic/angular-toolkit": "12.1.1",
     "bread-compressor-cli": "3.1.0",
     "local-web-server": "5.4.0",
-    "typescript": "5.7.3"
+    "typescript": "5.8.2"
   }
 }
