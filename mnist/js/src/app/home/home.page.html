@@ -7,19 +7,19 @@
 </ion-header>
 
 <ion-content class="ion-padding ion-text-center">
-  <canvas appDrawable (newImage)="detect($event)"></canvas>
+  <canvas (newImage)="detect($event)" appDrawable></canvas>
   <div>
     <ion-button (click)="erase()">Erase</ion-button>
   </div>
   <div>
-    <h3>Detected number: <strong>{{detectedNumber}}</strong></h3>
+    <h3>Detected number: <strong>{{ detectedNumber }}</strong></h3>
   </div>
 
   <table>
-    @for (detection of detections; track detection; let i = $index) {
+    @for (detection of detections; track $index) {
       <tr>
-        <td>{{i}}</td>
-        <td class="ion-text-end">{{detection * 100 | number:'1.1-1'}} %</td>
+        <td>{{ $index }}</td>
+        <td class="ion-text-end">{{ detection * 100 | number:'1.1-1' }} %</td>
       </tr>
     }
   </table>

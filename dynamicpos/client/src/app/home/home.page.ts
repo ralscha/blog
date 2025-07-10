@@ -1,12 +1,20 @@
-import {AfterViewInit, Component} from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import {AfterViewInit, Component, inject} from '@angular/core';
+import {HttpClient} from '@angular/common/http';
 import {circleMarker, latLng, LatLngBounds, LayerGroup, layerGroup, Map, tileLayer} from 'leaflet';
+import {IonContent, IonHeader, IonTitle, IonToolbar} from "@ionic/angular/standalone";
+import {LeafletDirective} from "@bluehalo/ngx-leaflet";
 
 @Component({
-    selector: 'app-home',
-    templateUrl: './home.page.html',
-    styleUrls: ['./home.page.scss'],
-    standalone: false
+  selector: 'app-home',
+  templateUrl: './home.page.html',
+  imports: [
+    IonHeader,
+    IonToolbar,
+    IonTitle,
+    IonContent,
+    LeafletDirective
+  ],
+  styleUrl: './home.page.scss'
 })
 export class HomePage implements AfterViewInit {
   options = {
@@ -19,11 +27,9 @@ export class HomePage implements AfterViewInit {
     zoom: 5,
     center: latLng([46.879966, -121.726909])
   };
+  private readonly httpClient = inject(HttpClient);
   private map!: Map;
   private markerGroup: LayerGroup | null = null;
-
-  constructor(private readonly httpClient: HttpClient) {
-  }
 
   ngAfterViewInit(): void {
     setTimeout(() => this.map.invalidateSize(), 10);

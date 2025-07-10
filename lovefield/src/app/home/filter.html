@@ -1,8 +1,8 @@
 <form #f="ngForm" (ngSubmit)="apply(f)" class="ion-padding">
   <ion-item-group>
     <ion-item-divider color="light">
-      <ion-label>Filter Magnitude: <strong>{{f.controls['mag']?.value?.lower}}
-        - {{f.controls['mag']?.value?.upper}}</strong>
+      <ion-label>Filter Magnitude: <strong>{{ f.controls['mag']?.value?.lower }}
+        - {{ f.controls['mag']?.value?.upper }}</strong>
       </ion-label>
     </ion-item-divider>
 
@@ -15,7 +15,7 @@
 
   <ion-item-group>
     <ion-item-divider color="light">
-      <ion-label>Filter Depth: <strong>{{f.controls['depth']?.value?.lower}} - {{f.controls['depth']?.value?.upper}}
+      <ion-label>Filter Depth: <strong>{{ f.controls['depth']?.value?.lower }} - {{ f.controls['depth']?.value?.upper }}
         km</strong></ion-label>
     </ion-item-divider>
 

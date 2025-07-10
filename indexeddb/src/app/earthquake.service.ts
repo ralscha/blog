@@ -1,9 +1,9 @@
-import {Injectable} from '@angular/core';
+import {inject, Injectable} from '@angular/core';
 import {Filter} from './filter-interface';
 import {parse} from 'papaparse';
-import * as geolib from 'geolib';
+import getDistance from 'geolib/es/getDistance';
 import {map} from 'rxjs/operators';
-import { HttpClient } from '@angular/common/http';
+import {HttpClient} from '@angular/common/http';
 import {Earthquake} from './earthquake';
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
@@ -11,17 +11,13 @@ import {Earthquake} from './earthquake';
   providedIn: 'root'
 })
 export class EarthquakeService {
-
   private static readonly FOURTYFIVE_MINUTES = 30 * 60 * 1000;
   private static readonly ONE_HOUR = 60 * 60 * 1000;
   private static readonly ONE_DAY = 24 * 60 * 60 * 1000;
   private static readonly SEVEN_DAYS = 7 * 24 * 60 * 60 * 1000;
   private static readonly THIRTY_DAYS = 30 * 24 * 60 * 60 * 1000;
-
+  private readonly http = inject(HttpClient);
   private db!: IDBDatabase;
-
-  constructor(private readonly http: HttpClient) {
-  }
 
   initProvider(): Promise<void> {
     let promise = this.initDb();
@@ -106,7 +102,7 @@ export class EarthquakeService {
         const filtered: Earthquake[] = [];
         e.forEach(r => {
 
-          const distanceInKilometers = geolib.getDistance(
+          const distanceInKilometers = getDistance(
             {latitude: r.latLng[0], longitude: r.latLng[1]},
             {latitude: filter.myLocation.latitude, longitude: filter.myLocation.longitude}) / 1000;
 

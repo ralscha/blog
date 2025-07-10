@@ -1,14 +1,16 @@
-import {ErrorHandler, Injectable} from '@angular/core';
+import {ErrorHandler, inject, Injectable} from '@angular/core';
 import * as StackTrace from 'stacktrace-js';
 import {environment} from '../environments/environment';
 import {ClientErrorService} from './clientError.service';
 
 @Injectable()
 export class AppGlobalErrorhandler implements ErrorHandler {
+  private readonly clientErrorService = inject(ClientErrorService);
+
 
   private isRetryRunning = false;
 
-  constructor(private readonly clientErrorService: ClientErrorService) {
+  constructor() {
     this.sendStoredErrors();
     window.addEventListener('online', () => this.sendStoredErrors());
   }

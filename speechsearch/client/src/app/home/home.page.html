@@ -10,7 +10,7 @@
   @if (matches && matches.length > 0) {
     <ion-card>
       <ion-card-content>
-        {{matches.join(', ')}}
+        {{ matches.join(', ') }}
       </ion-card-content>
     </ion-card>
   }
@@ -33,9 +33,9 @@
 </ion-content>
 
 <ion-footer class="ion-padding">
-  <ion-button color="secondary" (click)="searchCordova()">Cordova</ion-button>
-  <ion-button color="secondary" (click)="searchWebSpeech()" [disabled]="isWebSpeechRecording">Web Speech</ion-button>
-  <ion-button [color]="isRecording ? 'danger' : 'secondary'"
-    (click)="searchGoogleCloudSpeech()">{{isRecording ? 'Stop' : 'Cloud Speech'}}
+  <ion-button (click)="searchCordova()" color="secondary">Cordova</ion-button>
+  <ion-button (click)="searchWebSpeech()" [disabled]="isWebSpeechRecording" color="secondary">Web Speech</ion-button>
+  <ion-button (click)="searchGoogleCloudSpeech()"
+              [color]="isRecording ? 'danger' : 'secondary'">{{ isRecording ? 'Stop' : 'Cloud Speech' }}
   </ion-button>
 </ion-footer>

@@ -13,9 +13,9 @@
 
 <ion-content class="ion-padding">
   <ion-list lines="full">
-    @for (todo of todos | async; track todo.id) {
+    @for (todo of (todos | async); track todo.id) {
       <ion-item [detail]="true" routerLink="/edit/{{todo.id}}">
-        <ion-label>{{todo.subject}}</ion-label>
+        <ion-label>{{ todo.subject }}</ion-label>
       </ion-item>
     }
   </ion-list>

@@ -1,19 +1,27 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, inject, OnInit} from '@angular/core';
 import {EarthquakeService} from '../earthquake.service';
 import {IEarthquake} from '../protos/earthquake';
+import {DetailComponent} from '../detail/detail.component';
+import {
+  IonContent,
+  IonHeader,
+  IonItem,
+  IonLabel,
+  IonList,
+  IonRefresher,
+  IonRefresherContent,
+  IonTitle,
+  IonToolbar
+} from "@ionic/angular/standalone";
 
 @Component({
-    selector: 'app-json',
-    templateUrl: './json.page.html',
-    styleUrls: ['./json.page.scss'],
-    standalone: false
+  selector: 'app-json',
+  templateUrl: './json.page.html',
+  imports: [DetailComponent, IonHeader, IonToolbar, IonTitle, IonContent, IonRefresher, IonRefresherContent, IonList, IonItem, IonLabel]
 })
 export class JsonPage implements OnInit {
-
   earthquakes: IEarthquake[] = [];
-
-  constructor(private readonly earthquakeService: EarthquakeService) {
-  }
+  private readonly earthquakeService = inject(EarthquakeService);
 
   doRefresh(event: Event): void {
     this.earthquakeService.refresh().subscribe(() => {

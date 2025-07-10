@@ -1,13 +1,12 @@
-import {Directive, ElementRef, EventEmitter, HostListener, OnInit, Output, Renderer2} from '@angular/core';
-import {Platform} from '@ionic/angular';
+import {Directive, ElementRef, EventEmitter, HostListener, inject, OnInit, Output, Renderer2} from '@angular/core';
+import {Platform} from '@ionic/angular/standalone';
 
-@Directive({
-    selector: '[appDrawable]',
-    standalone: false
-})
+@Directive({selector: '[appDrawable]'})
 export class DrawableDirective implements OnInit {
-
   @Output() newImage = new EventEmitter();
+  private readonly el = inject(ElementRef);
+  private readonly renderer = inject(Renderer2);
+  private readonly platform = inject(Platform);
   private ctx!: CanvasRenderingContext2D;
   private canvas!: HTMLCanvasElement;
   private lastX: number | null = null;
@@ -17,10 +16,6 @@ export class DrawableDirective implements OnInit {
   private maxX = 0;
   private maxY = 0;
   private drawing = false;
-
-  constructor(private readonly  el: ElementRef, private readonly renderer: Renderer2,
-              private readonly platform: Platform) {
-  }
 
   ngOnInit(): void {
     this.canvas = this.el.nativeElement as HTMLCanvasElement;

@@ -1,22 +1,53 @@
-import {Component, OnInit} from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {TodoService} from '../../services/todo.service';
 import {Todo} from '../../todo';
-import {NgForm} from '@angular/forms';
+import {FormsModule, NgForm} from '@angular/forms';
+import {
+  IonBackButton,
+  IonButton,
+  IonButtons,
+  IonContent,
+  IonHeader,
+  IonIcon,
+  IonInput,
+  IonItem,
+  IonList,
+  IonTitle,
+  IonToolbar
+} from "@ionic/angular/standalone";
+import {trashOutline} from "ionicons/icons";
+import {addIcons} from "ionicons";
 
 @Component({
-    selector: 'app-edit',
-    templateUrl: './edit.page.html',
-    styleUrls: ['./edit.page.scss'],
-    standalone: false
+  selector: 'app-edit',
+  templateUrl: './edit.page.html',
+  styleUrl: './edit.page.scss',
+  imports: [
+    IonHeader,
+    IonToolbar,
+    IonTitle,
+    IonButtons,
+    IonBackButton,
+    IonButton,
+    IonIcon,
+    IonContent,
+    IonList,
+    FormsModule,
+    IonItem,
+    IonInput
+  ]
 })
 export class EditPage implements OnInit {
+  private readonly route = inject(ActivatedRoute);
+  private readonly todoService = inject(TodoService);
+  private readonly router = inject(Router);
+
 
   todo: Todo | undefined;
 
-  constructor(private readonly route: ActivatedRoute,
-              private readonly todoService: TodoService,
-              private readonly router: Router) {
+  constructor() {
+    addIcons({trashOutline});
   }
 
   async ngOnInit(): Promise<void> {
@@ -25,7 +56,7 @@ export class EditPage implements OnInit {
       this.todo = await this.todoService.getTodo(todoId);
     } else {
       this.todo = {
-        id: null,
+        id: '',
         subject: '',
         description: '',
         ts: 0

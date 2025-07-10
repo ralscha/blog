@@ -23,8 +23,6 @@ check-dep:
 	cd ./ngerrorhandler/server && ./mvnw.cmd versions:display-dependency-updates && ./mvnw.cmd versions:display-plugin-updates
 	cd ./ngerrorhandler/client && ncu
 	cd ./ngworkbox && ncu
-	cd ./parcelmaven && ./mvnw.cmd versions:display-dependency-updates && ./mvnw.cmd versions:display-plugin-updates
-	cd ./parcelmaven/src/main/frontend && ncu
 	cd ./passwordcheck/server && ./mvnw.cmd versions:display-dependency-updates && ./mvnw.cmd versions:display-plugin-updates
 	cd ./passwordcheck/client && ncu
 	cd ./pluggable-fs && ./mvnw.cmd versions:display-dependency-updates && ./mvnw.cmd versions:display-plugin-updates

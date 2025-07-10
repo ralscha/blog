@@ -1,17 +1,16 @@
-import { HttpClient } from '@angular/common/http';
+import {HttpClient} from '@angular/common/http';
 import {AbstractControl} from '@angular/forms';
 import {environment} from '../environments/environment';
-import {Injectable} from '@angular/core';
+import {inject, Injectable} from '@angular/core';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UsernameValidator {
+  private readonly http = inject(HttpClient);
+
 
   private timeout: any = null;
-
-  constructor(private readonly http: HttpClient) {
-  }
 
   validate(control: AbstractControl): Promise<{ [key: string]: boolean } | null> {
     if (this.timeout !== null) {

@@ -1,23 +1,35 @@
-import {Component, OnInit} from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import {Component, inject, OnInit} from '@angular/core';
+import {HttpClient} from '@angular/common/http';
 import {AuthService} from '../auth.service';
 import {JwtHelperService} from '@auth0/angular-jwt';
 import {environment} from '../../environments/environment';
+import {IonButton, IonButtons, IonContent, IonHeader, IonIcon, IonTitle, IonToolbar} from "@ionic/angular/standalone";
+import {addIcons} from "ionicons";
+import {exitOutline} from "ionicons/icons";
 
 @Component({
-    selector: 'app-home',
-    templateUrl: './home.page.html',
-    styleUrls: ['./home.page.scss'],
-    standalone: false
+  selector: 'app-home',
+  templateUrl: './home.page.html',
+  imports: [
+    IonHeader,
+    IonToolbar,
+    IonTitle,
+    IonButtons,
+    IonButton,
+    IonIcon,
+    IonContent
+  ]
 })
 export class HomePage implements OnInit {
-
   user!: string | null;
   message: string | null = null;
+  private readonly authService = inject(AuthService);
+  private readonly httpClient = inject(HttpClient);
 
-  constructor(private readonly authService: AuthService,
-              jwtHelper: JwtHelperService,
-              private readonly httpClient: HttpClient) {
+  constructor() {
+    addIcons({exitOutline});
+    const jwtHelper = inject(JwtHelperService);
+
 
     this.authService.authUserObservable.subscribe(jwt => {
       if (jwt) {

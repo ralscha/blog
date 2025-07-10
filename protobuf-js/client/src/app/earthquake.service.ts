@@ -1,7 +1,7 @@
-import {Injectable} from '@angular/core';
+import {inject, Injectable} from '@angular/core';
 import {Observable, throwError} from 'rxjs';
 import {catchError, map} from 'rxjs/operators';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Earthquakes, IEarthquake} from './protos/earthquake';
 import {environment} from '../environments/environment';
 
@@ -9,9 +9,8 @@ import {environment} from '../environments/environment';
   providedIn: 'root'
 })
 export class EarthquakeService {
+  private readonly http = inject(HttpClient);
 
-  constructor(private readonly http: HttpClient) {
-  }
 
   refresh(): Observable<void> {
     return this.http.get<void>(`${environment.SERVER_URL}/refresh`);

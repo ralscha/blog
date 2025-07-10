@@ -1,8 +1,8 @@
 import {Injectable} from '@angular/core';
 import {Earthquake, EarthquakeDb} from './earthquake-db';
 import {Filter} from './filter-interface';
-import {parse} from 'papaparse';
-import * as geolib from 'geolib';
+import Papa from 'papaparse';
+import getDistance from 'geolib/es/getDistance';
 
 @Injectable({
   providedIn: 'root'
@@ -76,7 +76,7 @@ export class EarthquakeService {
 
     if (hasDistanceFilter || filter.sort === 'distance') {
       result.forEach(r => {
-        const distanceInKilometers = geolib.getDistance(
+        const distanceInKilometers = getDistance(
           {latitude: r.latLng[0], longitude: r.latLng[1]},
           {latitude: filter.myLocation.latitude, longitude: filter.myLocation.longitude}) / 1000;
 
@@ -119,7 +119,7 @@ export class EarthquakeService {
   private async loadData(dataUrl: string): Promise<void> {
     const response = await fetch(dataUrl);
     const text = await response.text();
-    const data = parse<{
+    const data = Papa.parse<{
       id: string, time: string, place: string, mag: string,
       depth: string, latitude: string, longitude: string
     }>(text, {header: true});

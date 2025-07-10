@@ -1,19 +1,27 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, inject, OnInit} from '@angular/core';
 import {IEarthquake} from '../protos/earthquake';
 import {EarthquakeService} from '../earthquake.service';
+import {DetailComponent} from '../detail/detail.component';
+import {
+  IonContent,
+  IonHeader,
+  IonItem,
+  IonLabel,
+  IonList,
+  IonRefresher,
+  IonRefresherContent,
+  IonTitle,
+  IonToolbar
+} from "@ionic/angular/standalone";
 
 @Component({
-    selector: 'app-protobuf',
-    templateUrl: './protobuf.page.html',
-    styleUrls: ['./protobuf.page.scss'],
-    standalone: false
+  selector: 'app-protobuf',
+  templateUrl: './protobuf.page.html',
+  imports: [DetailComponent, IonHeader, IonToolbar, IonTitle, IonContent, IonRefresher, IonRefresherContent, IonList, IonItem, IonLabel]
 })
 export class ProtobufPage implements OnInit {
-
   earthquakes: IEarthquake[] = [];
-
-  constructor(private readonly earthquakeService: EarthquakeService) {
-  }
+  private readonly earthquakeService = inject(EarthquakeService);
 
   doRefresh(event: Event): void {
     this.earthquakeService.refresh().subscribe(() => {

@@ -8,7 +8,7 @@
 
 <ion-content class="ion-padding">
   <swiper-container [modules]="swiperModules" [pagination]="true">
-    @for (pic of pictures; track pic) {
+    @for (pic of pictures; track $index) {
       <swiper-slide><img [src]="pic" alt="pic"></swiper-slide>
     }
   </swiper-container>

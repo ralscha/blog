@@ -1,25 +1,39 @@
-import {Component} from '@angular/core';
-import {UntypedFormBuilder, UntypedFormGroup, Validators} from '@angular/forms';
-import { HttpClient } from '@angular/common/http';
+import {Component, inject} from '@angular/core';
+import {ReactiveFormsModule, UntypedFormBuilder, UntypedFormGroup, Validators} from '@angular/forms';
+import {HttpClient} from '@angular/common/http';
 import {UsernameValidator} from '../username-validator';
-import {ToastController} from '@ionic/angular';
+import {
+  IonButton,
+  IonContent,
+  IonHeader,
+  IonInput,
+  IonItem,
+  IonLabel,
+  IonList,
+  IonTitle,
+  IonToolbar,
+  ToastController
+} from '@ionic/angular/standalone';
 import {AgeValidator} from '../age-validator';
 import {environment} from '../../environments/environment';
 
 @Component({
-    selector: 'app-home',
-    templateUrl: './home.page.html',
-    styleUrls: ['./home.page.scss'],
-    standalone: false
+  selector: 'app-home',
+  templateUrl: './home.page.html',
+  styleUrl: './home.page.scss',
+  imports: [ReactiveFormsModule, IonHeader, IonToolbar, IonTitle, IonContent, IonList, IonItem, IonInput, IonLabel, IonButton]
 })
 export class HomePage {
-
   public registrationForm: UntypedFormGroup;
   public readonly minAge: number = 18;
+  private readonly http = inject(HttpClient);
+  private readonly toastCtrl = inject(ToastController);
   private readonly emailRegex = `(?:[a-z0-9!#$%&'*+/=?^_\`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_\`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\\])`;
 
-  constructor(formBuilder: UntypedFormBuilder, usernameValidator: UsernameValidator,
-              private readonly http: HttpClient, private readonly toastCtrl: ToastController) {
+  constructor() {
+    const formBuilder = inject(UntypedFormBuilder);
+    const usernameValidator = inject(UsernameValidator);
+
 
     this.registrationForm = formBuilder.group({
       username: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(30)]

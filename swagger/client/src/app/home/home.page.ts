@@ -1,27 +1,57 @@
-import {Component} from '@angular/core';
+import {Component, inject} from '@angular/core';
 import {Todo, TodoServiceService} from '../swagger';
-import {IonItemSliding, NavController, ViewDidEnter} from '@ionic/angular';
+import {
+  IonButton,
+  IonButtons,
+  IonContent,
+  IonHeader,
+  IonIcon,
+  IonItem,
+  IonItemOptions,
+  IonItemSliding,
+  IonLabel,
+  IonList,
+  IonTitle,
+  IonToolbar,
+  NavController,
+  ViewDidEnter
+} from '@ionic/angular/standalone';
+import {addIcons} from "ionicons";
+import {addOutline, createOutline, trashOutline} from "ionicons/icons";
 
 @Component({
-    selector: 'app-home',
-    templateUrl: './home.page.html',
-    styleUrls: ['./home.page.scss'],
-    standalone: false
+  selector: 'app-home',
+  templateUrl: './home.page.html',
+  imports: [
+    IonHeader,
+    IonToolbar,
+    IonTitle,
+    IonButtons,
+    IonButton,
+    IonIcon,
+    IonContent,
+    IonList,
+    IonItemSliding,
+    IonItem,
+    IonLabel,
+    IonItemOptions
+  ]
 })
 export class HomePage implements ViewDidEnter {
-
   todos: Todo[] = [];
+  private readonly navCtrl = inject(NavController);
+  private readonly todoService = inject(TodoServiceService);
 
-  constructor(private readonly navCtrl: NavController,
-              private readonly todoService: TodoServiceService) {
+  constructor() {
+    addIcons({addOutline, createOutline, trashOutline});
   }
 
   ionViewDidEnter(): void {
-    this.todoService.listUsingGET().subscribe(data => this.todos = data);
+    this.todoService.list().subscribe(data => this.todos = data);
   }
 
   addTodo(): void {
-    this.todoService.selectedTodo = null;
+    this.todoService.selectedTodo = undefined;
     this.navCtrl.navigateForward(['edit']);
   }
 
@@ -33,7 +63,7 @@ export class HomePage implements ViewDidEnter {
 
   deleteTodo(slidingItem: IonItemSliding, todo: Todo): void {
     slidingItem.close();
-    this.todoService.deleteUsingPOST(todo.id).subscribe(() => this.ionViewDidEnter());
+    this.todoService._delete(todo.id).subscribe(() => this.ionViewDidEnter());
   }
 
 }

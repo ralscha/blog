@@ -1,11 +1,16 @@
-import {Component, OnInit} from '@angular/core';
-import {IonicSlides} from '@ionic/angular';
+import {Component, CUSTOM_ELEMENTS_SCHEMA, OnInit} from '@angular/core';
+import {IonContent, IonHeader, IonicSlides, IonTitle, IonToolbar} from '@ionic/angular/standalone';
 
 @Component({
-    selector: 'app-home',
-    templateUrl: './home.page.html',
-    styleUrls: ['./home.page.scss'],
-    standalone: false
+  selector: 'app-home',
+  templateUrl: './home.page.html',
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
+  imports: [
+    IonHeader,
+    IonToolbar,
+    IonTitle,
+    IonContent
+  ]
 })
 export class HomePage implements OnInit {
   swiperModules = [IonicSlides];

@@ -21,22 +21,24 @@
     <ion-label>
       <ion-row>
         <ion-col size="6">
-          <ion-button color="secondary" type="button" expand="full" shape="round" size="large" (click)="start()"
-                      [disabled]="recording">
+          <ion-button (click)="start()" [disabled]="recording" color="secondary" expand="full" shape="round"
+                      size="large"
+                      type="button">
             Start
           </ion-button>
         </ion-col>
         <ion-col size="6">
-          <ion-button color="danger" type="button" expand="full" shape="round" size="large" (click)="stop()"
-                      [disabled]="!recording">
+          <ion-button (click)="stop()" [disabled]="!recording" color="danger" expand="full" shape="round" size="large"
+                      type="button">
             Stop
           </ion-button>
         </ion-col>
       </ion-row>
       <ion-row>
         <ion-col size="12">
-          <ion-button color="secondary" type="button" expand="full" shape="round" size="large" (click)="takeSnapshot()"
-                      [disabled]="!recording">
+          <ion-button (click)="takeSnapshot()" [disabled]="!recording" color="secondary" expand="full" shape="round"
+                      size="large"
+                      type="button">
             Take a Snapshot
           </ion-button>
         </ion-col>

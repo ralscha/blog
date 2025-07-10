@@ -1,10 +1,13 @@
 import {Component} from '@angular/core';
 import {EChartsOption} from 'echarts';
+import {NgxEchartsDirective} from 'ngx-echarts';
+import {IonContent, IonHeader, IonTitle, IonToolbar} from "@ionic/angular/standalone";
 
 @Component({
-    templateUrl: 'chart2.html',
-    styleUrls: ['chart2.scss'],
-    standalone: false
+  selector: 'app-chart2',
+  templateUrl: 'chart2.html',
+  styleUrl: './chart2.scss',
+  imports: [NgxEchartsDirective, IonHeader, IonToolbar, IonTitle, IonContent]
 })
 export class Chart2Page {
 

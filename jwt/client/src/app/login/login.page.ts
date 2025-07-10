@@ -1,21 +1,32 @@
-import {Component} from '@angular/core';
-import {LoadingController, NavController, ToastController} from '@ionic/angular';
+import {Component, inject} from '@angular/core';
+import {
+  IonButton,
+  IonContent,
+  IonHeader,
+  IonInput,
+  IonItem,
+  IonList,
+  IonTitle,
+  IonToolbar,
+  LoadingController,
+  NavController,
+  ToastController
+} from '@ionic/angular/standalone';
 import {AuthService} from '../auth.service';
 import {finalize} from 'rxjs/operators';
+import {FormsModule} from '@angular/forms';
 
 @Component({
-    selector: 'app-login',
-    templateUrl: './login.page.html',
-    styleUrls: ['./login.page.scss'],
-    standalone: false
+  selector: 'app-login',
+  templateUrl: './login.page.html',
+  imports: [FormsModule, IonHeader, IonToolbar, IonTitle, IonContent, IonList, IonItem, IonInput, IonButton]
 })
 export class LoginPage {
+  private readonly navCtrl = inject(NavController);
+  private readonly loadingCtrl = inject(LoadingController);
+  private readonly authService = inject(AuthService);
+  private readonly toastCtrl = inject(ToastController);
 
-  constructor(private readonly navCtrl: NavController,
-              private readonly loadingCtrl: LoadingController,
-              private readonly authService: AuthService,
-              private readonly toastCtrl: ToastController) {
-  }
 
   signup(): void {
     this.navCtrl.navigateRoot(['signup']);

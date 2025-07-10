@@ -2,7 +2,7 @@
   <ion-toolbar>
     <ion-title>
       Earthquakes
-      <ion-note>({{earthquakes?.length}}, {{elapsedTime | number:'1.0-0'}} ms)</ion-note>
+      <ion-note>({{ earthquakes?.length }}, {{ elapsedTime | number:'1.0-0' }} ms)</ion-note>
     </ion-title>
     <ion-buttons slot="primary">
       <ion-button (click)="presentPopover($event)">

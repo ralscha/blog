@@ -1,20 +1,50 @@
-import {Component} from '@angular/core';
-import {IonItemSliding, NavController, ViewDidEnter} from '@ionic/angular';
+import {Component, inject} from '@angular/core';
+import {
+  IonButton,
+  IonButtons,
+  IonContent,
+  IonHeader,
+  IonIcon,
+  IonItem,
+  IonItemOptions,
+  IonItemSliding,
+  IonLabel,
+  IonList,
+  IonTitle,
+  IonToolbar,
+  NavController,
+  ViewDidEnter
+} from '@ionic/angular/standalone';
 import {TodoService} from '../todo.service';
 import {Todo} from '../todo';
+import {addIcons} from "ionicons";
+import {addOutline, createOutline, exitOutline, trashOutline} from "ionicons/icons";
 
 @Component({
-    selector: 'app-home',
-    templateUrl: './home.page.html',
-    styleUrls: ['./home.page.scss'],
-    standalone: false
+  selector: 'app-home',
+  templateUrl: './home.page.html',
+  imports: [
+    IonHeader,
+    IonToolbar,
+    IonTitle,
+    IonButtons,
+    IonButton,
+    IonIcon,
+    IonContent,
+    IonList,
+    IonItemSliding,
+    IonLabel,
+    IonItem,
+    IonItemOptions
+  ]
 })
 export class HomePage implements ViewDidEnter {
-
   todos: Todo[] = [];
+  private readonly navCtrl = inject(NavController);
+  private readonly todoService = inject(TodoService);
 
-  constructor(private readonly navCtrl: NavController,
-              private readonly todoService: TodoService) {
+  constructor() {
+    addIcons({exitOutline, addOutline, createOutline, trashOutline});
   }
 
   ionViewDidEnter(): void {

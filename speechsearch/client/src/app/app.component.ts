@@ -1,21 +1,24 @@
-import {Component} from '@angular/core';
+import {Component, inject} from '@angular/core';
 
 import {Platform} from '@ionic/angular';
 import {SplashScreen} from '@ionic-native/splash-screen/ngx';
 import {StatusBar} from '@ionic-native/status-bar/ngx';
+import {IonApp, IonRouterOutlet} from "@ionic/angular/standalone";
 
 @Component({
-    selector: 'app-root',
-    templateUrl: './app.component.html',
-    styleUrls: ['./app.component.scss'],
-    standalone: false
+  selector: 'app-root',
+  templateUrl: './app.component.html',
+  imports: [
+    IonRouterOutlet,
+    IonApp
+  ]
 })
 export class AppComponent {
-  constructor(
-    private platform: Platform,
-    private splashScreen: SplashScreen,
-    private statusBar: StatusBar
-  ) {
+  private platform = inject(Platform);
+  private splashScreen = inject(SplashScreen);
+  private statusBar = inject(StatusBar);
+
+  constructor() {
     this.initializeApp();
   }
 

@@ -1,11 +1,14 @@
 import {Component} from '@angular/core';
 import {format} from 'date-fns';
 import {EChartsOption} from 'echarts';
+import {NgxEchartsDirective} from 'ngx-echarts';
+import {IonContent, IonHeader, IonTitle, IonToolbar} from "@ionic/angular/standalone";
 
 @Component({
-    templateUrl: 'chart5.html',
-    styleUrls: ['chart5.scss'],
-    standalone: false
+  selector: 'app-chart5',
+  templateUrl: 'chart5.html',
+  styleUrl: './chart5.scss',
+  imports: [NgxEchartsDirective, IonHeader, IonToolbar, IonTitle, IonContent]
 })
 export class Chart5Page {
 

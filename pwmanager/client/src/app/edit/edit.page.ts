@@ -1,22 +1,40 @@
-import {Component, OnInit} from '@angular/core';
-import {NavController} from '@ionic/angular';
+import {Component, inject, OnInit} from '@angular/core';
+import {
+  IonBackButton,
+  IonButton,
+  IonButtons,
+  IonContent,
+  IonFooter,
+  IonHeader,
+  IonIcon,
+  IonInput,
+  IonItem,
+  IonList,
+  IonTitle,
+  IonToolbar,
+  NavController
+} from '@ionic/angular/standalone';
 import {v4} from 'uuid';
 import {PasswordService} from '../password.service';
 import {Password} from '../password';
 import {ActivatedRoute} from '@angular/router';
+import {FormsModule} from '@angular/forms';
+import {addIcons} from "ionicons";
+import {trashOutline} from "ionicons/icons";
 
 @Component({
-    selector: 'app-edit',
-    templateUrl: './edit.page.html',
-    styleUrls: ['./edit.page.scss'],
-    standalone: false
+  selector: 'app-edit',
+  templateUrl: './edit.page.html',
+  imports: [FormsModule, IonHeader, IonToolbar, IonButtons, IonBackButton, IonTitle, IonButton, IonIcon, IonContent, IonList, IonItem, IonInput, IonFooter]
 })
 export class EditPage implements OnInit {
   password: Password | undefined = undefined;
+  private readonly navCtrl = inject(NavController);
+  private readonly route = inject(ActivatedRoute);
+  private readonly passwordService = inject(PasswordService);
 
-  constructor(private readonly navCtrl: NavController,
-              private readonly route: ActivatedRoute,
-              private readonly passwordService: PasswordService) {
+  constructor() {
+    addIcons({trashOutline});
   }
 
   ngOnInit(): void {

@@ -1,21 +1,38 @@
-import {Component, OnInit} from '@angular/core';
-import {ModalController, NavParams} from '@ionic/angular';
+import { Component, OnInit, inject } from '@angular/core';
 import {Filter} from '../filter-interface';
-import {NgForm} from '@angular/forms';
+import {FormsModule, NgForm} from '@angular/forms';
+import {
+  IonButton,
+  IonButtons,
+  IonContent,
+  IonHeader,
+  IonItem,
+  IonItemDivider,
+  IonItemGroup,
+  IonLabel,
+  IonRadio,
+  IonRadioGroup,
+  IonRange,
+  IonSelect,
+  IonSelectOption,
+  IonTitle,
+  IonToolbar,
+  ModalController,
+  NavParams
+} from "@ionic/angular/standalone";
 
 @Component({
-    selector: 'app-filter',
-    templateUrl: './filter.page.html',
-    styleUrls: ['./filter.page.scss'],
-    standalone: false
+  selector: 'app-filter',
+  templateUrl: './filter.page.html',
+  styleUrl: './filter.page.scss',
+  imports: [FormsModule, IonHeader, IonToolbar, IonButtons, IonButton, IonTitle, IonContent, IonItemGroup, IonItemDivider, IonLabel, IonItem, IonRange, IonRadioGroup, IonSelect, IonSelectOption, IonRadio]
 })
 export class FilterPage implements OnInit {
+  private readonly navParams = inject(NavParams);
+  private readonly modalCtrl = inject(ModalController);
+
 
   filter!: Filter;
-
-  constructor(private readonly navParams: NavParams,
-              private readonly modalCtrl: ModalController) {
-  }
 
   ngOnInit(): void {
     this.filter = this.navParams.get('filter');

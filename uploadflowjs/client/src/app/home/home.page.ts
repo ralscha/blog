@@ -1,25 +1,34 @@
-import {Component, ElementRef, ViewChild} from '@angular/core';
+import {Component, ElementRef, inject, ViewChild} from '@angular/core';
 // @ts-ignore
 import Flow from '@flowjs/flow.js';
 // @ts-ignore
 import * as RecordRTC from 'recordrtc';
-import {ToastController} from '@ionic/angular';
+import {
+  IonButton,
+  IonCol,
+  IonContent,
+  IonHeader,
+  IonItem,
+  IonLabel,
+  IonRow,
+  IonTitle,
+  IonToolbar,
+  ToastController
+} from '@ionic/angular/standalone';
 import {environment} from '../../environments/environment';
+import {ProgressBarComponent} from '../progress-bar/progress-bar.component';
 
 @Component({
-    selector: 'app-home',
-    templateUrl: './home.page.html',
-    styleUrls: ['./home.page.scss'],
-    standalone: false
+  selector: 'app-home',
+  templateUrl: './home.page.html',
+  imports: [ProgressBarComponent, IonHeader, IonToolbar, IonTitle, IonContent, IonItem, IonLabel, IonRow, IonCol, IonButton]
 })
 export class HomePage {
   recording = false;
   loadProgress = 0;
   @ViewChild('videoElement') videoElement!: ElementRef;
+  private readonly toastCtrl = inject(ToastController);
   private recordRTC: RecordRTC;
-
-  constructor(private readonly toastCtrl: ToastController) {
-  }
 
   start(): void {
     console.log(this.videoElement);

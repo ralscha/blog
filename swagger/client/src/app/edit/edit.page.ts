@@ -1,21 +1,31 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, inject, OnInit} from '@angular/core';
 import {Todo, TodoServiceService} from '../swagger';
-import {NavController} from '@ionic/angular';
+import {
+  IonBackButton,
+  IonButton,
+  IonButtons,
+  IonContent,
+  IonFooter,
+  IonHeader,
+  IonInput,
+  IonItem,
+  IonList,
+  IonTitle,
+  IonToolbar,
+  NavController
+} from '@ionic/angular/standalone';
 import {v4} from 'uuid';
+import {FormsModule} from '@angular/forms';
 
 @Component({
-    selector: 'app-edit',
-    templateUrl: './edit.page.html',
-    styleUrls: ['./edit.page.scss'],
-    standalone: false
+  selector: 'app-edit',
+  templateUrl: './edit.page.html',
+  imports: [FormsModule, IonHeader, IonToolbar, IonTitle, IonButtons, IonBackButton, IonContent, IonList, IonItem, IonInput, IonFooter, IonButton]
 })
 export class EditPage implements OnInit {
-
   todo!: Todo;
-
-  constructor(private readonly navCtrl: NavController,
-              private readonly todoService: TodoServiceService) {
-  }
+  private readonly navCtrl = inject(NavController);
+  private readonly todoService = inject(TodoServiceService);
 
   ngOnInit(): void {
     const todo = this.todoService.selectedTodo;
@@ -31,7 +41,7 @@ export class EditPage implements OnInit {
   }
 
   save(): void {
-    this.todoService.saveUsingPOST(this.todo).subscribe(() => this.navCtrl.navigateBack(['home']));
+    this.todoService.save(this.todo).subscribe(() => this.navCtrl.navigateBack(['home']));
   }
 
 }

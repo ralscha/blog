@@ -1,7 +1,23 @@
-import {platformBrowserDynamic} from '@angular/platform-browser-dynamic';
+import {PreloadAllModules, provideRouter, RouteReuseStrategy, withHashLocation, withPreloading} from '@angular/router';
+import {bootstrapApplication} from '@angular/platform-browser';
+import {routes} from './app/app.routes';
+import {AppComponent} from './app/app.component';
+import {provideIonicAngular,IonicRouteStrategy} from "@ionic/angular/standalone";
+import {Workbox} from "workbox-window";
 
-import {AppModule} from './app/app.module';
+function loadServiceWorker() {
+  if ('serviceWorker' in navigator) {
+    const wb = new Workbox('service-worker.js');
+    wb.register();
+  }
+}
 
-
-platformBrowserDynamic().bootstrapModule(AppModule)
+bootstrapApplication(AppComponent, {
+  providers: [
+    provideIonicAngular(),
+    {provide: RouteReuseStrategy, useClass: IonicRouteStrategy},
+    provideRouter(routes, withHashLocation(), withPreloading(PreloadAllModules))
+  ]
+})
+  .then(() => loadServiceWorker())
   .catch(err => console.error(err));

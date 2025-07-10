@@ -1,25 +1,24 @@
-import {Injectable} from '@angular/core';
+import {inject, Injectable} from '@angular/core';
 import {Observable, ReplaySubject} from 'rxjs';
-import { HttpClient } from '@angular/common/http';
+import {HttpClient} from '@angular/common/http';
 import {JwtHelperService} from '@auth0/angular-jwt';
 import {tap} from 'rxjs/operators';
 import {environment} from '../environments/environment';
-import {NavController} from '@ionic/angular';
+import {NavController} from '@ionic/angular/standalone';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
+  private readonly httpClient = inject(HttpClient);
+  private readonly navCtrl = inject(NavController);
+  private readonly jwtHelper = inject(JwtHelperService);
+
 
   private readonly jwtTokenName = 'jwt_token';
 
   private authUser = new ReplaySubject<string | null>(1);
   public authUserObservable = this.authUser.asObservable();
-
-  constructor(private readonly httpClient: HttpClient,
-              private readonly navCtrl: NavController,
-              private readonly jwtHelper: JwtHelperService) {
-  }
 
   hasAccess(): Promise<boolean> {
     const jwt = localStorage.getItem(this.jwtTokenName);

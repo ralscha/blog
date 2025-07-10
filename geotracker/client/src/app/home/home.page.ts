@@ -1,19 +1,20 @@
-import {Component} from '@angular/core';
+import {Component, inject} from '@angular/core';
 import {ServerPushService} from '../server-push.service';
 import {LocationTrackerService} from '../location-tracker.service';
+import {DatePipe} from '@angular/common';
+import {IonButton, IonContent, IonHeader, IonTitle, IonToolbar} from "@ionic/angular/standalone";
 
 @Component({
-    selector: 'app-home',
-    templateUrl: './home.page.html',
-    styleUrls: ['./home.page.scss'],
-    standalone: false
+  selector: 'app-home',
+  templateUrl: './home.page.html',
+  imports: [DatePipe, IonHeader, IonToolbar, IonTitle, IonContent, IonButton]
 })
 export class HomePage {
-
+  readonly locationTracker = inject(LocationTrackerService);
   tracking: boolean;
+  private readonly serverPush = inject(ServerPushService);
 
-  constructor(public readonly locationTracker: LocationTrackerService,
-              private readonly serverPush: ServerPushService) {
+  constructor() {
     this.tracking = false;
   }
 

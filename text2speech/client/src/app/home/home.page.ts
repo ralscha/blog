@@ -1,34 +1,45 @@
-import {Component} from '@angular/core';
+import {Component, inject} from '@angular/core';
 import {environment} from '../../environments/environment';
-import {LoadingController} from '@ionic/angular';
+import {
+  IonButton,
+  IonContent,
+  IonHeader,
+  IonItem,
+  IonLabel,
+  IonRange,
+  IonSelect,
+  IonSelectOption,
+  IonTextarea,
+  IonTitle,
+  IonToolbar,
+  LoadingController
+} from '@ionic/angular/standalone';
+import {FormsModule} from '@angular/forms';
 
 declare type Voice = { name: string, gender: string, language: string };
 
 @Component({
-    selector: 'app-home',
-    templateUrl: './home.page.html',
-    styleUrls: ['./home.page.scss'],
-    standalone: false
+  selector: 'app-home',
+  templateUrl: './home.page.html',
+  styleUrl: './home.page.scss',
+  imports: [FormsModule, IonHeader, IonToolbar, IonTitle, IonContent, IonItem, IonSelect, IonSelectOption, IonLabel, IonRange, IonTextarea, IonButton]
 })
 export class HomePage {
-
   languages: string[] = [];
   genders: string[] = [];
   voices: Voice[] = [];
   voicesResponse: Voice[] = [];
-
   selectedGender: string | null = null;
   selectedLanguage: string | null = null;
   selectedVoice: string | null = null;
-
   pitch = 0;
   speakingRate = 1;
   text = '';
-
   selectedClientVoice: SpeechSynthesisVoice | null = null;
   clientVoices: SpeechSynthesisVoice[];
+  private readonly loadingController = inject(LoadingController);
 
-  constructor(private readonly loadingController: LoadingController) {
+  constructor() {
     this.loadVoices();
     this.clientVoices = speechSynthesis.getVoices().sort((a, b) => a.name > b.name ? 1 : -1);
     speechSynthesis.onvoiceschanged = () => this.clientVoices = speechSynthesis.getVoices().sort((a, b) => a.name > b.name ? 1 : -1);

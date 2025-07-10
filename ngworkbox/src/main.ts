@@ -1,8 +1,6 @@
-import {enableProdMode} from '@angular/core';
-import {platformBrowserDynamic} from '@angular/platform-browser-dynamic';
-import {AppModule} from './app/app.module';
-import {environment} from './environments/environment';
 import {Workbox} from 'workbox-window';
+import {bootstrapApplication} from '@angular/platform-browser';
+import {AppComponent} from './app/app.component';
 
 function loadServiceWorker(): void {
   // if (environment.production && ('serviceWorker' in navigator)) {
@@ -34,6 +32,8 @@ function loadServiceWorker(): void {
   }
 }
 
-platformBrowserDynamic().bootstrapModule(AppModule)
+bootstrapApplication(AppComponent, {
+  providers: []
+})
   .then(() => loadServiceWorker())
   .catch(err => console.error(err));

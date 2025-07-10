@@ -1,36 +1,54 @@
-import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
-import {LoadingController} from '@ionic/angular';
+import {Component, ElementRef, inject, OnInit, ViewChild} from '@angular/core';
+import {
+  IonButton,
+  IonButtons,
+  IonCol,
+  IonContent,
+  IonFooter,
+  IonHeader,
+  IonIcon,
+  IonItem,
+  IonLabel,
+  IonList,
+  IonRow,
+  IonTitle,
+  IonToolbar,
+  LoadingController
+} from '@ionic/angular/standalone';
 import {environment} from '../../environments/environment';
 import {Face, FaceLandmark, Landmark, Logo, Text, Vertex, VisionResult} from '../vision';
+import {GoogleMap, MapMarker} from '@angular/google-maps';
+import {DecimalPipe} from '@angular/common';
+import {addIcons} from "ionicons";
+import {cameraOutline} from "ionicons/icons";
 
 @Component({
-    selector: 'app-home',
-    templateUrl: './home.page.html',
-    styleUrls: ['./home.page.scss'],
-    standalone: false
+  selector: 'app-home',
+  templateUrl: './home.page.html',
+  styleUrls: ['./home.page.scss'],
+  imports: [GoogleMap, MapMarker, DecimalPipe, IonHeader, IonToolbar, IonTitle, IonButtons, IonButton, IonIcon, IonContent, IonList, IonItem, IonLabel, IonRow, IonCol, IonFooter]
 })
 export class HomePage implements OnInit {
-
   @ViewChild('fileSelector') fileInput!: ElementRef;
   @ViewChild('canvas', {static: true}) canvas!: ElementRef;
   @ViewChild('canvasContainer') canvasContainer!: ElementRef;
-
   visionResult: VisionResult | null = null;
   detail: string | null = null;
   selectedFace: Face | null = null;
   markers: { lat: number, lng: number }[] = [];
-
   mapOptions: google.maps.MapOptions = {
     center: {lat: 40, lng: -20},
     zoom: 8
   };
+  private readonly loadingController = inject(LoadingController);
   private ratio!: number;
   private ctx!: CanvasRenderingContext2D;
   private selectedFile: File | null = null;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   private image: any = null;
 
-  constructor(private readonly loadingController: LoadingController) {
+  constructor() {
+    addIcons({cameraOutline});
   }
 
   ngOnInit(): void {

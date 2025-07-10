@@ -4,7 +4,7 @@ module.exports = {
   mode: 'production',
   entry: path.join(__dirname, 'src', 'service-worker.ts'),
   output: {
-    path: path.join(__dirname, 'dist', 'app'),
+    path: path.join(__dirname, 'dist', 'app', 'browser'),
     filename: 'service-worker.js'
   },
   module: {

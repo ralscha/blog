@@ -1,11 +1,14 @@
 import {Component} from '@angular/core';
 import {EChartsOption} from 'echarts';
+import {NgxEchartsDirective} from 'ngx-echarts';
+import {IonContent, IonHeader, IonTitle, IonToolbar} from "@ionic/angular/standalone";
 
 
 @Component({
-    templateUrl: 'chart4.html',
-    styleUrls: ['chart4.scss'],
-    standalone: false
+  selector: 'app-chart4',
+  templateUrl: 'chart4.html',
+  styleUrl: './chart4.scss',
+  imports: [NgxEchartsDirective, IonHeader, IonToolbar, IonTitle, IonContent]
 })
 export class Chart4Page {
 
@@ -20,7 +23,7 @@ export class Chart4Page {
         symbolSize: 50,
         roam: true,
         label: {
-            show: true
+          show: true
         },
         edgeSymbol: ['circle', 'arrow'],
         edgeSymbolSize: [4, 10],
@@ -47,17 +50,17 @@ export class Chart4Page {
           target: 1,
           symbolSize: [5, 20],
           label: {
-              show: true
+            show: true
           },
           lineStyle: {
-              width: 5,
-              curveness: 0.2
+            width: 5,
+            curveness: 0.2
           }
         }, {
           source: 'Node 2',
           target: 'Node 1',
           label: {
-              show: true
+            show: true
           },
           lineStyle: {
             curveness: 0.2
@@ -76,9 +79,9 @@ export class Chart4Page {
           target: 'Node 4'
         }],
         lineStyle: {
-            opacity: 0.9,
-            width: 2,
-            curveness: 0
+          opacity: 0.9,
+          width: 2,
+          curveness: 0
         }
       }
     ]

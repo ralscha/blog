@@ -1,23 +1,23 @@
-import {Component, Input} from '@angular/core';
-import * as geolib from 'geolib';
+import {Component, input} from '@angular/core';
 import {Earthquake} from '../earthquake-db';
+import {DatePipe, DecimalPipe} from '@angular/common';
+import {IonCol, IonRow} from "@ionic/angular/standalone";
+import getDistance from 'geolib/es/getDistance';
 
 @Component({
-    selector: 'app-detail',
-    templateUrl: './detail.component.html',
-    styles: ['.magnitude { font-weight: bold; font-size: 1.3em; }'],
-    standalone: false
+  selector: 'app-detail',
+  templateUrl: './detail.component.html',
+  styles: ['.magnitude { font-weight: bold; font-size: 1.3em; }'],
+  imports: [DecimalPipe, DatePipe, IonRow, IonCol]
 })
 export class DetailComponent {
 
-  @Input()
-  earthquake!: Earthquake;
+  readonly earthquake = input.required<Earthquake>();
 
-  @Input()
-  referenceLocation!: {
+  readonly referenceLocation = input.required<{
     latitude: number;
-    longitude: number
-  };
+    longitude: number;
+  }>();
 
   distanceToReference(earthquake: Earthquake): number | null {
     if (earthquake.distance) {
@@ -26,9 +26,9 @@ export class DetailComponent {
 
     const latLng = earthquake.latLng;
     if (latLng) {
-      return geolib.getDistance({
-        latitude: this.referenceLocation.latitude,
-        longitude: this.referenceLocation.longitude
+      return getDistance({
+        latitude: this.referenceLocation().latitude,
+        longitude: this.referenceLocation().longitude
       }, {
         latitude: latLng[0],
         longitude: latLng[1]

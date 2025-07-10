@@ -1,29 +1,43 @@
-import {ChangeDetectorRef, Component} from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import {Platform} from '@ionic/angular';
+import {ChangeDetectorRef, Component, inject} from '@angular/core';
+import {HttpClient} from '@angular/common/http';
+import {
+  IonCheckbox,
+  IonCol,
+  IonContent,
+  IonGrid,
+  IonHeader,
+  IonItem,
+  IonLabel,
+  IonList,
+  IonRow,
+  IonTitle,
+  IonToolbar,
+  Platform
+} from '@ionic/angular/standalone';
 import {timeout} from 'rxjs/operators';
 import {environment} from '../../environments/environment';
+import {FormsModule} from '@angular/forms';
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 declare let cordova: any;
 
 @Component({
-    selector: 'app-home',
-    templateUrl: './home.page.html',
-    styleUrls: ['./home.page.scss'],
-    standalone: false
+  selector: 'app-home',
+  templateUrl: './home.page.html',
+  imports: [FormsModule, IonHeader, IonToolbar, IonTitle, IonContent, IonGrid, IonRow, IonCol, IonCheckbox, IonList, IonItem, IonLabel]
 })
 export class HomePage {
-
   allowPush: boolean;
   allowPersonal: boolean;
   items: { id: number, text: string }[] = [];
   token: string | null = null;
+  private readonly http = inject(HttpClient);
+  private readonly changeDetectorRef = inject(ChangeDetectorRef);
   private readonly TOPIC_NAME = 'chuck';
 
-  constructor(private readonly http: HttpClient,
-              platform: Platform,
-              private readonly changeDetectorRef: ChangeDetectorRef) {
+  constructor() {
+    const platform = inject(Platform);
+
 
     platform.ready().then(async () => {
       try {

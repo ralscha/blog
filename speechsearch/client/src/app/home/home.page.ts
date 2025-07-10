@@ -1,29 +1,50 @@
-import {ChangeDetectorRef, Component} from '@angular/core';
+import {ChangeDetectorRef, Component, inject} from '@angular/core';
 import {Movie} from '../movie';
 import {LoadingController} from '@ionic/angular';
 // @ts-ignore
 import * as RecordRTC from 'recordrtc';
 import {environment} from '../../environments/environment';
+import {
+  IonButton,
+  IonCard,
+  IonCardContent,
+  IonCardHeader,
+  IonContent,
+  IonFooter,
+  IonHeader,
+  IonList,
+  IonTitle,
+  IonToolbar
+} from "@ionic/angular/standalone";
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 declare let webkitSpeechRecognition: any;
 
 @Component({
-    selector: 'app-home',
-    templateUrl: './home.page.html',
-    styleUrls: ['./home.page.scss'],
-    standalone: false
+  selector: 'app-home',
+  templateUrl: './home.page.html',
+  styleUrl: './home.page.scss',
+  imports: [
+    IonHeader,
+    IonToolbar,
+    IonTitle,
+    IonContent,
+    IonCard,
+    IonCardContent,
+    IonList,
+    IonCardHeader,
+    IonFooter,
+    IonButton
+  ]
 })
 export class HomePage {
   movies: Movie[] = [];
   matches: string[] = [];
   isRecording = false;
   isWebSpeechRecording = false;
+  private readonly changeDetectorRef = inject(ChangeDetectorRef);
+  private readonly loadingCtrl = inject(LoadingController);
   private recorder: RecordRTC;
-
-  constructor(private readonly changeDetectorRef: ChangeDetectorRef,
-              private readonly loadingCtrl: LoadingController) {
-  }
 
   async movieSearch(searchTerms: string[]): Promise<void> {
     if (searchTerms && searchTerms.length > 0) {

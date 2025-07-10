@@ -5,7 +5,7 @@
     </ion-title>
     <ion-buttons slot="end">
       <ion-button (click)="addTodo()">
-        <ion-icon name="add-outline" size="large"></ion-icon>
+        <ion-icon [size]="'large'" name="add-outline"></ion-icon>
       </ion-button>
     </ion-buttons>
   </ion-toolbar>
@@ -13,9 +13,9 @@
 
 <ion-content class="ion-padding">
   <ion-list lines="full">
-    @for (todo of todos | async; track todo.id) {
+    @for (todo of (todos | async); track todo.id) {
       <ion-item [detail]="true" routerLink="/edit/{{todo.id}}">
-        <ion-label>{{todo.subject}}</ion-label>
+        <ion-label>{{ todo.subject }}</ion-label>
       </ion-item>
     }
   </ion-list>

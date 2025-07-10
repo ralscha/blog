@@ -1,5 +1,5 @@
-import {Injectable} from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import {inject, Injectable} from '@angular/core';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {environment} from '../environments/environment';
 import {AppPosition} from './app-position';
 
@@ -7,9 +7,8 @@ import {AppPosition} from './app-position';
   providedIn: 'root'
 })
 export class ServerPushService {
+  private readonly httpClient = inject(HttpClient);
 
-  constructor(private readonly httpClient: HttpClient) {
-  }
 
   pushPosition(pos: AppPosition | null): void {
     this.httpClient.post(`${environment.serverURL}/pos`, pos)

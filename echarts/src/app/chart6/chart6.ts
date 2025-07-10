@@ -1,13 +1,16 @@
 import {Component} from '@angular/core';
 import {ViewWillEnter, ViewWillLeave} from '@ionic/angular';
 import {EChartsOption} from 'echarts';
+import {NgxEchartsDirective} from 'ngx-echarts';
+import {IonContent, IonHeader, IonTitle, IonToolbar} from "@ionic/angular/standalone";
 
 type DataType = { name: string, value: [string, number] };
 
 @Component({
-    templateUrl: 'chart6.html',
-    styleUrls: ['chart6.scss'],
-    standalone: false
+  selector: 'app-chart6',
+  templateUrl: 'chart6.html',
+  styleUrl: './chart6.scss',
+  imports: [NgxEchartsDirective, IonHeader, IonToolbar, IonTitle, IonContent]
 })
 export class Chart6Page implements ViewWillEnter, ViewWillLeave {
   private static oneDay = 24 * 3600 * 1000;
@@ -23,9 +26,9 @@ export class Chart6Page implements ViewWillEnter, ViewWillLeave {
     tooltip: {
       trigger: 'axis',
       formatter: (params: any) => {
-          const param = params[0];
-          const date = new Date(param.name);
-          return date.getDate() + '/' + (date.getMonth() + 1) + '/' + date.getFullYear() + ' : ' + param.value[1];
+        const param = params[0];
+        const date = new Date(param.name);
+        return date.getDate() + '/' + (date.getMonth() + 1) + '/' + date.getFullYear() + ' : ' + param.value[1];
       },
       axisPointer: {
         animation: false

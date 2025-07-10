@@ -1,26 +1,52 @@
-import {Component} from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import {LoadingController, ToastController} from '@ionic/angular';
+import {Component, inject} from '@angular/core';
+import {HttpClient} from '@angular/common/http';
+import {
+  IonButton,
+  IonCol,
+  IonContent,
+  IonHeader,
+  IonIcon,
+  IonItem,
+  IonLabel,
+  IonRow,
+  IonTitle,
+  IonToolbar,
+  LoadingController,
+  ToastController
+} from '@ionic/angular/standalone';
 import {catchError, finalize} from 'rxjs/operators';
 import {Observable, throwError} from 'rxjs';
 import {environment} from '../../environments/environment';
+import {addIcons} from "ionicons";
+import {camera, image} from "ionicons/icons";
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 @Component({
-    selector: 'app-home',
-    templateUrl: './home.page.html',
-    styleUrls: ['./home.page.scss'],
-    standalone: false
+  selector: 'app-home',
+  templateUrl: './home.page.html',
+  imports: [
+    IonHeader,
+    IonToolbar,
+    IonTitle,
+    IonContent,
+    IonItem,
+    IonLabel,
+    IonRow,
+    IonCol,
+    IonButton,
+    IonIcon
+  ]
 })
 export class HomePage {
-
   public myPhoto: any;
   public error: string | null = null;
+  private readonly http = inject(HttpClient);
+  private readonly loadingCtrl = inject(LoadingController);
+  private readonly toastCtrl = inject(ToastController);
   private loading: any;
 
-  constructor(private readonly http: HttpClient,
-              private readonly loadingCtrl: LoadingController,
-              private readonly toastCtrl: ToastController) {
+  constructor() {
+    addIcons({camera, image});
   }
 
   takePhoto(): void {

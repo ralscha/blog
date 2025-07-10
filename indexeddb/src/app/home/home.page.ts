@@ -1,23 +1,41 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, inject, OnInit} from '@angular/core';
 import {FilterPage} from '../filter/filter.page';
 import {EarthquakeService} from '../earthquake.service';
-import {LoadingController, ModalController} from '@ionic/angular';
+import {
+  IonButton,
+  IonButtons,
+  IonContent,
+  IonHeader,
+  IonIcon,
+  IonItem,
+  IonLabel,
+  IonList,
+  IonNote,
+  IonRefresher,
+  IonRefresherContent,
+  IonTitle,
+  IonToolbar,
+  LoadingController,
+  ModalController
+} from '@ionic/angular/standalone';
 import {Filter} from '../filter-interface';
 import {Earthquake} from '../earthquake';
+import {CdkFixedSizeVirtualScroll, CdkVirtualForOf, CdkVirtualScrollViewport} from '@angular/cdk/scrolling';
+import {DetailComponent} from '../detail/detail.component';
+import {DecimalPipe} from '@angular/common';
+import {addIcons} from "ionicons";
+import {optionsOutline} from "ionicons/icons";
 
 @Component({
-    selector: 'app-home',
-    templateUrl: './home.page.html',
-    styleUrls: ['./home.page.scss'],
-    standalone: false
+  selector: 'app-home',
+  templateUrl: './home.page.html',
+  styleUrls: ['./home.page.scss'],
+  imports: [CdkVirtualScrollViewport, CdkFixedSizeVirtualScroll, CdkVirtualForOf, DetailComponent, DecimalPipe, IonHeader, IonToolbar, IonTitle, IonNote, IonButtons, IonButton, IonIcon, IonContent, IonRefresher, IonRefresherContent, IonList, IonItem, IonLabel]
 })
 export class HomePage implements OnInit {
-
   earthquakes: Earthquake[] = [];
   elapsedTime!: number;
-
   geoWatchId!: number;
-
   filter: Filter = {
     mag: {
       lower: -1,
@@ -34,10 +52,12 @@ export class HomePage implements OnInit {
       longitude: 0
     }
   };
+  private readonly earthquakeService = inject(EarthquakeService);
+  private readonly modalCtrl = inject(ModalController);
+  private readonly loadingCtrl = inject(LoadingController);
 
-  constructor(private readonly earthquakeService: EarthquakeService,
-              private readonly modalCtrl: ModalController,
-              private readonly loadingCtrl: LoadingController) {
+  constructor() {
+    addIcons({optionsOutline});
   }
 
   ngOnInit(): void {

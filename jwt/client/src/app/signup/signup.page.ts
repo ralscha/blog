@@ -1,25 +1,35 @@
-import {Component, ViewChild} from '@angular/core';
-import {LoadingController, NavController, ToastController} from '@ionic/angular';
+import {Component, inject, ViewChild} from '@angular/core';
+import {
+  IonBackButton,
+  IonButton,
+  IonButtons,
+  IonContent,
+  IonHeader,
+  IonInput,
+  IonItem,
+  IonList,
+  IonTitle,
+  IonToolbar,
+  LoadingController,
+  NavController,
+  ToastController
+} from '@ionic/angular/standalone';
 import {AuthService} from '../auth.service';
-import {NgModel} from '@angular/forms';
+import {FormsModule, NgModel} from '@angular/forms';
 import {finalize} from 'rxjs/operators';
 
 @Component({
-    selector: 'app-signup',
-    templateUrl: './signup.page.html',
-    styleUrls: ['./signup.page.scss'],
-    standalone: false
+  selector: 'app-signup',
+  templateUrl: './signup.page.html',
+  imports: [FormsModule, IonHeader, IonToolbar, IonButtons, IonBackButton, IonTitle, IonContent, IonList, IonItem, IonInput, IonButton]
 })
 export class SignupPage {
-
   @ViewChild('username')
   usernameModel!: NgModel;
-
-  constructor(private readonly navCtrl: NavController,
-              private readonly authService: AuthService,
-              private readonly loadingCtrl: LoadingController,
-              private readonly toastCtrl: ToastController) {
-  }
+  private readonly navCtrl = inject(NavController);
+  private readonly authService = inject(AuthService);
+  private readonly loadingCtrl = inject(LoadingController);
+  private readonly toastCtrl = inject(ToastController);
 
   async signup(value: { name: string, email: string, username: string, password: string }): Promise<void> {
     const loading = await this.loadingCtrl.create({

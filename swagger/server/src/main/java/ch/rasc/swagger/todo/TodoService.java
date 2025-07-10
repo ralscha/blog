@@ -13,9 +13,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiParam;
-
 @RestController
 @RequestMapping("/todo")
 @CrossOrigin
@@ -35,9 +32,7 @@ public class TodoService {
 
   @PostMapping("/delete/{id}")
   @ResponseStatus(HttpStatus.NO_CONTENT)
-  @ApiOperation("Deletes a todo entry")
-  public void delete(@ApiParam(value = "Primary key of the todo entity",
-      required = true) @PathVariable("id") String id) {
+  public void delete(@PathVariable(value = "id", required = true) String id) {
     this.todoDb.delete(id);
   }
 

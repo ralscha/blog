@@ -19,13 +19,13 @@
     <ion-list lines="none">
       <ion-item>
         <ion-input #subject="ngModel" [ngModel]="todo?.subject" [required]="true" errorText="Subject is required"
-        label="Subject" labelPlacement="stacked" name="subject"></ion-input>
+                   label="Subject" labelPlacement="stacked" name="subject"></ion-input>
       </ion-item>
 
       <ion-item>
         <ion-input [ngModel]="todo?.description" errorText="Description is required"
-          label="Description" labelPlacement="stacked"
-          name="description"
+                   label="Description" labelPlacement="stacked"
+                   name="description"
         ></ion-input>
       </ion-item>
     </ion-list>

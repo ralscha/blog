@@ -70,7 +70,7 @@ async function serverSync(): Promise<void> {
   });
 
   // all these ids are not in our local database, fetch them
-  serverMap.forEach((value, key) => syncRequest.get.push(key));
+  serverMap.forEach((_value, key) => syncRequest.get.push(key));
 
   // delete local todos
   let deleted = false;
@@ -108,7 +108,10 @@ async function serverSync(): Promise<void> {
       }
 
       if (sync.updated) {
-        Object.entries(sync.updated).forEach(async (kv) => await db.todos.update(kv[0], {ts: kv[1]}));
+        for (const kv of Object.entries(sync.updated)) {
+          // @ts-ignore
+          await db.todos.update(kv[0], {ts: kv[1]});
+        }
       }
       if (sync.removed) {
         sync.removed.forEach(async (id: string) => await db.todos.delete(id));

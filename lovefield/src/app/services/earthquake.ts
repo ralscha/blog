@@ -1,7 +1,7 @@
-import {Injectable} from '@angular/core';
+import {inject, Injectable} from '@angular/core';
 import {parse, ParseResult} from 'papaparse';
 import * as lf from 'lovefield';
-import { HttpClient } from '@angular/common/http';
+import {HttpClient} from '@angular/common/http';
 import {map} from 'rxjs/operators';
 import {Filter} from '../filter';
 import {firstValueFrom} from "rxjs";
@@ -10,15 +10,14 @@ import {firstValueFrom} from "rxjs";
   providedIn: 'root'
 })
 export class EarthquakeService {
+  private readonly http = inject(HttpClient);
+
 
   private readonly DATA_URL = 'https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_month.csv';
   // private readonly DATA_URL = 'assets/data/all_month.csv';
   private schemaBuilder!: lf.schema.Builder;
   private earthquakeDb!: lf.Database;
   private eqTbl!: lf.schema.Table;
-
-  constructor(private readonly http: HttpClient) {
-  }
 
   createSchema() {
     this.schemaBuilder = lf.schema.create('earthquake', 1);

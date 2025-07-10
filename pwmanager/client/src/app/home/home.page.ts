@@ -1,19 +1,38 @@
-import {Component} from '@angular/core';
-import {NavController, ViewDidEnter} from '@ionic/angular';
+import {Component, inject} from '@angular/core';
+import {
+  IonButton,
+  IonButtons,
+  IonCard,
+  IonCardContent,
+  IonCardHeader,
+  IonContent,
+  IonHeader,
+  IonIcon,
+  IonNote,
+  IonSearchbar,
+  IonTitle,
+  IonToolbar,
+  NavController,
+  ViewDidEnter
+} from '@ionic/angular/standalone';
 import {PasswordService} from '../password.service';
 import {Password} from '../password';
+import {FormsModule} from "@angular/forms";
+import {addIcons} from "ionicons";
+import {addOutline, exitOutline} from "ionicons/icons";
 
 @Component({
-    selector: 'app-home',
-    templateUrl: './home.page.html',
-    styleUrls: ['./home.page.scss'],
-    standalone: false
+  selector: 'app-home',
+  templateUrl: './home.page.html',
+  imports: [FormsModule, IonHeader, IonToolbar, IonButtons, IonTitle, IonButton, IonIcon, IonContent, IonSearchbar, IonCard, IonCardHeader, IonCardContent, IonNote]
 })
 export class HomePage implements ViewDidEnter {
   passwords: Password[] = [];
+  private readonly navCtrl = inject(NavController);
+  private readonly passwordService = inject(PasswordService);
 
-  constructor(private readonly navCtrl: NavController,
-              private readonly passwordService: PasswordService) {
+  constructor() {
+    addIcons({exitOutline, addOutline});
   }
 
   ionViewDidEnter(): void {

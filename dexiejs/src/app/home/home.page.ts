@@ -1,17 +1,41 @@
-import {Component, OnInit} from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import {FilterPage} from '../filter/filter.page';
 import {Earthquake} from '../earthquake-db';
 import {EarthquakeService} from '../earthquake.service';
-import {LoadingController, ModalController} from '@ionic/angular';
 import {Filter} from '../filter-interface';
+import {CdkFixedSizeVirtualScroll, CdkVirtualForOf, CdkVirtualScrollViewport} from '@angular/cdk/scrolling';
+import {DetailComponent} from '../detail/detail.component';
+import {DecimalPipe} from '@angular/common';
+import {
+  IonButton,
+  IonButtons,
+  IonContent,
+  IonGrid,
+  IonHeader,
+  IonIcon,
+  IonItem,
+  IonNote,
+  IonRefresher,
+  IonRefresherContent,
+  IonTitle,
+  IonToolbar,
+  LoadingController,
+  ModalController
+} from "@ionic/angular/standalone";
+import {addIcons} from "ionicons";
+import {optionsOutline} from "ionicons/icons";
 
 @Component({
-    selector: 'app-home',
-    templateUrl: './home.page.html',
-    styleUrls: ['./home.page.scss'],
-    standalone: false
+  selector: 'app-home',
+  templateUrl: './home.page.html',
+  styleUrl: './home.page.scss',
+  imports: [CdkVirtualScrollViewport, CdkFixedSizeVirtualScroll, CdkVirtualForOf, DetailComponent, DecimalPipe, IonHeader, IonToolbar, IonTitle, IonNote, IonButtons, IonButton, IonIcon, IonContent, IonRefresher, IonRefresherContent, IonGrid, IonItem]
 })
 export class HomePage implements OnInit {
+  private readonly earthquakeService = inject(EarthquakeService);
+  private readonly modalCtrl = inject(ModalController);
+  private readonly loadingCtrl = inject(LoadingController);
+
 
   earthquakes: Earthquake[] = [];
   elapsedTime!: number;
@@ -35,9 +59,8 @@ export class HomePage implements OnInit {
     }
   };
 
-  constructor(private readonly earthquakeService: EarthquakeService,
-              private readonly modalCtrl: ModalController,
-              private readonly loadingCtrl: LoadingController) {
+  constructor() {
+    addIcons({optionsOutline});
   }
 
   ngOnInit(): void {

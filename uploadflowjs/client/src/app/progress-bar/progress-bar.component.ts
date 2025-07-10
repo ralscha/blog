@@ -1,14 +1,12 @@
-import {Component, Input} from '@angular/core';
+import {Component, input} from '@angular/core';
 
 @Component({
-    selector: 'app-progress-bar',
-    templateUrl: './progress-bar.component.html',
-    styleUrls: ['./progress-bar.component.scss'],
-    standalone: false
+  selector: 'app-progress-bar',
+  templateUrl: './progress-bar.component.html',
+  styleUrl: './progress-bar.component.scss'
 })
 export class ProgressBarComponent {
 
-  @Input()
-  progress!: number;
+  readonly progress = input.required<number>();
 
 }

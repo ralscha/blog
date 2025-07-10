@@ -1,12 +1,14 @@
 import {Component, ViewChild} from '@angular/core';
 import {DrawableDirective} from '../drawable.directive';
 import {multiply} from 'mathjs';
+import {DecimalPipe} from '@angular/common';
+import {IonButton, IonContent, IonHeader, IonTitle, IonToolbar} from "@ionic/angular/standalone";
 
 @Component({
-    selector: 'app-home',
-    templateUrl: './home.page.html',
-    styleUrls: ['./home.page.scss'],
-    standalone: false
+  selector: 'app-home',
+  templateUrl: './home.page.html',
+  styleUrl: './home.page.scss',
+  imports: [DrawableDirective, DecimalPipe, IonHeader, IonToolbar, IonTitle, IonContent, IonButton]
 })
 export class HomePage {
 

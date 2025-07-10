@@ -32,11 +32,11 @@ export class Configuration {
    * @returns the selected content-type or <code>undefined</code> if no selection could be made.
    */
   public selectHeaderContentType(contentTypes: string[]): string | undefined {
-    if (contentTypes.length === 0) {
+    if (contentTypes.length == 0) {
       return undefined;
     }
 
-    const type = contentTypes.find(x => this.isJsonMime(x));
+    let type = contentTypes.find(x => this.isJsonMime(x));
     if (type === undefined) {
       return contentTypes[0];
     }
@@ -51,11 +51,11 @@ export class Configuration {
    * @returns the selected content-type or <code>undefined</code> if no selection could be made.
    */
   public selectHeaderAccept(accepts: string[]): string | undefined {
-    if (accepts.length === 0) {
+    if (accepts.length == 0) {
       return undefined;
     }
 
-    const type = accepts.find(x => this.isJsonMime(x));
+    let type = accepts.find(x => this.isJsonMime(x));
     if (type === undefined) {
       return accepts[0];
     }
@@ -73,7 +73,7 @@ export class Configuration {
    * @return True if the given MIME is JSON, false otherwise.
    */
   public isJsonMime(mime: string): boolean {
-    const jsonMime = new RegExp(`^(application/json|[^;/ \t]+/[^;/ \t]+[+]json)[ \t]*(;.*)?$`, 'i');
+    const jsonMime: RegExp = new RegExp('^(application\/json|[^;/ \t]+\/[^;/ \t]+[+]json)[ \t]*(;.*)?$', 'i');
     return mime != null && (jsonMime.test(mime) || mime.toLowerCase() === 'application/json-patch+json');
   }
 }

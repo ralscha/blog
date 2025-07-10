@@ -16,12 +16,12 @@
 
   @if (tracking) {
     <div>
-      <div>Accuracy: {{locationTracker.pos?.accuracy}}</div>
-      <div>Bearing: {{locationTracker.pos?.bearing}}</div>
-      <div>Latitude: {{locationTracker.pos?.latitude}}</div>
-      <div>Longitude: {{locationTracker.pos?.longitude}}</div>
-      <div>Speed: {{locationTracker.pos?.speed}}</div>
-      <div>Time: {{locationTracker.pos?.time | date:'medium'}}</div>
+      <div>Accuracy: {{ locationTracker.pos?.accuracy }}</div>
+      <div>Bearing: {{ locationTracker.pos?.bearing }}</div>
+      <div>Latitude: {{ locationTracker.pos?.latitude }}</div>
+      <div>Longitude: {{ locationTracker.pos?.longitude }}</div>
+      <div>Speed: {{ locationTracker.pos?.speed }}</div>
+      <div>Time: {{ locationTracker.pos?.time | date:'medium' }}</div>
     </div>
   }
 

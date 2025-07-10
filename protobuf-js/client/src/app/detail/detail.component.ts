@@ -1,15 +1,16 @@
-import {Component, Input} from '@angular/core';
+import {Component, input} from '@angular/core';
 import {IEarthquake} from '../protos/earthquake';
+import {DatePipe, DecimalPipe} from '@angular/common';
+import {IonNote} from "@ionic/angular/standalone";
 
 @Component({
-    selector: 'app-detail',
-    templateUrl: './detail.component.html',
-    styleUrls: ['./detail.component.scss'],
-    standalone: false
+  selector: 'app-detail',
+  templateUrl: './detail.component.html',
+  styleUrls: ['./detail.component.scss'],
+  imports: [DecimalPipe, DatePipe, IonNote]
 })
 export class DetailComponent {
 
-  @Input()
-  earthquake!: IEarthquake;
+  readonly earthquake = input.required<IEarthquake>();
 
 }

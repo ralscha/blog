@@ -12,7 +12,7 @@ export class TodoDb extends Dexie {
 }
 
 export interface Todo {
-  id: string | null;
+  id: string;
   subject: string;
   description?: string;
   ts: number;

@@ -13,8 +13,8 @@
 
       <ion-item>
         <ion-input [class.invalid]="isInvalidAndDirty('username')"
-          formControlName="username" label="Username"
-        labelPlacement="stacked" type="text"></ion-input>
+                   formControlName="username" label="Username"
+                   labelPlacement="stacked" type="text"></ion-input>
       </ion-item>
       @if (hasError('username', 'required')) {
         <ion-item class="error-message">
@@ -47,8 +47,8 @@
 
       <ion-item>
         <ion-input [class.invalid]="isInvalidAndDirty('email')"
-          formControlName="email" label="Email"
-        labelPlacement="stacked" type="email"></ion-input>
+                   formControlName="email" label="Email"
+                   labelPlacement="stacked" type="email"></ion-input>
       </ion-item>
       @if (hasError('email', 'required')) {
         <ion-item class="error-message">
@@ -67,8 +67,8 @@
 
       <ion-item>
         <ion-input [class.invalid]="isInvalidAndDirty('age')"
-          formControlName="age" label="Age"
-        labelPlacement="stacked" type="number"></ion-input>
+                   formControlName="age" label="Age"
+                   labelPlacement="stacked" type="number"></ion-input>
       </ion-item>
       @if (hasError('age', 'required')) {
         <ion-item class="error-message">
@@ -80,7 +80,7 @@
       @if (hasError('age', 'notOldEnough')) {
         <ion-item class="error-message">
           <ion-label>
-            You must be at least {{minAge}} years old!
+            You must be at least {{ minAge }} years old!
           </ion-label>
         </ion-item>
       }
