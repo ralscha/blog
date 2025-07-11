@@ -1,9 +1,9 @@
-import {Directive, ElementRef, EventEmitter, HostListener, inject, OnInit, Output, Renderer2} from '@angular/core';
+import {Directive, ElementRef, HostListener, inject, OnInit, Renderer2, output} from '@angular/core';
 import {Platform} from '@ionic/angular/standalone';
 
 @Directive({selector: '[appDrawable]'})
 export class DrawableDirective implements OnInit {
-  @Output() newImage = new EventEmitter();
+  readonly newImage = output<HTMLCanvasElement>();
   private readonly el = inject(ElementRef);
   private readonly renderer = inject(Renderer2);
   private readonly platform = inject(Platform);

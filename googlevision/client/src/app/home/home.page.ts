@@ -1,4 +1,4 @@
-import {Component, ElementRef, inject, OnInit, ViewChild} from '@angular/core';
+import {Component, ElementRef, inject, OnInit, viewChild} from '@angular/core';
 import {
   IonButton,
   IonButtons,
@@ -29,9 +29,9 @@ import {cameraOutline} from "ionicons/icons";
   imports: [GoogleMap, MapMarker, DecimalPipe, IonHeader, IonToolbar, IonTitle, IonButtons, IonButton, IonIcon, IonContent, IonList, IonItem, IonLabel, IonRow, IonCol, IonFooter]
 })
 export class HomePage implements OnInit {
-  @ViewChild('fileSelector') fileInput!: ElementRef;
-  @ViewChild('canvas', {static: true}) canvas!: ElementRef;
-  @ViewChild('canvasContainer') canvasContainer!: ElementRef;
+  readonly fileInput = viewChild.required<ElementRef>('fileSelector');
+  readonly canvas = viewChild.required<ElementRef>('canvas');
+  readonly canvasContainer = viewChild.required<ElementRef>('canvasContainer');
   visionResult: VisionResult | null = null;
   detail: string | null = null;
   selectedFace: Face | null = null;
@@ -52,7 +52,7 @@ export class HomePage implements OnInit {
   }
 
   ngOnInit(): void {
-    this.ctx = this.canvas.nativeElement.getContext('2d');
+    this.ctx = this.canvas().nativeElement.getContext('2d');
   }
 
   showDetail(detail: string | null): void {
@@ -165,7 +165,7 @@ export class HomePage implements OnInit {
   }
 
   clickFileSelector(): void {
-    this.fileInput.nativeElement.click();
+    this.fileInput().nativeElement.click();
   }
 
   private async fetchSignUrl(): Promise<void> {
@@ -213,8 +213,8 @@ export class HomePage implements OnInit {
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   private drawImageScaled(img: any): void {
-    const width = this.canvasContainer.nativeElement.clientWidth;
-    const height = this.canvasContainer.nativeElement.clientHeight;
+    const width = this.canvasContainer().nativeElement.clientWidth;
+    const height = this.canvasContainer().nativeElement.clientHeight;
 
     const hRatio = width / img.width;
     const vRatio = height / img.height;
@@ -223,8 +223,8 @@ export class HomePage implements OnInit {
       this.ratio = 1;
     }
 
-    this.canvas.nativeElement.width = img.width * this.ratio;
-    this.canvas.nativeElement.height = img.height * this.ratio;
+    this.canvas().nativeElement.width = img.width * this.ratio;
+    this.canvas().nativeElement.height = img.height * this.ratio;
 
     this.ctx.clearRect(0, 0, width, height);
     this.ctx.drawImage(img, 0, 0, img.width, img.height,

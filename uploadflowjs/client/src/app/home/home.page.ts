@@ -1,4 +1,4 @@
-import {Component, ElementRef, inject, ViewChild} from '@angular/core';
+import {Component, ElementRef, inject, viewChild} from '@angular/core';
 // @ts-ignore
 import Flow from '@flowjs/flow.js';
 // @ts-ignore
@@ -26,17 +26,17 @@ import {ProgressBarComponent} from '../progress-bar/progress-bar.component';
 export class HomePage {
   recording = false;
   loadProgress = 0;
-  @ViewChild('videoElement') videoElement!: ElementRef;
+  readonly videoElement = viewChild.required<ElementRef>('videoElement');
   private readonly toastCtrl = inject(ToastController);
   private recordRTC: RecordRTC;
 
   start(): void {
-    console.log(this.videoElement);
+    console.log(this.videoElement());
     this.recording = true;
     navigator.mediaDevices.getUserMedia({video: true, audio: false})
       .then(async (stream) => {
-        this.videoElement.nativeElement.srcObject = stream;
-        await this.videoElement.nativeElement.play();
+        this.videoElement().nativeElement.srcObject = stream;
+        await this.videoElement().nativeElement.play();
 
         const options = {
           mimeType: 'video/webm;codecs=vp9',
@@ -59,8 +59,8 @@ export class HomePage {
       });
     }
 
-    this.videoElement.nativeElement.pause();
-    this.videoElement.nativeElement.srcObject = null;
+    this.videoElement().nativeElement.pause();
+    this.videoElement().nativeElement.srcObject = null;
   }
 
   takeSnapshot(): void {
@@ -70,7 +70,7 @@ export class HomePage {
 
     const ctx = canvas.getContext('2d');
     if (ctx !== null) {
-      ctx.drawImage(this.videoElement.nativeElement, 0, 0, canvas.width, canvas.height);
+      ctx.drawImage(this.videoElement().nativeElement, 0, 0, canvas.width, canvas.height);
 
       canvas.toBlob(this.uploadSnapshot.bind(this), 'image/jpeg', 1);
     }

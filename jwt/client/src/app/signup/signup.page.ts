@@ -1,4 +1,4 @@
-import {Component, inject, ViewChild} from '@angular/core';
+import {Component, inject, viewChild} from '@angular/core';
 import {
   IonBackButton,
   IonButton,
@@ -24,8 +24,7 @@ import {finalize} from 'rxjs/operators';
   imports: [FormsModule, IonHeader, IonToolbar, IonButtons, IonBackButton, IonTitle, IonContent, IonList, IonItem, IonInput, IonButton]
 })
 export class SignupPage {
-  @ViewChild('username')
-  usernameModel!: NgModel;
+  readonly usernameModel = viewChild.required<NgModel>('username');
   private readonly navCtrl = inject(NavController);
   private readonly authService = inject(AuthService);
   private readonly loadingCtrl = inject(LoadingController);
@@ -79,7 +78,7 @@ export class SignupPage {
 
       toast.present();
 
-      this.usernameModel.control.setErrors({usernameTaken: true});
+      this.usernameModel().control.setErrors({usernameTaken: true});
     }
   }
 
