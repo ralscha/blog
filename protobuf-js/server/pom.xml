@@ -80,7 +80,7 @@
 							<goal>run</goal>
 						</goals>
 						<configuration>
-							<protocVersion>4.30.2</protocVersion>
+							<protocVersion>4.31.1</protocVersion>
 							<inputDirectories>
 								<include>src/main/protobuf</include>
 							</inputDirectories>
