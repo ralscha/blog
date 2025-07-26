@@ -88,10 +88,10 @@
   },
   "schematics": {
     "@ionic/angular-toolkit:component": {
-      "styles": "scss"
+      "styles": "css"
     },
     "@ionic/angular-toolkit:page": {
-      "styles": "scss"
+      "styles": "css"
     },
     "@schematics/angular:component": {
       "type": "component"
