@@ -1,1 +1,1 @@
-Source code for my blog: https://golb.hplar.ch/
+Source code for my blog posts: https://golb.hplar.ch/
