@@ -9,15 +9,15 @@
   },
   "private": true,
   "dependencies": {
-    "@angular/cdk": "20.2.2",
-    "@angular/common": "20.3.0",
-    "@angular/compiler": "20.3.0",
-    "@angular/core": "20.3.0",
-    "@angular/forms": "20.3.0",
-    "@angular/platform-browser": "20.3.0",
-    "@angular/router": "20.3.0",
-    "@ionic/angular": "8.7.3",
-    "dexie": "4.2.0",
+    "@angular/cdk": "20.2.8",
+    "@angular/common": "20.3.4",
+    "@angular/compiler": "20.3.4",
+    "@angular/core": "20.3.4",
+    "@angular/forms": "20.3.4",
+    "@angular/platform-browser": "20.3.4",
+    "@angular/router": "20.3.4",
+    "@ionic/angular": "8.7.6",
+    "dexie": "4.2.1",
     "geolib": "3.3.4",
     "ionicons": "8.0.13",
     "papaparse": "5.5.3",
@@ -26,12 +26,12 @@
     "zone.js": "0.15.1"
   },
   "devDependencies": {
-    "@angular/build": "20.3.0",
-    "@angular/cli": "20.3.0",
-    "@angular/compiler-cli": "20.3.0",
+    "@angular/build": "20.3.5",
+    "@angular/cli": "20.3.5",
+    "@angular/compiler-cli": "20.3.4",
     "@ionic/angular-toolkit": "12.3.0",
     "@types/papaparse": "5.3.16",
     "local-web-server": "5.4.0",
-    "typescript": "5.9.2"
+    "typescript": "5.9.3"
   }
 }

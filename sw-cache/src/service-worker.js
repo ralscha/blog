@@ -4,10 +4,10 @@ async function loadPictures() {
   const cache = await caches.open('images');
 
   const pictures = [
-    'https://omed.hplar.ch/img/pexels-photo-127753.jpeg',
-    'https://omed.hplar.ch/img/pexels-photo-132037.jpeg',
-    'https://omed.hplar.ch/img/pexels-photo-248771.jpeg',
-    'https://omed.hplar.ch/img/pexels-photo-248797.jpeg'
+    'https://cataas.com/cat?width=400&height=300',
+    'https://cataas.com/cat?width=500&height=350',
+    'https://cataas.com/cat?width=450&height=320',
+    'https://cataas.com/cat?width=480&height=360'
   ];
   await cache.addAll(pictures);
 

@@ -9,16 +9,16 @@
   },
   "private": true,
   "dependencies": {
-    "@angular/common": "20.3.0",
-    "@angular/compiler": "20.3.0",
-    "@angular/core": "20.3.0",
-    "@angular/forms": "20.3.0",
-    "@angular/platform-browser": "20.3.0",
-    "@angular/router": "20.3.0",
+    "@angular/common": "20.3.4",
+    "@angular/compiler": "20.3.4",
+    "@angular/core": "20.3.4",
+    "@angular/forms": "20.3.4",
+    "@angular/platform-browser": "20.3.4",
+    "@angular/router": "20.3.4",
     "@ionic-native/core": "5.36.0",
     "@ionic-native/splash-screen": "5.36.0",
     "@ionic-native/status-bar": "5.36.0",
-    "@ionic/angular": "8.7.3",
+    "@ionic/angular": "8.7.6",
     "cordova-android": "14.0.1",
     "cordova-plugin-device": "3.0.0",
     "cordova-plugin-firebase-analytics": "8.0.0",
@@ -36,12 +36,12 @@
     "zone.js": "0.15.1"
   },
   "devDependencies": {
-    "@angular/build": "20.3.0",
-    "@angular/cli": "20.3.0",
-    "@angular/compiler-cli": "20.3.0",
+    "@angular/build": "20.3.5",
+    "@angular/cli": "20.3.5",
+    "@angular/compiler-cli": "20.3.4",
     "@ionic/angular-toolkit": "12.3.0",
     "local-web-server": "5.4.0",
-    "typescript": "5.9.2"
+    "typescript": "5.9.3"
   },
   "cordova": {
     "platforms": [

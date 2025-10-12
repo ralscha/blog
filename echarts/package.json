@@ -11,13 +11,13 @@
   },
   "private": true,
   "dependencies": {
-    "@angular/common": "20.3.0",
-    "@angular/compiler": "20.3.0",
-    "@angular/core": "20.3.0",
-    "@angular/forms": "20.3.0",
-    "@angular/platform-browser": "20.3.0",
-    "@angular/router": "20.3.0",
-    "@ionic/angular": "8.7.3",
+    "@angular/common": "20.3.4",
+    "@angular/compiler": "20.3.4",
+    "@angular/core": "20.3.4",
+    "@angular/forms": "20.3.4",
+    "@angular/platform-browser": "20.3.4",
+    "@angular/router": "20.3.4",
+    "@ionic/angular": "8.7.6",
     "date-fns": "4.1.0",
     "echarts": "5.6.0",
     "ionicons": "8.0.13",
@@ -27,14 +27,14 @@
     "zone.js": "0.15.1"
   },
   "devDependencies": {
-    "@angular/build": "20.3.0",
-    "@angular/cli": "20.3.0",
-    "@angular/compiler-cli": "20.3.0",
+    "@angular/build": "20.3.5",
+    "@angular/cli": "20.3.5",
+    "@angular/compiler-cli": "20.3.4",
     "@ionic/angular-toolkit": "12.3.0",
     "@juggle/resize-observer": "3.4.0",
     "bread-compressor-cli": "3.1.2",
     "local-web-server": "5.4.0",
     "resize-observer-polyfill": "1.5.1",
-    "typescript": "5.9.2"
+    "typescript": "5.9.3"
   }
 }
