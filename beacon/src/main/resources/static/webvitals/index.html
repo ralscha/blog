@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Web Vitals Example</title>
+
+  <script type="module">
+    import {onCLS, onINP, onLCP} from 'https://unpkg.com/web-vitals@5?module';
+
+    function sendToAnalytics(metric) {
+    const body = JSON.stringify({
+        name: metric.name,
+        value: metric.value,
+        rating: metric.rating,
+        delta: metric.delta,
+        id: metric.id,
+        navigationType: metric.navigationType,
+        attribution: metric.attribution ? JSON.stringify(metric.attribution) : null 
+    });
+
+    navigator.sendBeacon('../webVitals', body);
+    }
+
+    onCLS(sendToAnalytics);
+    onINP(sendToAnalytics);
+    onLCP(sendToAnalytics);
+  </script>
+</head>
+
+<body>
+  <h1>Web Vitals Example</h1>
+  <p>Open the console to see Web Vitals metrics.</p>
+</body>
+
+</html>
+
