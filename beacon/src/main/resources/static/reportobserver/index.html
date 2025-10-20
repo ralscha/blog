@@ -12,7 +12,7 @@
   <script>
     // create deprecation warning
     const request = new XMLHttpRequest();
-    request.open('GET', 'http://numbersapi.com/42', false);
+    request.open('GET', 'https://api.chucknorris.io/jokes/random', false);
     request.send(null);
 
     if (request.status === 200) {

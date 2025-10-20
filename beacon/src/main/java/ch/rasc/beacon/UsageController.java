@@ -45,13 +45,14 @@ public class UsageController {
   @ResponseStatus(code = HttpStatus.NO_CONTENT)
   @PostMapping("/usageArrayBufferView")
   public void usageArrayBufferView(@RequestBody byte[] data) throws DataFormatException {
-    Inflater decompresser = new Inflater();
-    decompresser.setInput(data, 0, data.length);
-    byte[] inflated = new byte[2048];
-    int resultLength = decompresser.inflate(inflated);
-    decompresser.end();
+    try (Inflater decompresser = new Inflater()) {
+      decompresser.setInput(data, 0, data.length);
+      byte[] inflated = new byte[2048];
+      int resultLength = decompresser.inflate(inflated);
+      decompresser.end();
 
-    System.out.println(new String(inflated, 0, resultLength));
+      System.out.println(new String(inflated, 0, resultLength));
+    }
   }
 
 }
