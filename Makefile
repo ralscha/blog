@@ -18,7 +18,6 @@ check-dep:
 	cd ./indexeddb && ncu
 	cd ./jwt/server && ./mvnw.cmd versions:display-dependency-updates && ./mvnw.cmd versions:display-plugin-updates
 	cd ./jwt/client && ncu
-	cd ./lovefield && ncu
 	cd ./minio && ./mvnw.cmd versions:display-dependency-updates && ./mvnw.cmd versions:display-plugin-updates
 	cd ./ngerrorhandler/server && ./mvnw.cmd versions:display-dependency-updates && ./mvnw.cmd versions:display-plugin-updates
 	cd ./ngerrorhandler/client && ncu

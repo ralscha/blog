@@ -37,17 +37,17 @@ public class FeedController {
     channel.setFeedType("rss_2.0");
     channel.setTitle("Ralph's Blog");
     channel.setDescription("Blog about this and that");
-    channel.setLink("https://golb.hplar.ch/");
-    channel.setUri("https://golb.hplar.ch/");
+    channel.setLink("https://blog.rasc.ch/");
+    channel.setUri("https://blog.rasc.ch/");
 
     Date postDate = new Date();
     channel.setPubDate(postDate);
 
     Item item = new Item();
     item.setAuthor("Ralph");
-    item.setLink("https://golb.hplar.ch/p/1");
+    item.setLink("https://blog.rasc.ch/p/1");
     item.setTitle("1");
-    item.setUri("https://golb.hplar.ch/p/1");
+    item.setUri("https://blog.rasc.ch/p/1");
 
     com.rometools.rome.feed.rss.Category category = new com.rometools.rome.feed.rss.Category();
     category.setValue("tag1");
@@ -67,7 +67,7 @@ public class FeedController {
     Feed feed = new Feed();
     feed.setFeedType("atom_1.0");
     feed.setTitle("Ralph's Blog");
-    feed.setId("https://golb.hplar.ch/");
+    feed.setId("https://blog.rasc.ch/");
 
     Content subtitle = new Content();
     subtitle.setType("text/plain");
@@ -80,7 +80,7 @@ public class FeedController {
     Entry entry = new Entry();
 
     Link link = new Link();
-    link.setHref("https://golb.hplar.ch/p/1");
+    link.setHref("https://blog.rasc.ch/p/1");
     entry.setAlternateLinks(Collections.singletonList(link));
     SyndPerson author = new Person();
     author.setName("Ralph");
@@ -88,7 +88,7 @@ public class FeedController {
     entry.setCreated(postDate);
     entry.setPublished(postDate);
     entry.setUpdated(postDate);
-    entry.setId("https://golb.hplar.ch/p/1");
+    entry.setId("https://blog.rasc.ch/p/1");
     entry.setTitle("1");
 
     Category category = new Category();
@@ -127,13 +127,13 @@ public class FeedController {
 
     feed.setTitle("Ralph's Blog");
     feed.setDescription("Blog about this and that");
-    feed.setLink("https://golb.hplar.ch/");
+    feed.setLink("https://blog.rasc.ch/");
     feed.setAuthor("Ralph");
-    feed.setUri("https://golb.hplar.ch/");
+    feed.setUri("https://blog.rasc.ch/");
 
     AtomNSModule atomNSModule = new AtomNSModuleImpl();
     String link = "rss_2.0".equals(feedType) ? "/synd_rss" : "/synd_atom";
-    atomNSModule.setLink("https://golb.hplar.ch" + link);
+    atomNSModule.setLink("https://blog.rasc.ch" + link);
     feed.getModules().add(atomNSModule);
 
     Date publishDate = new Date();
@@ -149,8 +149,8 @@ public class FeedController {
     }
     entry.setTitle("1");
     entry.setAuthor("Ralph");
-    entry.setLink("https://golb.hplar.ch/p/1");
-    entry.setUri("https://golb.hplar.ch/p/1");
+    entry.setLink("https://blog.rasc.ch/p/1");
+    entry.setUri("https://blog.rasc.ch/p/1");
     entry.setPublishedDate(publishDate);
     entry.setUpdatedDate(publishDate);
 

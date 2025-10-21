@@ -1,1 +1,1 @@
-Source code for the blog post: https://golb.hplar.ch/2017/01/Protocol-Buffers-with-Spring-Integration.html
+Source code for the blog post: https://blog.rasc.ch/2017/01/Protocol-Buffers-with-Spring-Integration.html

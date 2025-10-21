@@ -1,1 +1,1 @@
-Code for the blog post: https://golb.hplar.ch/2018/06/workbox-serviceworker-in-angular-project.html
+Code for the blog post: https://blog.rasc.ch/2018/06/workbox-serviceworker-in-angular-project.html

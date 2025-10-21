@@ -1,1 +1,1 @@
-Source code for the blog post: https://golb.hplar.ch/2018/03/Local-search-Have-I-Been-Pwned-with-Java.html
+Source code for the blog post: https://blog.rasc.ch/2018/03/Local-search-Have-I-Been-Pwned-with-Java.html

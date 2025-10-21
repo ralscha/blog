@@ -1,1 +1,1 @@
-Source code for the blog post: https://golb.hplar.ch/2018/01/A-closer-look-at-the-Cache-API.html
+Source code for the blog post: https://blog.rasc.ch/2018/01/A-closer-look-at-the-Cache-API.html

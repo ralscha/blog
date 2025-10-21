@@ -1,4 +1,4 @@
-Code for the blog post: https://golb.hplar.ch/2018/12/simple-neuronal-network.html
+Code for the blog post: https://blog.rasc.ch/2018/12/simple-neuronal-network.html
 
 Online Demo: https://omed.hplar.ch/mnist/
 

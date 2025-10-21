@@ -1,1 +1,1 @@
-Source code for the blog post: https://golb.hplar.ch/2018/02/Human-Readable-Regular-Expressions.html
+Source code for the blog post: https://blog.rasc.ch/2018/02/Human-Readable-Regular-Expressions.html
