@@ -2,20 +2,18 @@
   "name": "passwords",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "type": "module",
   "scripts": {
-    "start": "parcel serve src/index.html",
-    "prebuild": "shx rm -rf dist/*",
-    "build": "parcel build src/index.html --public-url ."
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
   },
   "license": "ISC",
   "devDependencies": {
-    "parcel-bundler": "1.12.5",
-    "shx": "0.4.0"
+    "vite": "7.1.12"
   },
   "dependencies": {
-    "babel-polyfill": "6.26.0",
-    "hibp": "15.0.1",
+    "hibp": "15.1.0",
     "zxcvbn": "4.4.2"
   }
 }

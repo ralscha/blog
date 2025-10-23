@@ -37,7 +37,6 @@ check-dep:
 	cd ./pwnd && ./mvnw.cmd versions:display-dependency-updates && ./mvnw.cmd versions:display-plugin-updates
 	cd ./rss && ./mvnw.cmd versions:display-dependency-updates && ./mvnw.cmd versions:display-plugin-updates
 	cd ./secure-todo && ncu
-	cd ./secure-todo-asm && ncu
 	cd ./speechsearch/server && ./mvnw.cmd versions:display-dependency-updates && ./mvnw.cmd versions:display-plugin-updates
 	cd ./speechsearch/client && ncu
 	cd ./sse && ./mvnw.cmd versions:display-dependency-updates && ./mvnw.cmd versions:display-plugin-updates

@@ -1,52 +1,50 @@
 import zxcvbn from 'zxcvbn';
 import { pwnedPassword } from 'hibp';
 
-export function main() {
+const strength = {
+  0: "Worst ☹",
+  1: "Bad ☹",
+  2: "Weak ☹",
+  3: "Good ☺",
+  4: "Strong ☻"
+}
 
-  const strength = {
-    0: "Worst ☹",
-    1: "Bad ☹",
-    2: "Weak ☹",
-    3: "Good ☺",
-    4: "Strong ☻"
+const password = document.getElementById('password');
+const meter = document.getElementById('password-strength-meter');
+const text = document.getElementById('password-strength-text');
+
+password.addEventListener('input', () => {
+  const val = password.value;
+  const result = zxcvbn(val);
+
+  meter.value = result.score;
+
+  if (val !== "") {
+    text.innerHTML = "Strength: " + "<strong>" + strength[result.score] + "</strong>" + "<span class='feedback'>" + result.feedback.warning + " " + result.feedback.suggestions + "</span";
   }
+  else {
+    text.innerHTML = "";
+  }
+});
 
-  const password = document.getElementById('password');
-  const meter = document.getElementById('password-strength-meter');
-  const text = document.getElementById('password-strength-text');
+showPasswordFlag.addEventListener('change', () => {
+  const x = document.getElementById("password");
+  if (x.type === "password") {
+    x.type = "text";
+  } else {
+    x.type = "password";
+  }
+});
 
-  password.addEventListener('input', () => {
-    const val = password.value;
-    const result = zxcvbn(val);
+const password_hibp = document.getElementById('password_hibp');
+const output = document.getElementById('password_hibp_output');
 
-    meter.value = result.score;
+let timeoutId = 0;
 
-    if (val !== "") {
-      text.innerHTML = "Strength: " + "<strong>" + strength[result.score] + "</strong>" + "<span class='feedback'>" + result.feedback.warning + " " + result.feedback.suggestions + "</span";
-    }
-    else {
-      text.innerHTML = "";
-    }
-  });
-
-  showPasswordFlag.addEventListener('change', () => {
-    const x = document.getElementById("password");
-    if (x.type === "password") {
-      x.type = "text";
-    } else {
-      x.type = "password";
-    }
-  });
-
-  const password_hibp = document.getElementById('password_hibp');
-  const output = document.getElementById('password_hibp_output');
-
-  let timeoutId = 0;
-
-  password_hibp.addEventListener('input', () => {
-    clearTimeout(timeoutId);
-    timeoutId = setTimeout(checkHibp, 500);
-  });
+password_hibp.addEventListener('input', () => {
+  clearTimeout(timeoutId);
+  timeoutId = setTimeout(checkHibp, 500);
+});
 
   async function checkHibp() {
     try {
@@ -61,33 +59,6 @@ export function main() {
     }
   }
 
-
-  const password_passpol = document.getElementById('password_passpol');
-  const output_passpol = document.getElementById('password_passpol_output');
-
-  password_passpol.addEventListener('input', () => {
-    output_passpol.innerHTML = '';
-    clearTimeout(timeoutId);
-    timeoutId = setTimeout(checkPasspol, 500);
-  });
-
-  async function checkPasspol() {
-    if (password_passpol.value !== '') {
-      try {
-        const response = await fetch('http://localhost:8080/passpolCheck', {
-          body: password_passpol.value,
-          method: 'POST'
-        });
-        const status = await response.json();
-        output_passpol.innerHTML = status;
-
-      } catch (err) {
-        output_passpol.innerHTML = err;
-      }
-    }
-  }
-
-
   const password_shhibp = document.getElementById('password_shhibp');
   const output_shhibp = document.getElementById('password_shhibp_output');
 
@@ -100,7 +71,7 @@ export function main() {
   async function checkSelfHostedHibp() {
     if (password_shhibp.value !== '') {
       try {
-        const response = await fetch('http://localhost:8080/selfHostedHibpCheck', {
+        const response = await fetch('/selfHostedHibpCheck', {
           body: password_shhibp.value,
           method: 'POST'
         });
@@ -117,4 +88,3 @@ export function main() {
       }
     }
   }
-}

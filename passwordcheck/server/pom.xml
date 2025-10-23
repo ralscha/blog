@@ -14,7 +14,7 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>3.5.6</version>
+		<version>3.5.7</version>
 		<relativePath />
 	</parent>
 
@@ -31,12 +31,6 @@
 		</dependency>
 
 		<dependency>
-			<groupId>com.codahale</groupId>
-			<artifactId>passpol</artifactId>
-			<version>0.7.0</version>
-		</dependency>
-
-		<dependency>
 			<groupId>org.jetbrains.xodus</groupId>
 			<artifactId>xodus-environment</artifactId>
 			<version>2.0.1</version>
@@ -48,6 +42,9 @@
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
+				<configuration>
+					<jvmArguments>--add-exports java.base/sun.nio.ch=ALL-UNNAMED</jvmArguments>
+				</configuration>
 			</plugin>
 		</plugins>
 	</build>
