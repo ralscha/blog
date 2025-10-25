@@ -75,7 +75,7 @@ export class PasswordService {
     const tempKey = await crypto.subtle.deriveKey(
       {
         name: 'PBKDF2', salt,
-        iterations: 100000, hash: 'SHA-256'
+        iterations: 300000, hash: 'SHA-256'
       },
       importedPassword,
       {name: 'AES-GCM', length: 256},
@@ -90,7 +90,7 @@ export class PasswordService {
     this.masterKey = await crypto.subtle.deriveKey(
       {
         name: 'PBKDF2', salt,
-        iterations: 10000, hash: 'SHA-256'
+        iterations: 50000, hash: 'SHA-256'
       },
       importedTempKey,
       {name: 'AES-GCM', length: 256},
@@ -101,7 +101,7 @@ export class PasswordService {
     const authKey = await crypto.subtle.deriveKey(
       {
         name: 'PBKDF2', salt,
-        iterations: 100000, hash: 'SHA-256'
+        iterations: 300000, hash: 'SHA-256'
       },
       importedTempKey,
       {name: 'AES-GCM', length: 256},
