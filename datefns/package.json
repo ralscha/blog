@@ -12,6 +12,6 @@
     "moment": "2.30.1"
   },
   "devDependencies": {
-    "vite": "7.1.11"
+    "vite": "7.1.12"
   }
 }
