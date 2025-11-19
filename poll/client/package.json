@@ -14,9 +14,9 @@
     "uuid": "11.1.0"
   },
   "devDependencies": {
-    "@parcel/compressor-brotli": "2.16.0",
-    "@parcel/compressor-gzip": "2.16.0",
+    "@parcel/compressor-brotli": "2.16.1",
+    "@parcel/compressor-gzip": "2.16.1",
     "buffer": "6.0.3",
-    "parcel": "2.16.0"
+    "parcel": "2.16.1"
   }
 }

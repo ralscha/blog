@@ -10,7 +10,7 @@
   },
   "license": "ISC",
   "devDependencies": {
-    "vite": "7.1.12"
+    "vite": "7.2.2"
   },
   "dependencies": {
     "hibp": "15.1.0",
