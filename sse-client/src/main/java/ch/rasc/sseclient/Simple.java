@@ -3,18 +3,19 @@ package ch.rasc.sseclient;
 import java.net.URI;
 import java.util.concurrent.TimeUnit;
 
-import com.launchdarkly.eventsource.EventHandler;
 import com.launchdarkly.eventsource.EventSource;
+import com.launchdarkly.eventsource.background.BackgroundEventHandler;
+import com.launchdarkly.eventsource.background.BackgroundEventSource;
 
 public class Simple {
 
   public static void main(String[] args) throws InterruptedException {
-    EventHandler eventHandler = new SimpleEventHandler();
+    BackgroundEventHandler eventHandler = new SimpleEventHandler();
     String url = String.format("http://localhost:8080/memory");
-    EventSource.Builder builder = new EventSource.Builder(eventHandler, URI.create(url))
-        .reconnectTime(3, TimeUnit.SECONDS);
+    BackgroundEventSource.Builder builder = new BackgroundEventSource.Builder(eventHandler, 
+        new EventSource.Builder(URI.create(url)).retryDelay(3, TimeUnit.SECONDS));
 
-    try (EventSource eventSource = builder.build()) {
+    try (BackgroundEventSource eventSource = builder.build()) {
       eventSource.start();
 
       TimeUnit.MINUTES.sleep(10);

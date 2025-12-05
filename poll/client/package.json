@@ -11,7 +11,7 @@
   "dependencies": {
     "echarts": "6.0.0",
     "muicss": "0.10.3",
-    "uuid": "11.1.0"
+    "uuid": "13.0.0"
   },
   "devDependencies": {
     "@parcel/compressor-brotli": "2.16.1",

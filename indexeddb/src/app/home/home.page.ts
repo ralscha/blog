@@ -24,7 +24,7 @@ import {CdkFixedSizeVirtualScroll, CdkVirtualForOf, CdkVirtualScrollViewport} fr
 import {DetailComponent} from '../detail/detail.component';
 import {DecimalPipe} from '@angular/common';
 import {addIcons} from "ionicons";
-import {optionsOutline} from "ionicons/icons";
+import {optionsOutline,arrowDownOutline} from "ionicons/icons";
 
 @Component({
   selector: 'app-home',
@@ -57,7 +57,7 @@ export class HomePage implements OnInit {
   private readonly loadingCtrl = inject(LoadingController);
 
   constructor() {
-    addIcons({optionsOutline});
+    addIcons({optionsOutline, arrowDownOutline});
   }
 
   ngOnInit(): void {

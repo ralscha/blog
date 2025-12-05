@@ -1,3 +1,4 @@
+import { provideZoneChangeDetection } from "@angular/core";
 import {PreloadAllModules, provideRouter, RouteReuseStrategy, withHashLocation, withPreloading} from '@angular/router';
 import {bootstrapApplication} from '@angular/platform-browser';
 import {provideEchartsCore} from 'ngx-echarts';
@@ -23,7 +24,7 @@ echarts.use([GridComponent, TitleComponent, TooltipComponent, LegendComponent, C
 
 bootstrapApplication(AppComponent, {
   providers: [
-    provideRouter(tabsRoutes, withHashLocation(), withPreloading(PreloadAllModules)),
+    provideZoneChangeDetection(),provideRouter(tabsRoutes, withHashLocation(), withPreloading(PreloadAllModules)),
     provideIonicAngular(),
     provideEchartsCore({echarts}),
     {provide: RouteReuseStrategy, useClass: IonicRouteStrategy}

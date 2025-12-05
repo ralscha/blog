@@ -4,7 +4,7 @@ import { TooltipComponent } from 'echarts/components';
 import { TitleComponent } from 'echarts/components';
 import { CanvasRenderer } from 'echarts/renderers';
 
-import { v4 as uuidv4 } from 'uuid';
+import { v4 as uuidv4 } from 'uuid/dist';
 
 echarts.use([PieChart, TooltipComponent, TitleComponent, CanvasRenderer]);
 const oss = ["Windows", "macOS", "Linux", "Other"];

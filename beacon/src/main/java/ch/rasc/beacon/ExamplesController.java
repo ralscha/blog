@@ -1,7 +1,8 @@
 package ch.rasc.beacon;
 
-import java.io.IOException;
 
+
+import org.springframework.boot.json.JsonParseException;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -9,15 +10,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
-import com.fasterxml.jackson.core.JsonParseException;
-import com.fasterxml.jackson.databind.JsonMappingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-
 import ch.rasc.beacon.dto.Analytics;
 import ch.rasc.beacon.dto.Performance;
 import ch.rasc.beacon.dto.Position;
 import ch.rasc.beacon.dto.Report;
 import ch.rasc.beacon.dto.WebVitals;
+import tools.jackson.databind.ObjectMapper;
 
 @Controller
 public class ExamplesController {
@@ -31,7 +29,7 @@ public class ExamplesController {
   @ResponseStatus(code = HttpStatus.NO_CONTENT)
   @PostMapping("/lifecycle")
   public void lifecycle(@RequestBody String data)
-      throws JsonParseException, JsonMappingException, IOException {
+      throws JsonParseException {
     Analytics analytics = this.objectMapper.readValue(data, Analytics.class);
 
     System.out.println("Session Duration: " + (analytics.stop() - analytics.start()) + "ms");
@@ -45,7 +43,7 @@ public class ExamplesController {
   @ResponseStatus(code = HttpStatus.NO_CONTENT)
   @PostMapping("/reportObserver")
   public void reportObserver(@RequestBody String data)
-      throws JsonParseException, JsonMappingException, IOException {
+      throws JsonParseException {
     Report report = this.objectMapper.readValue(data, Report.class);
     System.out.println(report);
   }
@@ -53,7 +51,7 @@ public class ExamplesController {
   @ResponseStatus(code = HttpStatus.NO_CONTENT)
   @PostMapping("/position")
   public void position(@RequestBody String data)
-      throws JsonParseException, JsonMappingException, IOException {
+      throws JsonParseException {
     Position location = this.objectMapper.readValue(data, Position.class);
     System.out.println(location);
   }
@@ -61,7 +59,7 @@ public class ExamplesController {
   @ResponseStatus(code = HttpStatus.NO_CONTENT)
   @PostMapping("/performance")
   public void performance(@RequestBody String data)
-      throws JsonParseException, JsonMappingException, IOException {
+      throws JsonParseException {
     Performance performance = this.objectMapper.readValue(data, Performance.class);
     
     if (performance.navigationStart() != null) {
@@ -123,7 +121,7 @@ public class ExamplesController {
   @ResponseStatus(code = HttpStatus.NO_CONTENT)
   @PostMapping("/webVitals")
   public void webVitals(@RequestBody String data)
-      throws JsonParseException, JsonMappingException, IOException {
+      throws JsonParseException {
     WebVitals webVitals = this.objectMapper.readValue(data, WebVitals.class);
     
     System.out.println("Metric: " + webVitals.name());

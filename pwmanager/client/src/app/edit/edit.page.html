@@ -1,13 +1,12 @@
 <ion-header>
   <ion-toolbar color="danger">
     <ion-buttons slot="start">
-      <ion-back-button defaultHref="/home"></ion-back-button>
+      <ion-back-button defaultHref="/home" />
     </ion-buttons>
     <ion-title>Edit Password</ion-title>
     <ion-buttons slot="end">
       <ion-button (click)="deletePassword()" [disabled]="!password!.id">
-        <ion-icon name="trash-outline" slot="icon-only">
-        </ion-icon>
+        <ion-icon name="trash-outline" slot="icon-only" />
       </ion-button>
     </ion-buttons>
   </ion-toolbar>
@@ -18,20 +17,20 @@
   <ion-list>
     <ion-item>
       <ion-input [(ngModel)]="password!.url" [required]="true" label="URL" labelPlacement="stacked"
-                 type="text"></ion-input>
+                 type="text" />
     </ion-item>
 
     <ion-item>
-      <ion-input [(ngModel)]="password!.username" label="Username" labelPlacement="stacked" type="text"></ion-input>
+      <ion-input [(ngModel)]="password!.username" label="Username" labelPlacement="stacked" type="text" />
     </ion-item>
 
     <ion-item>
-      <ion-input [(ngModel)]="password!.password" label="Password" labelPlacement="stacked" type="text"></ion-input>
+      <ion-input [(ngModel)]="password!.password" label="Password" labelPlacement="stacked" type="text" />
     </ion-item>
 
     <ion-item>
       <ion-input [(ngModel)]="password!.description" label="Description" labelPlacement="stacked"
-                 type="text"></ion-input>
+                 type="text" />
     </ion-item>
   </ion-list>
 

@@ -1,3 +1,4 @@
+import { provideZoneChangeDetection } from "@angular/core";
 import {StatusBar} from '@ionic-native/status-bar/ngx';
 import {SplashScreen} from '@ionic-native/splash-screen/ngx';
 import {provideRouter, RouteReuseStrategy, Routes, withHashLocation} from '@angular/router';
@@ -15,7 +16,7 @@ const routes: Routes = [
 
 bootstrapApplication(AppComponent, {
   providers: [
-    provideIonicAngular(),
+    provideZoneChangeDetection(),provideIonicAngular(),
     provideHttpClient(withInterceptorsFromDi()),
     provideRouter(routes, withHashLocation()),
     StatusBar,

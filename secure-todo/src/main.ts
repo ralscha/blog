@@ -2,7 +2,7 @@ import {provideRouter, RouteReuseStrategy, Routes, withHashLocation} from '@angu
 import {IonicRouteStrategy, provideIonicAngular} from '@ionic/angular/standalone';
 import {bootstrapApplication} from '@angular/platform-browser';
 import {HomePage} from './app/home/home.page';
-import {inject} from '@angular/core';
+import {inject, provideZoneChangeDetection} from '@angular/core';
 import {AuthGuard} from './app/auth.guard';
 import {PasswordPage} from './app/password/password.page';
 import {EditPage} from './app/edit/edit.page';
@@ -20,7 +20,7 @@ const routes: Routes = [
 
 bootstrapApplication(AppComponent, {
   providers: [
-    provideIonicAngular(),
+    provideZoneChangeDetection(),provideIonicAngular(),
     {provide: RouteReuseStrategy, useClass: IonicRouteStrategy},
     provideRouter(routes, withHashLocation())
   ]

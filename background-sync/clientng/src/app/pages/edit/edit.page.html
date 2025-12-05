@@ -4,11 +4,11 @@
       Edit Todo
     </ion-title>
     <ion-buttons slot="start">
-      <ion-back-button defaultHref="/"></ion-back-button>
+      <ion-back-button defaultHref="/" />
     </ion-buttons>
     <ion-buttons slot="end">
       <ion-button (click)="deleteTodo()">
-        <ion-icon name="trash-outline"></ion-icon>
+        <ion-icon name="trash-outline" />
       </ion-button>
     </ion-buttons>
   </ion-toolbar>
@@ -19,14 +19,14 @@
     <ion-list lines="none">
       <ion-item>
         <ion-input #subject="ngModel" [ngModel]="todo?.subject" [required]="true" errorText="Subject is required"
-                   label="Subject" labelPlacement="stacked" name="subject"></ion-input>
+                   label="Subject" labelPlacement="stacked" name="subject" />
       </ion-item>
 
       <ion-item>
         <ion-input [ngModel]="todo?.description" errorText="Description is required"
                    label="Description" labelPlacement="stacked"
                    name="description"
-        ></ion-input>
+         />
       </ion-item>
     </ion-list>
     <ion-button [disabled]="!f.valid" [size]="'default'" expand="full" type="submit">Save</ion-button>

@@ -35,20 +35,21 @@ public class EarthquakeImporter {
 
   @PostConstruct
   public void read() throws IOException, InterruptedException {
-    HttpClient httpClient = HttpClient.newHttpClient();
+    try (HttpClient httpClient = HttpClient.newHttpClient()) {
 
-    HttpRequest request = HttpRequest.newBuilder().GET()
-        .uri(URI.create(
-            "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/2.5_month.csv"))
-        .build();
-
-    HttpResponse<String> response = httpClient.send(request,
-        HttpResponse.BodyHandlers.ofString());
-
-    List<Record> records = this.parser.parseAllRecords(new StringReader(response.body()));
-    List<Earthquake> earthquakes = records.stream().map(Earthquake::new)
-        .collect(Collectors.toList());
-    insertData(earthquakes);
+      HttpRequest request = HttpRequest.newBuilder().GET()
+          .uri(URI.create(
+              "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/2.5_month.csv"))
+          .build();
+  
+      HttpResponse<String> response = httpClient.send(request,
+          HttpResponse.BodyHandlers.ofString());
+  
+      List<Record> records = this.parser.parseAllRecords(new StringReader(response.body()));
+      List<Earthquake> earthquakes = records.stream().map(Earthquake::new)
+          .collect(Collectors.toList());
+      insertData(earthquakes);
+    }
   }
 
   private void insertData(List<Earthquake> earthquakes) {

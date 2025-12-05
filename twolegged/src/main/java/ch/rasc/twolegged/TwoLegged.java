@@ -22,7 +22,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
+
 import okhttp3.FormBody;
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
@@ -58,11 +58,13 @@ public class TwoLegged {
     PKCS8EncodedKeySpec keySpec = new PKCS8EncodedKeySpec(decoded);
     RSAPrivateKey privKey = (RSAPrivateKey) kf.generatePrivate(keySpec);
 
-    String compactedJWT = Jwts.builder().setIssuer(credentials.getClientEmail())
-        .setAudience(credentials.getTokenUri())
+    String compactedJWT = Jwts.builder()
+        .issuer(credentials.getClientEmail())
+        .audience().add(credentials.getTokenUri()).and()
         .claim("scope", "https://www.googleapis.com/auth/cloud-translation")
-        .setExpiration(Date.from(Instant.now().plus(1, ChronoUnit.HOURS)))
-        .setIssuedAt(Date.from(Instant.now())).signWith(SignatureAlgorithm.RS256, privKey)
+        .expiration(Date.from(Instant.now().plus(1, ChronoUnit.HOURS)))
+        .issuedAt(Date.from(Instant.now()))
+        .signWith(privKey, Jwts.SIG.RS256)
         .compact();
 
     HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
@@ -89,7 +91,7 @@ public class TwoLegged {
     tr.put("target", "fr");
     tr.put("source", "en");
 
-    RequestBody requestBody = RequestBody.create(JSON, om.writeValueAsBytes(tr));
+    RequestBody requestBody = RequestBody.create(om.writeValueAsBytes(tr), JSON);
     request = new Request.Builder().url(translationUrl)
         .header("Authorization", "Bearer " + tokenResponse.getAccessToken())
         .post(requestBody).build();

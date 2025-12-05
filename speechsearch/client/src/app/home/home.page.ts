@@ -2,7 +2,7 @@ import {ChangeDetectorRef, Component, inject} from '@angular/core';
 import {Movie} from '../movie';
 import {LoadingController} from '@ionic/angular';
 // @ts-ignore
-import * as RecordRTC from 'recordrtc';
+import RecordRTC from 'recordrtc';
 import {environment} from '../../environments/environment';
 import {
   IonButton,

@@ -15,7 +15,7 @@ public class Server {
   }
 
   @Bean
-  public ProtobufHttpMessageConverter protobufHttpMessageConverter() {
+  ProtobufHttpMessageConverter protobufHttpMessageConverter() {
     return new ProtobufHttpMessageConverter();
   }
 }

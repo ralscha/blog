@@ -3,7 +3,7 @@ import {IonicRouteStrategy, provideIonicAngular} from '@ionic/angular/standalone
 import {provideHttpClient, withInterceptorsFromDi} from '@angular/common/http';
 import {bootstrapApplication} from '@angular/platform-browser';
 import {HomePage} from './app/home/home.page';
-import {inject} from '@angular/core';
+import {inject, provideZoneChangeDetection} from '@angular/core';
 import {AuthGuard} from './app/auth-guard.service';
 import {LoginPage} from './app/login/login.page';
 import {EditPage} from './app/edit/edit.page';
@@ -21,7 +21,7 @@ const routes: Routes = [
 
 bootstrapApplication(AppComponent, {
   providers: [
-    provideIonicAngular(),
+    provideZoneChangeDetection(),provideIonicAngular(),
     {provide: RouteReuseStrategy, useClass: IonicRouteStrategy},
     provideHttpClient(withInterceptorsFromDi()),
     provideRouter(routes, withHashLocation())

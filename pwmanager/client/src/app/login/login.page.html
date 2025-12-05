@@ -9,14 +9,14 @@
     <ion-list>
       <ion-item>
         <ion-input #username="ngModel" [required]="true" label="Username" labelPlacement="stacked" name="username"
-                   ngModel></ion-input>
+                   ngModel />
       </ion-item>
 
       <ion-item>
         <ion-input #password="ngModel" (keydown.enter)="login(username.value, password.value)" [required]="true"
                    label="Password" labelPlacement="stacked"
                    name="password"
-                   ngModel type="password"></ion-input>
+                   ngModel type="password" />
       </ion-item>
 
     </ion-list>

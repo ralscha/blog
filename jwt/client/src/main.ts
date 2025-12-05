@@ -5,7 +5,7 @@ import {bootstrapApplication} from '@angular/platform-browser';
 import {JwtModule} from '@auth0/angular-jwt';
 import {environment} from './environments/environment';
 import {HomePage} from './app/home/home.page';
-import {importProvidersFrom, inject} from '@angular/core';
+import {importProvidersFrom, inject, provideZoneChangeDetection} from '@angular/core';
 import {AuthGuard} from './app/auth.guard';
 import {LoginPage} from './app/login/login.page';
 import {SignupPage} from './app/signup/signup.page';
@@ -25,7 +25,7 @@ export function tokenGetter(): string | null {
 
 bootstrapApplication(AppComponent, {
   providers: [
-    provideIonicAngular(),
+    provideZoneChangeDetection(),provideIonicAngular(),
     importProvidersFrom(JwtModule.forRoot({
       config: {
         tokenGetter,

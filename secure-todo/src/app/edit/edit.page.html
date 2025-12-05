@@ -1,7 +1,7 @@
 <ion-header>
   <ion-toolbar color="danger">
     <ion-buttons slot="start">
-      <ion-back-button defaultHref="/home"></ion-back-button>
+      <ion-back-button defaultHref="/home" />
     </ion-buttons>
     <ion-title>Edit Todo</ion-title>
   </ion-toolbar>
@@ -11,11 +11,11 @@
 
   <ion-list>
     <ion-item>
-      <ion-input [(ngModel)]="todo!.title" label="Title" labelPlacement="stacked" type="text"></ion-input>
+      <ion-input [(ngModel)]="todo!.title" label="Title" labelPlacement="stacked" type="text" />
     </ion-item>
 
     <ion-item>
-      <ion-input [(ngModel)]="todo!.description" label="Description" labelPlacement="stacked" type="text"></ion-input>
+      <ion-input [(ngModel)]="todo!.description" label="Description" labelPlacement="stacked" type="text" />
     </ion-item>
   </ion-list>
 

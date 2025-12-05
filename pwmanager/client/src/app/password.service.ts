@@ -44,7 +44,7 @@ export class PasswordService {
     const response = await fetch(`${environment.serverUrl}/fetch`, {
       headers,
       method: 'POST',
-      body: this.authenticationKey
+      body: this.authenticationKey ? new Blob([this.authenticationKey.buffer.slice(0) as ArrayBuffer]) : null
     });
 
     const arrayBuffer = await response.arrayBuffer();
@@ -67,14 +67,15 @@ export class PasswordService {
   }
 
   private async initKeys(username: string, password: string): Promise<void> {
-    const salt = this.textEncoder.encode(username);
+    const salt = new Uint8Array(this.textEncoder.encode(username).buffer.slice(0));
 
-    const importedPassword = await crypto.subtle.importKey('raw', this.textEncoder.encode(password),
+    const passwordData = this.textEncoder.encode(password);
+    const importedPassword = await crypto.subtle.importKey('raw', passwordData.buffer.slice(0) as ArrayBuffer,
       'PBKDF2', false, ['deriveKey']);
 
     const tempKey = await crypto.subtle.deriveKey(
       {
-        name: 'PBKDF2', salt,
+        name: 'PBKDF2', salt: salt.buffer.slice(0) as ArrayBuffer,
         iterations: 300000, hash: 'SHA-256'
       },
       importedPassword,
@@ -89,7 +90,7 @@ export class PasswordService {
 
     this.masterKey = await crypto.subtle.deriveKey(
       {
-        name: 'PBKDF2', salt,
+        name: 'PBKDF2', salt: salt.buffer.slice(0) as ArrayBuffer,
         iterations: 50000, hash: 'SHA-256'
       },
       importedTempKey,
@@ -100,7 +101,7 @@ export class PasswordService {
 
     const authKey = await crypto.subtle.deriveKey(
       {
-        name: 'PBKDF2', salt,
+        name: 'PBKDF2', salt: salt.buffer.slice(0) as ArrayBuffer,
         iterations: 300000, hash: 'SHA-256'
       },
       importedTempKey,
@@ -140,7 +141,7 @@ export class PasswordService {
     const requestParams = {
       headers,
       method: 'POST',
-      body: authKeyAndData
+      body: new Blob([authKeyAndData.buffer.slice(0) as ArrayBuffer])
     };
     fetch(`${environment.serverUrl}/store`, requestParams);
   }

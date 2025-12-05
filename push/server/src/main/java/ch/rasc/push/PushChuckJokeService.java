@@ -25,9 +25,9 @@ public class PushChuckJokeService {
 
   @Scheduled(fixedDelay = 30_000)
   public void sendChuckQuotes() {
-    IcndbJoke joke = this.restTemplate.getForObject("http://api.icndb.com/jokes/random",
+    IcndbJoke joke = this.restTemplate.getForObject("https://api.chucknorris.io/jokes/random",
         IcndbJoke.class);
-    sendPushMessage(HtmlEscape.unescapeHtml(joke.getValue().getJoke()));
+    sendPushMessage(HtmlEscape.unescapeHtml(joke.value()));
   }
 
   void sendPushMessage(String joke) {

@@ -7,7 +7,7 @@ import {environment} from './environments/environment';
 import {HomePage} from './app/home/home.page';
 import {EditPage} from './app/edit/edit.page';
 import {AppComponent} from './app/app.component';
-import {importProvidersFrom} from '@angular/core';
+import {importProvidersFrom, provideZoneChangeDetection} from '@angular/core';
 
 
 const routes: Routes = [
@@ -27,7 +27,7 @@ function apiConfigFactory(): Configuration {
 
 bootstrapApplication(AppComponent, {
   providers: [
-    provideIonicAngular(),
+    provideZoneChangeDetection(),provideIonicAngular(),
     importProvidersFrom(ApiModule.forRoot(apiConfigFactory)),
     {provide: RouteReuseStrategy, useClass: IonicRouteStrategy},
     provideHttpClient(withInterceptorsFromDi()),

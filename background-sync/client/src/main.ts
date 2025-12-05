@@ -1,3 +1,4 @@
+import { provideZoneChangeDetection } from "@angular/core";
 import {PreloadAllModules, provideRouter, RouteReuseStrategy, withHashLocation, withPreloading} from '@angular/router';
 import {bootstrapApplication} from '@angular/platform-browser';
 import {routes} from './app/app.routes';
@@ -14,7 +15,7 @@ function loadServiceWorker() {
 
 bootstrapApplication(AppComponent, {
   providers: [
-    provideIonicAngular(),
+    provideZoneChangeDetection(),provideIonicAngular(),
     {provide: RouteReuseStrategy, useClass: IonicRouteStrategy},
     provideRouter(routes, withHashLocation(), withPreloading(PreloadAllModules))
   ]

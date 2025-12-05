@@ -6,6 +6,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import com.launchdarkly.eventsource.EventSource;
+import com.launchdarkly.eventsource.background.BackgroundEventSource;
 
 public class EmojiTracker {
 
@@ -13,7 +14,7 @@ public class EmojiTracker {
     final Pattern dataRegex = Pattern.compile("\"([A-F0-9]+)\":(\\d+)");
 
     String url = "http://emojitrack-gostreamer.herokuapp.com/subscribe/eps";
-    EventSource.Builder builder = new EventSource.Builder(
+    BackgroundEventSource.Builder builder = new BackgroundEventSource.Builder(
         (DefaultEventHandler) (event, messageEvent) -> {
           Matcher matcher = dataRegex.matcher(messageEvent.getData());
           while (matcher.find()) {
@@ -24,9 +25,9 @@ public class EmojiTracker {
             System.out.println(")");
           }
 
-        }, URI.create(url));
+        }, new EventSource.Builder(URI.create(url)));
 
-    try (EventSource eventSource = builder.build()) {
+    try (BackgroundEventSource eventSource = builder.build()) {
       eventSource.start();
 
       TimeUnit.MINUTES.sleep(10);

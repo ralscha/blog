@@ -3,17 +3,19 @@ package ch.rasc.sseclient;
 import java.net.URI;
 import java.util.concurrent.TimeUnit;
 
-import com.launchdarkly.eventsource.EventHandler;
 import com.launchdarkly.eventsource.EventSource;
+import com.launchdarkly.eventsource.background.BackgroundEventHandler;
+import com.launchdarkly.eventsource.background.BackgroundEventSource;
 
 public class WikipediaChanges {
 
   public static void main(String[] args) throws InterruptedException {
-    EventHandler eventHandler = new WikipediaChangeHandler();
+    BackgroundEventHandler eventHandler = new WikipediaChangeHandler();
     String url = "https://stream.wikimedia.org/v2/stream/recentchange";
-    EventSource.Builder builder = new EventSource.Builder(eventHandler, URI.create(url));
+    BackgroundEventSource.Builder builder = new BackgroundEventSource.Builder(eventHandler, 
+        new EventSource.Builder(URI.create(url)));
 
-    try (EventSource eventSource = builder.build()) {
+    try (BackgroundEventSource eventSource = builder.build()) {
       eventSource.start();
 
       TimeUnit.MINUTES.sleep(10);

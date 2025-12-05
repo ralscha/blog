@@ -14,7 +14,7 @@
       <ion-item>
         <ion-input [class.invalid]="isInvalidAndDirty('username')"
                    formControlName="username" label="Username"
-                   labelPlacement="stacked" type="text"></ion-input>
+                   labelPlacement="stacked" type="text" />
       </ion-item>
       @if (hasError('username', 'required')) {
         <ion-item class="error-message">
@@ -48,7 +48,7 @@
       <ion-item>
         <ion-input [class.invalid]="isInvalidAndDirty('email')"
                    formControlName="email" label="Email"
-                   labelPlacement="stacked" type="email"></ion-input>
+                   labelPlacement="stacked" type="email" />
       </ion-item>
       @if (hasError('email', 'required')) {
         <ion-item class="error-message">
@@ -68,7 +68,7 @@
       <ion-item>
         <ion-input [class.invalid]="isInvalidAndDirty('age')"
                    formControlName="age" label="Age"
-                   labelPlacement="stacked" type="number"></ion-input>
+                   labelPlacement="stacked" type="number" />
       </ion-item>
       @if (hasError('age', 'required')) {
         <ion-item class="error-message">

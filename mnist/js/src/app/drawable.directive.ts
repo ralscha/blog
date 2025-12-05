@@ -25,8 +25,8 @@ export class DrawableDirective implements OnInit {
     this.renderer.setAttribute(this.canvas, 'height', '' + Math.min(300, this.platform.width() / 1.5));
   }
 
-  @HostListener('touchend', ['$event'])
-  @HostListener('mouseup', ['$event'])
+  @HostListener('touchend')
+  @HostListener('mouseup')
   up(): void {
     this.newImage.emit(this.getImgData());
     this.drawing = false;

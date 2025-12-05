@@ -16,12 +16,10 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-
 import ch.rasc.sse.eventbus.SseEvent;
 import ch.rasc.sse.eventbus.SseEventBus;
 import jakarta.servlet.http.HttpServletResponse;
+import tools.jackson.databind.ObjectMapper;
 
 @RestController
 @CrossOrigin
@@ -64,8 +62,7 @@ public class GeoController {
 
   @PostMapping(path = "/pos")
   @ResponseStatus(value = HttpStatus.NO_CONTENT)
-  public void handleLocation(@RequestBody Position position)
-      throws JsonProcessingException {
+  public void handleLocation(@RequestBody Position position) {
     SseEvent event = SseEvent.of("pos",
         this.objectMapper.writeValueAsString(Collections.singleton(position)));
     this.publisher.publishEvent(event);

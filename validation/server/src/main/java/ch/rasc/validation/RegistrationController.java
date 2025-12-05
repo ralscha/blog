@@ -39,27 +39,27 @@ public class RegistrationController {
     Map<String, Set<String>> errors = new HashMap<>();
 
     if (this.existingUsernames.contains(registration.getUsername())) {
-      errors.computeIfAbsent("username", key -> new HashSet<>()).add("usernameTaken");
+      errors.computeIfAbsent("username", _ -> new HashSet<>()).add("usernameTaken");
     }
 
     for (FieldError fieldError : result.getFieldErrors()) {
       String code = fieldError.getCode();
       String field = fieldError.getField();
       if ("NotBlank".equals(code) || "NotNull".equals(code)) {
-        errors.computeIfAbsent(field, key -> new HashSet<>()).add("required");
+        errors.computeIfAbsent(field, _ -> new HashSet<>()).add("required");
       }
       else if ("Email".equals(code) && "email".equals(field)) {
-        errors.computeIfAbsent(field, key -> new HashSet<>()).add("pattern");
+        errors.computeIfAbsent(field, _ -> new HashSet<>()).add("pattern");
       }
       else if ("Min".equals(code) && "age".equals(field)) {
-        errors.computeIfAbsent(field, key -> new HashSet<>()).add("notOldEnough");
+        errors.computeIfAbsent(field, _ -> new HashSet<>()).add("notOldEnough");
       }
       else if ("Size".equals(code) && "username".equals(field)) {
         if (registration.getUsername().length() < 2) {
-          errors.computeIfAbsent(field, key -> new HashSet<>()).add("minlength");
+          errors.computeIfAbsent(field, _ -> new HashSet<>()).add("minlength");
         }
         else {
-          errors.computeIfAbsent(field, key -> new HashSet<>()).add("maxlength");
+          errors.computeIfAbsent(field, _ -> new HashSet<>()).add("maxlength");
         }
       }
     }

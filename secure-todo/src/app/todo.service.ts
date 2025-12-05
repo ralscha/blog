@@ -140,7 +140,7 @@ export class TodoService {
         iv: initializationVector
       },
       this.aesKey,
-      data
+      new Uint8Array(data.buffer, data.byteOffset, data.byteLength) as Uint8Array<ArrayBuffer>
     );
 
     return this.joinIvAndData(initializationVector, new Uint8Array(encrypted));
@@ -154,10 +154,10 @@ export class TodoService {
     const parts = this.separateIvFromData(buffer);
     return window.crypto.subtle.decrypt({
         name: 'AES-GCM',
-        iv: parts.iv
+        iv: new Uint8Array(parts.iv.buffer, parts.iv.byteOffset, parts.iv.byteLength) as Uint8Array<ArrayBuffer>
       },
       this.aesKey,
-      parts.data
+      new Uint8Array(parts.data.buffer, parts.data.byteOffset, parts.data.byteLength) as Uint8Array<ArrayBuffer>
     );
   }
 

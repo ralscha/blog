@@ -2,7 +2,7 @@
   <ion-toolbar color="secondary">
     <ion-title>Edit Todo</ion-title>
     <ion-buttons slot="start">
-      <ion-back-button defaultHref="/home"></ion-back-button>
+      <ion-back-button defaultHref="/home" />
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
@@ -11,11 +11,11 @@
 
   <ion-list>
     <ion-item>
-      <ion-input [(ngModel)]="todo.title" label="Title" labelPlacement="floating" type="text"></ion-input>
+      <ion-input [(ngModel)]="todo.title" label="Title" labelPlacement="floating" type="text" />
     </ion-item>
 
     <ion-item>
-      <ion-input [(ngModel)]="todo.description" label="Description" labelPlacement="floating" type="text"></ion-input>
+      <ion-input [(ngModel)]="todo.description" label="Description" labelPlacement="floating" type="text" />
     </ion-item>
   </ion-list>
 

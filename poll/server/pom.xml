@@ -6,7 +6,6 @@
 	<groupId>ch.rasc.demo</groupId>
 	<artifactId>poll</artifactId>
 	<version>0.0.1</version>
-	<packaging>jar</packaging>
 
 	<name>poll</name>
 	<description>Demo project for Spring Boot</description>
@@ -14,7 +13,7 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>3.5.7</version>
+		<version>4.0.0</version>
 		<relativePath />
 	</parent>
 
@@ -27,19 +26,13 @@
 	<dependencies>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-web</artifactId>
-			<exclusions>
-				<exclusion>
-					<groupId>org.springframework.boot</groupId>
-					<artifactId>spring-boot-starter-tomcat</artifactId>
-				</exclusion>
-			</exclusions>
+			<artifactId>spring-boot-starter-webmvc</artifactId>
 		</dependency>
-
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-undertow</artifactId>
-		</dependency>
+		
+	    <dependency>
+	        <groupId>com.fasterxml.jackson.core</groupId>
+	        <artifactId>jackson-databind</artifactId>
+	    </dependency>
 
 		<dependency>
 			<groupId>ch.rasc</groupId>
@@ -65,7 +58,7 @@
 			<plugin>
 				<groupId>com.github.eirslett</groupId>
 				<artifactId>frontend-maven-plugin</artifactId>
-				<version>1.15.1</version>
+				<version>1.15.4</version>
 				<executions>
 					<execution>
 						<id>install node and npm</id>
