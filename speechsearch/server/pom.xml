@@ -49,7 +49,7 @@
 		<dependency>
 			<groupId>com.google.cloud</groupId>
 			<artifactId>google-cloud-speech</artifactId>
-			<version>4.71.0</version>
+			<version>4.75.0</version>
 		</dependency>
 
 		<dependency>
