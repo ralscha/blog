@@ -5,12 +5,15 @@ import {
   endOfWeek,
   format,
   formatDistance,
+  formatISO,
   isAfter,
   isBefore,
   isLeapYear,
-  startOfWeek
+  startOfWeek,
+  startOfDay
 } from 'date-fns';
-import {fr} from 'date-fns/locale/fr'
+import { fr } from 'date-fns/locale';
+import { tz } from '@date-fns/tz';
 
 const inputEl = document.getElementById('input');
 const outputEl = document.getElementById('output');
@@ -39,6 +42,10 @@ inputEl.addEventListener('change', () => {
   out.push(`In 13 days: ${addDays(inputDate, 13)}`);
 
   out.push(`In French:  ${formatDistance(inputDate, now, {addSuffix: true, locale: fr})}`);
+
+  const singaporeTz = tz('Asia/Singapore');
+  const startInSingapore = startOfDay(addDays(now, 5), { in: singaporeTz });
+  out.push(`Start of day in Singapore (+5 days): ${formatISO(startInSingapore)}`);
 
   outputEl.innerHTML = out.join('<br>');
 });
