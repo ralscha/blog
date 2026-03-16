@@ -9,10 +9,7 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.filter.GenericFilterBean;
 
 import ch.rasc.jwt.Application;
-import io.jsonwebtoken.ExpiredJwtException;
-import io.jsonwebtoken.MalformedJwtException;
-import io.jsonwebtoken.UnsupportedJwtException;
-import io.jsonwebtoken.security.SignatureException;
+import com.auth0.jwt.exceptions.JWTVerificationException;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.ServletRequest;
@@ -48,8 +45,7 @@ public class JWTFilter extends GenericFilterBean {
       }
       filterChain.doFilter(servletRequest, servletResponse);
     }
-    catch (ExpiredJwtException | UnsupportedJwtException | MalformedJwtException
-        | SignatureException | UsernameNotFoundException e) {
+    catch (JWTVerificationException | UsernameNotFoundException e) {
       Application.logger.info("Security exception {}", e.getMessage());
       ((HttpServletResponse) servletResponse)
           .setStatus(HttpServletResponse.SC_UNAUTHORIZED);

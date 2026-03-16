@@ -12,16 +12,15 @@ import java.security.spec.PKCS8EncodedKeySpec;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import java.util.Base64;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
 import org.slf4j.bridge.SLF4JBridgeHandler;
 
+import com.auth0.jwt.JWT;
+import com.auth0.jwt.algorithms.Algorithm;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-
-import io.jsonwebtoken.Jwts;
 
 import okhttp3.FormBody;
 import okhttp3.MediaType;
@@ -58,14 +57,14 @@ public class TwoLegged {
     PKCS8EncodedKeySpec keySpec = new PKCS8EncodedKeySpec(decoded);
     RSAPrivateKey privKey = (RSAPrivateKey) kf.generatePrivate(keySpec);
 
-    String compactedJWT = Jwts.builder()
-        .issuer(credentials.getClientEmail())
-        .audience().add(credentials.getTokenUri()).and()
-        .claim("scope", "https://www.googleapis.com/auth/cloud-translation")
-        .expiration(Date.from(Instant.now().plus(1, ChronoUnit.HOURS)))
-        .issuedAt(Date.from(Instant.now()))
-        .signWith(privKey, Jwts.SIG.RS256)
-        .compact();
+    Algorithm algorithm = Algorithm.RSA256(null, privKey);
+    String compactedJWT = JWT.create()
+        .withIssuer(credentials.getClientEmail())
+        .withAudience(credentials.getTokenUri())
+        .withClaim("scope", "https://www.googleapis.com/auth/cloud-translation")
+        .withExpiresAt(Instant.now().plus(1, ChronoUnit.HOURS))
+        .withIssuedAt(Instant.now())
+        .sign(algorithm);
 
     HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
     logging.setLevel(Level.BODY);

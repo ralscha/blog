@@ -81,7 +81,7 @@ public class PollController {
       }
     }
 
-    SseEvent.Builder builder = SseEvent.builder().data(sb.toString());
+    var builder = SseEvent.builder().data(sb.toString());
     if (clientId != null) {
       builder.addClientId(clientId);
     }
