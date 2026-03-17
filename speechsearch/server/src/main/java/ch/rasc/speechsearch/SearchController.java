@@ -3,7 +3,7 @@ package ch.rasc.speechsearch;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
@@ -11,8 +11,6 @@ import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 import java.util.stream.Collectors;
-
-import javax.annotation.PreDestroy;
 
 import org.bson.Document;
 import org.bson.conversions.Bson;
@@ -43,6 +41,7 @@ import com.mongodb.client.MongoCursor;
 import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.model.Filters;
 
+import jakarta.annotation.PreDestroy;
 import net.bramp.ffmpeg.FFmpeg;
 import net.bramp.ffmpeg.FFmpegExecutor;
 import net.bramp.ffmpeg.builder.FFmpegBuilder;
@@ -57,14 +56,17 @@ public class SearchController {
 
   private final SpeechClient speech;
 
+  private final String ffmpegPath;
+
   public SearchController(AppConfig appConfig) throws IOException {
     MongoClientSettings mongoClientSettings = MongoClientSettings.builder()
         .writeConcern(WriteConcern.UNACKNOWLEDGED).build();
     this.mongoClient = MongoClients.create(mongoClientSettings);
     this.mongoDatabase = this.mongoClient.getDatabase("imdb");
+    this.ffmpegPath = appConfig.getFfmpegPath();
 
     ServiceAccountCredentials credentials = ServiceAccountCredentials
-        .fromStream(Files.newInputStream(Paths.get(appConfig.getCredentialsPath())));
+        .fromStream(Files.newInputStream(Path.of(appConfig.getCredentialsPath())));
     SpeechSettings settings = SpeechSettings.newBuilder()
         .setCredentialsProvider(FixedCredentialsProvider.create(credentials)).build();
     this.speech = SpeechClient.create(settings);
@@ -83,43 +85,45 @@ public class SearchController {
 
   @PostMapping("/uploadSpeech")
   public List<String> uploadSpeech(@RequestBody byte[] payloadFromWeb) throws Exception {
-
     String id = UUID.randomUUID().toString();
-    Path inFile = Paths.get("./in" + id + ".wav");
-    Path outFile = Paths.get("./out" + id + ".flac");
+    Path inFile = Files.createTempFile("speechsearch-" + id, ".wav");
+    Path outFile = Files.createTempFile("speechsearch-" + id, ".flac");
 
-    Files.write(inFile, payloadFromWeb);
+    try {
+      Files.write(inFile, payloadFromWeb, StandardOpenOption.TRUNCATE_EXISTING);
 
-    FFmpeg ffmpeg = new FFmpeg("./ffmpeg.exe");
-    FFmpegBuilder builder = new FFmpegBuilder().setInput(inFile.toString())
-        .overrideOutputFiles(true).addOutput(outFile.toString())
-        .setAudioSampleRate(44_100).setAudioChannels(1)
-        .setAudioSampleFormat(FFmpeg.AUDIO_FORMAT_S16).setAudioCodec("flac").done();
+      FFmpeg ffmpeg = new FFmpeg(this.ffmpegPath);
+      FFmpegBuilder builder = new FFmpegBuilder().setInput(inFile.toString())
+          .overrideOutputFiles(true).addOutput(outFile.toString())
+          .setAudioSampleRate(44_100).setAudioChannels(1)
+          .setAudioSampleFormat(FFmpeg.AUDIO_FORMAT_S16).setAudioCodec("flac").done();
 
-    FFmpegExecutor executor = new FFmpegExecutor(ffmpeg);
-    executor.createJob(builder).run();
+      FFmpegExecutor executor = new FFmpegExecutor(ffmpeg);
+      executor.createJob(builder).run();
 
-    byte[] payload = Files.readAllBytes(outFile);
+      byte[] payload = Files.readAllBytes(outFile);
 
-    ByteString audioBytes = ByteString.copyFrom(payload);
+      ByteString audioBytes = ByteString.copyFrom(payload);
 
-    RecognitionConfig config = RecognitionConfig.newBuilder()
-        .setEncoding(AudioEncoding.FLAC).setLanguageCode("en-US").build();
-    RecognitionAudio audio = RecognitionAudio.newBuilder().setContent(audioBytes).build();
+      RecognitionConfig config = RecognitionConfig.newBuilder()
+          .setEncoding(AudioEncoding.FLAC).setLanguageCode("en-US").build();
+      RecognitionAudio audio = RecognitionAudio.newBuilder().setContent(audioBytes).build();
 
-    RecognizeResponse response = this.speech.recognize(config, audio);
-    List<SpeechRecognitionResult> results = response.getResultsList();
+      RecognizeResponse response = this.speech.recognize(config, audio);
+      List<SpeechRecognitionResult> results = response.getResultsList();
 
-    List<String> searchTerms = new ArrayList<>();
-    for (SpeechRecognitionResult result : results) {
-      SpeechRecognitionAlternative alternative = result.getAlternativesList().get(0);
-      searchTerms.add(alternative.getTranscript());
+      List<String> searchTerms = new ArrayList<>();
+      for (SpeechRecognitionResult result : results) {
+        SpeechRecognitionAlternative alternative = result.getAlternativesList().get(0);
+        searchTerms.add(alternative.getTranscript());
+      }
+
+      return searchTerms;
     }
-
-    Files.deleteIfExists(inFile);
-    Files.deleteIfExists(outFile);
-
-    return searchTerms;
+    finally {
+      Files.deleteIfExists(inFile);
+      Files.deleteIfExists(outFile);
+    }
   }
 
   @SuppressWarnings("unchecked")

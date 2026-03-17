@@ -1,15 +1,9 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>
-      M2.5+ Earthquakes (Past 30 days)
-    </ion-title>
+    <ion-title> M2.5+ Earthquakes (Past 30 days) </ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content class="ion-padding">
-  <div (leafletMapReady)="onMapReady($event)"
-       [leafletOptions]="options"
-       id="map"
-       leaflet>
-  </div>
+  <div (leafletMapReady)="onMapReady($event)" [leafletOptions]="options" id="map" leaflet></div>
 </ion-content>

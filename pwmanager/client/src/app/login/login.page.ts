@@ -1,4 +1,4 @@
-import {Component, inject} from '@angular/core';
+import { Component, inject } from '@angular/core';
 import {
   IonButton,
   IonContent,
@@ -8,24 +8,32 @@ import {
   IonList,
   IonTitle,
   IonToolbar,
-  NavController
+  NavController,
 } from '@ionic/angular/standalone';
-import {PasswordService} from '../password.service';
-import {FormsModule} from '@angular/forms';
+import { PasswordService } from '../password.service';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.page.html',
-  imports: [FormsModule, IonHeader, IonToolbar, IonTitle, IonButton, IonContent, IonList, IonItem, IonInput]
+  imports: [
+    FormsModule,
+    IonHeader,
+    IonToolbar,
+    IonTitle,
+    IonButton,
+    IonContent,
+    IonList,
+    IonItem,
+    IonInput,
+  ],
 })
 export class LoginPage {
   private readonly navCtrl = inject(NavController);
   private readonly passwordService = inject(PasswordService);
 
-
   async login(username: string, password: string): Promise<void> {
     await this.passwordService.fetchPasswords(username, password);
-    this.navCtrl.navigateRoot(['home'], {replaceUrl: true});
+    this.navCtrl.navigateRoot(['home'], { replaceUrl: true });
   }
-
 }

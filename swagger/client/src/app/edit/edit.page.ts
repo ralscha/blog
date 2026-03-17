@@ -1,5 +1,5 @@
 import {Component, inject, OnInit} from '@angular/core';
-import {Todo, TodoServiceService} from '../swagger';
+import {Todo, TodoService} from '../swagger';
 import {
   IonBackButton,
   IonButton,
@@ -16,6 +16,7 @@ import {
 } from '@ionic/angular/standalone';
 import {v4} from 'uuid';
 import {FormsModule} from '@angular/forms';
+import {TodoStateService} from '../todo-state.service';
 
 @Component({
   selector: 'app-edit',
@@ -25,10 +26,11 @@ import {FormsModule} from '@angular/forms';
 export class EditPage implements OnInit {
   todo!: Todo;
   private readonly navCtrl = inject(NavController);
-  private readonly todoService = inject(TodoServiceService);
+  private readonly todoService = inject(TodoService);
+  private readonly todoState = inject(TodoStateService);
 
   ngOnInit(): void {
-    const todo = this.todoService.selectedTodo;
+    const todo = this.todoState.selectedTodo();
     if (todo) {
       this.todo = todo;
     } else {
@@ -41,7 +43,10 @@ export class EditPage implements OnInit {
   }
 
   save(): void {
-    this.todoService.save(this.todo).subscribe(() => this.navCtrl.navigateBack(['home']));
+    this.todoService.save(this.todo).subscribe(() => {
+      this.todoState.clear();
+      this.navCtrl.navigateBack(['home']);
+    });
   }
 
 }

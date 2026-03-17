@@ -29,7 +29,7 @@ function loadPositions() {
 }
 
 function subscribeToServer() {
-  eventSource = new EventSource(`register/${uuid.v4()}`);
+  eventSource = new EventSource(`register/${crypto.randomUUID()}`);
 
   eventSource.addEventListener('pos', response => {
     for (const line of response.data.split('\n')) {

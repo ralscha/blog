@@ -1,31 +1,35 @@
-import {AfterViewInit, Component, inject} from '@angular/core';
-import {HttpClient} from '@angular/common/http';
-import {circleMarker, latLng, LatLngBounds, LayerGroup, layerGroup, Map, tileLayer} from 'leaflet';
-import {IonContent, IonHeader, IonTitle, IonToolbar} from "@ionic/angular/standalone";
-import {LeafletDirective} from "@bluehalo/ngx-leaflet";
+import { AfterViewInit, Component, inject } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import {
+  circleMarker,
+  latLng,
+  LatLngBounds,
+  LayerGroup,
+  layerGroup,
+  Map,
+  tileLayer,
+} from 'leaflet';
+import { IonContent, IonHeader, IonTitle, IonToolbar } from '@ionic/angular/standalone';
+import { LeafletDirective } from '@bluehalo/ngx-leaflet';
+import { environment } from '../../environments/environment';
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.page.html',
-  imports: [
-    IonHeader,
-    IonToolbar,
-    IonTitle,
-    IonContent,
-    LeafletDirective
-  ],
-  styleUrl: './home.page.scss'
+  imports: [IonHeader, IonToolbar, IonTitle, IonContent, LeafletDirective],
+  styleUrl: './home.page.scss',
 })
 export class HomePage implements AfterViewInit {
   options = {
     layers: [
-      tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+      tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         maxZoom: 18,
-        attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-      })
+        attribution:
+          '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+      }),
     ],
     zoom: 5,
-    center: latLng([46.879966, -121.726909])
+    center: latLng([46.879966, -121.726909]),
   };
   private readonly httpClient = inject(HttpClient);
   private map!: Map;
@@ -39,16 +43,19 @@ export class HomePage implements AfterViewInit {
     this.map = map;
     this.loadEarthquakes(map.getBounds());
 
-    map.on('zoomend', evt => this.loadEarthquakes(evt.target.getBounds()));
-    map.on('moveend', evt => this.loadEarthquakes(evt.target.getBounds()));
+    map.on('zoomend', (evt) => this.loadEarthquakes(evt.target.getBounds()));
+    map.on('moveend', (evt) => this.loadEarthquakes(evt.target.getBounds()));
   }
 
   private loadEarthquakes(bounds: LatLngBounds): void {
     const wrappedBounds = this.map.wrapLatLngBounds(bounds);
     const southWest = wrappedBounds.getSouthWest();
     const northEast = wrappedBounds.getNorthEast();
-    this.httpClient.get<Earthquake[]>(`http://127.0.0.1:8080/earthquakes/${southWest.lng}/${southWest.lat}/${northEast.lng}/${northEast.lat}`)
-      .subscribe(data => this.drawCircles(data));
+    this.httpClient
+      .get<
+        Earthquake[]
+      >(`${environment.serverUrl}/earthquakes/${southWest.lng}/${southWest.lat}/${northEast.lng}/${northEast.lat}`)
+      .subscribe((data) => this.drawCircles(data));
   }
 
   private drawCircles(earthquakes: Earthquake[]): void {
@@ -64,7 +71,7 @@ export class HomePage implements AfterViewInit {
         fillOpacity: 0.4,
         fillColor: this.getFillColor(earthquake.mag),
         weight: 1,
-        radius: earthquake.mag * this.map.getZoom()
+        radius: earthquake.mag * this.map.getZoom(),
       })
         .bindPopup(info)
         .addTo(this.markerGroup);
@@ -92,6 +99,6 @@ interface Earthquake {
   place: string;
   mag: number;
   location: {
-    coordinates: number[]
+    coordinates: number[];
   };
 }

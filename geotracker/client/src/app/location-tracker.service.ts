@@ -1,12 +1,12 @@
-import {ApplicationRef, inject, Injectable} from '@angular/core';
-import {ServerPushService} from './server-push.service';
-import {AppPosition} from './app-position';
+import { ApplicationRef, inject, Injectable } from '@angular/core';
+import { ServerPushService } from './server-push.service';
+import { AppPosition } from './app-position';
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 declare let BackgroundGeolocation: any;
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class LocationTrackerService {
   pos: AppPosition | null = null;
@@ -26,20 +26,24 @@ export class LocationTrackerService {
     const geoOptions = {
       enableHighAccuracy: true,
       maximumAge: 30000,
-      timeout: 10000
+      timeout: 10000,
     };
 
-    navigator.geolocation.getCurrentPosition(loc => {
-      this.pos = {
-        accuracy: loc.coords.accuracy,
-        bearing: loc.coords.heading,
-        latitude: loc.coords.latitude,
-        longitude: loc.coords.longitude,
-        speed: loc.coords.speed,
-        time: loc.timestamp
-      };
-      this.serverPush.pushPosition(this.pos);
-    }, err => this.serverPush.pushError(err.message), geoOptions);
+    navigator.geolocation.getCurrentPosition(
+      (loc) => {
+        this.pos = {
+          accuracy: loc.coords.accuracy,
+          bearing: loc.coords.heading,
+          latitude: loc.coords.latitude,
+          longitude: loc.coords.longitude,
+          speed: loc.coords.speed,
+          time: loc.timestamp,
+        };
+        this.serverPush.pushPosition(this.pos);
+      },
+      (err) => this.serverPush.pushError(err.message),
+      geoOptions,
+    );
   }
 
   startBackgroundLocation(): void {
@@ -55,7 +59,7 @@ export class LocationTrackerService {
       locationProvider: BackgroundGeolocation.ACTIVITY_PROVIDER,
       interval: 90000,
       fastestInterval: 60000,
-      activitiesInterval: 80000
+      activitiesInterval: 80000,
     });
 
     BackgroundGeolocation.on('location', (location: any) => {
@@ -67,7 +71,7 @@ export class LocationTrackerService {
             latitude: location.latitude,
             longitude: location.longitude,
             speed: location.speed,
-            time: location.time
+            time: location.time,
           };
           this.serverPush.pushPosition(this.pos);
           this.appRef.tick();

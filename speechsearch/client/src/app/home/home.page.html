@@ -1,8 +1,6 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>
-      Movie Speech Search
-    </ion-title>
+    <ion-title> Movie Speech Search </ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -33,9 +31,13 @@
 </ion-content>
 
 <ion-footer class="ion-padding">
-  <ion-button (click)="searchCordova()" color="secondary">Cordova</ion-button>
-  <ion-button (click)="searchWebSpeech()" [disabled]="isWebSpeechRecording" color="secondary">Web Speech</ion-button>
-  <ion-button (click)="searchGoogleCloudSpeech()"
-              [color]="isRecording ? 'danger' : 'secondary'">{{ isRecording ? 'Stop' : 'Cloud Speech' }}
+  <ion-button
+    (click)="searchWebSpeech()"
+    [disabled]="isWebSpeechRecording || !isWebSpeechSupported"
+    color="secondary"
+    >Web Speech</ion-button
+  >
+  <ion-button (click)="searchGoogleCloudSpeech()" [color]="isRecording ? 'danger' : 'secondary'"
+    >{{ isRecording ? 'Stop' : 'Cloud Speech' }}
   </ion-button>
 </ion-footer>

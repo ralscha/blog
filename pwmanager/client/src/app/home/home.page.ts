@@ -1,4 +1,4 @@
-import {Component, inject} from '@angular/core';
+import { Component, inject } from '@angular/core';
 import {
   IonButton,
   IonButtons,
@@ -13,18 +13,32 @@ import {
   IonTitle,
   IonToolbar,
   NavController,
-  ViewDidEnter
+  ViewDidEnter,
 } from '@ionic/angular/standalone';
-import {PasswordService} from '../password.service';
-import {Password} from '../password';
-import {FormsModule} from "@angular/forms";
-import {addIcons} from "ionicons";
-import {addOutline, exitOutline} from "ionicons/icons";
+import { PasswordService } from '../password.service';
+import { Password } from '../password';
+import { FormsModule } from '@angular/forms';
+import { addIcons } from 'ionicons';
+import { addOutline, exitOutline } from 'ionicons/icons';
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.page.html',
-  imports: [FormsModule, IonHeader, IonToolbar, IonButtons, IonTitle, IonButton, IonIcon, IonContent, IonSearchbar, IonCard, IonCardHeader, IonCardContent, IonNote]
+  imports: [
+    FormsModule,
+    IonHeader,
+    IonToolbar,
+    IonButtons,
+    IonTitle,
+    IonButton,
+    IonIcon,
+    IonContent,
+    IonSearchbar,
+    IonCard,
+    IonCardHeader,
+    IonCardContent,
+    IonNote,
+  ],
 })
 export class HomePage implements ViewDidEnter {
   passwords: Password[] = [];
@@ -32,7 +46,7 @@ export class HomePage implements ViewDidEnter {
   private readonly passwordService = inject(PasswordService);
 
   constructor() {
-    addIcons({exitOutline, addOutline});
+    addIcons({ exitOutline, addOutline });
   }
 
   ionViewDidEnter(): void {
@@ -43,8 +57,11 @@ export class HomePage implements ViewDidEnter {
   filter(event: any): void {
     const query = event.target.value;
     if (query !== undefined) {
-      this.passwords = this.passwordService.getPasswords().filter(pw => (pw.url.includes(query)
-        || (pw.description && pw.description.includes(query))));
+      this.passwords = this.passwordService
+        .getPasswords()
+        .filter(
+          (pw) => pw.url.includes(query) || (pw.description && pw.description.includes(query)),
+        );
     } else {
       this.passwords = this.passwordService.getPasswords();
     }
@@ -60,6 +77,6 @@ export class HomePage implements ViewDidEnter {
 
   logout(): void {
     this.passwordService.clearPasswords();
-    this.navCtrl.navigateRoot(['login'], {replaceUrl: true});
+    this.navCtrl.navigateRoot(['login'], { replaceUrl: true });
   }
 }

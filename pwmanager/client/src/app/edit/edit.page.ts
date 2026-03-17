@@ -1,4 +1,4 @@
-import {Component, inject, OnInit} from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import {
   IonBackButton,
   IonButton,
@@ -12,20 +12,34 @@ import {
   IonList,
   IonTitle,
   IonToolbar,
-  NavController
+  NavController,
 } from '@ionic/angular/standalone';
-import {v4} from 'uuid';
-import {PasswordService} from '../password.service';
-import {Password} from '../password';
-import {ActivatedRoute} from '@angular/router';
-import {FormsModule} from '@angular/forms';
-import {addIcons} from "ionicons";
-import {trashOutline} from "ionicons/icons";
+import { v4 } from 'uuid';
+import { PasswordService } from '../password.service';
+import { Password } from '../password';
+import { ActivatedRoute } from '@angular/router';
+import { FormsModule } from '@angular/forms';
+import { addIcons } from 'ionicons';
+import { trashOutline } from 'ionicons/icons';
 
 @Component({
   selector: 'app-edit',
   templateUrl: './edit.page.html',
-  imports: [FormsModule, IonHeader, IonToolbar, IonButtons, IonBackButton, IonTitle, IonButton, IonIcon, IonContent, IonList, IonItem, IonInput, IonFooter]
+  imports: [
+    FormsModule,
+    IonHeader,
+    IonToolbar,
+    IonButtons,
+    IonBackButton,
+    IonTitle,
+    IonButton,
+    IonIcon,
+    IonContent,
+    IonList,
+    IonItem,
+    IonInput,
+    IonFooter,
+  ],
 })
 export class EditPage implements OnInit {
   password: Password | undefined = undefined;
@@ -34,7 +48,7 @@ export class EditPage implements OnInit {
   private readonly passwordService = inject(PasswordService);
 
   constructor() {
-    addIcons({trashOutline});
+    addIcons({ trashOutline });
   }
 
   ngOnInit(): void {
@@ -50,7 +64,7 @@ export class EditPage implements OnInit {
         url: '',
         username: '',
         password: '',
-        description: ''
+        description: '',
       };
     }
   }

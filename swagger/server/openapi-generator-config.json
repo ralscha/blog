@@ -1,0 +1,7 @@
+{
+  "ngVersion": "21.2.4",
+  "rxjsVersion": "7.8.2",
+  "providedIn": "root",
+  "serviceSuffix": "Service",
+  "stringEnums": true
+}

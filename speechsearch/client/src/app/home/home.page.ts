@@ -1,9 +1,9 @@
-import {ChangeDetectorRef, Component, inject} from '@angular/core';
-import {Movie} from '../movie';
-import {LoadingController} from '@ionic/angular';
+import { ChangeDetectorRef, Component, inject } from '@angular/core';
+import { Movie } from '../movie';
+import { LoadingController } from '@ionic/angular';
 // @ts-ignore
 import RecordRTC from 'recordrtc';
-import {environment} from '../../environments/environment';
+import { environment } from '../../environments/environment';
 import {
   IonButton,
   IonCard,
@@ -14,11 +14,15 @@ import {
   IonHeader,
   IonList,
   IonTitle,
-  IonToolbar
-} from "@ionic/angular/standalone";
+  IonToolbar,
+} from '@ionic/angular/standalone';
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
-declare let webkitSpeechRecognition: any;
+
+type SpeechWindow = Window & {
+  SpeechRecognition?: any;
+  webkitSpeechRecognition?: any;
+};
 
 @Component({
   selector: 'app-home',
@@ -34,8 +38,8 @@ declare let webkitSpeechRecognition: any;
     IonList,
     IonCardHeader,
     IonFooter,
-    IonButton
-  ]
+    IonButton,
+  ],
 })
 export class HomePage {
   movies: Movie[] = [];
@@ -45,18 +49,30 @@ export class HomePage {
   private readonly changeDetectorRef = inject(ChangeDetectorRef);
   private readonly loadingCtrl = inject(LoadingController);
   private recorder: RecordRTC;
+  private mediaStream: MediaStream | null = null;
+
+  get isWebSpeechSupported(): boolean {
+    return !!this.getSpeechRecognitionCtor();
+  }
+
+  private get speechWindow(): SpeechWindow {
+    return window as SpeechWindow;
+  }
+
+  private getSpeechRecognitionCtor(): any {
+    return this.speechWindow.SpeechRecognition ?? this.speechWindow.webkitSpeechRecognition;
+  }
 
   async movieSearch(searchTerms: string[]): Promise<void> {
     if (searchTerms && searchTerms.length > 0) {
-
       const loading = await this.loadingCtrl.create({
-        message: 'Please wait...'
+        message: 'Please wait...',
       });
       loading.present();
 
       this.matches = searchTerms;
       let queryParams = '';
-      searchTerms.forEach(term => {
+      searchTerms.forEach((term) => {
         queryParams += `term=${term}&`;
       });
       const response = await fetch(`${environment.serverUrl}/search?${queryParams}`);
@@ -68,41 +84,13 @@ export class HomePage {
     }
   }
 
-  searchCordova(): void {
-    // @ts-ignore
-    window.plugins.speechRecognition.hasPermission(permission => {
-
-      if (!permission) {
-        // @ts-ignore
-        window.plugins.speechRecognition.requestPermission(() => {
-          // @ts-ignore
-          window.plugins.speechRecognition.startListening(terms => {
-            if (terms && terms.length > 0) {
-              this.movieSearch([terms[0]]);
-            } else {
-              this.movieSearch(terms);
-            }
-          });
-        });
-      } else {
-        // @ts-ignore
-        window.plugins.speechRecognition.startListening(terms => {
-          if (terms && terms.length > 0) {
-            this.movieSearch([terms[0]]);
-          } else {
-            this.movieSearch(terms);
-          }
-        });
-      }
-    });
-  }
-
   searchWebSpeech(): void {
-    if (!('webkitSpeechRecognition' in window)) {
+    const SpeechRecognitionCtor = this.getSpeechRecognitionCtor();
+    if (!SpeechRecognitionCtor) {
       return;
     }
 
-    const recognition = new webkitSpeechRecognition();
+    const recognition = new SpeechRecognitionCtor();
     recognition.continuous = false;
 
     recognition.onstart = () => {
@@ -132,7 +120,6 @@ export class HomePage {
     recognition.start();
   }
 
-
   async searchGoogleCloudSpeech(): Promise<void> {
     if (this.isRecording) {
       if (this.recorder) {
@@ -146,25 +133,25 @@ export class HomePage {
           const requestParams = {
             headers,
             method: 'POST',
-            body: recordedBlob
+            body: recordedBlob,
           };
           const response = await fetch(`${environment.serverUrl}/uploadSpeech`, requestParams);
           const searchTerms = await response.json();
+          this.mediaStream?.getTracks().forEach((track) => track.stop());
+          this.mediaStream = null;
           this.movieSearch(searchTerms);
         });
       }
       this.isRecording = false;
     } else {
       this.isRecording = true;
-      const stream = await navigator.mediaDevices.getUserMedia({video: false, audio: true});
+      this.mediaStream = await navigator.mediaDevices.getUserMedia({ video: false, audio: true });
       const options = {
         mimeType: 'audio/wav',
-        recorderType: RecordRTC.StereoAudioRecorder
+        recorderType: RecordRTC.StereoAudioRecorder,
       };
-      this.recorder = RecordRTC(stream, options);
+      this.recorder = RecordRTC(this.mediaStream, options);
       this.recorder.startRecording();
     }
   }
-
-
 }

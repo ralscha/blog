@@ -7,6 +7,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class AppConfig {
   private String credentialsPath;
+  private String ffmpegPath = "ffmpeg";
 
   public String getCredentialsPath() {
     return this.credentialsPath;
@@ -14,6 +15,14 @@ public class AppConfig {
 
   public void setCredentialsPath(String credentialsPath) {
     this.credentialsPath = credentialsPath;
+  }
+
+  public String getFfmpegPath() {
+    return this.ffmpegPath;
+  }
+
+  public void setFfmpegPath(String ffmpegPath) {
+    this.ffmpegPath = ffmpegPath;
   }
 
 }

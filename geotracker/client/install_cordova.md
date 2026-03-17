@@ -4,6 +4,7 @@ ionic cordova plugin add @mauron85/cordova-plugin-background-geolocation
 ionic cordova plugin add cordova-plugin-geolocation
 
 add workaround
+
 ```
     <platform name="android">
         ...
