@@ -1,1 +1,0 @@
-Source code for the blog post: https://blog.rasc.ch/2017/11/Developing-a-self-hosted-location-tracker.html

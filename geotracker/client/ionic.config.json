@@ -1,7 +1,0 @@
-{
-  "name": "geotracker",
-  "integrations": {
-    "cordova": {}
-  },
-  "type": "angular"
-}
