@@ -1,1 +1,0 @@
-Code for the blog post: https://blog.rasc.ch/2017/02/Upload-files-from-Java-to-a-Minio-server.html

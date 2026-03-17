@@ -1,7 +1,0 @@
-{
-  "name": "uploadsb",
-  "integrations": {
-    "cordova": {}
-  },
-  "type": "angular"
-}
