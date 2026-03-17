@@ -1,13 +1,12 @@
 export interface Filter {
-
   mag: {
-    lower: number,
-    upper: number
+    lower: number;
+    upper: number;
   };
 
   distance: {
-    lower: number,
-    upper: number
+    lower: number;
+    upper: number;
   };
 
   time: string;
@@ -16,7 +15,6 @@ export interface Filter {
 
   myLocation: {
     latitude: number;
-    longitude: number
+    longitude: number;
   };
-
 }

@@ -1,4 +1,4 @@
-import {Component, inject, OnInit} from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import {
   IonButton,
   IonButtons,
@@ -16,16 +16,33 @@ import {
   IonTitle,
   IonToolbar,
   ModalController,
-  NavParams
+  NavParams,
 } from '@ionic/angular/standalone';
-import {Filter} from '../filter-interface';
-import {FormsModule, NgForm} from '@angular/forms';
+import { Filter } from '../filter-interface';
+import { FormsModule, NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-filter',
   templateUrl: './filter.page.html',
   styleUrls: ['./filter.page.scss'],
-  imports: [FormsModule, IonHeader, IonToolbar, IonButtons, IonButton, IonTitle, IonContent, IonItemGroup, IonItemDivider, IonLabel, IonItem, IonRange, IonRadioGroup, IonSelect, IonSelectOption, IonRadio]
+  imports: [
+    FormsModule,
+    IonHeader,
+    IonToolbar,
+    IonButtons,
+    IonButton,
+    IonTitle,
+    IonContent,
+    IonItemGroup,
+    IonItemDivider,
+    IonLabel,
+    IonItem,
+    IonRange,
+    IonRadioGroup,
+    IonSelect,
+    IonSelectOption,
+    IonRadio,
+  ],
 })
 export class FilterPage implements OnInit {
   filter!: Filter;
@@ -36,7 +53,7 @@ export class FilterPage implements OnInit {
     this.filter = this.navParams.get('filter');
   }
 
-  applyFilters({value}: NgForm): void {
+  applyFilters({ value }: NgForm): void {
     this.dismiss(value);
   }
 
@@ -47,5 +64,4 @@ export class FilterPage implements OnInit {
     }
     this.modalCtrl.dismiss(data);
   }
-
 }

@@ -4,9 +4,7 @@
       <ion-button (click)="dismiss()">Cancel</ion-button>
     </ion-buttons>
 
-    <ion-title>
-      Filter Earthquakes
-    </ion-title>
+    <ion-title> Filter Earthquakes </ion-title>
 
     <ion-buttons slot="end">
       <ion-button (click)="applyFilters(f)" [strong]="true">Done</ion-button>
@@ -16,19 +14,28 @@
 
 <ion-content>
   <form #f="ngForm">
-
     <ion-item-group>
       <ion-item-divider color="light">
         <ion-label>
-          Distance from me: <strong>{{ f.controls['distance']?.value?.lower }}
-          - {{ f.controls['distance']?.value?.upper }}</strong>
+          Distance from me:
+          <strong
+            >{{ f.controls['distance']?.value?.lower }} -
+            {{ f.controls['distance']?.value?.upper }}</strong
+          >
         </ion-label>
       </ion-item-divider>
 
       <ion-item>
         <ion-label>
-          <ion-range [dualKnobs]="true" [max]="20000" [min]="0" [ngModel]="filter.distance" aria-label="distance"
-                     class="ion-no-padding" name="distance">
+          <ion-range
+            [dualKnobs]="true"
+            [max]="20000"
+            [min]="0"
+            [ngModel]="filter.distance"
+            aria-label="distance"
+            class="ion-no-padding"
+            name="distance"
+          >
             <ion-label slot="start">0 km</ion-label>
             <ion-label slot="end">20,000 km</ion-label>
           </ion-range>
@@ -39,14 +46,23 @@
     <ion-item-group>
       <ion-item-divider color="light">
         <ion-label>
-          Magnitude: <strong>{{ f.controls['mag']?.value?.lower }} - {{ f.controls['mag']?.value?.upper }}</strong>
+          Magnitude:
+          <strong
+            >{{ f.controls['mag']?.value?.lower }} - {{ f.controls['mag']?.value?.upper }}</strong
+          >
         </ion-label>
       </ion-item-divider>
       <ion-item>
         <ion-label>
-          <ion-range [dualKnobs]="true" [max]="10" [min]="-1" [ngModel]="filter.mag" aria-label="magnitude"
-                     class="ion-no-padding"
-                     name="mag">
+          <ion-range
+            [dualKnobs]="true"
+            [max]="10"
+            [min]="-1"
+            [ngModel]="filter.mag"
+            aria-label="magnitude"
+            class="ion-no-padding"
+            name="mag"
+          >
             <ion-label slot="start">-1</ion-label>
             <ion-label slot="end">10</ion-label>
           </ion-range>
@@ -90,6 +106,5 @@
         </ion-item>
       </ion-radio-group>
     </ion-item-group>
-
   </form>
 </ion-content>

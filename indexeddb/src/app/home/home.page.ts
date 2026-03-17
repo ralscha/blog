@@ -1,6 +1,6 @@
-import {Component, inject, OnInit} from '@angular/core';
-import {FilterPage} from '../filter/filter.page';
-import {EarthquakeService} from '../earthquake.service';
+import { Component, inject, OnInit } from '@angular/core';
+import { FilterPage } from '../filter/filter.page';
+import { EarthquakeService } from '../earthquake.service';
 import {
   IonButton,
   IonButtons,
@@ -16,21 +16,44 @@ import {
   IonTitle,
   IonToolbar,
   LoadingController,
-  ModalController
+  ModalController,
 } from '@ionic/angular/standalone';
-import {Filter} from '../filter-interface';
-import {Earthquake} from '../earthquake';
-import {CdkFixedSizeVirtualScroll, CdkVirtualForOf, CdkVirtualScrollViewport} from '@angular/cdk/scrolling';
-import {DetailComponent} from '../detail/detail.component';
-import {DecimalPipe} from '@angular/common';
-import {addIcons} from "ionicons";
-import {optionsOutline,arrowDownOutline} from "ionicons/icons";
+import { Filter } from '../filter-interface';
+import { Earthquake } from '../earthquake';
+import {
+  CdkFixedSizeVirtualScroll,
+  CdkVirtualForOf,
+  CdkVirtualScrollViewport,
+} from '@angular/cdk/scrolling';
+import { DetailComponent } from '../detail/detail.component';
+import { DecimalPipe } from '@angular/common';
+import { addIcons } from 'ionicons';
+import { optionsOutline, arrowDownOutline } from 'ionicons/icons';
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.page.html',
   styleUrls: ['./home.page.scss'],
-  imports: [CdkVirtualScrollViewport, CdkFixedSizeVirtualScroll, CdkVirtualForOf, DetailComponent, DecimalPipe, IonHeader, IonToolbar, IonTitle, IonNote, IonButtons, IonButton, IonIcon, IonContent, IonRefresher, IonRefresherContent, IonList, IonItem, IonLabel]
+  imports: [
+    CdkVirtualScrollViewport,
+    CdkFixedSizeVirtualScroll,
+    CdkVirtualForOf,
+    DetailComponent,
+    DecimalPipe,
+    IonHeader,
+    IonToolbar,
+    IonTitle,
+    IonNote,
+    IonButtons,
+    IonButton,
+    IonIcon,
+    IonContent,
+    IonRefresher,
+    IonRefresherContent,
+    IonList,
+    IonItem,
+    IonLabel,
+  ],
 })
 export class HomePage implements OnInit {
   earthquakes: Earthquake[] = [];
@@ -39,25 +62,25 @@ export class HomePage implements OnInit {
   filter: Filter = {
     mag: {
       lower: -1,
-      upper: 10
+      upper: 10,
     },
     distance: {
       lower: 0,
-      upper: 20000
+      upper: 20000,
     },
     time: '-1',
     sort: 'time',
     myLocation: {
       latitude: 0,
-      longitude: 0
-    }
+      longitude: 0,
+    },
   };
   private readonly earthquakeService = inject(EarthquakeService);
   private readonly modalCtrl = inject(ModalController);
   private readonly loadingCtrl = inject(LoadingController);
 
   constructor() {
-    addIcons({optionsOutline, arrowDownOutline});
+    addIcons({ optionsOutline, arrowDownOutline });
   }
 
   ngOnInit(): void {
@@ -65,31 +88,36 @@ export class HomePage implements OnInit {
     if (storedFilter) {
       this.filter = JSON.parse(storedFilter);
     }
-    navigator.geolocation.getCurrentPosition(position => {
-      this.filter.myLocation = position.coords;
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        this.filter.myLocation = position.coords;
 
-      this.earthquakeService.initProvider()
-        .then(() => this.filterEarthquakes())
-        .catch(err => console.log(err));
-
-    }, () => {
-      this.filter.myLocation = {longitude: 7.5663964, latitude: 46.9268287};
-      this.earthquakeService.initProvider()
-        .then(() => this.filterEarthquakes())
-        .catch(err => console.log(err));
-    });
+        this.earthquakeService
+          .initProvider()
+          .then(() => this.filterEarthquakes())
+          .catch((err) => console.log(err));
+      },
+      () => {
+        this.filter.myLocation = { longitude: 7.5663964, latitude: 46.9268287 };
+        this.earthquakeService
+          .initProvider()
+          .then(() => this.filterEarthquakes())
+          .catch((err) => console.log(err));
+      },
+    );
 
     if (this.geoWatchId) {
       navigator.geolocation.clearWatch(this.geoWatchId);
     }
 
-    this.geoWatchId = navigator.geolocation.watchPosition(position => {
+    this.geoWatchId = navigator.geolocation.watchPosition((position) => {
       this.filter.myLocation = position.coords;
     });
   }
 
   doRefresh(event: Event): void {
-    this.earthquakeService.initProvider()
+    this.earthquakeService
+      .initProvider()
       .then(() => this.filterEarthquakes(true))
       .then(() => (event as CustomEvent).detail.complete());
   }
@@ -101,7 +129,7 @@ export class HomePage implements OnInit {
 
     if (!hideLoading) {
       loading = await this.loadingCtrl.create({
-        message: 'Please wait...'
+        message: 'Please wait...',
       });
       await loading.present();
     }
@@ -116,12 +144,10 @@ export class HomePage implements OnInit {
   }
 
   async presentFilterPage(): Promise<void> {
-    const filterPage = await this.modalCtrl.create(
-      {
-        component: FilterPage,
-        componentProps: {filter: this.filter}
-      }
-    );
+    const filterPage = await this.modalCtrl.create({
+      component: FilterPage,
+      componentProps: { filter: this.filter },
+    });
 
     await filterPage.present();
     const event = await filterPage.onDidDismiss();
@@ -130,7 +156,5 @@ export class HomePage implements OnInit {
       this.filter = event.data;
       await this.filterEarthquakes();
     }
-
   }
-
 }
