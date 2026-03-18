@@ -16,11 +16,10 @@ import {
   HttpParams,
   HttpResponse,
   HttpEvent,
-  HttpParameterCodec,
   HttpContext,
 } from '@angular/common/http';
-import { CustomHttpParameterCodec } from '../encoder';
 import { Observable } from 'rxjs';
+import { OpenApiHttpParams, QueryParamStyle } from '../query.params';
 
 // @ts-ignore
 import { Todo } from '../model/todo';
@@ -43,9 +42,11 @@ export class TodoService extends BaseService {
   }
 
   /**
+   * @endpoint post /todo/delete/{id}
    * @param id
    * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
    * @param reportProgress flag to report request and response progress.
+   * @param options additional options
    */
   public _delete(
     id: string,
@@ -106,14 +107,16 @@ export class TodoService extends BaseService {
       ...(withCredentials ? { withCredentials } : {}),
       headers: localVarHeaders,
       observe: observe,
-      transferCache: localVarTransferCache,
+      ...(localVarTransferCache !== undefined ? { transferCache: localVarTransferCache } : {}),
       reportProgress: reportProgress,
     });
   }
 
   /**
+   * @endpoint get /todo/list
    * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
    * @param reportProgress flag to report request and response progress.
+   * @param options additional options
    */
   public list(
     observe?: 'body',
@@ -166,15 +169,17 @@ export class TodoService extends BaseService {
       ...(withCredentials ? { withCredentials } : {}),
       headers: localVarHeaders,
       observe: observe,
-      transferCache: localVarTransferCache,
+      ...(localVarTransferCache !== undefined ? { transferCache: localVarTransferCache } : {}),
       reportProgress: reportProgress,
     });
   }
 
   /**
+   * @endpoint post /todo/save
    * @param todo
    * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
    * @param reportProgress flag to report request and response progress.
+   * @param options additional options
    */
   public save(
     todo: Todo,
@@ -244,7 +249,7 @@ export class TodoService extends BaseService {
       ...(withCredentials ? { withCredentials } : {}),
       headers: localVarHeaders,
       observe: observe,
-      transferCache: localVarTransferCache,
+      ...(localVarTransferCache !== undefined ? { transferCache: localVarTransferCache } : {}),
       reportProgress: reportProgress,
     });
   }

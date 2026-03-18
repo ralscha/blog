@@ -1,5 +1,6 @@
-import { HttpHeaders, HttpParams, HttpParameterCodec } from '@angular/common/http';
+import { HttpHeaders, HttpParameterCodec } from '@angular/common/http';
 import { Param } from './param';
+import { OpenApiHttpParams } from './query.params';
 
 export interface ConfigurationParameters {
   /**
@@ -178,8 +179,8 @@ export class Configuration {
   public addCredentialToQuery(
     credentialKey: string,
     paramName: string,
-    query: HttpParams,
-  ): HttpParams {
+    query: OpenApiHttpParams,
+  ): OpenApiHttpParams {
     const value = this.lookupCredential(credentialKey);
     return value ? query.set(paramName, value) : query;
   }
