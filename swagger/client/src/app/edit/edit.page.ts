@@ -1,5 +1,5 @@
-import {Component, inject, OnInit} from '@angular/core';
-import {Todo, TodoService} from '../swagger';
+import { Component, inject, OnInit } from '@angular/core';
+import { Todo, TodoService } from '../swagger';
 import {
   IonBackButton,
   IonButton,
@@ -12,16 +12,29 @@ import {
   IonList,
   IonTitle,
   IonToolbar,
-  NavController
+  NavController,
 } from '@ionic/angular/standalone';
-import {v4} from 'uuid';
-import {FormsModule} from '@angular/forms';
-import {TodoStateService} from '../todo-state.service';
+import { v4 } from 'uuid';
+import { FormsModule } from '@angular/forms';
+import { TodoStateService } from '../todo-state.service';
 
 @Component({
   selector: 'app-edit',
   templateUrl: './edit.page.html',
-  imports: [FormsModule, IonHeader, IonToolbar, IonTitle, IonButtons, IonBackButton, IonContent, IonList, IonItem, IonInput, IonFooter, IonButton]
+  imports: [
+    FormsModule,
+    IonHeader,
+    IonToolbar,
+    IonTitle,
+    IonButtons,
+    IonBackButton,
+    IonContent,
+    IonList,
+    IonItem,
+    IonInput,
+    IonFooter,
+    IonButton,
+  ],
 })
 export class EditPage implements OnInit {
   todo!: Todo;
@@ -37,7 +50,7 @@ export class EditPage implements OnInit {
       this.todo = {
         id: v4(),
         title: '',
-        description: ''
+        description: '',
       };
     }
   }
@@ -48,5 +61,4 @@ export class EditPage implements OnInit {
       this.navCtrl.navigateBack(['home']);
     });
   }
-
 }

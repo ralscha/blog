@@ -1,5 +1,5 @@
-import {Component, inject} from '@angular/core';
-import {Todo, TodoService} from '../swagger';
+import { Component, inject } from '@angular/core';
+import { Todo, TodoService } from '../swagger';
 import {
   IonButton,
   IonButtons,
@@ -14,11 +14,11 @@ import {
   IonTitle,
   IonToolbar,
   NavController,
-  ViewDidEnter
+  ViewDidEnter,
 } from '@ionic/angular/standalone';
-import {addIcons} from "ionicons";
-import {addOutline, createOutline, trashOutline} from "ionicons/icons";
-import {TodoStateService} from '../todo-state.service';
+import { addIcons } from 'ionicons';
+import { addOutline, createOutline, trashOutline } from 'ionicons/icons';
+import { TodoStateService } from '../todo-state.service';
 
 @Component({
   selector: 'app-home',
@@ -35,8 +35,8 @@ import {TodoStateService} from '../todo-state.service';
     IonItemSliding,
     IonItem,
     IonLabel,
-    IonItemOptions
-  ]
+    IonItemOptions,
+  ],
 })
 export class HomePage implements ViewDidEnter {
   todos: Todo[] = [];
@@ -45,11 +45,11 @@ export class HomePage implements ViewDidEnter {
   private readonly todoState = inject(TodoStateService);
 
   constructor() {
-    addIcons({addOutline, createOutline, trashOutline});
+    addIcons({ addOutline, createOutline, trashOutline });
   }
 
   ionViewDidEnter(): void {
-    this.todoService.list().subscribe(data => this.todos = data);
+    this.todoService.list().subscribe((data) => (this.todos = data));
   }
 
   addTodo(): void {
@@ -71,5 +71,4 @@ export class HomePage implements ViewDidEnter {
 
     this.todoService._delete(todo.id).subscribe(() => this.ionViewDidEnter());
   }
-
 }
