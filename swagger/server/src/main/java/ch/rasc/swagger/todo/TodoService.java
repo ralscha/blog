@@ -5,6 +5,7 @@ import java.util.List;
 
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -38,7 +39,7 @@ public class TodoService {
     this.todoDb.delete(id);
   }
 
-  @GetMapping("/list")
+  @GetMapping(value="/list", produces=MediaType.APPLICATION_JSON_VALUE)
   public List<Todo> list() {
     return new ArrayList<>(this.todoDb.list());
   }

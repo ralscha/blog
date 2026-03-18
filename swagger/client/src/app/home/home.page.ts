@@ -49,7 +49,10 @@ export class HomePage implements ViewDidEnter {
   }
 
   ionViewDidEnter(): void {
-    this.todoService.list().subscribe((data) => (this.todos = data));
+    this.todoService.list().subscribe((data) => {
+      console.log(data);
+      this.todos = data;
+    });
   }
 
   addTodo(): void {
