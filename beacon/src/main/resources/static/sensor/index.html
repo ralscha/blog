@@ -14,22 +14,27 @@
   <div id="z"></div>
 
   <script>
-    const sensor = new Accelerometer();
-    sensor.start();
+    if (!('Accelerometer' in window)) {
+      document.body.insertAdjacentHTML('beforeend', '<p>Accelerometer is not supported in this browser.</p>');
+    }
+    else {
+      const sensor = new Accelerometer({ frequency: 10 });
+      sensor.start();
 
-    sensor.onreading = () => {
-      const formData = new FormData();
-      formData.append('x', sensor.x);
-      formData.append('y', sensor.y);
-      formData.append('z', sensor.y);
-      navigator.sendBeacon('../sensor', formData);
+      sensor.onreading = () => {
+        const formData = new FormData();
+        formData.append('x', sensor.x);
+        formData.append('y', sensor.y);
+        formData.append('z', sensor.z);
+        navigator.sendBeacon('../sensor', formData);
 
-      document.getElementById('x').innerText = sensor.x;
-      document.getElementById('y').innerText = sensor.y;
-      document.getElementById('z').innerText = sensor.z;
-    };
+        document.getElementById('x').innerText = sensor.x;
+        document.getElementById('y').innerText = sensor.y;
+        document.getElementById('z').innerText = sensor.z;
+      };
 
-    sensor.onerror = event => console.log(event.error.name, event.error.message);
+      sensor.onerror = event => console.log(event.error.name, event.error.message);
+    }
 
   </script>
 </body>

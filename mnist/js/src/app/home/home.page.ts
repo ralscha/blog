@@ -2,7 +2,7 @@ import {Component, viewChild} from '@angular/core';
 import {DrawableDirective} from '../drawable.directive';
 import {multiply} from 'mathjs';
 import {DecimalPipe} from '@angular/common';
-import {IonButton, IonContent, IonHeader, IonTitle, IonToolbar} from "@ionic/angular/standalone";
+import {IonButton, IonContent, IonHeader, IonTitle, IonToolbar} from '@ionic/angular/standalone';
 
 @Component({
   selector: 'app-home',
@@ -15,26 +15,31 @@ export class HomePage {
   readonly drawable = viewChild.required(DrawableDirective);
   detections: number[] = [];
   detectedNumber: number | null | undefined;
+  private readonly weightsLoaded: Promise<void>;
   private weightsInputHidden!: number[][];
   private weightsHiddenOutput!: number[][];
 
   constructor() {
-    const fetchInputHidden = fetch('assets/weights-input-hidden.json');
-    const fetchHiddenOutput = fetch('assets/weights-hidden-output.json');
-
-    fetchInputHidden.then(response => response.json()).then(json => {
-      this.weightsInputHidden = json;
-    });
-    fetchHiddenOutput.then(response => response.json()).then(json => {
-      this.weightsHiddenOutput = json;
-    });
+    this.weightsLoaded = this.loadWeights();
   }
 
-  sigmoid(t: any): number {
+  private async loadWeights(): Promise<void> {
+    const [weightsInputHidden, weightsHiddenOutput] = await Promise.all([
+      fetch('assets/weights-input-hidden.json').then(response => response.json() as Promise<number[][]>),
+      fetch('assets/weights-hidden-output.json').then(response => response.json() as Promise<number[][]>)
+    ]);
+
+    this.weightsInputHidden = weightsInputHidden;
+    this.weightsHiddenOutput = weightsHiddenOutput;
+  }
+
+  sigmoid(t: number): number {
     return 1 / (1 + Math.exp(-t));
   }
 
-  detect(canvas: any): void {
+  async detect(canvas: HTMLCanvasElement): Promise<void> {
+    await this.weightsLoaded;
+
     const canvasCopy = document.createElement('canvas');
     canvasCopy.width = 28;
     canvasCopy.height = 28;

@@ -2,6 +2,8 @@ import {Injectable} from '@angular/core';
 import {Todo, TodoDb} from '../todo';
 import {v4 as uuidv4} from 'uuid';
 
+const SYNC_TAG = 'todo_updated';
+
 @Injectable({
   providedIn: 'root'
 })
@@ -40,9 +42,17 @@ export class TodoService {
     }
   }
 
-  requestSync(): void {
-    // @ts-ignore
-    navigator.serviceWorker.ready.then(swRegistration => swRegistration.sync.register('todo_updated'));
+  async requestSync(): Promise<void> {
+    if (!('serviceWorker' in navigator)) {
+      return;
+    }
+
+    const swRegistration = await navigator.serviceWorker.ready;
+    if (!swRegistration.sync) {
+      return;
+    }
+
+    await swRegistration.sync.register(SYNC_TAG);
   }
 
   private changed(oldTodo: Todo | undefined, newTodo: Todo): boolean {

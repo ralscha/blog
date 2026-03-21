@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -17,10 +16,11 @@ import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
 import org.slf4j.LoggerFactory;
+import org.springframework.http.MediaType;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.google.api.gax.core.FixedCredentialsProvider;
@@ -75,10 +75,8 @@ public class VisionController {
   private ImageAnnotatorSettings imageAnnotatorSettings;
 
   public VisionController(AppConfig appConfig) {
-    Path serviceAccountFile = Paths.get(appConfig.getServiceAccountFile());
-
-    try (InputStream is = Files.newInputStream(serviceAccountFile)) {
-      GoogleCredentials credentials = GoogleCredentials.fromStream(is);
+    try {
+      GoogleCredentials credentials = createCredentials(appConfig);
       StorageOptions options = StorageOptions.newBuilder().setCredentials(credentials)
           .build();
       this.storage = options.getService();
@@ -108,18 +106,24 @@ public class VisionController {
     }
   }
 
-  @PostMapping("/signurl")
-  public SignUrlResponse getSignUrl(@RequestParam("contentType") String contentType) {
+  @PostMapping(path = "/signurl", consumes = MediaType.APPLICATION_JSON_VALUE,
+      produces = MediaType.APPLICATION_JSON_VALUE)
+  public SignUrlResponse getSignUrl(@RequestBody SignUrlRequest request) {
     String uuid = UUID.randomUUID().toString();
+    String contentType = StringUtils.hasText(request.contentType())
+        ? request.contentType()
+        : MediaType.APPLICATION_OCTET_STREAM_VALUE;
     String url = this.storage.signUrl(
         BlobInfo.newBuilder(BUCKET_NAME, uuid).setContentType(contentType).build(), 3,
         TimeUnit.MINUTES, SignUrlOption.httpMethod(HttpMethod.PUT),
-        SignUrlOption.withContentType()).toString();
+        SignUrlOption.withContentType(), SignUrlOption.withV4Signature()).toString();
     return new SignUrlResponse(uuid, url);
   }
 
-  @PostMapping("/vision")
-  public VisionResult vision(@RequestParam("uuid") String uuid) throws IOException {
+  @PostMapping(path = "/vision", consumes = MediaType.APPLICATION_JSON_VALUE,
+      produces = MediaType.APPLICATION_JSON_VALUE)
+  public VisionResult vision(@RequestBody VisionRequest request) throws IOException {
+    String uuid = request.uuid();
 
     try (ImageAnnotatorClient vision = ImageAnnotatorClient
         .create(this.imageAnnotatorSettings)) {
@@ -129,7 +133,7 @@ public class VisionController {
               ImageSource.newBuilder().setImageUri("gs://" + BUCKET_NAME + "/" + uuid))
           .build();
 
-      AnnotateImageRequest request = AnnotateImageRequest.newBuilder()
+        AnnotateImageRequest annotateRequest = AnnotateImageRequest.newBuilder()
           .addFeatures(Feature.newBuilder().setType(Type.FACE_DETECTION).build())
           .addFeatures(Feature.newBuilder().setType(Type.LANDMARK_DETECTION).build())
           .addFeatures(Feature.newBuilder().setType(Type.LOGO_DETECTION).build())
@@ -149,7 +153,7 @@ public class VisionController {
       // OBJECT_LOCALIZATION
 
       List<AnnotateImageRequest> requests = new ArrayList<>();
-      requests.add(request);
+      requests.add(annotateRequest);
 
       // Performs label detection on the image file
       BatchAnnotateImagesResponse response = vision.batchAnnotateImages(requests);
@@ -366,16 +370,14 @@ public class VisionController {
         }
 
         if (webEntitiesList != null) {
-          web.setWebEntities(webEntitiesList.stream().map(e -> {
-            if (StringUtils.hasText(e.getDescription())) {
-              WebEntity we = new WebEntity();
-              we.setDescription(e.getDescription());
-              we.setEntityId(e.getEntityId());
-              we.setScore(e.getScore());
-              return we;
-            }
-            return null;
-          }).filter(Objects::nonNull).collect(Collectors.toList()));
+          web.setWebEntities(webEntitiesList.stream()
+              .filter(e -> StringUtils.hasText(e.getDescription())).map(e -> {
+                WebEntity we = new WebEntity();
+                we.setDescription(e.getDescription());
+                we.setEntityId(e.getEntityId());
+                we.setScore(e.getScore());
+                return we;
+              }).collect(Collectors.toList()));
         }
 
         result.setWeb(web);
@@ -384,8 +386,22 @@ public class VisionController {
       return result;
     }
     finally {
-      this.storage.delete(BlobId.of(BUCKET_NAME, uuid));
+      if (StringUtils.hasText(uuid)) {
+        this.storage.delete(BlobId.of(BUCKET_NAME, uuid));
+      }
     }
+  }
+
+  private static GoogleCredentials createCredentials(AppConfig appConfig)
+      throws IOException {
+    if (StringUtils.hasText(appConfig.getServiceAccountFile())) {
+      Path serviceAccountFile = Path.of(appConfig.getServiceAccountFile());
+      try (InputStream is = Files.newInputStream(serviceAccountFile)) {
+        return GoogleCredentials.fromStream(is);
+      }
+    }
+
+    return GoogleCredentials.getApplicationDefault();
   }
 
   private static float likelihoodToNumber(Likelihood likelihood) {

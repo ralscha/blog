@@ -7,13 +7,36 @@ import {CacheFirst} from 'workbox-strategies';
 import {Todo, TodoDb} from './app/todo';
 
 declare const self: ServiceWorkerGlobalScope;
+declare const __SW_IS_PRODUCTION__: boolean;
+
+interface SyncEventWithTag extends ExtendableEvent {
+  readonly tag: string;
+  readonly lastChance?: boolean;
+}
+
+interface SyncRequest {
+  update: Todo[];
+  remove: string[];
+  get: string[];
+}
+
+interface SyncResponsePayload {
+  get?: Todo[];
+  updated?: Record<string, number>;
+  removed?: string[];
+}
+
+const SYNC_TAG = 'todo_updated';
+const TRIGGER_SYNC_MESSAGE = 'trigger_sync';
+const SYNC_FINISHED_MESSAGE = 'sync_finished';
 
 const syncURL = 'http://localhost:8080';
+let currentSync: Promise<void> | undefined;
 
 self.skipWaiting();
 clientsClaim();
 
-if (process.env['NODE_ENV'] === 'production') {
+if (__SW_IS_PRODUCTION__) {
   registerRoute(/assets\/icons\/.+\.png$/, new CacheFirst({cacheName: 'icons'}));
   precacheAndRoute(self.__WB_MANIFEST);
 }
@@ -22,25 +45,37 @@ if (process.env['NODE_ENV'] === 'production') {
 const db = new TodoDb();
 
 self.addEventListener('sync', event => {
-  // @ts-ignore
-  if (event.tag === 'todo_updated') {
-    // @ts-ignore
-    event.waitUntil(serverSync());
+  const syncEvent = event as SyncEventWithTag;
+  if (syncEvent.tag === SYNC_TAG) {
+    syncEvent.waitUntil(runSync());
   }
 });
 
+self.addEventListener('message', event => {
+  const messageEvent = event as ExtendableMessageEvent;
+  if (messageEvent.data?.type === TRIGGER_SYNC_MESSAGE) {
+    messageEvent.waitUntil(runSync());
+  }
+});
+
+function runSync(): Promise<void> {
+  if (!currentSync) {
+    currentSync = serverSync().finally(() => {
+      currentSync = undefined;
+    });
+  }
+
+  return currentSync;
+}
+
 async function serverSync(): Promise<void> {
   const syncViewResponse = await fetch(`${syncURL}/syncview`);
-  const syncView = await syncViewResponse.json();
+  const syncView = await syncViewResponse.json() as Record<string, number>;
 
-  const serverMap = new Map();
+  const serverMap = new Map<string, number>();
   Object.entries(syncView).forEach(kv => serverMap.set(kv[0], kv[1]));
 
-  const syncRequest: {
-    update: Todo[],
-    remove: string[],
-    get: string[]
-  } = {
+  const syncRequest: SyncRequest = {
     update: [],
     remove: [],
     get: []
@@ -49,8 +84,8 @@ async function serverSync(): Promise<void> {
   const deleteLocal: string[] = [];
 
   await db.todos.toCollection().each(todo => {
-    const serverTimestamp = serverMap.get(todo.id);
-    if (serverTimestamp) {
+    if (serverMap.has(todo.id)) {
+      const serverTimestamp = serverMap.get(todo.id) ?? 0;
       if (todo.ts === -1) {
         syncRequest.remove.push(todo.id);
       } else if (todo.ts > serverTimestamp) {
@@ -99,8 +134,8 @@ async function serverSync(): Promise<void> {
     }
   });
 
-  if (syncResponse.status === 200) {
-    const sync = await syncResponse.json();
+  if (syncResponse.ok) {
+    const sync = await syncResponse.json() as SyncResponsePayload;
 
     await db.transaction('rw', db.todos, async () => {
       if (sync.get && sync.get.length > 0) {
@@ -109,12 +144,13 @@ async function serverSync(): Promise<void> {
 
       if (sync.updated) {
         for (const kv of Object.entries(sync.updated)) {
-          // @ts-ignore
           await db.todos.update(kv[0], {ts: kv[1]});
         }
       }
       if (sync.removed) {
-        sync.removed.forEach(async (id: string) => await db.todos.delete(id));
+        for (const id of sync.removed) {
+          await db.todos.delete(id);
+        }
       }
     });
 
@@ -127,6 +163,6 @@ async function serverSync(): Promise<void> {
 async function notifyClients(): Promise<void> {
   const clients = await self.clients.matchAll({includeUncontrolled: true});
   for (const client of clients) {
-    client.postMessage('sync_finished');
+    client.postMessage(SYNC_FINISHED_MESSAGE);
   }
 }

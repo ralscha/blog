@@ -7,7 +7,8 @@ public record Performance(
     
     Double fcp, // First Contentful Paint
     Double lcp, // Largest Contentful Paint
-    Double fid, // First Input Delay
+    Double cls, // Cumulative Layout Shift
+    Double inp, // Interaction to Next Paint
 
     Long sessionDuration,
     Long timestamp,

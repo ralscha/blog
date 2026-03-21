@@ -10,23 +10,26 @@
   <h1>Reporting Observer</h1>
 
   <script>
-    // create deprecation warning
-    const request = new XMLHttpRequest();
-    request.open('GET', 'https://api.chucknorris.io/jokes/random', false);
-    request.send(null);
-
-    if (request.status === 200) {
-      console.log(request.responseText);
+    if (!('ReportingObserver' in window)) {
+      document.body.insertAdjacentHTML('beforeend', '<p>ReportingObserver is not supported in this browser.</p>');
     }
+    else {
+      const observer = new ReportingObserver(reports => {
+        for (const report of reports) {
+          navigator.sendBeacon('../reportObserver', JSON.stringify(report.body, ['id', 'columnNumber', 'lineNumber', 'message', 'sourceFile']));
+        }
+      }, { types: ['intervention', 'deprecation'], buffered: true });
 
-    // observe and report
-    const observer = new ReportingObserver((reports, observer) => {
-      for (const report of reports) {
-        navigator.sendBeacon('../reportObserver', JSON.stringify(report.body, ['id', 'columnNumber', 'lineNumber', 'message', 'sourceFile']));
+      observer.observe();
+
+      const request = new XMLHttpRequest();
+      request.open('GET', 'https://api.chucknorris.io/jokes/random', false);
+      request.send(null);
+
+      if (request.status === 200) {
+        console.log(request.responseText);
       }
-    }, { types: ['intervention', 'deprecation'], buffered: true });
-
-    observer.observe();
+    }
   </script>
 </body>
 

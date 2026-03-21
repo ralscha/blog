@@ -50,11 +50,13 @@ export class HomePage implements ViewDidEnter {
     addIcons({addOutline});
     this.todoService.requestSync();
 
-    navigator.serviceWorker.addEventListener('message', event => {
-      if (event.data === 'sync_finished') {
-        this.todos = this.todoService.getTodos();
-      }
-    });
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.addEventListener('message', event => {
+        if (event.data === 'sync_finished') {
+          this.todos = this.todoService.getTodos();
+        }
+      });
+    }
   }
 
   addTodo(): void {

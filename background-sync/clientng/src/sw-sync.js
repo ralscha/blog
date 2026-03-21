@@ -3,6 +3,9 @@
 
   importScripts('dexie.min.js');
 
+  const API_BASE_URL = 'http://localhost:8080';
+  const SYNC_TAG = 'todo_updated';
+
   const db = new Dexie("Todo");
 
   db.version(1).stores({
@@ -12,13 +15,13 @@
 
 
   self.addEventListener('sync', function (event) {
-    if (event.tag == 'todo_updated') {
+    if (event.tag === SYNC_TAG) {
       event.waitUntil(serverSync());
     }
   });
 
   async function serverSync() {
-    const syncViewResponse = await fetch('http://localhost:8080/syncview');
+    const syncViewResponse = await fetch(`${API_BASE_URL}/syncview`);
     const syncView = await syncViewResponse.json();
 
     const serverMap = new Map();
@@ -75,7 +78,7 @@
     }
 
     // send sync request to the server
-    const syncResponse = await fetch('http://localhost:8080/sync', {
+    const syncResponse = await fetch(`${API_BASE_URL}/sync`, {
       method: 'POST',
       body: JSON.stringify(syncRequest),
       headers: {
@@ -92,17 +95,19 @@
         }
 
         if (sync.updated) {
-          Object.entries(sync.updated).forEach(async (kv) => await db.todos.update(kv[0], {ts: kv[1]}));
+          await Promise.all(
+            Object.entries(sync.updated).map(([id, ts]) => db.todos.update(id, {ts}))
+          );
         }
-        if (sync.removed) {
-          sync.removed.forEach(async (id) => await db.todos.delete(id));
+        if (sync.removed && sync.removed.length > 0) {
+          await db.todos.bulkDelete(sync.removed);
         }
       });
 
       return notifyClients();
     }
 
-    return Promise.reject('sync failed: ' + response.status);
+    throw new Error('sync failed: ' + syncResponse.status);
   }
 
   async function notifyClients() {

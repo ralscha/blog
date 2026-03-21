@@ -20,21 +20,21 @@ import org.apache.commons.math3.linear.RealMatrix;
 
 public class Mnist {
 
-  private final static int inodes = 784;
-  private final static int hnodes = 200;
-  private final static int onodes = 10;
-  private final static int epochs = 10;
-  private final static double learning_rate = 0.1;
+  private static final int INPUT_NODES = 784;
+  private static final int HIDDEN_NODES = 200;
+  private static final int OUTPUT_NODES = 10;
+  private static final int EPOCHS = 10;
+  private static final double LEARNING_RATE = 0.1;
 
   public static RealMatrix wInputHidden;
   public static RealMatrix wHiddenOutput;
 
   // Accuracy: 0.9766
   public static void main(String[] args) throws IOException {
-    wInputHidden = createRealMatrix(hnodes, inodes);
-    wHiddenOutput = createRealMatrix(onodes, hnodes);
-    wInputHidden = initRandom(wInputHidden, Math.pow(inodes, -0.5));
-    wHiddenOutput = initRandom(wHiddenOutput, Math.pow(hnodes, -0.5));
+    wInputHidden = createRealMatrix(HIDDEN_NODES, INPUT_NODES);
+    wHiddenOutput = createRealMatrix(OUTPUT_NODES, HIDDEN_NODES);
+    wInputHidden = initRandom(wInputHidden, Math.pow(INPUT_NODES, -0.5));
+    wHiddenOutput = initRandom(wHiddenOutput, Math.pow(HIDDEN_NODES, -0.5));
 
     int[] labels = MnistReader.getLabels(Paths.get("./train-labels-idx1-ubyte.gz"));
     List<int[][]> images = MnistReader
@@ -45,27 +45,27 @@ public class Mnist {
       scaledImages[i] = scale(Util.flat(images.get(i)));
     }
 
-    double[][] roated1ScaledImages = new double[images.size()][];
+    double[][] rotatedClockwiseScaledImages = new double[images.size()][];
     for (int i = 0; i < images.size(); i++) {
-      roated1ScaledImages[i] = scale(Util.flat(rotate(images.get(i), 10)));
+      rotatedClockwiseScaledImages[i] = scale(Util.flat(rotate(images.get(i), 10)));
     }
 
-    double[][] roated2scaledImages = new double[images.size()][];
+    double[][] rotatedCounterclockwiseScaledImages = new double[images.size()][];
     for (int i = 0; i < images.size(); i++) {
-      roated2scaledImages[i] = scale(Util.flat(rotate(images.get(i), -10)));
+      rotatedCounterclockwiseScaledImages[i] = scale(Util.flat(rotate(images.get(i), -10)));
     }
 
-    for (int e = 0; e < epochs; e++) {
+    for (int e = 0; e < EPOCHS; e++) {
       System.out.println("running epoch: " + (e + 1));
       for (int i = 0; i < labels.length; i++) {
         RealMatrix inputs = MatrixUtils.createColumnRealMatrix(scaledImages[i]);
         RealMatrix targets = createTarget(labels[i]);
         train(inputs, targets);
 
-        inputs = MatrixUtils.createColumnRealMatrix(roated1ScaledImages[i]);
+        inputs = MatrixUtils.createColumnRealMatrix(rotatedClockwiseScaledImages[i]);
         train(inputs, targets);
 
-        inputs = MatrixUtils.createColumnRealMatrix(roated2scaledImages[i]);
+        inputs = MatrixUtils.createColumnRealMatrix(rotatedCounterclockwiseScaledImages[i]);
         train(inputs, targets);
       }
     }
@@ -144,13 +144,13 @@ public class Mnist {
     RealMatrix t1 = multiplyElements(outputErrors, finalOutputs);
     RealMatrix t2 = multiplyElements(t1, scalar(finalOutputs, in -> 1.0 - in));
     RealMatrix t3 = t2.multiply(hiddenOutputs.transpose());
-    wHiddenOutput = wHiddenOutput.add(scalar(t3, in -> learning_rate * in));
+    wHiddenOutput = wHiddenOutput.add(scalar(t3, in -> LEARNING_RATE * in));
 
     RealMatrix hiddenErrors = wHiddenOutput.transpose().multiply(outputErrors);
     t1 = multiplyElements(hiddenErrors, hiddenOutputs);
     t2 = multiplyElements(t1, scalar(hiddenOutputs, in -> 1.0 - in));
     t3 = t2.multiply(inputs.transpose());
-    wInputHidden = wInputHidden.add(scalar(t3, in -> learning_rate * in));
+    wInputHidden = wInputHidden.add(scalar(t3, in -> LEARNING_RATE * in));
   }
 
   public static double[] scale(int[] img) {
@@ -162,8 +162,8 @@ public class Mnist {
   }
 
   private static RealMatrix createTarget(int label) {
-    RealMatrix target = MatrixUtils.createRealMatrix(10, 1);
-    for (int i = 0; i < 10; i++) {
+    RealMatrix target = MatrixUtils.createRealMatrix(OUTPUT_NODES, 1);
+    for (int i = 0; i < OUTPUT_NODES; i++) {
       target.setEntry(i, 0, i != label ? 0.001 : 0.999);
     }
     return target;

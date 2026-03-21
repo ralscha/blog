@@ -13,15 +13,25 @@
   <script>
     window.onerror = function (msg, url, line, col, error) {
       const formData = new FormData();
+      formData.append('message', String(msg));
       formData.append('url', url);
       formData.append('line', line);
       formData.append('col', col);
-      formData.append('error', error);
+      formData.append('error', error?.stack || error?.message || 'Unknown error');
       navigator.sendBeacon('../clientError', formData);
     };
 
+    window.addEventListener('unhandledrejection', event => {
+      const formData = new FormData();
+      formData.append('message', 'Unhandled promise rejection');
+      formData.append('url', window.location.href);
+      formData.append('line', 0);
+      formData.append('col', 0);
+      formData.append('error', event.reason?.stack || String(event.reason));
+      navigator.sendBeacon('../clientError', formData);
+    });
+
     setTimeout(() => {
-      // error
       const a = b * b;
     }, 1000);
 

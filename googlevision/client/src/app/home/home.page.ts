@@ -1,4 +1,4 @@
-import {Component, ElementRef, inject, OnInit, viewChild} from '@angular/core';
+import {AfterViewInit, Component, ElementRef, inject, viewChild} from '@angular/core';
 import {
   IonButton,
   IonButtons,
@@ -28,7 +28,7 @@ import {cameraOutline} from "ionicons/icons";
   styleUrls: ['./home.page.scss'],
   imports: [GoogleMap, MapMarker, DecimalPipe, IonHeader, IonToolbar, IonTitle, IonButtons, IonButton, IonIcon, IonContent, IonList, IonItem, IonLabel, IonRow, IonCol, IonFooter]
 })
-export class HomePage implements OnInit {
+export class HomePage implements AfterViewInit {
   readonly fileInput = viewChild.required<ElementRef>('fileSelector');
   readonly canvas = viewChild.required<ElementRef>('canvas');
   readonly canvasContainer = viewChild.required<ElementRef>('canvasContainer');
@@ -44,15 +44,18 @@ export class HomePage implements OnInit {
   private ratio!: number;
   private ctx!: CanvasRenderingContext2D;
   private selectedFile: File | null = null;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  private image: any = null;
+  private image: HTMLImageElement | null = null;
 
   constructor() {
     addIcons({cameraOutline});
   }
 
-  ngOnInit(): void {
-    this.ctx = this.canvas().nativeElement.getContext('2d');
+  ngAfterViewInit(): void {
+    const context = this.canvas().nativeElement.getContext('2d');
+    if (context === null) {
+      throw new Error('Unable to create 2D canvas context');
+    }
+    this.ctx = context;
   }
 
   showDetail(detail: string | null): void {
@@ -135,14 +138,25 @@ export class HomePage implements OnInit {
     }
   }
 
-  onFileCange(event: Event): void {
-    // @ts-ignore
-    this.selectedFile = event.target.files[0];
-    const url = URL.createObjectURL(this.selectedFile!);
+  onFileChange(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    const file = input.files?.item(0);
+    if (!file) {
+      return;
+    }
+
+    this.selectedFile = file;
+    const url = URL.createObjectURL(file);
 
     this.image = new Image();
     this.image.onload = async () => {
-      this.drawImageScaled(this.image);
+      const image = this.image;
+      if (image === null) {
+        URL.revokeObjectURL(url);
+        return;
+      }
+
+      this.drawImageScaled(image);
 
       const loading = await this.loadingController.create({
         message: 'Processing...'
@@ -158,8 +172,12 @@ export class HomePage implements OnInit {
       try {
         await this.fetchSignUrl();
       } finally {
-        loading.dismiss();
+        URL.revokeObjectURL(url);
+        await loading.dismiss();
       }
+    };
+    this.image.onerror = () => {
+      URL.revokeObjectURL(url);
     };
     this.image.src = url;
   }
@@ -173,13 +191,19 @@ export class HomePage implements OnInit {
       return Promise.reject('no file selected');
     }
 
-    const formData = new FormData();
-    formData.append('contentType', this.selectedFile.type);
-
     const response = await fetch(`${environment.serverURL}/signurl`, {
       method: 'POST',
-      body: formData
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        contentType: this.selectedFile.type || 'application/octet-stream'
+      })
     });
+    if (!response.ok) {
+      throw new Error('Failed to fetch signed upload URL');
+    }
+
     const {uuid, url} = await response.json();
 
     await this.uploadToGoogleCloudStorage(url);
@@ -191,28 +215,34 @@ export class HomePage implements OnInit {
       return Promise.reject('no file selected');
     }
 
-    await fetch(signURL, {
+    const response = await fetch(signURL, {
       method: 'PUT',
       headers: {
-        'Content-Type': this.selectedFile.type,
+        'Content-Type': this.selectedFile.type || 'application/octet-stream',
       },
       body: this.selectedFile
     });
+    if (!response.ok) {
+      throw new Error('Failed to upload file to Google Cloud Storage');
+    }
   }
 
   private async initiateGoogleVision(uuid: string): Promise<void> {
-    const formData = new FormData();
-    formData.append('uuid', uuid);
-
     const response = await fetch(`${environment.serverURL}/vision`, {
       method: 'POST',
-      body: formData
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({uuid})
     });
+    if (!response.ok) {
+      throw new Error('Failed to start Google Cloud Vision request');
+    }
+
     this.visionResult = await response.json();
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  private drawImageScaled(img: any): void {
+  private drawImageScaled(img: HTMLImageElement): void {
     const width = this.canvasContainer().nativeElement.clientWidth;
     const height = this.canvasContainer().nativeElement.clientHeight;
 

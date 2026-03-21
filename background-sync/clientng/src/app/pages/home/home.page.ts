@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, OnDestroy, inject } from '@angular/core';
 import {TodoService} from '../../services/todo.service';
 import {Todo} from '../../todo';
 import {Router, RouterLink} from '@angular/router';
@@ -39,22 +39,25 @@ import {addIcons} from "ionicons";
     AsyncPipe
   ]
 })
-export class HomePage implements ViewDidEnter {
+export class HomePage implements ViewDidEnter, OnDestroy {
   private readonly todoService = inject(TodoService);
   private readonly router = inject(Router);
+  private readonly handleServiceWorkerMessage = (event: MessageEvent) => {
+    if (event.data === 'sync_finished') {
+      this.todos = this.todoService.getTodos();
+    }
+  };
 
 
   todos!: Promise<Todo[]>;
 
   constructor() {
     addIcons({addOutline});
-    this.todoService.requestSync();
+    void this.todoService.requestSync();
 
-    navigator.serviceWorker.addEventListener('message', event => {
-      if (event.data === 'sync_finished') {
-        this.todos = this.todoService.getTodos();
-      }
-    });
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.addEventListener('message', this.handleServiceWorkerMessage);
+    }
   }
 
   addTodo(): void {
@@ -63,5 +66,11 @@ export class HomePage implements ViewDidEnter {
 
   ionViewDidEnter(): void {
     this.todos = this.todoService.getTodos();
+  }
+
+  ngOnDestroy(): void {
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.removeEventListener('message', this.handleServiceWorkerMessage);
+    }
   }
 }

@@ -1,12 +1,29 @@
-const analytics = { start: performance.now() };
+const analytics = {
+  start: performance.now(),
+  stop: null,
+  hiddenAt: null
+};
+
+let beaconSent = false;
+
+function sendAnalytics(timeStamp) {
+  if (beaconSent) {
+    return;
+  }
+
+  beaconSent = true;
+  analytics.stop = performance.now();
+  analytics.hiddenAt = timeStamp;
+  navigator.sendBeacon('../lifecycle', JSON.stringify(analytics));
+}
 
 document.addEventListener('visibilitychange', event => {
-  analytics.visibility.push({ state: document.visibilityState, ts: event.timeStamp });
-  
   if (document.visibilityState === 'hidden') {
-    analytics.stop = performance.now();
-    analytics.hiddenAt = event.timeStamp;
-    navigator.sendBeacon('../lifecycle', JSON.stringify(analytics));
+    sendAnalytics(event.timeStamp);
   }
+});
+
+window.addEventListener('pagehide', event => {
+  sendAnalytics(event.timeStamp);
 });
 

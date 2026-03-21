@@ -3,3 +3,6 @@
 /.settings/
 bun.lock
 www/
+node_modules/
+package-lock.json
+bun.lock

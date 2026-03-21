@@ -1,7 +1,5 @@
 package ch.rasc.beacon;
 
-
-
 import org.springframework.boot.json.JsonParseException;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
@@ -78,8 +76,11 @@ public class ExamplesController {
     if (performance.lcp() != null) {
       System.out.println("Largest Contentful Paint (LCP): " + performance.lcp() + "ms");
     }
-    if (performance.fid() != null) {
-      System.out.println("First Input Delay (FID): " + performance.fid() + "ms");
+    if (performance.cls() != null) {
+      System.out.println("Cumulative Layout Shift (CLS): " + performance.cls());
+    }
+    if (performance.inp() != null) {
+      System.out.println("Interaction to Next Paint (INP): " + performance.inp() + "ms");
     }
     
     if (performance.sessionDuration() != null) {
@@ -98,9 +99,11 @@ public class ExamplesController {
 
   @ResponseStatus(code = HttpStatus.NO_CONTENT)
   @PostMapping("/clientError")
-  public void clientError(@RequestParam("url") String url, @RequestParam("line") int line,
+  public void clientError(@RequestParam("message") String message,
+      @RequestParam("url") String url, @RequestParam("line") int line,
       @RequestParam("col") int col, @RequestParam("error") String error) {
 
+    System.out.println(message);
     System.out.println(error);
     System.out.println(url);
     System.out.println("Line  : " + line);

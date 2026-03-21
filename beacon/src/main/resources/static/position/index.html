@@ -22,8 +22,8 @@
     function startListening() {
       navigator.geolocation.watchPosition(pos => {
 
-        document.getElementById('latitude').innerHTML = pos.coords.latitude;
-        document.getElementById('longitude').innerHTML = pos.coords.longitude;
+        document.getElementById('latitude').textContent = pos.coords.latitude;
+        document.getElementById('longitude').textContent = pos.coords.longitude;
 
         const position = {
           latitude: pos.coords.latitude,
@@ -31,6 +31,11 @@
           ts: pos.timestamp
         };
         navigator.sendBeacon('../position', JSON.stringify(position));
+      }, error => {
+        console.error(error.message);
+      }, {
+        enableHighAccuracy: true,
+        maximumAge: 10000
       });
     }
   </script>
