@@ -1,7 +1,7 @@
-import Dexie from 'dexie';
+import Dexie, {type EntityTable} from 'dexie';
 
 export class EarthquakeDb extends Dexie {
-  earthquakes!: Dexie.Table<Earthquake, string>;
+  earthquakes!: EntityTable<Earthquake, 'id'>;
 
   constructor() {
     super('Earthquake');

@@ -1,4 +1,4 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, Input, inject } from '@angular/core';
 import {Filter} from '../filter-interface';
 import {FormsModule, NgForm} from '@angular/forms';
 import {
@@ -17,8 +17,7 @@ import {
   IonSelectOption,
   IonTitle,
   IonToolbar,
-  ModalController,
-  NavParams
+  ModalController
 } from "@ionic/angular/standalone";
 
 @Component({
@@ -27,16 +26,11 @@ import {
   styleUrl: './filter.page.scss',
   imports: [FormsModule, IonHeader, IonToolbar, IonButtons, IonButton, IonTitle, IonContent, IonItemGroup, IonItemDivider, IonLabel, IonItem, IonRange, IonRadioGroup, IonSelect, IonSelectOption, IonRadio]
 })
-export class FilterPage implements OnInit {
-  private readonly navParams = inject(NavParams);
+export class FilterPage {
   private readonly modalCtrl = inject(ModalController);
 
-
+  @Input({required: true})
   filter!: Filter;
-
-  ngOnInit(): void {
-    this.filter = this.navParams.get('filter');
-  }
 
   applyFilters({value}: NgForm): void {
     this.dismiss(value);

@@ -23,7 +23,7 @@ import {
   ModalController
 } from "@ionic/angular/standalone";
 import {addIcons} from "ionicons";
-import {optionsOutline} from "ionicons/icons";
+import {arrowDownOutline, optionsOutline} from "ionicons/icons";
 
 @Component({
   selector: 'app-home',
@@ -60,7 +60,7 @@ export class HomePage implements OnInit {
   };
 
   constructor() {
-    addIcons({optionsOutline});
+    addIcons({optionsOutline, arrowDownOutline});
   }
 
   ngOnInit(): void {
@@ -71,13 +71,13 @@ export class HomePage implements OnInit {
     navigator.geolocation.getCurrentPosition(position => {
       this.filter.myLocation = position.coords;
 
-      this.earthquakeService.initProvider()
+      this.earthquakeService.refreshEarthquakes()
         .then(() => this.filterEarthquakes())
         .catch(err => console.log(err));
 
     }, () => {
       this.filter.myLocation = {longitude: 7.5663964, latitude: 46.9268287};
-      this.earthquakeService.initProvider()
+      this.earthquakeService.refreshEarthquakes()
         .then(() => this.filterEarthquakes())
         .catch(err => console.log(err));
     });
@@ -92,7 +92,7 @@ export class HomePage implements OnInit {
   }
 
   doRefresh(event: Event): void {
-    this.earthquakeService.initProvider()
+    this.earthquakeService.refreshEarthquakes()
       .then(() => this.filterEarthquakes(true))
       .then(() => (event as CustomEvent).detail.complete());
   }

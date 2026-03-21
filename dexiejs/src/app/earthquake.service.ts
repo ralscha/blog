@@ -4,24 +4,30 @@ import {Filter} from './filter-interface';
 import Papa from 'papaparse';
 import getDistance from 'geolib/es/getDistance';
 
+interface EarthquakeCsvRow {
+  id: string;
+  time: string;
+  place: string;
+  mag: string;
+  depth: string;
+  latitude: string;
+  longitude: string;
+}
+
 @Injectable({
   providedIn: 'root'
 })
 export class EarthquakeService {
 
-  private static readonly FOURTYFIVE_MINUTES = 30 * 60 * 1000;
+  private static readonly FORTY_FIVE_MINUTES = 45 * 60 * 1000;
   private static readonly ONE_HOUR = 60 * 60 * 1000;
   private static readonly ONE_DAY = 24 * 60 * 60 * 1000;
   private static readonly SEVEN_DAYS = 7 * 24 * 60 * 60 * 1000;
   private static readonly THIRTY_DAYS = 30 * 24 * 60 * 60 * 1000;
 
-  private db: EarthquakeDb;
+  private readonly db = new EarthquakeDb();
 
-  constructor() {
-    this.db = new EarthquakeDb();
-  }
-
-  async initProvider(): Promise<number> {
+  async refreshEarthquakes(): Promise<number> {
     if (!navigator.onLine) {
       return Promise.resolve(-1);
     }
@@ -39,7 +45,7 @@ export class EarthquakeService {
       } else if (lastUpdateTs + EarthquakeService.ONE_HOUR < now) {
         // database older than 1 hour. load the 1 day file
         await this.loadData('https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_day.csv');
-      } else if (lastUpdateTs + EarthquakeService.FOURTYFIVE_MINUTES < now) {
+      } else if (lastUpdateTs + EarthquakeService.FORTY_FIVE_MINUTES < now) {
         // database older than 45 minutes. load the 1 hour file
         await this.loadData('https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_hour.csv');
       }
@@ -118,11 +124,15 @@ export class EarthquakeService {
 
   private async loadData(dataUrl: string): Promise<void> {
     const response = await fetch(dataUrl);
+    if (!response.ok) {
+      throw new Error(`Request failed for ${dataUrl}: ${response.status} ${response.statusText}`);
+    }
+
     const text = await response.text();
-    const data = Papa.parse<{
-      id: string, time: string, place: string, mag: string,
-      depth: string, latitude: string, longitude: string
-    }>(text, {header: true});
+    const data = Papa.parse<EarthquakeCsvRow>(text, {
+      header: true,
+      skipEmptyLines: true
+    });
     const earthquakes: Earthquake[] = [];
 
     for (const row of data.data) {
@@ -138,11 +148,10 @@ export class EarthquakeService {
       }
     }
 
-    this.db.transaction('rw', this.db.earthquakes, async () => {
+    await this.db.transaction('rw', this.db.earthquakes, async () => {
       await this.db.earthquakes.bulkPut(earthquakes);
       localStorage.setItem('lastUpdate', Date.now().toString());
     });
-
   }
 
   private deleteOldRecords(): Promise<number> {
