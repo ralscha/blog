@@ -6,6 +6,11 @@ import {registerRoute} from 'workbox-routing';
 import {CacheFirst} from 'workbox-strategies';
 
 declare const self: ServiceWorkerGlobalScope;
+declare const process: {
+  env: {
+    NODE_ENV?: string;
+  };
+};
 
 self.skipWaiting();
 clientsClaim();

@@ -3,13 +3,13 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "dev": "npm-run-all --parallel sw-dev-webpack start",
+    "dev": "npm-run-all --parallel sw-dev-vite start",
     "start": "ng serve -o",
     "build": "ng build",
-    "postbuild": "npm run sw-prod-webpack",
+    "postbuild": "npm run sw-prod-vite",
     "serve-dist": "ws --hostname localhost -d dist/app -p 1234 -o --log.format stats",
-    "sw-dev-webpack": "rimraf ./src/service-worker.js \u0026\u0026 webpack --config ./sw-dev-webpack.config.js",
-    "sw-prod-webpack": "rimraf ./dist/app/service-worker.js \u0026\u0026 webpack --config ./sw-prod-webpack.config.js --progress --color \u0026\u0026 workbox injectManifest ./workbox-config.js",
+    "sw-dev-vite": "rimraf ./src/service-worker.js \u0026\u0026 vite build --config ./vite.service-worker.config.ts --mode development --watch",
+    "sw-prod-vite": "rimraf ./dist/app/service-worker.js \u0026\u0026 vite build --config ./vite.service-worker.config.ts --mode production \u0026\u0026 workbox injectManifest ./workbox-config.js",
     "format": "npx prettier --write ."
   },
   "private": true,
@@ -37,9 +37,8 @@
     "local-web-server": "5.4.0",
     "npm-run-all": "4.1.5",
     "rimraf": "6.1.3",
-    "ts-loader": "9.5.4",
     "typescript": "5.9.3",
-    "webpack-cli": "6.0.1",
+    "vite": "8.0.1",
     "workbox-cli": "7.4.0",
     "prettier": "3.8.1"
   }
