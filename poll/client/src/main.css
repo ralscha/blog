@@ -1,9 +1,144 @@
-@import '../node_modules/muicss/dist/css/mui.min.css';
-
 body {
-  font-family: "Roboto", "Helvetica Neue", Helvetica, Arial, serif;
+  margin: 0;
+  min-height: 100vh;
+  background:
+    radial-gradient(circle at top, rgba(41, 98, 255, 0.18), transparent 40%),
+    linear-gradient(180deg, #f6f8fc 0%, #eef2f9 100%);
+  color: #162033;
+  font-family: "Aptos", "Segoe UI", sans-serif;
 }
 
 .hidden {
   display: none;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+.layout {
+  display: grid;
+  gap: 24px;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 32px 20px 48px;
+}
+
+.card {
+  background: rgba(255, 255, 255, 0.9);
+  border: 1px solid rgba(22, 32, 51, 0.08);
+  border-radius: 24px;
+  box-shadow: 0 20px 60px rgba(35, 55, 80, 0.12);
+  backdrop-filter: blur(10px);
+}
+
+.stack {
+  display: grid;
+  gap: 18px;
+  padding: 28px;
+}
+
+.eyebrow {
+  margin: 0;
+  color: #3867d6;
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+h1 {
+  margin: 0;
+  font-size: clamp(2rem, 5vw, 3.25rem);
+  line-height: 1.05;
+}
+
+.intro {
+  margin: 0;
+  max-width: 44rem;
+  color: #4c5b74;
+  font-size: 1.05rem;
+}
+
+.message {
+  padding: 16px 18px;
+  border-radius: 16px;
+  font-weight: 600;
+}
+
+.message.success {
+  background: #e9f9ef;
+  color: #17663a;
+}
+
+.message.info {
+  background: #eef4ff;
+  color: #2447a6;
+}
+
+.poll-options {
+  display: grid;
+  gap: 12px;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+.poll-options legend {
+  margin-bottom: 8px;
+  padding: 0;
+  font-size: 1rem;
+  font-weight: 700;
+}
+
+.option {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 16px;
+  border: 1px solid #d8dfeb;
+  border-radius: 16px;
+  background: #fff;
+}
+
+.option:hover {
+  border-color: #8ca8ff;
+}
+
+.option input {
+  width: 18px;
+  height: 18px;
+  margin: 0;
+}
+
+.vote-button {
+  width: fit-content;
+  padding: 12px 20px;
+  border: 0;
+  border-radius: 999px;
+  background: linear-gradient(135deg, #1d62f0 0%, #25a0ff 100%);
+  color: #fff;
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.vote-button:hover {
+  filter: brightness(1.05);
+}
+
+.chart-card {
+  padding: 20px;
+}
+
+.chart {
+  width: 100%;
+  height: 420px;
+}
+
+@media (min-width: 960px) {
+  .layout {
+    grid-template-columns: minmax(320px, 420px) 1fr;
+    align-items: start;
+  }
 }

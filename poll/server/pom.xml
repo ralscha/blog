@@ -56,47 +56,6 @@
                 </configuration>
             </plugin>
 			<plugin>
-				<groupId>com.github.eirslett</groupId>
-				<artifactId>frontend-maven-plugin</artifactId>
-				<version>1.15.4</version>
-				<executions>
-					<execution>
-						<id>install node and npm</id>
-						<goals>
-							<goal>install-node-and-npm</goal>
-						</goals>
-					</execution>
-					<execution>
-						<id>npm install</id>
-						<goals>
-							<goal>npm</goal>
-						</goals>
-						<configuration>
-							<arguments>install</arguments>
-						</configuration>
-					</execution>					
-					<execution>
-						<id>build</id>
-						<goals>
-							<goal>npm</goal>
-						</goals>
-						<phase>prepare-package</phase>
-						<configuration>
-							<arguments>run build</arguments>
-						</configuration>
-					</execution>
-				</executions>
-				<configuration>
-					<nodeVersion>v20.10.0</nodeVersion>
-					<workingDirectory>${basedir}/../client</workingDirectory>
-					<installDirectory>${basedir}/install</installDirectory>
-					<environmentVariables>
-						<NODE_ENV>production</NODE_ENV>
-					</environmentVariables>
-				</configuration>
-			</plugin>
-
-			<plugin>
 				<artifactId>maven-antrun-plugin</artifactId>
 				<executions>
 					<execution>

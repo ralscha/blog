@@ -4,70 +4,103 @@ import { TooltipComponent } from 'echarts/components';
 import { TitleComponent } from 'echarts/components';
 import { CanvasRenderer } from 'echarts/renderers';
 
-import { v4 as uuidv4 } from 'uuid/dist';
-
 echarts.use([PieChart, TooltipComponent, TitleComponent, CanvasRenderer]);
-const oss = ["Windows", "macOS", "Linux", "Other"];
+const operatingSystems = ['Windows', 'macOS', 'Linux', 'Other'];
+
+const elements = {
+    alreadyVotedMessage: document.getElementById('hasVotedAlreadyErrorMsg'),
+    chart: document.getElementById('chart'),
+    voteButton: document.getElementById('vote-button'),
+    voteForm: document.getElementById('vote-form'),
+    votedMessage: document.getElementById('voted')
+};
 
 
 export function init() {
-
-    const alreadyVoted = localStorage.getItem('hasVoted');
-    document.getElementById('hasVotedAlreadyErrorMsg').classList.toggle('hidden', !alreadyVoted);
-    document.getElementById('vote-form').classList.toggle('hidden', alreadyVoted);
-
-    const voteButton = document.getElementById('vote-button');
-
-    voteButton.addEventListener('click', e => {
-        localStorage.setItem('hasVoted', true)
-        const choice = document.querySelector('input[name=os]:checked').value;
-
-        fetch('poll', {
-            method: 'POST',
-            body: choice
-        }).then(() => {
-            document.getElementById('voted').classList.remove('hidden');
-            document.getElementById('hasVotedAlreadyErrorMsg').classList.add('hidden');
-            document.getElementById('vote-form').classList.add('hidden');
-        }).catch((e) => console.log(e));
-    });
-
-    const chart = echarts.init(document.getElementById('chart'));
+    const chart = echarts.init(elements.chart);
     chart.setOption(getChartOption());
 
-    const eventSource = new EventSource(`register/${uuidv4()}`);
-    eventSource.addEventListener('message', response => {
-        const pollData = response.data.split(',').map(Number);
-        const total = pollData.reduce((accumulator, currentValue) => accumulator + currentValue);
+    if (localStorage.getItem('hasVoted') === 'true') {
+        showAlreadyVotedState();
+    }
+    else {
+        showVotingState();
+    }
 
+    elements.voteButton.addEventListener('click', async () => {
+        const selectedOption = document.querySelector('input[name=os]:checked');
+        if (!selectedOption) {
+            return;
+        }
+
+        try {
+            await fetch('/poll', {
+            method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ operatingSystem: selectedOption.value })
+            });
+
+            localStorage.setItem('hasVoted', 'true');
+            showVoteSubmittedState();
+        }
+        catch (error) {
+            console.error('Unable to submit vote', error);
+        }
+    });
+
+    const eventSource = new EventSource(`/register/${crypto.randomUUID()}`);
+    eventSource.addEventListener('message', ({ data }) => {
+        const snapshot = JSON.parse(data);
         chart.setOption({
             title: {
-                text: `Total Votes: ${total}`
+                text: `Total Votes: ${snapshot.totalVotes}`
             },
-            series: {
-                data: [
-                    { value: pollData[0], name: oss[0] },
-                    { value: pollData[1], name: oss[1] },
-                    { value: pollData[2], name: oss[2] },
-                    { value: pollData[3], name: oss[3] }
-                ],
-            }
+            series: [{
+                data: snapshot.results.map(({ label, votes }) => ({
+                    value: votes,
+                    name: label
+                }))
+            }]
         });
-
     }, false);
 
+    window.addEventListener('beforeunload', () => {
+        eventSource.close();
+        chart.dispose();
+    }, { once: true });
 
+
+}
+
+function showVotingState() {
+    elements.alreadyVotedMessage.classList.add('hidden');
+    elements.voteForm.classList.remove('hidden');
+    elements.votedMessage.classList.add('hidden');
+}
+
+function showAlreadyVotedState() {
+    elements.alreadyVotedMessage.classList.remove('hidden');
+    elements.voteForm.classList.add('hidden');
+    elements.votedMessage.classList.add('hidden');
+}
+
+function showVoteSubmittedState() {
+    elements.alreadyVotedMessage.classList.add('hidden');
+    elements.voteForm.classList.add('hidden');
+    elements.votedMessage.classList.remove('hidden');
 }
 
 function getChartOption() {
     return {
         title: {
-            text: 'Votes',
-            x: 'center'
+            text: 'Total Votes: 0',
+            left: 'center'
         },
         tooltip: {
             trigger: 'item',
-            formatter: "{b} : {c} ({d}%)"
+            formatter: '{b}: {c} ({d}%)'
         },
         series: [
             {
@@ -75,14 +108,9 @@ function getChartOption() {
                 type: 'pie',
                 radius: '60%',
                 center: ['50%', '45%'],
-                data: [
-                    { value: 0, name: oss[0] },
-                    { value: 0, name: oss[1] },
-                    { value: 0, name: oss[2] },
-                    { value: 0, name: oss[3] }
-                ],
-                itemStyle: {
-                    emphasis: {
+                data: operatingSystems.map((label) => ({ value: 0, name: label })),
+                emphasis: {
+                    itemStyle: {
                         shadowBlur: 10,
                         shadowOffsetX: 0,
                         shadowColor: 'rgba(0, 0, 0, 0.5)'

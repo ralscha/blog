@@ -1,0 +1,49 @@
+version: '3'
+
+tasks:
+
+  default:
+    desc: Show available tasks.
+    cmds:
+      - task --list
+
+  client:install:
+    dir: client
+    cmds:
+      - npm install
+
+  client:build:
+    dir: client
+    cmds:
+      - npm run build
+
+  client:watch:
+    dir: client
+    cmds:
+      - npm run watch
+
+  server:run:
+    dir: server
+    cmds:
+      - .\mvnw.cmd spring-boot:run -Dspring-boot.run.profiles=development
+
+  server:package:
+    deps:
+      - client:build
+    dir: server
+    cmds:
+      - .\mvnw.cmd clean package -DskipTests
+
+  dev:
+    desc: Install client dependencies, start the Vite watcher, then run Spring Boot separately.
+    deps:
+      - client:install
+    cmds:
+      - echo Run `task client:watch` in one terminal and `task server:run` in another.
+
+  build:
+    desc: Build the client and package the Spring Boot application.
+    deps:
+      - client:install
+    cmds:
+      - task server:package

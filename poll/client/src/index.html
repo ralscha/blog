@@ -5,49 +5,56 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link href="//fonts.googleapis.com/css?family=Roboto:300,400,500,700" rel="stylesheet" type="text/css" />
   <title>Poll Demo</title>
   <link rel="stylesheet" href="./main.css" />
 </head>
 
 <body>
-  <div class="mui-container">
-    <h1>OS Vote</h1>
+  <main class="layout">
+    <section class="card stack">
+      <p class="eyebrow">Server-Sent Events Demo</p>
+      <h1>Favorite Development OS</h1>
+      <p class="intro">Vote once from this browser and watch the pie chart update in real time.</p>
 
-    <div id="voted" class="mui-panel hidden">
-        <span class="mui--text-dark-secondary mui--text-display2">Thanks for your vote.</span>
+      <div id="voted" class="message success hidden" role="status">Thanks for your vote.</div>
+
+      <div id="hasVotedAlreadyErrorMsg" class="message info hidden" role="status">
+        You have already voted from this browser.
       </div>
 
-    <div id="hasVotedAlreadyErrorMsg" class="mui-panel hidden">
-      <span class="mui--text-accent-secondary mui--text-display2">You have already voted, you can only vote once.</span>
-    </div>
-    <form id="vote-form" class="hidden">
-      <p>Vote for your favorite OS to develop on</p>
-      <p>
-        <input type="radio" name="os" id="windows" value="Windows">
-        <label for="windows">Windows</label>
-      </p>
-      <p>
-        <input type="radio" name="os" id="macos" value="macOS">
-        <label for="macos">macOS</label>
-      </p>
-      <p>
-        <input type="radio" name="os" id="linux" value="Linux">
-        <label for="linux">Linux</label>
-      </p>
-      <p>
-        <input type="radio" name="os" id="other" value="Other">
-        <label for="other">Something else</label>
-      </p>
-      <button class="mui-btn mui-btn--primary" id="vote-button" type="button">Vote</button>
-    </form>
+      <form id="vote-form" class="stack hidden">
+        <fieldset class="poll-options">
+          <legend>Which operating system do you prefer for development?</legend>
 
-    <br>
-    <br>
+          <label class="option" for="windows">
+            <input type="radio" name="os" id="windows" value="Windows">
+            <span>Windows</span>
+          </label>
 
-    <h5 style="text-align: center" id="chartTitle"></h5>
-    <div id="chart" style="height: 400px;width:600px"></div>
-  </div>
+          <label class="option" for="macos">
+            <input type="radio" name="os" id="macos" value="macOS">
+            <span>macOS</span>
+          </label>
+
+          <label class="option" for="linux">
+            <input type="radio" name="os" id="linux" value="Linux">
+            <span>Linux</span>
+          </label>
+
+          <label class="option" for="other">
+            <input type="radio" name="os" id="other" value="Other">
+            <span>Other</span>
+          </label>
+        </fieldset>
+
+        <button class="vote-button" id="vote-button" type="button">Submit vote</button>
+      </form>
+    </section>
+
+    <section class="card chart-card">
+      <div id="chart" class="chart"></div>
+    </section>
+  </main>
 
   <script type="module" src="./app.js"></script>
 

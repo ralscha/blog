@@ -1,9 +1,8 @@
 package ch.rasc.demo.poll;
 
 import java.nio.file.Paths;
-import java.util.concurrent.TimeUnit;
+import java.time.Duration;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
 import org.springframework.core.env.Profiles;
@@ -16,8 +15,11 @@ import org.springframework.web.servlet.resource.EncodedResourceResolver;
 @Configuration
 class ResourceConfig implements WebMvcConfigurer {
 
-  @Autowired
-  private Environment environment;
+  private final Environment environment;
+
+  ResourceConfig(Environment environment) {
+    this.environment = environment;
+  }
 
   @Override
   public void addResourceHandlers(ResourceHandlerRegistry registry) {
@@ -34,7 +36,7 @@ class ResourceConfig implements WebMvcConfigurer {
           .addResolver(new EncodedResourceResolver());
 
       registry.addResourceHandler("/**").addResourceLocations("classpath:/static/")
-          .setCacheControl(CacheControl.maxAge(365, TimeUnit.DAYS).cachePublic())
+          .setCacheControl(CacheControl.maxAge(Duration.ofDays(365)).cachePublic())
           .resourceChain(false).addResolver(new EncodedResourceResolver());
     }
   }
