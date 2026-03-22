@@ -1,91 +1,114 @@
-importScripts('https://www.gstatic.com/firebasejs/7.10.0/firebase-app.js');
-importScripts('https://www.gstatic.com/firebasejs/7.10.0/firebase-messaging.js');
+self.addEventListener('notificationclick', event => {
+	event.notification.close();
+
+	event.waitUntil((async () => {
+		const existingClients = await clients.matchAll({
+			type: 'window',
+			includeUncontrolled: true
+		});
+
+		for (const client of existingClients) {
+			if (client.url.endsWith('/index.html') || client.url.endsWith('/')) {
+				await client.focus();
+				return;
+			}
+		}
+
+		await clients.openWindow('/index.html');
+	})());
+});
+
+importScripts('https://www.gstatic.com/firebasejs/10.13.2/firebase-app-compat.js');
+importScripts('https://www.gstatic.com/firebasejs/10.13.2/firebase-messaging-compat.js');
 
 firebase.initializeApp({
-  apiKey: "AIzaSyAMBZJQqEL9ZjA2Y01E0bj9wV4BGZMvdJU",
-  projectId: "demopush-7dacf",
-  messagingSenderId: "425242423819",
-  appId: "1:425242423819:web:e34dad8cf7e765216c8d0e"
+	apiKey: 'AIzaSyAMBZJQqEL9ZjA2Y01E0bj9wV4BGZMvdJU',
+	authDomain: 'demopush-7dacf.firebaseapp.com',
+	projectId: 'demopush-7dacf',
+	storageBucket: 'demopush-7dacf.firebasestorage.app',
+	messagingSenderId: '425242423819',
+	appId: '1:425242423819:web:e34dad8cf7e765216c8d0e'
 });
 
 const messaging = firebase.messaging();
-messaging.usePublicVapidKey('BE-ASg0VyvsQIxoCzGF7K7cT5Xzj_eJCsnZytY3q71Mwou_5i7S0-9NTQwfpU8wdmZXRb3w7DXSfoXms0QXeybc');
+let dbPromise;
 
-self.addEventListener('push', async event => {
-	const db = await getDb();
-	const tx = this.db.transaction('jokes', 'readwrite');
-	const store = tx.objectStore('jokes');
-
-	const data = event.data.json().data;
-	data.id = parseInt(data.id);
-	store.put(data);
-
-	tx.oncomplete = async e => {
-		const allClients = await clients.matchAll({ includeUncontrolled: true });
-		for (const client of allClients) {
-			client.postMessage('newData');
-		}
-	};
-});
-
-async function getDb() {
-	if (this.db) {
-		return Promise.resolve(this.db);
+messaging.onBackgroundMessage(async payload => {
+	if (payload.data) {
+		await storeJoke(payload.data);
+		await notifyClients();
 	}
 
-	return new Promise(resolve => {
-		const openRequest = indexedDB.open("Chuck", 1);
+	const notification = createNotification(payload);
+	await self.registration.showNotification(notification.title, notification.options);
+});
 
-		openRequest.onupgradeneeded = event => {
-			const db = event.target.result;
-			db.createObjectStore('jokes', { keyPath: 'id' });
-		};
-
-		openRequest.onsuccess = event => {
-			this.db = event.target.result;
-			resolve(this.db);
-		}
+async function storeJoke(jokeData) {
+	const db = await getDb();
+	const transaction = db.transaction('jokes', 'readwrite');
+	transaction.objectStore('jokes').put({
+		id: String(jokeData.id),
+		joke: String(jokeData.joke),
+		seq: Number.parseInt(jokeData.seq, 10),
+		ts: Number.parseInt(jokeData.ts, 10)
 	});
+	await waitForTransaction(transaction);
 }
 
+async function notifyClients() {
+	const allClients = await clients.matchAll({
+		type: 'window',
+		includeUncontrolled: true
+	});
 
-messaging.setBackgroundMessageHandler(function(payload) {
-  const notificationTitle = 'Background Title (client)';
-  const notificationOptions = {
-    body: 'Background Body (client)',
-    icon: '/mail.png'
-  };
+	for (const client of allClients) {
+		client.postMessage({ type: 'newData' });
+	}
+}
 
-  return self.registration.showNotification(notificationTitle,
-      notificationOptions);
-});
+function createNotification(payload) {
+	const title = payload.notification && payload.notification.title
+		? payload.notification.title
+		: 'New Chuck Norris joke';
 
+	const body = payload.notification && payload.notification.body
+		? payload.notification.body
+		: payload.data && payload.data.joke ? payload.data.joke : 'A new joke is available.';
 
-const CACHE_NAME = 'my-site-cache-v1';
-const urlsToCache = [
-	'/index.html',
-	'/index.js',
-	'/mail.png',
-	'/mail2.png',
-	'/manifest.json'
-];
+	return {
+		title,
+		options: {
+			body,
+			badge: '/mail.png',
+			icon: '/mail2.png'
+		}
+	};
+}
 
-self.addEventListener('install', event => {
-	event.waitUntil(caches.open(CACHE_NAME)
-		.then(cache => cache.addAll(urlsToCache)));
-});
+async function getDb() {
+	if (!dbPromise) {
+		dbPromise = new Promise((resolve, reject) => {
+			const openRequest = indexedDB.open('Chuck', 1);
 
-self.addEventListener('fetch', event => {
-	event.respondWith(
-		caches.match(event.request)
-			.then(response => {
-				if (response) {
-					return response;
-				}
-				return fetch(event.request);
-			}
-			)
-	);
-});
+			openRequest.onupgradeneeded = event => {
+				const db = event.target.result;
+				db.createObjectStore('jokes', { keyPath: 'id' });
+			};
+
+			openRequest.onsuccess = event => resolve(event.target.result);
+			openRequest.onerror = () => reject(openRequest.error);
+		});
+	}
+
+	return dbPromise;
+}
+
+function waitForTransaction(transaction) {
+	return new Promise((resolve, reject) => {
+		transaction.oncomplete = () => resolve();
+		transaction.onabort = () => reject(transaction.error);
+		transaction.onerror = () => reject(transaction.error);
+	});
+}
 
 

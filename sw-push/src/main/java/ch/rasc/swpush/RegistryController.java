@@ -23,7 +23,8 @@ public class RegistryController {
   @PostMapping("/register")
   @ResponseStatus(HttpStatus.NO_CONTENT)
   public Mono<Void> register(@RequestBody Mono<String> token) {
-    return token.doOnNext(t -> this.fcmClient.subscribe("chuck", t)).then();
+    return token.map(String::trim).filter(t -> !t.isEmpty())
+        .doOnNext(t -> this.fcmClient.subscribe("chuck", t)).then();
   }
 
 }

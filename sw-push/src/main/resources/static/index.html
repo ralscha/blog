@@ -1,28 +1,61 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <meta charset=utf-8 />
-  <title>Web Push</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Firebase Cloud Messaging Demo</title>
   <link rel="manifest" href="manifest.json">
   <style>
      body {
         font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        margin: 24px;
+        max-width: 900px;
+     }
+     h1 {
+        margin-bottom: 8px;
+     }
+     .controls {
+        align-items: center;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+        margin-bottom: 24px;
+     }
+     button {
+        background-color: #0f766e;
+        border: 0;
+        border-radius: 6px;
+        color: #fff;
+        cursor: pointer;
+        font: inherit;
+        padding: 10px 16px;
+     }
+     .status {
+        color: #334155;
      }
      .header {
-        font-family: monospace;
-        font-size: 1.1em;
+        font-family: Consolas, "Courier New", monospace;
+        font-size: 0.95rem;
+     }
+     .joke-entry {
+        border-bottom: 1px solid #e2e8f0;
+        margin-bottom: 16px;
+        padding-bottom: 16px;
      }
      .joke {
-        margin-bottom: 10px;
+        margin-top: 6px;
      }
   </style>
-    
 </head>
 <body>
-<div id="outTable">
+<h1>Firebase Cloud Messaging Demo</h1>
+<div class="controls">
+  <button id="enablePush" type="button">Enable notifications</button>
+  <div class="status" id="status" role="status" aria-live="polite"></div>
 </div>
-<script src="https://www.gstatic.com/firebasejs/7.10.0/firebase-app.js"></script>
-<script src="https://www.gstatic.com/firebasejs/7.10.0/firebase-messaging.js"></script>
+<div id="outTable"></div>
+<script src="https://www.gstatic.com/firebasejs/10.13.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.13.2/firebase-messaging-compat.js"></script>
 <script src="index.js"></script>
 </body>
 </html>
