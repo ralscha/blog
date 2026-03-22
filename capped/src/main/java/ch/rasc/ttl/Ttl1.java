@@ -1,5 +1,6 @@
 package ch.rasc.ttl;
 
+import java.time.Instant;
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
@@ -28,7 +29,7 @@ public class Ttl1 {
 
       for (int j = 0; j < 5; j++) {
         Document logMessage = new Document();
-        logMessage.append("date", new Date());
+        logMessage.append("date", Date.from(Instant.now()));
         logMessage.append("severity", "INFO");
         logMessage.append("message", String.valueOf(j));
         collection.insertOne(logMessage);

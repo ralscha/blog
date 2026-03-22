@@ -1,51 +1,99 @@
 package ch.rasc.pwnd;
 
 import java.io.IOException;
-import java.io.InputStream;
+import java.net.URI;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.nio.file.StandardCopyOption;
+import java.nio.file.StandardOpenOption;
+import java.time.Duration;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.Response;
-import okhttp3.ResponseBody;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class Download {
 
-  private final static String RANGE_API = "https://api.pwnedpasswords.com/range/";
+  private static final String RANGE_API = "https://api.pwnedpasswords.com/range/";
+
+  private static final int MAX_RETRIES = 3;
+
+  private static final HttpClient HTTP_CLIENT = HttpClient.newBuilder()
+      .connectTimeout(Duration.ofSeconds(30)).build();
 
   public static void main(String[] args) throws IOException {
-    int numThreads = Runtime.getRuntime().availableProcessors() * 4;
+    int numThreads = Math.max(4, Runtime.getRuntime().availableProcessors() * 2);
+    int totalRanges = 0x100000;
+    AtomicInteger completedRanges = new AtomicInteger();
 
-    OkHttpClient httpClient = new OkHttpClient();
+    Path outputDir = Path.of("./pwned");
+    Files.createDirectories(outputDir);
 
     try (ExecutorService executor = Executors.newFixedThreadPool(numThreads)) {
-      Path outputDir = Paths.get("./pwned");
-      Files.createDirectories(outputDir);
-
-      int max = 1024 * 1024;
-      for (int i = 0; i < max; i++) {
+      for (int i = 0; i < totalRanges; i++) {
         String range = getRange(i);
-        executor.execute(() -> downloadRange(httpClient, range, outputDir));
+        executor.execute(
+            () -> downloadRange(range, outputDir, completedRanges, totalRanges));
       }
     }
   }
 
-  private static void downloadRange(OkHttpClient httpClient, String hashPrefix,
-      Path outputDir) {
-    Request request = new Request.Builder().url(RANGE_API + hashPrefix).build();
-    try (Response response = httpClient.newCall(request).execute();
-        ResponseBody body = response.body();
-        InputStream bodyIs = body.byteStream()) {
-      Files.copy(bodyIs, outputDir.resolve(hashPrefix + ".txt"),
-          StandardCopyOption.REPLACE_EXISTING);
+  private static void downloadRange(String hashPrefix, Path outputDir,
+      AtomicInteger completedRanges, int totalRanges) {
+    HttpRequest request = HttpRequest.newBuilder(URI.create(RANGE_API + hashPrefix))
+        .header("User-Agent", "pwnd-java-downloader")
+        .timeout(Duration.ofSeconds(60)).build();
+
+    for (int attempt = 1; attempt <= MAX_RETRIES; attempt++) {
+      try {
+        HttpResponse<byte[]> response = HTTP_CLIENT.send(request,
+            HttpResponse.BodyHandlers.ofByteArray());
+        if (response.statusCode() != 200) {
+          throw new IOException("Unexpected HTTP status: " + response.statusCode());
+        }
+
+        Path outputFile = outputDir.resolve(hashPrefix + ".txt");
+        Files.write(outputFile, response.body(), StandardOpenOption.CREATE,
+            StandardOpenOption.TRUNCATE_EXISTING, StandardOpenOption.WRITE);
+        logProgress(completedRanges.incrementAndGet(), totalRanges);
+        return;
+      }
+      catch (InterruptedException e) {
+        Thread.currentThread().interrupt();
+        System.err.println("Interrupted while downloading range " + hashPrefix);
+        return;
+      }
+      catch (IOException e) {
+        if (attempt == MAX_RETRIES) {
+          System.err.println(
+              "Failed to download range " + hashPrefix + ": " + e.getMessage());
+          return;
+        }
+
+        if (!pauseBeforeRetry(attempt, hashPrefix)) {
+          return;
+        }
+      }
     }
-    catch (IOException e) {
-      e.printStackTrace();
+  }
+
+  private static boolean pauseBeforeRetry(int attempt, String hashPrefix) {
+    try {
+      Thread.sleep(Duration.ofSeconds(attempt).toMillis());
+      return true;
+    }
+    catch (InterruptedException e) {
+      Thread.currentThread().interrupt();
+      System.err.println("Interrupted while waiting to retry range " + hashPrefix);
+      return false;
+    }
+  }
+
+  private static void logProgress(int completedRanges, int totalRanges) {
+    if (completedRanges % 10_000 == 0 || completedRanges == totalRanges) {
+      System.out.println(
+          "Downloaded " + completedRanges + " of " + totalRanges + " ranges");
     }
   }
 

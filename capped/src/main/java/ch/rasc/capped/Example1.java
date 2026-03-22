@@ -25,9 +25,8 @@ public class Example1 {
       db.listCollectionNames().into(collectionNames);
 
       if (!collectionNames.contains("log")) {
-        db.createCollection("log", new CreateCollectionOptions().capped(true)
-            // .autoIndex(false)
-            .sizeInBytes(256));
+        db.createCollection("log",
+            new CreateCollectionOptions().capped(true).sizeInBytes(256));
       }
 
       MongoCollection<Document> collection = db.getCollection("log");

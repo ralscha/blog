@@ -71,6 +71,11 @@ meter[value="4"]::-moz-meter-bar { background: green; }
     margin-top: 1em;
 }
 
+#password_hibp_output,
+#password_shhibp_output {
+    white-space: pre-line;
+}
+
 meter::-webkit-meter-optimum-value {
 	transition: width .4s ease-out;
 }

@@ -1,8 +1,10 @@
 package ch.rasc.pwnd;
 
+import java.nio.charset.StandardCharsets;
+import java.time.Duration;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.util.Arrays;
+import java.util.List;
 
 import jetbrains.exodus.ArrayByteIterable;
 import jetbrains.exodus.ByteIterable;
@@ -14,21 +16,11 @@ import jetbrains.exodus.env.StoreConfig;
 
 public class Search {
 
-  private static MessageDigest md;
-  static {
-    try {
-      md = MessageDigest.getInstance("SHA-1");
-    }
-    catch (NoSuchAlgorithmException e) {
-      e.printStackTrace();
-    }
-  }
-
   public static void main(String[] args) {
     try (Environment env = Environments.newInstance("./pwned_db")) {
-      for (String pw : Arrays.asList("123456", "password", "654321", "qwerty",
+      for (String pw : List.of("123456", "password", "654321", "qwerty",
           "letmein")) {
-        long start = System.currentTimeMillis();
+        long start = System.nanoTime();
         Integer count = haveIBeenPwned(env, pw);
         if (count != null) {
           System.out.println("I have been pwned. Number of occurrences: " + count);
@@ -36,16 +28,16 @@ public class Search {
         else {
           System.out.println("Password not found");
         }
-        System.out.println(System.currentTimeMillis() - start + " ms");
+        System.out.println(Duration.ofNanos(System.nanoTime() - start).toMillis() + " ms");
         System.out.println();
       }
     }
   }
 
   private static Integer haveIBeenPwned(Environment env, String password) {
+    byte[] passwordBytes = sha1(password);
     return env.computeInReadonlyTransaction(txn -> {
       Store store = env.openStore("passwords", StoreConfig.WITHOUT_DUPLICATES, txn);
-      byte[] passwordBytes = md.digest(password.getBytes());
       ByteIterable key = new ArrayByteIterable(passwordBytes);
       ByteIterable bi = store.get(txn, key);
       if (bi != null) {
@@ -53,6 +45,16 @@ public class Search {
       }
       return null;
     });
+  }
+
+  private static byte[] sha1(String password) {
+    try {
+      MessageDigest messageDigest = MessageDigest.getInstance("SHA-1");
+      return messageDigest.digest(password.getBytes(StandardCharsets.UTF_8));
+    }
+    catch (NoSuchAlgorithmException e) {
+      throw new IllegalStateException("SHA-1 is not available", e);
+    }
   }
 
 }

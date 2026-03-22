@@ -40,7 +40,7 @@ public class Clone {
       System.out.println(collStats.get("capped")); // false
 
       collStats = db.runCommand(new Document("collStats", "logCapped"));
-      System.out.println(collStats.get("capped")); // false
+        System.out.println(collStats.get("capped")); // true
 
       db.getCollection("logCapped").find().forEach(
           (Consumer<Document>) document -> System.out.println(document.get("index")));

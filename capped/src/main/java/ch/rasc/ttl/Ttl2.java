@@ -1,7 +1,7 @@
 package ch.rasc.ttl;
 
-import java.time.LocalDateTime;
-import java.time.ZoneId;
+import java.time.Instant;
+import java.time.temporal.ChronoUnit;
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
@@ -27,7 +27,7 @@ public class Ttl2 {
           new IndexOptions().expireAfter(1L, TimeUnit.MINUTES));
 
       Document logMessage = new Document();
-      logMessage.append("date", toDate(LocalDateTime.now().minusMinutes(5)));
+      logMessage.append("date", Date.from(Instant.now().minus(5, ChronoUnit.MINUTES)));
       logMessage.append("severity", "INFO");
       logMessage.append("message", "in the past");
       collection.insertOne(logMessage);
@@ -39,9 +39,5 @@ public class Ttl2 {
       System.out.println(collection.countDocuments()); // 0
 
     }
-  }
-
-  private static Date toDate(LocalDateTime ldt) {
-    return Date.from(ldt.atZone(ZoneId.systemDefault()).toInstant());
   }
 }

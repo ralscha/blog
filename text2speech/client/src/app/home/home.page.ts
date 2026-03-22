@@ -17,6 +17,13 @@ import {
 import {FormsModule} from '@angular/forms';
 
 declare type Voice = { name: string, gender: string, language: string };
+declare type SpeakRequest = {
+  language: string,
+  voice: string,
+  text: string,
+  pitch: number,
+  speakingRate: number
+};
 
 @Component({
   selector: 'app-home',
@@ -36,13 +43,13 @@ export class HomePage {
   speakingRate = 1;
   text = '';
   selectedClientVoice: SpeechSynthesisVoice | null = null;
-  clientVoices: SpeechSynthesisVoice[];
+  clientVoices: SpeechSynthesisVoice[] = [];
   private readonly loadingController = inject(LoadingController);
 
   constructor() {
     this.loadVoices();
-    this.clientVoices = speechSynthesis.getVoices().sort((a, b) => a.name > b.name ? 1 : -1);
-    speechSynthesis.onvoiceschanged = () => this.clientVoices = speechSynthesis.getVoices().sort((a, b) => a.name > b.name ? 1 : -1);
+    this.updateClientVoices();
+    speechSynthesis.onvoiceschanged = () => this.updateClientVoices();
   }
 
   async speakWithWebSpeechAPI(): Promise<void> {
@@ -56,12 +63,13 @@ export class HomePage {
       return Promise.reject('no language or voice selected');
     }
 
-    const formData = new FormData();
-    formData.append('language', this.selectedLanguage);
-    formData.append('voice', this.selectedVoice);
-    formData.append('text', this.text);
-    formData.append('pitch', this.pitch.toString());
-    formData.append('speakingRate', this.speakingRate.toString());
+    const requestBody: SpeakRequest = {
+      language: this.selectedLanguage,
+      voice: this.selectedVoice,
+      text: this.text,
+      pitch: this.pitch,
+      speakingRate: this.speakingRate
+    };
 
     const loadingElement = await this.loadingController.create({
       message: 'Generating mp3...',
@@ -69,39 +77,40 @@ export class HomePage {
     });
     await loadingElement.present();
 
-    let mp3Bytes = null;
+    let mp3Blob: Blob | null = null;
     try {
       const response = await fetch(`${environment.SERVER_URL}/speak`, {
-        body: formData,
+        body: JSON.stringify(requestBody),
+        headers: {
+          'Content-Type': 'application/json'
+        },
         method: 'POST'
       });
-      mp3Bytes = await response.arrayBuffer();
+      if (!response.ok) {
+        throw new Error(`Text-to-Speech request failed with status ${response.status}`);
+      }
+      mp3Blob = await response.blob();
     } finally {
       await loadingElement.dismiss();
     }
 
-    if (mp3Bytes !== null) {
-      const audioContext = new AudioContext();
-      const audioBufferSource = audioContext.createBufferSource();
-
-      audioBufferSource.buffer = await audioContext.decodeAudioData(mp3Bytes);
-
-      audioBufferSource.connect(audioContext.destination);
-      audioBufferSource.loop = false;
-      audioBufferSource.start(0);
+    if (mp3Blob !== null) {
+      const audioUrl = URL.createObjectURL(mp3Blob);
+      const audio = new Audio(audioUrl);
+      audio.addEventListener('ended', () => URL.revokeObjectURL(audioUrl), {once: true});
+      audio.addEventListener('error', () => URL.revokeObjectURL(audioUrl), {once: true});
+      await audio.play();
     }
   }
 
   languageChanged(event: Event): void {
     this.selectedLanguage = (event as CustomEvent).detail.value;
-    this.voices = this.voicesResponse.filter(this.matches.bind(this));
-    setTimeout(() => this.selectedVoice = this.voices[0].name, 1);
+    this.updateFilteredVoices();
   }
 
   genderChanged(event: Event): void {
     this.selectedGender = (event as CustomEvent).detail.value;
-    this.voices = this.voicesResponse.filter(this.matches.bind(this));
-    setTimeout(() => this.selectedVoice = this.voices[0].name, 1);
+    this.updateFilteredVoices();
   }
 
   private async loadVoices(): Promise<void> {
@@ -110,11 +119,23 @@ export class HomePage {
     this.languages = this.voicesResponse.map(v => v.language).filter(this.onlyUnique).sort();
     this.genders = this.voicesResponse.map(v => v.gender).filter(this.onlyUnique).sort();
 
-    this.selectedGender = 'FEMALE';
-    this.selectedLanguage = 'en-GB';
-    this.selectedVoice = 'en-GB-Wavenet-A';
+    this.selectedLanguage = this.languages.find(language => language.startsWith('en-')) ?? this.languages[0] ?? null;
+    this.selectedGender = this.genders.includes('FEMALE') ? 'FEMALE' : this.genders[0] ?? null;
     this.text = 'Text to speak';
+    this.updateFilteredVoices();
+  }
+
+  private updateClientVoices(): void {
+    this.clientVoices = speechSynthesis.getVoices().sort((a, b) => a.name.localeCompare(b.name));
+    this.selectedClientVoice = this.selectedClientVoice
+      ?? this.clientVoices.find(voice => voice.lang.startsWith('en-'))
+      ?? this.clientVoices[0]
+      ?? null;
+  }
+
+  private updateFilteredVoices(): void {
     this.voices = this.voicesResponse.filter(this.matches.bind(this));
+    this.selectedVoice = this.voices[0]?.name ?? null;
   }
 
   private matches(voice: Voice): boolean {

@@ -10,7 +10,7 @@ public class VerbalRegex {
   public static void main(String[] args) {
     VerbalExpression regex = VerbalExpression.regex().startOfLine().capture()
         .range("A", "Z").count(2, 3).endCapture().then("-").capture().digit().count(1, 3)
-        .endCapture().then(".").capture().anyOf("xzy").endCapture().endOfLine().build();
+        .endCapture().then(".").capture().anyOf("xyz").endCapture().endOfLine().build();
 
     System.out.println(regex.toString());
 

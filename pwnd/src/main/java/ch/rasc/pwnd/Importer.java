@@ -1,17 +1,15 @@
 package ch.rasc.pwnd;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
-import java.util.concurrent.atomic.AtomicLong;
-
-import org.jetbrains.annotations.NotNull;
+import java.util.HexFormat;
 
 import jetbrains.exodus.ArrayByteIterable;
-import jetbrains.exodus.ByteIterable;
 import jetbrains.exodus.bindings.IntegerBinding;
 import jetbrains.exodus.env.Environment;
 import jetbrains.exodus.env.Environments;
@@ -21,78 +19,71 @@ import jetbrains.exodus.env.Transaction;
 
 public class Importer {
 
+  private static final HexFormat HEX_FORMAT = HexFormat.of();
+
+  private static final long FLUSH_INTERVAL = 10_000_000L;
+
   public static void main(String[] args) {
+    Path inputDir = Path.of("./pwned");
 
     try (Environment env = Environments.newInstance("./pwned_db")) {
-      env.executeInTransaction((@NotNull final Transaction txn) -> {
-        Store store = env.openStore("passwords", StoreConfig.WITHOUT_DUPLICATES, txn);
-        Path inputDir = Paths.get("./pwned");
-
-        final AtomicLong importCounter = new AtomicLong(0L);
-        final AtomicLong fileCounter = new AtomicLong(0L);
-
-        List<String> hashFiles = listAllFiles(inputDir);
-        int totalFiles = hashFiles.size();
-        for (String hashFile : hashFiles) {
-          Path inputFile = inputDir.resolve(Paths.get(hashFile));
-          try (var linesReader = Files.lines(inputFile)) {
-            linesReader.forEach(line -> {
-              long c = importCounter.incrementAndGet();
-              if (c > 10_000_000) {
-                txn.flush();
-                System.out.println(
-                    "Processed no of files " + fileCounter.get() + " of " + totalFiles);
-                importCounter.set(0L);
-              }
-              String hashPrefix = hashFile.substring(0, hashFile.lastIndexOf("."));
-              handleLine(store, txn, hashPrefix, line);
-            });
-
-          }
-          catch (IOException e) {
-            throw new RuntimeException(e);
-          }
-
-          fileCounter.incrementAndGet();
-        }
-
-        txn.commit();
-      });
+      env.executeInTransaction(txn -> importFiles(env, txn, inputDir));
     }
   }
 
-  static List<String> listAllFiles(Path inputDir) {
-    List<String> files = new ArrayList<>();
-    try (var walker = Files.walk(inputDir)) {
-      walker.forEach(filePath -> {
-        if (Files.isRegularFile(filePath)) {
-          files.add(filePath.getFileName().toString());
+  private static void importFiles(Environment env, Transaction txn, Path inputDir) {
+    Store store = env.openStore("passwords", StoreConfig.WITHOUT_DUPLICATES, txn);
+    List<Path> hashFiles = listAllFiles(inputDir);
+    long importedEntries = 0L;
+    int processedFiles = 0;
+
+    for (Path inputFile : hashFiles) {
+      String hashPrefix = fileNameWithoutExtension(inputFile);
+      try (BufferedReader reader = Files.newBufferedReader(inputFile,
+          StandardCharsets.US_ASCII)) {
+        String line;
+        while ((line = reader.readLine()) != null) {
+          handleLine(store, txn, hashPrefix, line);
+          importedEntries++;
+          if (importedEntries % FLUSH_INTERVAL == 0) {
+            txn.flush();
+            System.out.println(
+                "Processed " + processedFiles + " of " + hashFiles.size() + " files");
+          }
         }
-      });
-    }
-    catch (IOException e) {
-      e.printStackTrace();
+      }
+      catch (IOException e) {
+        throw new RuntimeException("Unable to read " + inputFile, e);
+      }
+
+      processedFiles++;
     }
 
-    files.sort(String::compareTo);
-    return files;
+    txn.commit();
+  }
+
+  static List<Path> listAllFiles(Path inputDir) {
+    try (var files = Files.list(inputDir)) {
+      return files.filter(Files::isRegularFile)
+          .sorted(Comparator.comparing(path -> path.getFileName().toString())).toList();
+    }
+    catch (IOException e) {
+      throw new RuntimeException("Unable to list files in " + inputDir, e);
+    }
   }
 
   static void handleLine(Store store, Transaction txn, String prefix, String line) {
-    String sha1 = line.substring(0, 35);
-    int count = Integer.parseInt(line.substring(36).trim());
+    int separator = line.indexOf(':');
+    String sha1 = prefix + line.substring(0, separator);
+    int count = Integer.parseInt(line.substring(separator + 1).trim());
 
-    ByteIterable key = new ArrayByteIterable(hexStringToByteArray(prefix + sha1));
-    store.putRight(txn, key, IntegerBinding.intToCompressedEntry(count));
+    store.putRight(txn, new ArrayByteIterable(HEX_FORMAT.parseHex(sha1)),
+        IntegerBinding.intToCompressedEntry(count));
   }
 
-  private static byte[] hexStringToByteArray(String s) {
-    byte[] data = new byte[20];
-    for (int i = 0; i < 40; i += 2) {
-      data[i / 2] = (byte) ((Character.digit(s.charAt(i), 16) << 4)
-          + Character.digit(s.charAt(i + 1), 16));
-    }
-    return data;
+  private static String fileNameWithoutExtension(Path path) {
+    String fileName = path.getFileName().toString();
+    return fileName.substring(0, fileName.lastIndexOf('.'));
   }
 
 }

@@ -1,5 +1,6 @@
 package ch.rasc.capped;
 
+import java.time.Instant;
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -28,22 +29,24 @@ public class Tail {
 
       AtomicInteger index = new AtomicInteger(0);
       Thread insertThread = new Thread(() -> {
-        while (true) {
+        while (!Thread.currentThread().isInterrupted()) {
           try {
             TimeUnit.SECONDS.sleep(1);
           }
           catch (InterruptedException e) {
-            // ignore this
+            Thread.currentThread().interrupt();
+            return;
           }
 
           Document logMessage = new Document();
           logMessage.append("index", index.incrementAndGet());
           logMessage.append("message", "User sr");
-          logMessage.append("loggedIn", new Date());
-          logMessage.append("loggedOut", new Date());
+          logMessage.append("loggedIn", Date.from(Instant.now()));
+          logMessage.append("loggedOut", Date.from(Instant.now()));
           collection.insertOne(logMessage);
         }
       });
+      insertThread.setDaemon(true);
       insertThread.start();
 
       while (true) {

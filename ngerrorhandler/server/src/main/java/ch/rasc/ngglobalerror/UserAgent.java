@@ -4,11 +4,15 @@ public class UserAgent {
 
   private String language;
 
+  private boolean online;
+
   private String platform;
 
   private String userAgent;
 
-  private String connectionType;
+  private Double connectionDownlink;
+
+  private String connectionEffectiveType;
 
   public UserAgent() {
   }
@@ -19,6 +23,14 @@ public class UserAgent {
 
   public void setLanguage(String language) {
     this.language = language;
+  }
+
+  public boolean isOnline() {
+    return this.online;
+  }
+
+  public void setOnline(boolean online) {
+    this.online = online;
   }
 
   public String getPlatform() {
@@ -37,19 +49,28 @@ public class UserAgent {
     this.userAgent = userAgent;
   }
 
-  public String getConnectionType() {
-    return this.connectionType;
+  public Double getConnectionDownlink() {
+    return this.connectionDownlink;
   }
 
-  public void setConnectionType(String connectionType) {
-    this.connectionType = connectionType;
+  public void setConnectionDownlink(Double connectionDownlink) {
+    this.connectionDownlink = connectionDownlink;
+  }
+
+  public String getConnectionEffectiveType() {
+    return this.connectionEffectiveType;
+  }
+
+  public void setConnectionEffectiveType(String connectionEffectiveType) {
+    this.connectionEffectiveType = connectionEffectiveType;
   }
 
   @Override
   public String toString() {
-    return "UserAgent [language=" + this.language + ", platform=" + this.platform
-        + ", userAgent=" + this.userAgent + ", connectionType=" + this.connectionType
-        + "]";
+    return "UserAgent [language=" + this.language + ", online=" + this.online
+        + ", platform=" + this.platform + ", userAgent=" + this.userAgent
+        + ", connectionDownlink=" + this.connectionDownlink
+        + ", connectionEffectiveType=" + this.connectionEffectiveType + "]";
   }
 
 }

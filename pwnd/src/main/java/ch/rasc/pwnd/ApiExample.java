@@ -1,55 +1,60 @@
 package ch.rasc.pwnd;
 
 import java.io.IOException;
+import java.net.URI;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
+import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-
-import jetbrains.exodus.util.HexUtil;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.Response;
-import okhttp3.ResponseBody;
+import java.util.HexFormat;
 
 public class ApiExample {
 
-  private static MessageDigest md;
-  static {
-    try {
-      md = MessageDigest.getInstance("SHA-1");
-    }
-    catch (NoSuchAlgorithmException e) {
-      e.printStackTrace();
-    }
-  }
+  private static final HexFormat HEX_FORMAT = HexFormat.of().withUpperCase();
 
-  public static void main(String[] args) throws IOException {
+  private static final HttpClient HTTP_CLIENT = HttpClient.newHttpClient();
+
+  public static void main(String[] args) throws IOException, InterruptedException {
 
     String password = "123456";
-    byte[] passwordBytes = md.digest(password.getBytes());
-    String hex = HexUtil.byteArrayToString(passwordBytes).toUpperCase();
-    String prefixHash = hex.substring(0, 5);
-    String suffixHash = hex.substring(5);
+    String sha1 = sha1Hex(password);
+    String prefixHash = sha1.substring(0, 5);
+    String suffixHash = sha1.substring(5);
 
-    OkHttpClient client = new OkHttpClient();
-    String url = "https://api.pwnedpasswords.com/range/" + prefixHash;
+    HttpRequest request = HttpRequest
+        .newBuilder(URI.create("https://api.pwnedpasswords.com/range/" + prefixHash))
+        .header("Add-Padding", "true").header("User-Agent", "pwnd-java-example")
+        .build();
+    HttpResponse<String> response = HTTP_CLIENT.send(request,
+        HttpResponse.BodyHandlers.ofString(StandardCharsets.UTF_8));
 
-    Request request = new Request.Builder().url(url).build();
-    try (Response response = client.newCall(request).execute();
-        ResponseBody body = response.body()) {
-      String hashes = body.string();
-      String[] lines = hashes.split("\\r?\\n");
-
-      for (String line : lines) {
-        if (line.startsWith(suffixHash)) {
-          System.out
-              .println("password found, count: " + line.substring(line.indexOf(":") + 1));
-          return;
-        }
-      }
-      System.out.println("password not found");
-
+    if (response.statusCode() != 200) {
+      throw new IOException("Unexpected HTTP status: " + response.statusCode());
     }
 
+    for (String line : response.body().split("\\R")) {
+      if (line.startsWith(suffixHash + ":")) {
+        System.out
+            .println("password found, count: " + line.substring(line.indexOf(':') + 1));
+        return;
+      }
+    }
+
+    System.out.println("password not found");
+
+  }
+
+  private static String sha1Hex(String password) {
+    try {
+      MessageDigest messageDigest = MessageDigest.getInstance("SHA-1");
+      byte[] passwordBytes = messageDigest.digest(password.getBytes(StandardCharsets.UTF_8));
+      return HEX_FORMAT.formatHex(passwordBytes);
+    }
+    catch (NoSuchAlgorithmException e) {
+      throw new IllegalStateException("SHA-1 is not available", e);
+    }
   }
 
 }

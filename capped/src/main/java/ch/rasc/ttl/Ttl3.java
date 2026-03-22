@@ -1,7 +1,7 @@
 package ch.rasc.ttl;
 
-import java.time.LocalDateTime;
-import java.time.ZoneId;
+import java.time.Instant;
+import java.time.temporal.ChronoUnit;
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
@@ -27,22 +27,22 @@ public class Ttl3 {
           new IndexOptions().expireAfter(0L, TimeUnit.SECONDS));
 
       Document logMessage = new Document();
-      logMessage.append("date", new Date());
-      logMessage.append("expireAt", toDate(LocalDateTime.now().plusSeconds(10)));
+      logMessage.append("date", Date.from(Instant.now()));
+      logMessage.append("expireAt", Date.from(Instant.now().plus(10, ChronoUnit.SECONDS)));
       logMessage.append("severity", "INFO");
-      logMessage.append("message", "a debug message");
-      collection.insertOne(logMessage);
-
-      logMessage = new Document();
-      logMessage.append("date", new Date());
-      logMessage.append("expireAt", toDate(LocalDateTime.now().plusMinutes(2)));
-      logMessage.append("severity", "WARN");
       logMessage.append("message", "an info message");
       collection.insertOne(logMessage);
 
       logMessage = new Document();
-      logMessage.append("date", new Date());
-      logMessage.append("expireAt", toDate(LocalDateTime.now().plusMinutes(5)));
+      logMessage.append("date", Date.from(Instant.now()));
+      logMessage.append("expireAt", Date.from(Instant.now().plus(2, ChronoUnit.MINUTES)));
+      logMessage.append("severity", "WARN");
+      logMessage.append("message", "a warning message");
+      collection.insertOne(logMessage);
+
+      logMessage = new Document();
+      logMessage.append("date", Date.from(Instant.now()));
+      logMessage.append("expireAt", Date.from(Instant.now().plus(5, ChronoUnit.MINUTES)));
       logMessage.append("severity", "ERROR");
       logMessage.append("message", "an error message");
       collection.insertOne(logMessage);
@@ -56,10 +56,6 @@ public class Ttl3 {
       System.out.println(collection.countDocuments()); // 0
 
     }
-  }
-
-  private static Date toDate(LocalDateTime ldt) {
-    return Date.from(ldt.atZone(ZoneId.systemDefault()).toInstant());
   }
 
 }
