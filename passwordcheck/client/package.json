@@ -10,7 +10,7 @@
   },
   "license": "ISC",
   "devDependencies": {
-    "vite": "8.0.1"
+    "vite": "8.0.5"
   },
   "dependencies": {
     "@zxcvbn-ts/core": "3.0.4",
