@@ -13,7 +13,7 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>4.0.5</version>
+		<version>4.0.6</version>
 	</parent>
 
 	<properties>
@@ -31,7 +31,7 @@
 		<dependency>
 		    <groupId>org.springdoc</groupId>
 		    <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
-		    <version>3.0.2</version>
+		    <version>3.0.3</version>
 		</dependency>
 
 	</dependencies>
@@ -47,7 +47,7 @@
 			<plugin>
 			    <groupId>org.openapitools</groupId>
 			    <artifactId>openapi-generator-maven-plugin</artifactId>
-			    <version>7.21.0</version>
+			    <version>7.22.0</version>
 				<executions>
 					<execution>
 						<id>typescriptgen</id>

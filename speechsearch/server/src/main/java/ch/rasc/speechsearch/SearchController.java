@@ -93,10 +93,11 @@ public class SearchController {
       Files.write(inFile, payloadFromWeb, StandardOpenOption.TRUNCATE_EXISTING);
 
       FFmpeg ffmpeg = new FFmpeg(this.ffmpegPath);
-      FFmpegBuilder builder = new FFmpegBuilder().setInput(inFile.toString())
-          .overrideOutputFiles(true).addOutput(outFile.toString())
-          .setAudioSampleRate(44_100).setAudioChannels(1)
-          .setAudioSampleFormat(FFmpeg.AUDIO_FORMAT_S16).setAudioCodec("flac").done();
+        FFmpegBuilder builder = new FFmpegBuilder().overrideOutputFiles(true);
+        builder.setInput(inFile.toString());
+        builder.addOutput(outFile.toString()).setAudioSampleRate(44_100)
+          .setAudioChannels(1).setAudioSampleFormat(FFmpeg.AUDIO_FORMAT_S16)
+          .setAudioCodec("flac").done();
 
       FFmpegExecutor executor = new FFmpegExecutor(ffmpeg);
       executor.createJob(builder).run();
