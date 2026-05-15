@@ -33,10 +33,9 @@ public abstract class Util {
   public static RealMatrix multiplyElements(RealMatrix matrixA, RealMatrix matrixB)
       throws IllegalArgumentException {
     if (matrixA == null || matrixB == null || !areDimensionsEqual(matrixA, matrixB)) {
-      throw new IllegalArgumentException("""
-          Both matrices must be non-null\s\
-          and matrix dimensions must be equal\
-           for element-wise multiplication.""");
+      throw new IllegalArgumentException(
+          "Both matrices must be non-null and matrix dimensions must be equal "
+              + "for element-wise multiplication.");
     }
 
     int numRows = matrixA.getRowDimension();

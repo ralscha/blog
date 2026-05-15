@@ -167,7 +167,7 @@ public class VisionController {
         return result;
       }
 
-      if (resp.getLabelAnnotationsList() != null) {
+        if (!resp.getLabelAnnotationsList().isEmpty()) {
         List<Label> labels = new ArrayList<>();
         for (EntityAnnotation ea : resp.getLabelAnnotationsList()) {
           Label l = new Label();
@@ -178,14 +178,14 @@ public class VisionController {
         result.setLabels(labels);
       }
 
-      if (resp.getLandmarkAnnotationsList() != null) {
+      if (!resp.getLandmarkAnnotationsList().isEmpty()) {
         List<Landmark> landmarks = new ArrayList<>();
         for (EntityAnnotation ea : resp.getLandmarkAnnotationsList()) {
           Landmark l = new Landmark();
           l.setScore(ea.getScore());
           l.setDescription(ea.getDescription());
 
-          if (ea.getBoundingPoly() != null) {
+          if (ea.hasBoundingPoly()) {
             l.setBoundingPoly(ea.getBoundingPoly().getVerticesList().stream().map(v -> {
               Vertex vertex = new Vertex();
               vertex.setX(v.getX());
@@ -193,7 +193,7 @@ public class VisionController {
               return vertex;
             }).collect(Collectors.toList()));
           }
-          if (ea.getLocationsList() != null) {
+          if (!ea.getLocationsList().isEmpty()) {
             l.setLocations(ea.getLocationsList().stream().map(loc -> {
               LngLat ll = new LngLat();
               ll.setLng(loc.getLatLng().getLongitude());
@@ -206,14 +206,14 @@ public class VisionController {
         result.setLandmarks(landmarks);
       }
 
-      if (resp.getLogoAnnotationsList() != null) {
+      if (!resp.getLogoAnnotationsList().isEmpty()) {
         List<Logo> logos = new ArrayList<>();
         for (EntityAnnotation ea : resp.getLogoAnnotationsList()) {
           Logo l = new Logo();
           l.setScore(ea.getScore());
           l.setDescription(ea.getDescription());
 
-          if (ea.getBoundingPoly() != null) {
+          if (ea.hasBoundingPoly()) {
             l.setBoundingPoly(ea.getBoundingPoly().getVerticesList().stream().map(v -> {
               Vertex vertex = new Vertex();
               vertex.setX(v.getX());
@@ -226,13 +226,13 @@ public class VisionController {
         result.setLogos(logos);
       }
 
-      if (resp.getTextAnnotationsList() != null) {
+      if (!resp.getTextAnnotationsList().isEmpty()) {
         Set<Text> texts = new HashSet<>();
         for (EntityAnnotation ea : resp.getTextAnnotationsList()) {
           Text t = new Text();
           t.setDescription(ea.getDescription().trim());
 
-          if (ea.getBoundingPoly() != null) {
+          if (ea.hasBoundingPoly()) {
             t.setBoundingPoly(ea.getBoundingPoly().getVerticesList().stream()
                 .filter(Objects::nonNull).map(v -> {
                   Vertex vertex = new Vertex();
@@ -247,7 +247,7 @@ public class VisionController {
         result.setTexts(texts);
       }
 
-      if (resp.getFaceAnnotationsList() != null) {
+              if (!resp.getFaceAnnotationsList().isEmpty()) {
         List<Face> faces = new ArrayList<>();
         for (FaceAnnotation fa : resp.getFaceAnnotationsList()) {
           Face face = new Face();
@@ -278,7 +278,7 @@ public class VisionController {
           face.setHeadwear(fa.getHeadwearLikelihood());
           face.setHeadwearRating(likelihoodToNumber(fa.getHeadwearLikelihood()));
 
-          if (fa.getBoundingPoly() != null) {
+          if (fa.hasBoundingPoly()) {
             face.setBoundingPoly(
                 fa.getBoundingPoly().getVerticesList().stream().map(v -> {
                   Vertex vertex = new Vertex();
@@ -288,7 +288,7 @@ public class VisionController {
                 }).collect(Collectors.toList()));
           }
 
-          if (fa.getFdBoundingPoly() != null) {
+          if (fa.hasFdBoundingPoly()) {
             face.setFdBoundingPoly(
                 fa.getFdBoundingPoly().getVerticesList().stream().map(v -> {
                   Vertex vertex = new Vertex();
@@ -298,7 +298,7 @@ public class VisionController {
                 }).collect(Collectors.toList()));
           }
 
-          if (fa.getLandmarksList() != null) {
+          if (!fa.getLandmarksList().isEmpty()) {
             face.setLandmarks(fa.getLandmarksList().stream().map(l -> {
               FaceLandmark fl = new FaceLandmark();
               fl.setType(l.getType());
@@ -315,7 +315,7 @@ public class VisionController {
       }
 
       SafeSearchAnnotation safeSearchAnnotation = resp.getSafeSearchAnnotation();
-      if (safeSearchAnnotation != null) {
+      if (resp.hasSafeSearchAnnotation()) {
         SafeSearch safeSearch = new SafeSearch();
         safeSearch.setAdult(safeSearchAnnotation.getAdult());
         safeSearch.setAdultRating(likelihoodToNumber(safeSearchAnnotation.getAdult()));
@@ -332,7 +332,7 @@ public class VisionController {
       }
 
       WebDetection webDetection = resp.getWebDetection();
-      if (webDetection != null) {
+      if (resp.hasWebDetection()) {
         Web web = new Web();
         List<WebImage> fullMatchingImagesList = webDetection.getFullMatchingImagesList();
         List<WebPage> pagesWithMatchingImagesList = webDetection
@@ -342,7 +342,7 @@ public class VisionController {
         List<com.google.cloud.vision.v1.WebDetection.WebEntity> webEntitiesList = webDetection
             .getWebEntitiesList();
 
-        if (fullMatchingImagesList != null) {
+        if (!fullMatchingImagesList.isEmpty()) {
           web.setFullMatchingImages(fullMatchingImagesList.stream().map(e -> {
             WebUrl wu = new WebUrl();
             wu.setScore(e.getScore());
@@ -351,7 +351,7 @@ public class VisionController {
           }).collect(Collectors.toList()));
         }
 
-        if (pagesWithMatchingImagesList != null) {
+        if (!pagesWithMatchingImagesList.isEmpty()) {
           web.setPagesWithMatchingImages(pagesWithMatchingImagesList.stream().map(e -> {
             WebUrl wu = new WebUrl();
             wu.setScore(e.getScore());
@@ -360,7 +360,7 @@ public class VisionController {
           }).collect(Collectors.toList()));
         }
 
-        if (partialMatchingImagesList != null) {
+        if (!partialMatchingImagesList.isEmpty()) {
           web.setPartialMatchingImages(partialMatchingImagesList.stream().map(e -> {
             WebUrl wu = new WebUrl();
             wu.setScore(e.getScore());
@@ -369,7 +369,7 @@ public class VisionController {
           }).collect(Collectors.toList()));
         }
 
-        if (webEntitiesList != null) {
+        if (!webEntitiesList.isEmpty()) {
           web.setWebEntities(webEntitiesList.stream()
               .filter(e -> StringUtils.hasText(e.getDescription())).map(e -> {
                 WebEntity we = new WebEntity();
