@@ -1,7 +1,12 @@
-import {Component, inject} from '@angular/core';
-import {ReactiveFormsModule, UntypedFormBuilder, UntypedFormGroup, Validators} from '@angular/forms';
-import {HttpClient} from '@angular/common/http';
-import {UsernameValidator} from '../username-validator';
+import { Component, inject, ChangeDetectionStrategy } from '@angular/core';
+import {
+  ReactiveFormsModule,
+  UntypedFormBuilder,
+  UntypedFormGroup,
+  Validators,
+} from '@angular/forms';
+import { HttpClient } from '@angular/common/http';
+import { UsernameValidator } from '../username-validator';
 import {
   IonButton,
   IonContent,
@@ -12,16 +17,28 @@ import {
   IonList,
   IonTitle,
   IonToolbar,
-  ToastController
+  ToastController,
 } from '@ionic/angular/standalone';
-import {AgeValidator} from '../age-validator';
-import {environment} from '../../environments/environment';
+import { AgeValidator } from '../age-validator';
+import { environment } from '../../environments/environment';
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.page.html',
   styleUrl: './home.page.scss',
-  imports: [ReactiveFormsModule, IonHeader, IonToolbar, IonTitle, IonContent, IonList, IonItem, IonInput, IonLabel, IonButton]
+  changeDetection: ChangeDetectionStrategy.Eager,
+  imports: [
+    ReactiveFormsModule,
+    IonHeader,
+    IonToolbar,
+    IonTitle,
+    IonContent,
+    IonList,
+    IonItem,
+    IonInput,
+    IonLabel,
+    IonButton,
+  ],
 })
 export class HomePage {
   public registrationForm: UntypedFormGroup;
@@ -34,12 +51,14 @@ export class HomePage {
     const formBuilder = inject(UntypedFormBuilder);
     const usernameValidator = inject(UsernameValidator);
 
-
     this.registrationForm = formBuilder.group({
-      username: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(30)]
-        , usernameValidator.validate.bind(usernameValidator)],
+      username: [
+        '',
+        [Validators.required, Validators.minLength(2), Validators.maxLength(30)],
+        usernameValidator.validate.bind(usernameValidator),
+      ],
       email: ['', [Validators.required, Validators.pattern(this.emailRegex)]],
-      age: ['', [Validators.required, AgeValidator.validate(this.minAge)]]
+      age: ['', [Validators.required, AgeValidator.validate(this.minAge)]],
     });
 
     // example without the FormBuilder
@@ -74,7 +93,10 @@ export class HomePage {
 
   register(): void {
     console.log(this.registrationForm.value);
-    this.http.post<{ [key: string]: string[] }>(`${environment.serverURL}/register`, this.registrationForm.value)
+    this.http
+      .post<{
+        [key: string]: string[];
+      }>(`${environment.serverURL}/register`, this.registrationForm.value)
       .subscribe(async (data) => {
         for (const fieldName of Object.keys(data)) {
           const serverErrors = data[fieldName];
@@ -94,7 +116,7 @@ export class HomePage {
         if (this.registrationForm.valid) {
           const toast = await this.toastCtrl.create({
             message: 'Registration successful',
-            duration: 3000
+            duration: 3000,
           });
           await toast.present();
         }

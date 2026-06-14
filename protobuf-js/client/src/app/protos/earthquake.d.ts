@@ -1,15 +1,14 @@
-import * as $protobuf from "protobufjs";
-
+import * as $protobuf from 'protobufjs';
 
 export interface IEarthquake {
-  id?: (string | null);
-  time?: (string | null);
-  latitude?: (number | null);
-  longitude?: (number | null);
-  depth?: (number | null);
-  mag?: (number | null);
-  place?: (string | null);
-  magType?: (string | null);
+  id?: string | null;
+  time?: string | null;
+  latitude?: number | null;
+  longitude?: number | null;
+  depth?: number | null;
+  mag?: number | null;
+  place?: string | null;
+  magType?: string | null;
 }
 
 export class Earthquake implements IEarthquake {
@@ -30,15 +29,18 @@ export class Earthquake implements IEarthquake {
 
   public static encodeDelimited(message: IEarthquake, writer?: $protobuf.Writer): $protobuf.Writer;
 
-  public static decode(reader: ($protobuf.Reader | Uint8Array), length?: number): Earthquake;
+  public static decode(reader: $protobuf.Reader | Uint8Array, length?: number): Earthquake;
 
-  public static decodeDelimited(reader: ($protobuf.Reader | Uint8Array)): Earthquake;
+  public static decodeDelimited(reader: $protobuf.Reader | Uint8Array): Earthquake;
 
-  public static verify(message: { [k: string]: any }): (string | null);
+  public static verify(message: { [k: string]: any }): string | null;
 
   public static fromObject(object: { [k: string]: any }): Earthquake;
 
-  public static toObject(message: Earthquake, options?: $protobuf.IConversionOptions): { [k: string]: any };
+  public static toObject(
+    message: Earthquake,
+    options?: $protobuf.IConversionOptions,
+  ): { [k: string]: any };
 
   public static getTypeUrl(typeUrlPrefix?: string): string;
 
@@ -46,7 +48,7 @@ export class Earthquake implements IEarthquake {
 }
 
 export interface IEarthquakes {
-  earthquakes?: (IEarthquake[] | null);
+  earthquakes?: IEarthquake[] | null;
 }
 
 export class Earthquakes implements IEarthquakes {
@@ -60,15 +62,18 @@ export class Earthquakes implements IEarthquakes {
 
   public static encodeDelimited(message: IEarthquakes, writer?: $protobuf.Writer): $protobuf.Writer;
 
-  public static decode(reader: ($protobuf.Reader | Uint8Array), length?: number): Earthquakes;
+  public static decode(reader: $protobuf.Reader | Uint8Array, length?: number): Earthquakes;
 
-  public static decodeDelimited(reader: ($protobuf.Reader | Uint8Array)): Earthquakes;
+  public static decodeDelimited(reader: $protobuf.Reader | Uint8Array): Earthquakes;
 
-  public static verify(message: { [k: string]: any }): (string | null);
+  public static verify(message: { [k: string]: any }): string | null;
 
   public static fromObject(object: { [k: string]: any }): Earthquakes;
 
-  public static toObject(message: Earthquakes, options?: $protobuf.IConversionOptions): { [k: string]: any };
+  public static toObject(
+    message: Earthquakes,
+    options?: $protobuf.IConversionOptions,
+  ): { [k: string]: any };
 
   public static getTypeUrl(typeUrlPrefix?: string): string;
 

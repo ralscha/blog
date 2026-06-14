@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  serviceWorkerScript: 'sw-master.js'
+  serviceWorkerScript: 'sw-master.js',
 };

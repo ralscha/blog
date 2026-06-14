@@ -8,25 +8,43 @@
   <form #form="ngForm" (ngSubmit)="login(form.value)" novalidate>
     <ion-list lines="none">
       <ion-item>
-        <ion-input #username="ngModel" [class.invalid]="username.errors && username.dirty" [required]="true"
-                   errorText="Username is required" label="Username"
-                   labelPlacement="stacked" name="username" ngModel
-                   type="text" />
+        <ion-input
+          #username="ngModel"
+          [class.invalid]="username.errors && username.dirty"
+          [required]="true"
+          errorText="Username is required"
+          label="Username"
+          labelPlacement="stacked"
+          name="username"
+          ngModel
+          type="text"
+        />
       </ion-item>
 
       <ion-item>
-        <ion-input #password="ngModel" [class.invalid]="password.errors && password.dirty" [required]="true"
-                   errorText="Password is required" label="Password"
-                   labelPlacement="stacked" name="password" ngModel
-                   type="password" />
+        <ion-input
+          #password="ngModel"
+          [class.invalid]="password.errors && password.dirty"
+          [required]="true"
+          errorText="Password is required"
+          label="Password"
+          labelPlacement="stacked"
+          name="password"
+          ngModel
+          type="password"
+        />
       </ion-item>
 
       <div class="ion-padding">
-        <ion-button [disabled]="!form.valid" color="primary" expand="block" type="submit">Login</ion-button>
+        <ion-button [disabled]="!form.valid" color="primary" expand="block" type="submit"
+          >Login</ion-button
+        >
       </div>
 
       <div class="ion-padding">
-        <ion-button (click)="signup()" color="secondary" expand="block" type="button">Sign up</ion-button>
+        <ion-button (click)="signup()" color="secondary" expand="block" type="button"
+          >Sign up</ion-button
+        >
       </div>
     </ion-list>
   </form>

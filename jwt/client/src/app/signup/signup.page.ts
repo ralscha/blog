@@ -1,4 +1,4 @@
-import {Component, inject, viewChild} from '@angular/core';
+import { Component, inject, viewChild, ChangeDetectionStrategy } from '@angular/core';
 import {
   IonBackButton,
   IonButton,
@@ -12,16 +12,29 @@ import {
   IonToolbar,
   LoadingController,
   NavController,
-  ToastController
+  ToastController,
 } from '@ionic/angular/standalone';
-import {AuthService} from '../auth.service';
-import {FormsModule, NgModel} from '@angular/forms';
-import {finalize} from 'rxjs/operators';
+import { AuthService } from '../auth.service';
+import { FormsModule, NgModel } from '@angular/forms';
+import { finalize } from 'rxjs/operators';
 
 @Component({
   selector: 'app-signup',
   templateUrl: './signup.page.html',
-  imports: [FormsModule, IonHeader, IonToolbar, IonButtons, IonBackButton, IonTitle, IonContent, IonList, IonItem, IonInput, IonButton]
+  changeDetection: ChangeDetectionStrategy.Eager,
+  imports: [
+    FormsModule,
+    IonHeader,
+    IonToolbar,
+    IonButtons,
+    IonBackButton,
+    IonTitle,
+    IonContent,
+    IonList,
+    IonItem,
+    IonInput,
+    IonButton,
+  ],
 })
 export class SignupPage {
   readonly usernameModel = viewChild.required<NgModel>('username');
@@ -30,10 +43,15 @@ export class SignupPage {
   private readonly loadingCtrl = inject(LoadingController);
   private readonly toastCtrl = inject(ToastController);
 
-  async signup(value: { name: string, email: string, username: string, password: string }): Promise<void> {
+  async signup(value: {
+    name: string;
+    email: string;
+    username: string;
+    password: string;
+  }): Promise<void> {
     const loading = await this.loadingCtrl.create({
       spinner: 'bubbles',
-      message: 'Signing up ...'
+      message: 'Signing up ...',
     });
 
     loading.present();
@@ -42,8 +60,9 @@ export class SignupPage {
       .signup(value)
       .pipe(finalize(() => loading.dismiss()))
       .subscribe(
-        jwt => this.showSuccesToast(jwt),
-        err => this.handleError(err));
+        (jwt) => this.showSuccesToast(jwt),
+        (err) => this.handleError(err),
+      );
   }
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -53,7 +72,7 @@ export class SignupPage {
     const toast = await this.toastCtrl.create({
       message,
       duration: 5000,
-      position: 'bottom'
+      position: 'bottom',
     });
 
     toast.present();
@@ -64,23 +83,21 @@ export class SignupPage {
       const toast = await this.toastCtrl.create({
         message: 'Sign up successful',
         duration: 3000,
-        position: 'bottom'
+        position: 'bottom',
       });
 
       toast.present();
-      this.navCtrl.navigateRoot(['home'], {replaceUrl: true});
+      this.navCtrl.navigateRoot(['home'], { replaceUrl: true });
     } else {
       const toast = await this.toastCtrl.create({
         message: 'Username already registered',
         duration: 3000,
-        position: 'bottom'
+        position: 'bottom',
       });
 
       toast.present();
 
-      this.usernameModel().control.setErrors({usernameTaken: true});
+      this.usernameModel().control.setErrors({ usernameTaken: true });
     }
   }
-
-
 }

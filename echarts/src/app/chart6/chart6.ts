@@ -1,16 +1,17 @@
-import {Component} from '@angular/core';
-import {ViewWillEnter, ViewWillLeave} from '@ionic/angular';
-import {EChartsOption} from 'echarts';
-import {NgxEchartsDirective} from 'ngx-echarts';
-import {IonContent, IonHeader, IonTitle, IonToolbar} from "@ionic/angular/standalone";
+import { Component, ChangeDetectionStrategy } from '@angular/core';
+import { ViewWillEnter, ViewWillLeave } from '@ionic/angular';
+import { EChartsOption } from 'echarts';
+import { NgxEchartsDirective } from 'ngx-echarts';
+import { IonContent, IonHeader, IonTitle, IonToolbar } from '@ionic/angular/standalone';
 
-type DataType = { name: string, value: [string, number] };
+type DataType = { name: string; value: [string, number] };
 
 @Component({
   selector: 'app-chart6',
   templateUrl: 'chart6.html',
   styleUrl: './chart6.scss',
-  imports: [NgxEchartsDirective, IonHeader, IonToolbar, IonTitle, IonContent]
+  changeDetection: ChangeDetectionStrategy.Eager,
+  imports: [NgxEchartsDirective, IonHeader, IonToolbar, IonTitle, IonContent],
 })
 export class Chart6Page implements ViewWillEnter, ViewWillLeave {
   private static oneDay = 24 * 3600 * 1000;
@@ -21,73 +22,93 @@ export class Chart6Page implements ViewWillEnter, ViewWillLeave {
   updateOptions2!: { series: { data: DataType[] }[] };
   options1: EChartsOption = {
     title: {
-      text: 'Dynamic Data 1'
+      text: 'Dynamic Data 1',
     },
     tooltip: {
       trigger: 'axis',
       formatter: (params: any) => {
         const param = params[0];
         const date = new Date(param.name);
-        return date.getDate() + '/' + (date.getMonth() + 1) + '/' + date.getFullYear() + ' : ' + param.value[1];
+        return (
+          date.getDate() +
+          '/' +
+          (date.getMonth() + 1) +
+          '/' +
+          date.getFullYear() +
+          ' : ' +
+          param.value[1]
+        );
       },
       axisPointer: {
-        animation: false
-      }
+        animation: false,
+      },
     },
     xAxis: {
       type: 'time',
       splitLine: {
-        show: false
-      }
+        show: false,
+      },
     },
     yAxis: {
       type: 'value',
       boundaryGap: [0, '100%'],
       splitLine: {
-        show: false
-      }
+        show: false,
+      },
     },
-    series: [{
-      name: 'Sumulation Data',
-      type: 'line',
-      showSymbol: false,
-      data: this.data1
-    }]
+    series: [
+      {
+        name: 'Sumulation Data',
+        type: 'line',
+        showSymbol: false,
+        data: this.data1,
+      },
+    ],
   };
   options2: EChartsOption = {
     title: {
-      text: 'Dynamic Data 2'
+      text: 'Dynamic Data 2',
     },
     tooltip: {
       trigger: 'axis',
       formatter: (params: any) => {
         const param = params[0];
         const date = new Date(param.name);
-        return date.getDate() + '/' + (date.getMonth() + 1) + '/' + date.getFullYear() + ' : ' + param.value[1];
+        return (
+          date.getDate() +
+          '/' +
+          (date.getMonth() + 1) +
+          '/' +
+          date.getFullYear() +
+          ' : ' +
+          param.value[1]
+        );
       },
       axisPointer: {
-        animation: false
-      }
+        animation: false,
+      },
     },
     xAxis: {
       type: 'time',
       splitLine: {
-        show: false
-      }
+        show: false,
+      },
     },
     yAxis: {
       type: 'value',
       boundaryGap: [0, '100%'],
       splitLine: {
-        show: false
-      }
+        show: false,
+      },
     },
-    series: [{
-      name: 'Sumulation Data',
-      type: 'line',
-      showSymbol: false,
-      data: this.data2
-    }]
+    series: [
+      {
+        name: 'Sumulation Data',
+        type: 'line',
+        showSymbol: false,
+        data: this.data2,
+      },
+    ],
   };
   private now = new Date(2017, 9, 3);
   private value = Math.random() * 1000;
@@ -110,15 +131,19 @@ export class Chart6Page implements ViewWillEnter, ViewWillLeave {
       }
 
       this.updateOptions1 = {
-        series: [{
-          data: this.data1
-        }]
+        series: [
+          {
+            data: this.data1,
+          },
+        ],
       };
 
       this.updateOptions2 = {
-        series: [{
-          data: this.data2
-        }]
+        series: [
+          {
+            data: this.data2,
+          },
+        ],
       };
     }, 1000);
   }
@@ -134,9 +159,8 @@ export class Chart6Page implements ViewWillEnter, ViewWillLeave {
       name: this.now.toString(),
       value: [
         [this.now.getFullYear(), this.now.getMonth() + 1, this.now.getDate()].join('/'),
-        Math.round(this.value)
-      ]
+        Math.round(this.value),
+      ],
     };
   }
-
 }

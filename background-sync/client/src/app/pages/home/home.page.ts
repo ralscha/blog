@@ -1,9 +1,9 @@
-import { Component, inject } from '@angular/core';
-import {TodoService} from '../../services/todo.service';
-import {Todo} from '../../todo';
-import {Router, RouterLink} from '@angular/router';
-import {ViewDidEnter} from '@ionic/angular';
-import {AsyncPipe} from '@angular/common';
+import { Component, inject, ChangeDetectionStrategy } from '@angular/core';
+import { TodoService } from '../../services/todo.service';
+import { Todo } from '../../todo';
+import { Router, RouterLink } from '@angular/router';
+import { ViewDidEnter } from '@ionic/angular';
+import { AsyncPipe } from '@angular/common';
 import {
   IonButton,
   IonButtons,
@@ -15,14 +15,15 @@ import {
   IonList,
   IonRouterLink,
   IonTitle,
-  IonToolbar
-} from "@ionic/angular/standalone";
-import {addOutline} from "ionicons/icons";
-import {addIcons} from "ionicons";
+  IonToolbar,
+} from '@ionic/angular/standalone';
+import { addOutline } from 'ionicons/icons';
+import { addIcons } from 'ionicons';
 
 @Component({
   selector: 'app-page-home',
   templateUrl: './home.page.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [
     IonHeader,
     IonToolbar,
@@ -36,22 +37,21 @@ import {addIcons} from "ionicons";
     IonLabel,
     RouterLink,
     IonRouterLink,
-    AsyncPipe
-  ]
+    AsyncPipe,
+  ],
 })
 export class HomePage implements ViewDidEnter {
   private readonly todoService = inject(TodoService);
   private readonly router = inject(Router);
 
-
   todos!: Promise<Todo[]>;
 
   constructor() {
-    addIcons({addOutline});
+    addIcons({ addOutline });
     this.todoService.requestSync();
 
     if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.addEventListener('message', event => {
+      navigator.serviceWorker.addEventListener('message', (event) => {
         if (event.data === 'sync_finished') {
           this.todos = this.todoService.getTodos();
         }

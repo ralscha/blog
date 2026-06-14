@@ -1,6 +1,6 @@
 import { provideRouter, RouteReuseStrategy, Routes, withHashLocation } from '@angular/router';
 import { IonicRouteStrategy, provideIonicAngular } from '@ionic/angular/standalone';
-import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
+import { provideHttpClient, withInterceptorsFromDi, withXhr } from '@angular/common/http';
 import { bootstrapApplication } from '@angular/platform-browser';
 import { provideApi } from './app/swagger';
 import { environment } from './environments/environment';
@@ -22,7 +22,7 @@ bootstrapApplication(AppComponent, {
     provideIonicAngular(),
     provideApi({ basePath: environment.basePath }),
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
-    provideHttpClient(withInterceptorsFromDi()),
+    provideHttpClient(withXhr(), withInterceptorsFromDi()),
     provideRouter(routes, withHashLocation()),
   ],
 }).catch((err) => console.error(err));

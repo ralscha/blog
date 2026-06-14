@@ -1,14 +1,13 @@
-import {HttpClient} from '@angular/common/http';
-import {AbstractControl} from '@angular/forms';
-import {environment} from '../environments/environment';
-import {inject, Injectable} from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { AbstractControl } from '@angular/forms';
+import { environment } from '../environments/environment';
+import { inject, Injectable } from '@angular/core';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class UsernameValidator {
   private readonly http = inject(HttpClient);
-
 
   private timeout: any = null;
 
@@ -27,20 +26,21 @@ export class UsernameValidator {
 
     return new Promise((resolve) => {
       this.timeout = setTimeout(() => {
-        this.http.get<boolean>(`${environment.serverURL}/checkUsername?value=${control.value}`)
-          .subscribe(flag => {
+        this.http
+          .get<boolean>(`${environment.serverURL}/checkUsername?value=${control.value}`)
+          .subscribe(
+            (flag) => {
               if (flag) {
-                resolve({usernameTaken: true});
+                resolve({ usernameTaken: true });
               } else {
                 resolve(null);
               }
             },
             (err) => {
               console.log(err);
-            }
+            },
           );
       }, 200);
     });
   }
-
 }

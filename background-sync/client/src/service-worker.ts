@@ -1,10 +1,10 @@
 /// <reference lib="es2018" />
 /// <reference lib="webworker" />
-import {precacheAndRoute} from 'workbox-precaching';
-import {clientsClaim} from 'workbox-core';
-import {registerRoute} from 'workbox-routing';
-import {CacheFirst} from 'workbox-strategies';
-import {Todo, TodoDb} from './app/todo';
+import { precacheAndRoute } from 'workbox-precaching';
+import { clientsClaim } from 'workbox-core';
+import { registerRoute } from 'workbox-routing';
+import { CacheFirst } from 'workbox-strategies';
+import { Todo, TodoDb } from './app/todo';
 
 declare const self: ServiceWorkerGlobalScope;
 declare const __SW_IS_PRODUCTION__: boolean;
@@ -37,21 +37,21 @@ self.skipWaiting();
 clientsClaim();
 
 if (__SW_IS_PRODUCTION__) {
-  registerRoute(/assets\/icons\/.+\.png$/, new CacheFirst({cacheName: 'icons'}));
+  registerRoute(/assets\/icons\/.+\.png$/, new CacheFirst({ cacheName: 'icons' }));
   precacheAndRoute(self.__WB_MANIFEST);
 }
 
 // Background Sync
 const db = new TodoDb();
 
-self.addEventListener('sync', event => {
+self.addEventListener('sync', (event) => {
   const syncEvent = event as SyncEventWithTag;
   if (syncEvent.tag === SYNC_TAG) {
     syncEvent.waitUntil(runSync());
   }
 });
 
-self.addEventListener('message', event => {
+self.addEventListener('message', (event) => {
   const messageEvent = event as ExtendableMessageEvent;
   if (messageEvent.data?.type === TRIGGER_SYNC_MESSAGE) {
     messageEvent.waitUntil(runSync());
@@ -70,20 +70,20 @@ function runSync(): Promise<void> {
 
 async function serverSync(): Promise<void> {
   const syncViewResponse = await fetch(`${syncURL}/syncview`);
-  const syncView = await syncViewResponse.json() as Record<string, number>;
+  const syncView = (await syncViewResponse.json()) as Record<string, number>;
 
   const serverMap = new Map<string, number>();
-  Object.entries(syncView).forEach(kv => serverMap.set(kv[0], kv[1]));
+  Object.entries(syncView).forEach((kv) => serverMap.set(kv[0], kv[1]));
 
   const syncRequest: SyncRequest = {
     update: [],
     remove: [],
-    get: []
+    get: [],
   };
 
   const deleteLocal: string[] = [];
 
-  await db.todos.toCollection().each(todo => {
+  await db.todos.toCollection().each((todo) => {
     if (serverMap.has(todo.id)) {
       const serverTimestamp = serverMap.get(todo.id) ?? 0;
       if (todo.ts === -1) {
@@ -115,9 +115,11 @@ async function serverSync(): Promise<void> {
   }
 
   // if no changes end sync
-  if (syncRequest.update.length === 0
-    && syncRequest.remove.length === 0
-    && syncRequest.get.length === 0) {
+  if (
+    syncRequest.update.length === 0 &&
+    syncRequest.remove.length === 0 &&
+    syncRequest.get.length === 0
+  ) {
     if (deleted) {
       return notifyClients();
     } else {
@@ -130,12 +132,12 @@ async function serverSync(): Promise<void> {
     method: 'POST',
     body: JSON.stringify(syncRequest),
     headers: {
-      'Content-Type': 'application/json'
-    }
+      'Content-Type': 'application/json',
+    },
   });
 
   if (syncResponse.ok) {
-    const sync = await syncResponse.json() as SyncResponsePayload;
+    const sync = (await syncResponse.json()) as SyncResponsePayload;
 
     await db.transaction('rw', db.todos, async () => {
       if (sync.get && sync.get.length > 0) {
@@ -144,7 +146,7 @@ async function serverSync(): Promise<void> {
 
       if (sync.updated) {
         for (const kv of Object.entries(sync.updated)) {
-          await db.todos.update(kv[0], {ts: kv[1]});
+          await db.todos.update(kv[0], { ts: kv[1] });
         }
       }
       if (sync.removed) {
@@ -161,7 +163,7 @@ async function serverSync(): Promise<void> {
 }
 
 async function notifyClients(): Promise<void> {
-  const clients = await self.clients.matchAll({includeUncontrolled: true});
+  const clients = await self.clients.matchAll({ includeUncontrolled: true });
   for (const client of clients) {
     client.postMessage(SYNC_FINISHED_MESSAGE);
   }

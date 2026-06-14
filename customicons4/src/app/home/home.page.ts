@@ -1,19 +1,19 @@
-import {ChangeDetectionStrategy, Component} from '@angular/core';
-import {IonButton, IonContent, IonHeader, IonIcon, IonTitle, IonToolbar} from '@ionic/angular/standalone';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
+import {
+  IonButton,
+  IonContent,
+  IonHeader,
+  IonIcon,
+  IonTitle,
+  IonToolbar,
+} from '@ionic/angular/standalone';
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.page.html',
   styleUrl: './home.page.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [
-    IonHeader,
-    IonToolbar,
-    IonTitle,
-    IonContent,
-    IonButton,
-    IonIcon
-  ]
+  imports: [IonHeader, IonToolbar, IonTitle, IonContent, IonButton, IonIcon],
 })
 export class HomePage {
   readonly embeddedPhoneIcon =

@@ -1,6 +1,6 @@
-import {Component, inject, OnInit} from '@angular/core';
-import {Todo} from '../todo';
-import {ActivatedRoute} from '@angular/router';
+import { Component, inject, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { Todo } from '../todo';
+import { ActivatedRoute } from '@angular/router';
 import {
   IonBackButton,
   IonButton,
@@ -13,15 +13,29 @@ import {
   IonList,
   IonTitle,
   IonToolbar,
-  NavController
+  NavController,
 } from '@ionic/angular/standalone';
-import {TodoService} from '../todo.service';
-import {FormsModule} from '@angular/forms';
+import { TodoService } from '../todo.service';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-edit',
   templateUrl: './edit.page.html',
-  imports: [FormsModule, IonHeader, IonToolbar, IonButtons, IonBackButton, IonTitle, IonContent, IonList, IonItem, IonInput, IonFooter, IonButton]
+  changeDetection: ChangeDetectionStrategy.Eager,
+  imports: [
+    FormsModule,
+    IonHeader,
+    IonToolbar,
+    IonButtons,
+    IonBackButton,
+    IonTitle,
+    IonContent,
+    IonList,
+    IonItem,
+    IonInput,
+    IonFooter,
+    IonButton,
+  ],
 })
 export class EditPage implements OnInit {
   todo: Todo | undefined;
@@ -36,7 +50,7 @@ export class EditPage implements OnInit {
     } else {
       this.todo = {
         title: '',
-        description: ''
+        description: '',
       };
     }
   }
@@ -47,5 +61,4 @@ export class EditPage implements OnInit {
     }
     this.navCtrl.navigateBack(['home']);
   }
-
 }

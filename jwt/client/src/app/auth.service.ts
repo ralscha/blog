@@ -1,19 +1,18 @@
-import {inject, Injectable} from '@angular/core';
-import {Observable, ReplaySubject} from 'rxjs';
-import {HttpClient} from '@angular/common/http';
-import {JwtHelperService} from '@auth0/angular-jwt';
-import {tap} from 'rxjs/operators';
-import {environment} from '../environments/environment';
-import {NavController} from '@ionic/angular/standalone';
+import { inject, Injectable } from '@angular/core';
+import { Observable, ReplaySubject } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
+import { JwtHelperService } from '@auth0/angular-jwt';
+import { tap } from 'rxjs/operators';
+import { environment } from '../environments/environment';
+import { NavController } from '@ionic/angular/standalone';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class AuthService {
   private readonly httpClient = inject(HttpClient);
   private readonly navCtrl = inject(NavController);
   private readonly jwtHelper = inject(JwtHelperService);
-
 
   private readonly jwtTokenName = 'jwt_token';
 
@@ -24,20 +23,17 @@ export class AuthService {
     const jwt = localStorage.getItem(this.jwtTokenName);
 
     if (jwt && !this.jwtHelper.isTokenExpired(jwt)) {
-
       return new Promise((resolve) => {
-
-        this.httpClient.get(`${environment.serverURL}/authenticate`)
-          .subscribe({
-            next: () => {
-              this.authUser.next(jwt);
-              resolve(true);
-            },
-            error: () => {
-              this.logout();
-              resolve(false);
-            }
-          });
+        this.httpClient.get(`${environment.serverURL}/authenticate`).subscribe({
+          next: () => {
+            this.authUser.next(jwt);
+            resolve(true);
+          },
+          error: () => {
+            this.logout();
+            resolve(false);
+          },
+        });
       });
 
       // OR
@@ -49,25 +45,34 @@ export class AuthService {
     }
   }
 
-  login(values: { username: string, password: string }): Observable<string> {
-    return this.httpClient.post(`${environment.serverURL}/login`, values, {responseType: 'text'})
-      .pipe(tap(jwt => this.handleJwtResponse(jwt)));
+  login(values: { username: string; password: string }): Observable<string> {
+    return this.httpClient
+      .post(`${environment.serverURL}/login`, values, { responseType: 'text' })
+      .pipe(tap((jwt) => this.handleJwtResponse(jwt)));
   }
 
   logout(): void {
     localStorage.removeItem(this.jwtTokenName);
     this.authUser.next(null);
-    this.navCtrl.navigateRoot('login', {replaceUrl: true});
+    this.navCtrl.navigateRoot('login', { replaceUrl: true });
   }
 
-  signup(values: { name: string, email: string, username: string, password: string }): Observable<string> {
-    return this.httpClient.post(`${environment.serverURL}/signup`, values, {responseType: 'text'})
-      .pipe(tap(jwt => {
-        if (jwt !== 'EXISTS') {
-          return this.handleJwtResponse(jwt);
-        }
-        return jwt;
-      }));
+  signup(values: {
+    name: string;
+    email: string;
+    username: string;
+    password: string;
+  }): Observable<string> {
+    return this.httpClient
+      .post(`${environment.serverURL}/signup`, values, { responseType: 'text' })
+      .pipe(
+        tap((jwt) => {
+          if (jwt !== 'EXISTS') {
+            return this.handleJwtResponse(jwt);
+          }
+          return jwt;
+        }),
+      );
   }
 
   private handleJwtResponse(jwt: string): string {

@@ -1,11 +1,10 @@
-import {ClientError, ClientErrorDb} from './clientErrorDb';
-import {Injectable} from '@angular/core';
+import { ClientError, ClientErrorDb } from './clientErrorDb';
+import { Injectable } from '@angular/core';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class ClientErrorService {
-
   private db: ClientErrorDb;
 
   constructor() {
@@ -13,7 +12,7 @@ export class ClientErrorService {
   }
 
   async store(body: string): Promise<void> {
-    await this.db.errors.add({error: body});
+    await this.db.errors.add({ error: body });
   }
 
   async delete(ids: number[]): Promise<void> {
@@ -23,5 +22,4 @@ export class ClientErrorService {
   async getAll(): Promise<ClientError[]> {
     return this.db.errors.toArray();
   }
-
 }

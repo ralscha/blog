@@ -6,7 +6,7 @@ export class TodoDb extends Dexie {
   constructor() {
     super('Todo');
     this.version(1).stores({
-      todos: 'id,ts'
+      todos: 'id,ts',
     });
   }
 }

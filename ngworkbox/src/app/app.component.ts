@@ -1,8 +1,9 @@
-import {Component} from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 
 @Component({
   selector: 'app-root',
-  templateUrl: './app.component.html'
+  changeDetection: ChangeDetectionStrategy.Eager,
+  templateUrl: './app.component.html',
 })
 export class AppComponent {
   title = 'Workbox Service Worker with Angular';

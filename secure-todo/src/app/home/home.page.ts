@@ -1,4 +1,4 @@
-import {Component, inject} from '@angular/core';
+import { Component, inject, ChangeDetectionStrategy } from '@angular/core';
 import {
   IonButton,
   IonButtons,
@@ -13,16 +13,17 @@ import {
   IonTitle,
   IonToolbar,
   NavController,
-  ViewDidEnter
+  ViewDidEnter,
 } from '@ionic/angular/standalone';
-import {TodoService} from '../todo.service';
-import {Todo} from '../todo';
-import {addIcons} from "ionicons";
-import {addOutline, createOutline, exitOutline, trashOutline} from "ionicons/icons";
+import { TodoService } from '../todo.service';
+import { Todo } from '../todo';
+import { addIcons } from 'ionicons';
+import { addOutline, createOutline, exitOutline, trashOutline } from 'ionicons/icons';
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.page.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [
     IonHeader,
     IonToolbar,
@@ -35,8 +36,8 @@ import {addOutline, createOutline, exitOutline, trashOutline} from "ionicons/ico
     IonItemSliding,
     IonLabel,
     IonItem,
-    IonItemOptions
-  ]
+    IonItemOptions,
+  ],
 })
 export class HomePage implements ViewDidEnter {
   todos: Todo[] = [];
@@ -44,7 +45,7 @@ export class HomePage implements ViewDidEnter {
   private readonly todoService = inject(TodoService);
 
   constructor() {
-    addIcons({exitOutline, addOutline, createOutline, trashOutline});
+    addIcons({ exitOutline, addOutline, createOutline, trashOutline });
   }
 
   ionViewDidEnter(): void {
@@ -68,7 +69,6 @@ export class HomePage implements ViewDidEnter {
 
   exit(): void {
     this.todoService.exit();
-    this.navCtrl.navigateRoot(['password'], {replaceUrl: true});
+    this.navCtrl.navigateRoot(['password'], { replaceUrl: true });
   }
-
 }

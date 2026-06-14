@@ -1,14 +1,13 @@
-import {Injectable} from '@angular/core';
-import {Todo, TodoDb} from '../todo';
-import {v4 as uuidv4} from 'uuid';
+import { Injectable } from '@angular/core';
+import { Todo, TodoDb } from '../todo';
+import { v4 as uuidv4 } from 'uuid';
 
 const SYNC_TAG = 'todo_updated';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class TodoService {
-
   private db: TodoDb;
 
   constructor() {

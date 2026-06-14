@@ -1,6 +1,6 @@
-import {ErrorHandler, inject, Injectable} from '@angular/core';
-import {environment} from '../environments/environment';
-import {ClientErrorService} from './clientError.service';
+import { ErrorHandler, inject, Injectable } from '@angular/core';
+import { environment } from '../environments/environment';
+import { ClientErrorService } from './clientError.service';
 
 interface NetworkInformationLike {
   downlink?: number;
@@ -70,7 +70,7 @@ export class AppGlobalErrorHandler implements ErrorHandler {
         return;
       }
 
-      const wasOK = await this.sendError(errors.map(error => error.error));
+      const wasOK = await this.sendError(errors.map((error) => error.error));
       if (wasOK) {
         const deleteIds: number[] = [];
         for (const error of errors) {
@@ -92,9 +92,11 @@ export class AppGlobalErrorHandler implements ErrorHandler {
   }
 
   private createErrorReport(error: unknown): ErrorReport {
-    const connection = (navigator as Navigator & {
-      connection?: NetworkInformationLike;
-    }).connection;
+    const connection = (
+      navigator as Navigator & {
+        connection?: NetworkInformationLike;
+      }
+    ).connection;
     const applicationError = this.asError(error);
 
     return {
@@ -105,9 +107,9 @@ export class AppGlobalErrorHandler implements ErrorHandler {
         platform: navigator.platform,
         userAgent: navigator.userAgent,
         connectionDownlink: connection?.downlink,
-        connectionEffectiveType: connection?.effectiveType
+        connectionEffectiveType: connection?.effectiveType,
       },
-      stackTrace: this.parseStackTrace(applicationError)
+      stackTrace: this.parseStackTrace(applicationError),
     };
   }
 
@@ -118,9 +120,9 @@ export class AppGlobalErrorHandler implements ErrorHandler {
 
     return error.stack
       .split('\n')
-      .map(line => line.trim())
-      .filter(line => line.length > 0 && !this.isErrorHeaderLine(line))
-      .map(line => this.parseStackFrame(line))
+      .map((line) => line.trim())
+      .filter((line) => line.length > 0 && !this.isErrorHeaderLine(line))
+      .map((line) => this.parseStackFrame(line))
       .filter((frame): frame is ErrorStackFrame => frame !== null);
   }
 
@@ -140,7 +142,7 @@ export class AppGlobalErrorHandler implements ErrorHandler {
         functionName,
         fileName,
         lineNumber: Number(lineNumber),
-        columnNumber: Number(columnNumber)
+        columnNumber: Number(columnNumber),
       };
     }
 
@@ -150,7 +152,7 @@ export class AppGlobalErrorHandler implements ErrorHandler {
       return {
         fileName,
         lineNumber: Number(lineNumber),
-        columnNumber: Number(columnNumber)
+        columnNumber: Number(columnNumber),
       };
     }
 
@@ -165,7 +167,7 @@ export class AppGlobalErrorHandler implements ErrorHandler {
         functionName: functionName || undefined,
         fileName,
         lineNumber: Number(lineNumber),
-        columnNumber: Number(columnNumber)
+        columnNumber: Number(columnNumber),
       };
     }
 
@@ -215,8 +217,8 @@ export class AppGlobalErrorHandler implements ErrorHandler {
         method: 'POST',
         body,
         headers: {
-          'content-type': 'application/json'
-        }
+          'content-type': 'application/json',
+        },
       });
       if (response.ok) {
         return true;

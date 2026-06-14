@@ -1,14 +1,15 @@
 /*eslint-disable block-scoped-var, id-length, no-control-regex, no-magic-numbers, no-prototype-builtins, no-redeclare, no-shadow, no-var, sort-vars*/
-import * as $protobuf from "protobufjs/minimal";
+import * as $protobuf from 'protobufjs/minimal';
 
 // Common aliases
-const $Reader = $protobuf.Reader, $Writer = $protobuf.Writer, $util = $protobuf.util;
+const $Reader = $protobuf.Reader,
+  $Writer = $protobuf.Writer,
+  $util = $protobuf.util;
 
 // Exported root namespace
-const $root = $protobuf.roots["default"] || ($protobuf.roots["default"] = {});
+const $root = $protobuf.roots['default'] || ($protobuf.roots['default'] = {});
 
-export const Earthquake = $root.Earthquake = (() => {
-
+export const Earthquake = ($root.Earthquake = (() => {
   /**
    * Properties of an Earthquake.
    * @exports IEarthquake
@@ -34,8 +35,7 @@ export const Earthquake = $root.Earthquake = (() => {
   function Earthquake(properties) {
     if (properties)
       for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
-        if (properties[keys[i]] != null)
-          this[keys[i]] = properties[keys[i]];
+        if (properties[keys[i]] != null) this[keys[i]] = properties[keys[i]];
   }
 
   /**
@@ -44,7 +44,7 @@ export const Earthquake = $root.Earthquake = (() => {
    * @memberof Earthquake
    * @instance
    */
-  Earthquake.prototype.id = "";
+  Earthquake.prototype.id = '';
 
   /**
    * Earthquake time.
@@ -52,7 +52,7 @@ export const Earthquake = $root.Earthquake = (() => {
    * @memberof Earthquake
    * @instance
    */
-  Earthquake.prototype.time = "";
+  Earthquake.prototype.time = '';
 
   /**
    * Earthquake latitude.
@@ -92,7 +92,7 @@ export const Earthquake = $root.Earthquake = (() => {
    * @memberof Earthquake
    * @instance
    */
-  Earthquake.prototype.place = "";
+  Earthquake.prototype.place = '';
 
   /**
    * Earthquake magType.
@@ -100,7 +100,7 @@ export const Earthquake = $root.Earthquake = (() => {
    * @memberof Earthquake
    * @instance
    */
-  Earthquake.prototype.magType = "";
+  Earthquake.prototype.magType = '';
 
   /**
    * Creates a new Earthquake instance using the specified properties.
@@ -124,24 +124,23 @@ export const Earthquake = $root.Earthquake = (() => {
    * @returns {$protobuf.Writer} Writer
    */
   Earthquake.encode = function encode(message, writer) {
-    if (!writer)
-      writer = $Writer.create();
-    if (message.id != null && Object.hasOwnProperty.call(message, "id"))
-      writer.uint32(/* id 1, wireType 2 =*/10).string(message.id);
-    if (message.time != null && Object.hasOwnProperty.call(message, "time"))
-      writer.uint32(/* id 2, wireType 2 =*/18).string(message.time);
-    if (message.latitude != null && Object.hasOwnProperty.call(message, "latitude"))
-      writer.uint32(/* id 3, wireType 1 =*/25).double(message.latitude);
-    if (message.longitude != null && Object.hasOwnProperty.call(message, "longitude"))
-      writer.uint32(/* id 4, wireType 1 =*/33).double(message.longitude);
-    if (message.depth != null && Object.hasOwnProperty.call(message, "depth"))
-      writer.uint32(/* id 5, wireType 5 =*/45).float(message.depth);
-    if (message.mag != null && Object.hasOwnProperty.call(message, "mag"))
-      writer.uint32(/* id 6, wireType 5 =*/53).float(message.mag);
-    if (message.place != null && Object.hasOwnProperty.call(message, "place"))
-      writer.uint32(/* id 7, wireType 2 =*/58).string(message.place);
-    if (message.magType != null && Object.hasOwnProperty.call(message, "magType"))
-      writer.uint32(/* id 8, wireType 2 =*/66).string(message.magType);
+    if (!writer) writer = $Writer.create();
+    if (message.id != null && Object.hasOwnProperty.call(message, 'id'))
+      writer.uint32(/* id 1, wireType 2 =*/ 10).string(message.id);
+    if (message.time != null && Object.hasOwnProperty.call(message, 'time'))
+      writer.uint32(/* id 2, wireType 2 =*/ 18).string(message.time);
+    if (message.latitude != null && Object.hasOwnProperty.call(message, 'latitude'))
+      writer.uint32(/* id 3, wireType 1 =*/ 25).double(message.latitude);
+    if (message.longitude != null && Object.hasOwnProperty.call(message, 'longitude'))
+      writer.uint32(/* id 4, wireType 1 =*/ 33).double(message.longitude);
+    if (message.depth != null && Object.hasOwnProperty.call(message, 'depth'))
+      writer.uint32(/* id 5, wireType 5 =*/ 45).float(message.depth);
+    if (message.mag != null && Object.hasOwnProperty.call(message, 'mag'))
+      writer.uint32(/* id 6, wireType 5 =*/ 53).float(message.mag);
+    if (message.place != null && Object.hasOwnProperty.call(message, 'place'))
+      writer.uint32(/* id 7, wireType 2 =*/ 58).string(message.place);
+    if (message.magType != null && Object.hasOwnProperty.call(message, 'magType'))
+      writer.uint32(/* id 8, wireType 2 =*/ 66).string(message.magType);
     return writer;
   };
 
@@ -170,13 +169,12 @@ export const Earthquake = $root.Earthquake = (() => {
    * @throws {$protobuf.util.ProtocolError} If required fields are missing
    */
   Earthquake.decode = function decode(reader, length, error) {
-    if (!(reader instanceof $Reader))
-      reader = $Reader.create(reader);
-    let end = length === undefined ? reader.len : reader.pos + length, message = new $root.Earthquake();
+    if (!(reader instanceof $Reader)) reader = $Reader.create(reader);
+    let end = length === undefined ? reader.len : reader.pos + length,
+      message = new $root.Earthquake();
     while (reader.pos < end) {
       let tag = reader.uint32();
-      if (tag === error)
-        break;
+      if (tag === error) break;
       switch (tag >>> 3) {
         case 1: {
           message.id = reader.string();
@@ -229,8 +227,7 @@ export const Earthquake = $root.Earthquake = (() => {
    * @throws {$protobuf.util.ProtocolError} If required fields are missing
    */
   Earthquake.decodeDelimited = function decodeDelimited(reader) {
-    if (!(reader instanceof $Reader))
-      reader = new $Reader(reader);
+    if (!(reader instanceof $Reader)) reader = new $Reader(reader);
     return this.decode(reader, reader.uint32());
   };
 
@@ -243,32 +240,23 @@ export const Earthquake = $root.Earthquake = (() => {
    * @returns {string|null} `null` if valid, otherwise the reason why it is not
    */
   Earthquake.verify = function verify(message) {
-    if (typeof message !== "object" || message === null)
-      return "object expected";
-    if (message.id != null && message.hasOwnProperty("id"))
-      if (!$util.isString(message.id))
-        return "id: string expected";
-    if (message.time != null && message.hasOwnProperty("time"))
-      if (!$util.isString(message.time))
-        return "time: string expected";
-    if (message.latitude != null && message.hasOwnProperty("latitude"))
-      if (typeof message.latitude !== "number")
-        return "latitude: number expected";
-    if (message.longitude != null && message.hasOwnProperty("longitude"))
-      if (typeof message.longitude !== "number")
-        return "longitude: number expected";
-    if (message.depth != null && message.hasOwnProperty("depth"))
-      if (typeof message.depth !== "number")
-        return "depth: number expected";
-    if (message.mag != null && message.hasOwnProperty("mag"))
-      if (typeof message.mag !== "number")
-        return "mag: number expected";
-    if (message.place != null && message.hasOwnProperty("place"))
-      if (!$util.isString(message.place))
-        return "place: string expected";
-    if (message.magType != null && message.hasOwnProperty("magType"))
-      if (!$util.isString(message.magType))
-        return "magType: string expected";
+    if (typeof message !== 'object' || message === null) return 'object expected';
+    if (message.id != null && message.hasOwnProperty('id'))
+      if (!$util.isString(message.id)) return 'id: string expected';
+    if (message.time != null && message.hasOwnProperty('time'))
+      if (!$util.isString(message.time)) return 'time: string expected';
+    if (message.latitude != null && message.hasOwnProperty('latitude'))
+      if (typeof message.latitude !== 'number') return 'latitude: number expected';
+    if (message.longitude != null && message.hasOwnProperty('longitude'))
+      if (typeof message.longitude !== 'number') return 'longitude: number expected';
+    if (message.depth != null && message.hasOwnProperty('depth'))
+      if (typeof message.depth !== 'number') return 'depth: number expected';
+    if (message.mag != null && message.hasOwnProperty('mag'))
+      if (typeof message.mag !== 'number') return 'mag: number expected';
+    if (message.place != null && message.hasOwnProperty('place'))
+      if (!$util.isString(message.place)) return 'place: string expected';
+    if (message.magType != null && message.hasOwnProperty('magType'))
+      if (!$util.isString(message.magType)) return 'magType: string expected';
     return null;
   };
 
@@ -281,25 +269,16 @@ export const Earthquake = $root.Earthquake = (() => {
    * @returns {Earthquake} Earthquake
    */
   Earthquake.fromObject = function fromObject(object) {
-    if (object instanceof $root.Earthquake)
-      return object;
+    if (object instanceof $root.Earthquake) return object;
     let message = new $root.Earthquake();
-    if (object.id != null)
-      message.id = String(object.id);
-    if (object.time != null)
-      message.time = String(object.time);
-    if (object.latitude != null)
-      message.latitude = Number(object.latitude);
-    if (object.longitude != null)
-      message.longitude = Number(object.longitude);
-    if (object.depth != null)
-      message.depth = Number(object.depth);
-    if (object.mag != null)
-      message.mag = Number(object.mag);
-    if (object.place != null)
-      message.place = String(object.place);
-    if (object.magType != null)
-      message.magType = String(object.magType);
+    if (object.id != null) message.id = String(object.id);
+    if (object.time != null) message.time = String(object.time);
+    if (object.latitude != null) message.latitude = Number(object.latitude);
+    if (object.longitude != null) message.longitude = Number(object.longitude);
+    if (object.depth != null) message.depth = Number(object.depth);
+    if (object.mag != null) message.mag = Number(object.mag);
+    if (object.place != null) message.place = String(object.place);
+    if (object.magType != null) message.magType = String(object.magType);
     return message;
   };
 
@@ -313,34 +292,35 @@ export const Earthquake = $root.Earthquake = (() => {
    * @returns {Object.<string,*>} Plain object
    */
   Earthquake.toObject = function toObject(message, options) {
-    if (!options)
-      options = {};
+    if (!options) options = {};
     let object = {};
     if (options.defaults) {
-      object.id = "";
-      object.time = "";
+      object.id = '';
+      object.time = '';
       object.latitude = 0;
       object.longitude = 0;
       object.depth = 0;
       object.mag = 0;
-      object.place = "";
-      object.magType = "";
+      object.place = '';
+      object.magType = '';
     }
-    if (message.id != null && message.hasOwnProperty("id"))
-      object.id = message.id;
-    if (message.time != null && message.hasOwnProperty("time"))
-      object.time = message.time;
-    if (message.latitude != null && message.hasOwnProperty("latitude"))
-      object.latitude = options.json && !isFinite(message.latitude) ? String(message.latitude) : message.latitude;
-    if (message.longitude != null && message.hasOwnProperty("longitude"))
-      object.longitude = options.json && !isFinite(message.longitude) ? String(message.longitude) : message.longitude;
-    if (message.depth != null && message.hasOwnProperty("depth"))
-      object.depth = options.json && !isFinite(message.depth) ? String(message.depth) : message.depth;
-    if (message.mag != null && message.hasOwnProperty("mag"))
+    if (message.id != null && message.hasOwnProperty('id')) object.id = message.id;
+    if (message.time != null && message.hasOwnProperty('time')) object.time = message.time;
+    if (message.latitude != null && message.hasOwnProperty('latitude'))
+      object.latitude =
+        options.json && !isFinite(message.latitude) ? String(message.latitude) : message.latitude;
+    if (message.longitude != null && message.hasOwnProperty('longitude'))
+      object.longitude =
+        options.json && !isFinite(message.longitude)
+          ? String(message.longitude)
+          : message.longitude;
+    if (message.depth != null && message.hasOwnProperty('depth'))
+      object.depth =
+        options.json && !isFinite(message.depth) ? String(message.depth) : message.depth;
+    if (message.mag != null && message.hasOwnProperty('mag'))
       object.mag = options.json && !isFinite(message.mag) ? String(message.mag) : message.mag;
-    if (message.place != null && message.hasOwnProperty("place"))
-      object.place = message.place;
-    if (message.magType != null && message.hasOwnProperty("magType"))
+    if (message.place != null && message.hasOwnProperty('place')) object.place = message.place;
+    if (message.magType != null && message.hasOwnProperty('magType'))
       object.magType = message.magType;
     return object;
   };
@@ -366,16 +346,15 @@ export const Earthquake = $root.Earthquake = (() => {
    */
   Earthquake.getTypeUrl = function getTypeUrl(typeUrlPrefix) {
     if (typeUrlPrefix === undefined) {
-      typeUrlPrefix = "type.googleapis.com";
+      typeUrlPrefix = 'type.googleapis.com';
     }
-    return typeUrlPrefix + "/Earthquake";
+    return typeUrlPrefix + '/Earthquake';
   };
 
   return Earthquake;
-})();
+})());
 
-export const Earthquakes = $root.Earthquakes = (() => {
-
+export const Earthquakes = ($root.Earthquakes = (() => {
   /**
    * Properties of an Earthquakes.
    * @exports IEarthquakes
@@ -395,8 +374,7 @@ export const Earthquakes = $root.Earthquakes = (() => {
     this.earthquakes = [];
     if (properties)
       for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
-        if (properties[keys[i]] != null)
-          this[keys[i]] = properties[keys[i]];
+        if (properties[keys[i]] != null) this[keys[i]] = properties[keys[i]];
   }
 
   /**
@@ -429,11 +407,13 @@ export const Earthquakes = $root.Earthquakes = (() => {
    * @returns {$protobuf.Writer} Writer
    */
   Earthquakes.encode = function encode(message, writer) {
-    if (!writer)
-      writer = $Writer.create();
+    if (!writer) writer = $Writer.create();
     if (message.earthquakes != null && message.earthquakes.length)
       for (let i = 0; i < message.earthquakes.length; ++i)
-        $root.Earthquake.encode(message.earthquakes[i], writer.uint32(/* id 1, wireType 2 =*/10).fork()).ldelim();
+        $root.Earthquake.encode(
+          message.earthquakes[i],
+          writer.uint32(/* id 1, wireType 2 =*/ 10).fork(),
+        ).ldelim();
     return writer;
   };
 
@@ -462,17 +442,15 @@ export const Earthquakes = $root.Earthquakes = (() => {
    * @throws {$protobuf.util.ProtocolError} If required fields are missing
    */
   Earthquakes.decode = function decode(reader, length, error) {
-    if (!(reader instanceof $Reader))
-      reader = $Reader.create(reader);
-    let end = length === undefined ? reader.len : reader.pos + length, message = new $root.Earthquakes();
+    if (!(reader instanceof $Reader)) reader = $Reader.create(reader);
+    let end = length === undefined ? reader.len : reader.pos + length,
+      message = new $root.Earthquakes();
     while (reader.pos < end) {
       let tag = reader.uint32();
-      if (tag === error)
-        break;
+      if (tag === error) break;
       switch (tag >>> 3) {
         case 1: {
-          if (!(message.earthquakes && message.earthquakes.length))
-            message.earthquakes = [];
+          if (!(message.earthquakes && message.earthquakes.length)) message.earthquakes = [];
           message.earthquakes.push($root.Earthquake.decode(reader, reader.uint32()));
           break;
         }
@@ -495,8 +473,7 @@ export const Earthquakes = $root.Earthquakes = (() => {
    * @throws {$protobuf.util.ProtocolError} If required fields are missing
    */
   Earthquakes.decodeDelimited = function decodeDelimited(reader) {
-    if (!(reader instanceof $Reader))
-      reader = new $Reader(reader);
+    if (!(reader instanceof $Reader)) reader = new $Reader(reader);
     return this.decode(reader, reader.uint32());
   };
 
@@ -509,15 +486,12 @@ export const Earthquakes = $root.Earthquakes = (() => {
    * @returns {string|null} `null` if valid, otherwise the reason why it is not
    */
   Earthquakes.verify = function verify(message) {
-    if (typeof message !== "object" || message === null)
-      return "object expected";
-    if (message.earthquakes != null && message.hasOwnProperty("earthquakes")) {
-      if (!Array.isArray(message.earthquakes))
-        return "earthquakes: array expected";
+    if (typeof message !== 'object' || message === null) return 'object expected';
+    if (message.earthquakes != null && message.hasOwnProperty('earthquakes')) {
+      if (!Array.isArray(message.earthquakes)) return 'earthquakes: array expected';
       for (let i = 0; i < message.earthquakes.length; ++i) {
         let error = $root.Earthquake.verify(message.earthquakes[i]);
-        if (error)
-          return "earthquakes." + error;
+        if (error) return 'earthquakes.' + error;
       }
     }
     return null;
@@ -532,16 +506,15 @@ export const Earthquakes = $root.Earthquakes = (() => {
    * @returns {Earthquakes} Earthquakes
    */
   Earthquakes.fromObject = function fromObject(object) {
-    if (object instanceof $root.Earthquakes)
-      return object;
+    if (object instanceof $root.Earthquakes) return object;
     let message = new $root.Earthquakes();
     if (object.earthquakes) {
       if (!Array.isArray(object.earthquakes))
-        throw TypeError(".Earthquakes.earthquakes: array expected");
+        throw TypeError('.Earthquakes.earthquakes: array expected');
       message.earthquakes = [];
       for (let i = 0; i < object.earthquakes.length; ++i) {
-        if (typeof object.earthquakes[i] !== "object")
-          throw TypeError(".Earthquakes.earthquakes: object expected");
+        if (typeof object.earthquakes[i] !== 'object')
+          throw TypeError('.Earthquakes.earthquakes: object expected');
         message.earthquakes[i] = $root.Earthquake.fromObject(object.earthquakes[i]);
       }
     }
@@ -558,11 +531,9 @@ export const Earthquakes = $root.Earthquakes = (() => {
    * @returns {Object.<string,*>} Plain object
    */
   Earthquakes.toObject = function toObject(message, options) {
-    if (!options)
-      options = {};
+    if (!options) options = {};
     let object = {};
-    if (options.arrays || options.defaults)
-      object.earthquakes = [];
+    if (options.arrays || options.defaults) object.earthquakes = [];
     if (message.earthquakes && message.earthquakes.length) {
       object.earthquakes = [];
       for (let j = 0; j < message.earthquakes.length; ++j)
@@ -592,12 +563,12 @@ export const Earthquakes = $root.Earthquakes = (() => {
    */
   Earthquakes.getTypeUrl = function getTypeUrl(typeUrlPrefix) {
     if (typeUrlPrefix === undefined) {
-      typeUrlPrefix = "type.googleapis.com";
+      typeUrlPrefix = 'type.googleapis.com';
     }
-    return typeUrlPrefix + "/Earthquakes";
+    return typeUrlPrefix + '/Earthquakes';
   };
 
   return Earthquakes;
-})();
+})());
 
-export {$root as default};
+export { $root as default };

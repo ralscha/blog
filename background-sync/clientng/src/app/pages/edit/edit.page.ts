@@ -1,8 +1,8 @@
-import { Component, OnInit, inject } from '@angular/core';
-import {ActivatedRoute, Router} from '@angular/router';
-import {TodoService} from '../../services/todo.service';
-import {Todo} from '../../todo';
-import {FormsModule, NgForm} from '@angular/forms';
+import { Component, OnInit, inject, ChangeDetectionStrategy } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { TodoService } from '../../services/todo.service';
+import { Todo } from '../../todo';
+import { FormsModule, NgForm } from '@angular/forms';
 import {
   IonBackButton,
   IonButton,
@@ -14,15 +14,16 @@ import {
   IonItem,
   IonList,
   IonTitle,
-  IonToolbar
-} from "@ionic/angular/standalone";
-import {trashOutline} from "ionicons/icons";
-import {addIcons} from "ionicons";
+  IonToolbar,
+} from '@ionic/angular/standalone';
+import { trashOutline } from 'ionicons/icons';
+import { addIcons } from 'ionicons';
 
 @Component({
   selector: 'app-edit',
   templateUrl: './edit.page.html',
   styleUrl: './edit.page.scss',
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [
     IonHeader,
     IonToolbar,
@@ -35,19 +36,18 @@ import {addIcons} from "ionicons";
     IonList,
     FormsModule,
     IonItem,
-    IonInput
-  ]
+    IonInput,
+  ],
 })
 export class EditPage implements OnInit {
   private readonly route = inject(ActivatedRoute);
   private readonly todoService = inject(TodoService);
   private readonly router = inject(Router);
 
-
   todo: Todo | undefined;
 
   constructor() {
-    addIcons({trashOutline});
+    addIcons({ trashOutline });
   }
 
   async ngOnInit(): Promise<void> {
@@ -59,7 +59,7 @@ export class EditPage implements OnInit {
         id: '',
         subject: '',
         description: '',
-        ts: 0
+        ts: 0,
       };
     }
   }
@@ -79,5 +79,4 @@ export class EditPage implements OnInit {
     }
     this.router.navigateByUrl('/');
   }
-
 }

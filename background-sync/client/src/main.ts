@@ -1,10 +1,16 @@
-import { provideZoneChangeDetection } from "@angular/core";
-import {PreloadAllModules, provideRouter, RouteReuseStrategy, withHashLocation, withPreloading} from '@angular/router';
-import {bootstrapApplication} from '@angular/platform-browser';
-import {routes} from './app/app.routes';
-import {AppComponent} from './app/app.component';
-import {provideIonicAngular,IonicRouteStrategy} from "@ionic/angular/standalone";
-import {Workbox} from "workbox-window";
+import { provideZoneChangeDetection } from '@angular/core';
+import {
+  PreloadAllModules,
+  provideRouter,
+  RouteReuseStrategy,
+  withHashLocation,
+  withPreloading,
+} from '@angular/router';
+import { bootstrapApplication } from '@angular/platform-browser';
+import { routes } from './app/app.routes';
+import { AppComponent } from './app/app.component';
+import { provideIonicAngular, IonicRouteStrategy } from '@ionic/angular/standalone';
+import { Workbox } from 'workbox-window';
 
 function loadServiceWorker() {
   if ('serviceWorker' in navigator) {
@@ -15,10 +21,11 @@ function loadServiceWorker() {
 
 bootstrapApplication(AppComponent, {
   providers: [
-    provideZoneChangeDetection(),provideIonicAngular(),
-    {provide: RouteReuseStrategy, useClass: IonicRouteStrategy},
-    provideRouter(routes, withHashLocation(), withPreloading(PreloadAllModules))
-  ]
+    provideZoneChangeDetection(),
+    provideIonicAngular(),
+    { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
+    provideRouter(routes, withHashLocation(), withPreloading(PreloadAllModules)),
+  ],
 })
   .then(() => loadServiceWorker())
-  .catch(err => console.error(err));
+  .catch((err) => console.error(err));

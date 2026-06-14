@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  serviceWorkerScript: 'sw-sync.js'
+  serviceWorkerScript: 'sw-sync.js',
 };
 
 /*

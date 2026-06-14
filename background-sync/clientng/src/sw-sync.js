@@ -6,13 +6,12 @@
   const API_BASE_URL = 'http://localhost:8080';
   const SYNC_TAG = 'todo_updated';
 
-  const db = new Dexie("Todo");
+  const db = new Dexie('Todo');
 
   db.version(1).stores({
-    todos: "id,ts"
+    todos: 'id,ts',
   });
   db.open();
-
 
   self.addEventListener('sync', function (event) {
     if (event.tag === SYNC_TAG) {
@@ -25,17 +24,17 @@
     const syncView = await syncViewResponse.json();
 
     const serverMap = new Map();
-    Object.entries(syncView).forEach(kv => serverMap.set(kv[0], kv[1]));
+    Object.entries(syncView).forEach((kv) => serverMap.set(kv[0], kv[1]));
 
     const syncRequest = {
       update: [],
       remove: [],
-      get: []
+      get: [],
     };
 
     const deleteLocal = [];
 
-    await db.todos.toCollection().each(todo => {
+    await db.todos.toCollection().each((todo) => {
       const serverTimestamp = serverMap.get(todo.id);
       if (serverTimestamp) {
         if (todo.ts === -1) {
@@ -67,9 +66,11 @@
     }
 
     // if no changes end sync
-    if (syncRequest.update.length === 0
-      && syncRequest.remove.length === 0
-      && syncRequest.get.length === 0) {
+    if (
+      syncRequest.update.length === 0 &&
+      syncRequest.remove.length === 0 &&
+      syncRequest.get.length === 0
+    ) {
       if (deleted) {
         return notifyClients();
       } else {
@@ -82,8 +83,8 @@
       method: 'POST',
       body: JSON.stringify(syncRequest),
       headers: {
-        'Content-Type': 'application/json'
-      }
+        'Content-Type': 'application/json',
+      },
     });
 
     if (syncResponse.status === 200) {
@@ -96,7 +97,7 @@
 
         if (sync.updated) {
           await Promise.all(
-            Object.entries(sync.updated).map(([id, ts]) => db.todos.update(id, {ts}))
+            Object.entries(sync.updated).map(([id, ts]) => db.todos.update(id, { ts })),
           );
         }
         if (sync.removed && sync.removed.length > 0) {
@@ -111,10 +112,9 @@
   }
 
   async function notifyClients() {
-    const clients = await self.clients.matchAll({includeUncontrolled: true});
+    const clients = await self.clients.matchAll({ includeUncontrolled: true });
     for (const client of clients) {
       client.postMessage('sync_finished');
     }
   }
-
-}());
+})();

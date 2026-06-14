@@ -1,7 +1,7 @@
-import {Component, inject, OnInit} from '@angular/core';
-import {EarthquakeService} from '../earthquake.service';
-import {IEarthquake} from '../protos/earthquake';
-import {DetailComponent} from '../detail/detail.component';
+import { Component, inject, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { EarthquakeService } from '../earthquake.service';
+import { IEarthquake } from '../protos/earthquake';
+import { DetailComponent } from '../detail/detail.component';
 import {
   IonContent,
   IonHeader,
@@ -11,13 +11,25 @@ import {
   IonRefresher,
   IonRefresherContent,
   IonTitle,
-  IonToolbar
-} from "@ionic/angular/standalone";
+  IonToolbar,
+} from '@ionic/angular/standalone';
 
 @Component({
   selector: 'app-json',
   templateUrl: './json.page.html',
-  imports: [DetailComponent, IonHeader, IonToolbar, IonTitle, IonContent, IonRefresher, IonRefresherContent, IonList, IonItem, IonLabel]
+  changeDetection: ChangeDetectionStrategy.Eager,
+  imports: [
+    DetailComponent,
+    IonHeader,
+    IonToolbar,
+    IonTitle,
+    IonContent,
+    IonRefresher,
+    IonRefresherContent,
+    IonList,
+    IonItem,
+    IonLabel,
+  ],
 })
 export class JsonPage implements OnInit {
   earthquakes: IEarthquake[] = [];
@@ -25,17 +37,14 @@ export class JsonPage implements OnInit {
 
   doRefresh(event: Event): void {
     this.earthquakeService.refresh().subscribe(() => {
-      this.earthquakeService
-        .fetchJson()
-        .subscribe(data => {
-          this.earthquakes = data;
-          (event as CustomEvent).detail.complete();
-        });
+      this.earthquakeService.fetchJson().subscribe((data) => {
+        this.earthquakes = data;
+        (event as CustomEvent).detail.complete();
+      });
     });
   }
 
   ngOnInit(): void {
-    this.earthquakeService.fetchJson().subscribe(data => this.earthquakes = data);
+    this.earthquakeService.fetchJson().subscribe((data) => (this.earthquakes = data));
   }
-
 }

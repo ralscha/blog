@@ -1,4 +1,4 @@
-import Dexie, {type EntityTable} from 'dexie';
+import Dexie, { type EntityTable } from 'dexie';
 
 export class EarthquakeDb extends Dexie {
   earthquakes!: EntityTable<Earthquake, 'id'>;
@@ -6,7 +6,7 @@ export class EarthquakeDb extends Dexie {
   constructor() {
     super('Earthquake');
     this.version(1).stores({
-      earthquakes: 'id,mag,time'
+      earthquakes: 'id,mag,time',
     });
   }
 }
@@ -20,4 +20,3 @@ export interface Earthquake {
   distance?: number;
   latLng: [number, number];
 }
-

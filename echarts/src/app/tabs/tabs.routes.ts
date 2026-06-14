@@ -1,11 +1,11 @@
-import {TabsPage} from './tabs.page';
-import {Chart1Page} from '../chart1/chart1';
-import {Chart3Page} from '../chart3/chart3';
-import {Chart2Page} from '../chart2/chart2';
-import {Chart4Page} from '../chart4/chart4';
-import {Chart5Page} from '../chart5/chart5';
-import {Chart6Page} from '../chart6/chart6';
-import {Routes} from "@angular/router";
+import { TabsPage } from './tabs.page';
+import { Chart1Page } from '../chart1/chart1';
+import { Chart3Page } from '../chart3/chart3';
+import { Chart2Page } from '../chart2/chart2';
+import { Chart4Page } from '../chart4/chart4';
+import { Chart5Page } from '../chart5/chart5';
+import { Chart6Page } from '../chart6/chart6';
+import { Routes } from '@angular/router';
 
 export const tabsRoutes: Routes = [
   {
@@ -17,67 +17,65 @@ export const tabsRoutes: Routes = [
         children: [
           {
             path: '',
-            component: Chart1Page
-          }
-        ]
+            component: Chart1Page,
+          },
+        ],
       },
       {
         path: 'chart2',
         children: [
           {
             path: '',
-            component: Chart2Page
-          }
-        ]
+            component: Chart2Page,
+          },
+        ],
       },
       {
         path: 'chart3',
         children: [
           {
             path: '',
-            component: Chart3Page
-          }
-        ]
+            component: Chart3Page,
+          },
+        ],
       },
       {
         path: 'chart4',
         children: [
           {
             path: '',
-            component: Chart4Page
-          }
-        ]
+            component: Chart4Page,
+          },
+        ],
       },
       {
         path: 'chart5',
         children: [
           {
             path: '',
-            component: Chart5Page
-          }
-        ]
+            component: Chart5Page,
+          },
+        ],
       },
       {
         path: 'chart6',
         children: [
           {
             path: '',
-            component: Chart6Page
-          }
-        ]
+            component: Chart6Page,
+          },
+        ],
       },
       {
         path: '',
         redirectTo: '/tabs/chart1',
-        pathMatch: 'full'
-      }
-    ]
+        pathMatch: 'full',
+      },
+    ],
   },
   {
     path: '',
     redirectTo: '/tabs/chart1',
-    pathMatch: 'full'
-  }
+    pathMatch: 'full',
+  },
 ];
-
-

@@ -1,17 +1,17 @@
-import {Component, viewChild} from '@angular/core';
-import {DrawableDirective} from '../drawable.directive';
-import {multiply} from 'mathjs';
-import {DecimalPipe} from '@angular/common';
-import {IonButton, IonContent, IonHeader, IonTitle, IonToolbar} from '@ionic/angular/standalone';
+import { Component, viewChild, ChangeDetectionStrategy } from '@angular/core';
+import { DrawableDirective } from '../drawable.directive';
+import { multiply } from 'mathjs';
+import { DecimalPipe } from '@angular/common';
+import { IonButton, IonContent, IonHeader, IonTitle, IonToolbar } from '@ionic/angular/standalone';
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.page.html',
   styleUrl: './home.page.scss',
-  imports: [DrawableDirective, DecimalPipe, IonHeader, IonToolbar, IonTitle, IonContent, IonButton]
+  changeDetection: ChangeDetectionStrategy.Eager,
+  imports: [DrawableDirective, DecimalPipe, IonHeader, IonToolbar, IonTitle, IonContent, IonButton],
 })
 export class HomePage {
-
   readonly drawable = viewChild.required(DrawableDirective);
   detections: number[] = [];
   detectedNumber: number | null | undefined;
@@ -25,8 +25,12 @@ export class HomePage {
 
   private async loadWeights(): Promise<void> {
     const [weightsInputHidden, weightsHiddenOutput] = await Promise.all([
-      fetch('assets/weights-input-hidden.json').then(response => response.json() as Promise<number[][]>),
-      fetch('assets/weights-hidden-output.json').then(response => response.json() as Promise<number[][]>)
+      fetch('assets/weights-input-hidden.json').then(
+        (response) => response.json() as Promise<number[][]>,
+      ),
+      fetch('assets/weights-hidden-output.json').then(
+        (response) => response.json() as Promise<number[][]>,
+      ),
     ]);
 
     this.weightsInputHidden = weightsInputHidden;
@@ -49,13 +53,22 @@ export class HomePage {
     const ratioX = canvas.width / 28;
     const ratioY = canvas.height / 28;
     const drawBox = this.drawable().getDrawingBox();
-    const scaledSourceWidth = Math.min(20, Math.max(4, ((drawBox[2] - drawBox[0] + 32) / ratioX)));
-    const scaledSourceHeight = Math.min(20, ((drawBox[3] - drawBox[1] + 32) / ratioY));
+    const scaledSourceWidth = Math.min(20, Math.max(4, (drawBox[2] - drawBox[0] + 32) / ratioX));
+    const scaledSourceHeight = Math.min(20, (drawBox[3] - drawBox[1] + 32) / ratioY);
     const dx = (28 - scaledSourceWidth) / 2;
     const dy = (28 - scaledSourceHeight) / 2;
 
-    copyContext!.drawImage(canvas, drawBox[0] - 16, drawBox[1] - 16, drawBox[2] - drawBox[0] + 16, drawBox[3] - drawBox[1] + 16,
-      dx, dy, scaledSourceWidth, scaledSourceHeight);
+    copyContext!.drawImage(
+      canvas,
+      drawBox[0] - 16,
+      drawBox[1] - 16,
+      drawBox[2] - drawBox[0] + 16,
+      drawBox[3] - drawBox[1] + 16,
+      dx,
+      dy,
+      scaledSourceWidth,
+      scaledSourceHeight,
+    );
     const imageData = copyContext!.getImageData(0, 0, 28, 28);
 
     const numPixels = imageData.width * imageData.height;
@@ -81,9 +94,9 @@ export class HomePage {
     }
 
     const hiddenInputs = multiply(this.weightsInputHidden, inputs);
-    const hiddenOutputs = hiddenInputs.map(value => this.sigmoid(value));
+    const hiddenOutputs = hiddenInputs.map((row) => row.map((value) => this.sigmoid(value)));
     const finalInputs = multiply(this.weightsHiddenOutput, hiddenOutputs);
-    return finalInputs.map(value => this.sigmoid(value));
+    return finalInputs.map((row) => row.map((value) => this.sigmoid(value))).flat();
   }
 
   private indexMax(data: number[]): number {
@@ -94,5 +107,4 @@ export class HomePage {
 
     return indexMax;
   }
-
 }

@@ -1,6 +1,6 @@
-import {Injectable} from '@angular/core';
-import {Earthquake, EarthquakeDb} from './earthquake-db';
-import {Filter} from './filter-interface';
+import { Injectable } from '@angular/core';
+import { Earthquake, EarthquakeDb } from './earthquake-db';
+import { Filter } from './filter-interface';
 import Papa from 'papaparse';
 import getDistance from 'geolib/es/getDistance';
 
@@ -15,10 +15,9 @@ interface EarthquakeCsvRow {
 }
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class EarthquakeService {
-
   private static readonly FORTY_FIVE_MINUTES = 45 * 60 * 1000;
   private static readonly ONE_HOUR = 60 * 60 * 1000;
   private static readonly ONE_DAY = 24 * 60 * 60 * 1000;
@@ -38,20 +37,30 @@ export class EarthquakeService {
       const now = Date.now();
       if (lastUpdateTs + EarthquakeService.SEVEN_DAYS < now) {
         // database older than 7 days. load the 30 days file
-        await this.loadData('https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_month.csv');
+        await this.loadData(
+          'https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_month.csv',
+        );
       } else if (lastUpdateTs + EarthquakeService.ONE_DAY < now) {
         // database older than 1 day. load the 7 days file
-        await this.loadData('https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_week.csv');
+        await this.loadData(
+          'https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_week.csv',
+        );
       } else if (lastUpdateTs + EarthquakeService.ONE_HOUR < now) {
         // database older than 1 hour. load the 1 day file
-        await this.loadData('https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_day.csv');
+        await this.loadData(
+          'https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_day.csv',
+        );
       } else if (lastUpdateTs + EarthquakeService.FORTY_FIVE_MINUTES < now) {
         // database older than 45 minutes. load the 1 hour file
-        await this.loadData('https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_hour.csv');
+        await this.loadData(
+          'https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_hour.csv',
+        );
       }
     } else {
       // no last update. load the 30 days file
-      await this.loadData('https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_month.csv');
+      await this.loadData(
+        'https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_month.csv',
+      );
     }
 
     return this.deleteOldRecords();
@@ -66,14 +75,17 @@ export class EarthquakeService {
     let result: Earthquake[];
 
     if (hasMagFilter && !hasTimeFilter) {
-      result = await this.db.earthquakes.where('mag').between(filter.mag.lower, filter.mag.upper, true, true).toArray();
+      result = await this.db.earthquakes
+        .where('mag')
+        .between(filter.mag.lower, filter.mag.upper, true, true)
+        .toArray();
     } else if (!hasMagFilter && hasTimeFilter) {
       now.setHours(now.getHours() - parseInt(filter.time, 10));
       result = await this.db.earthquakes.where('time').aboveOrEqual(now.getTime()).toArray();
     } else if (hasMagFilter && hasTimeFilter) {
       now.setHours(now.getHours() - parseInt(filter.time, 10));
       result = await this.db.earthquakes.where('time').aboveOrEqual(now.getTime()).toArray();
-      result = result.filter(e => e.mag >= filter.mag.lower && e.mag <= filter.mag.upper);
+      result = result.filter((e) => e.mag >= filter.mag.lower && e.mag <= filter.mag.upper);
     } else {
       result = await this.db.earthquakes.toArray();
     }
@@ -81,13 +93,18 @@ export class EarthquakeService {
     let filtered: Earthquake[] = [];
 
     if (hasDistanceFilter || filter.sort === 'distance') {
-      result.forEach(r => {
-        const distanceInKilometers = getDistance(
-          {latitude: r.latLng[0], longitude: r.latLng[1]},
-          {latitude: filter.myLocation.latitude, longitude: filter.myLocation.longitude}) / 1000;
+      result.forEach((r) => {
+        const distanceInKilometers =
+          getDistance(
+            { latitude: r.latLng[0], longitude: r.latLng[1] },
+            { latitude: filter.myLocation.latitude, longitude: filter.myLocation.longitude },
+          ) / 1000;
 
         if (hasDistanceFilter) {
-          if (filter.distance.lower <= distanceInKilometers && distanceInKilometers <= filter.distance.upper) {
+          if (
+            filter.distance.lower <= distanceInKilometers &&
+            distanceInKilometers <= filter.distance.upper
+          ) {
             r.distance = distanceInKilometers;
             filtered.push(r);
           }
@@ -99,7 +116,6 @@ export class EarthquakeService {
     } else {
       filtered = result;
     }
-
 
     if (filter.sort === 'mag') {
       return filtered.sort((a, b) => b.mag - a.mag);
@@ -131,7 +147,7 @@ export class EarthquakeService {
     const text = await response.text();
     const data = Papa.parse<EarthquakeCsvRow>(text, {
       header: true,
-      skipEmptyLines: true
+      skipEmptyLines: true,
     });
     const earthquakes: Earthquake[] = [];
 
@@ -143,7 +159,7 @@ export class EarthquakeService {
           mag: Number(row.mag),
           depth: Number(row.depth),
           latLng: [Number(row.latitude), Number(row.longitude)],
-          id: row.id
+          id: row.id,
         });
       }
     }

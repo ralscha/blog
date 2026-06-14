@@ -1,8 +1,6 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>
-      MNIST
-    </ion-title>
+    <ion-title> MNIST </ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -12,16 +10,17 @@
     <ion-button (click)="erase()">Erase</ion-button>
   </div>
   <div>
-    <h3>Detected number: <strong>{{ detectedNumber }}</strong></h3>
+    <h3>
+      Detected number: <strong>{{ detectedNumber }}</strong>
+    </h3>
   </div>
 
   <table>
     @for (detection of detections; track $index) {
       <tr>
         <td>{{ $index }}</td>
-        <td class="ion-text-end">{{ detection * 100 | number:'1.1-1' }} %</td>
+        <td class="ion-text-end">{{ detection * 100 | number: '1.1-1' }} %</td>
       </tr>
     }
   </table>
-
 </ion-content>

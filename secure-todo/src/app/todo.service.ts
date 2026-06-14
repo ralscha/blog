@@ -1,11 +1,10 @@
-import {Injectable} from '@angular/core';
-import {Todo} from './todo';
+import { Injectable } from '@angular/core';
+import { Todo } from './todo';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class TodoService {
-
   private todos: Map<number, Todo> | null = null;
 
   private lastId = 0;
@@ -92,29 +91,31 @@ export class TodoService {
       this.textEncoder.encode(password),
       'PBKDF2',
       false,
-      ['deriveKey']);
+      ['deriveKey'],
+    );
 
-    this.aesKey = await
-      window.crypto.subtle.deriveKey({
-          name: 'PBKDF2',
-          salt: this.textEncoder.encode(this.salt),
-          iterations: this.iterations,
-          hash: 'SHA-256'
-        },
-        baseKey,
-        {name: 'AES-GCM', length: 128},
-        false,
-        ['encrypt', 'decrypt']);
+    this.aesKey = await window.crypto.subtle.deriveKey(
+      {
+        name: 'PBKDF2',
+        salt: this.textEncoder.encode(this.salt),
+        iterations: this.iterations,
+        hash: 'SHA-256',
+      },
+      baseKey,
+      { name: 'AES-GCM', length: 128 },
+      false,
+      ['encrypt', 'decrypt'],
+    );
   }
 
   private joinIvAndData(iv: Uint8Array, data: Uint8Array): Uint8Array {
     const buf = new Uint8Array(iv.length + data.length);
-    iv.forEach((byte, i) => buf[i] = byte);
-    data.forEach((byte, i) => buf[i + iv.length] = byte);
+    iv.forEach((byte, i) => (buf[i] = byte));
+    data.forEach((byte, i) => (buf[i + iv.length] = byte));
     return buf;
   }
 
-  private separateIvFromData(buf: Uint8Array): { iv: Uint8Array, data: Uint8Array; } {
+  private separateIvFromData(buf: Uint8Array): { iv: Uint8Array; data: Uint8Array } {
     const iv = new Uint8Array(this.ivLen);
     const data = new Uint8Array(buf.length - this.ivLen);
     buf.forEach((byte, i) => {
@@ -124,7 +125,7 @@ export class TodoService {
         data[i - this.ivLen] = byte;
       }
     });
-    return {iv, data};
+    return { iv, data };
   }
 
   private async encrypt(data: Uint8Array): Promise<Uint8Array> {
@@ -135,12 +136,13 @@ export class TodoService {
     const initializationVector = new Uint8Array(this.ivLen);
     crypto.getRandomValues(initializationVector);
 
-    const encrypted = await crypto.subtle.encrypt({
+    const encrypted = await crypto.subtle.encrypt(
+      {
         name: 'AES-GCM',
-        iv: initializationVector
+        iv: initializationVector,
       },
       this.aesKey,
-      new Uint8Array(data.buffer, data.byteOffset, data.byteLength) as Uint8Array<ArrayBuffer>
+      new Uint8Array(data.buffer, data.byteOffset, data.byteLength) as Uint8Array<ArrayBuffer>,
     );
 
     return this.joinIvAndData(initializationVector, new Uint8Array(encrypted));
@@ -152,13 +154,21 @@ export class TodoService {
     }
 
     const parts = this.separateIvFromData(buffer);
-    return window.crypto.subtle.decrypt({
+    return window.crypto.subtle.decrypt(
+      {
         name: 'AES-GCM',
-        iv: new Uint8Array(parts.iv.buffer, parts.iv.byteOffset, parts.iv.byteLength) as Uint8Array<ArrayBuffer>
+        iv: new Uint8Array(
+          parts.iv.buffer,
+          parts.iv.byteOffset,
+          parts.iv.byteLength,
+        ) as Uint8Array<ArrayBuffer>,
       },
       this.aesKey,
-      new Uint8Array(parts.data.buffer, parts.data.byteOffset, parts.data.byteLength) as Uint8Array<ArrayBuffer>
+      new Uint8Array(
+        parts.data.buffer,
+        parts.data.byteOffset,
+        parts.data.byteLength,
+      ) as Uint8Array<ArrayBuffer>,
     );
   }
-
 }

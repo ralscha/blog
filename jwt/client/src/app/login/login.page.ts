@@ -1,4 +1,4 @@
-import {Component, inject} from '@angular/core';
+import { Component, inject, ChangeDetectionStrategy } from '@angular/core';
 import {
   IonButton,
   IonContent,
@@ -10,16 +10,27 @@ import {
   IonToolbar,
   LoadingController,
   NavController,
-  ToastController
+  ToastController,
 } from '@ionic/angular/standalone';
-import {AuthService} from '../auth.service';
-import {finalize} from 'rxjs/operators';
-import {FormsModule} from '@angular/forms';
+import { AuthService } from '../auth.service';
+import { finalize } from 'rxjs/operators';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.page.html',
-  imports: [FormsModule, IonHeader, IonToolbar, IonTitle, IonContent, IonList, IonItem, IonInput, IonButton]
+  changeDetection: ChangeDetectionStrategy.Eager,
+  imports: [
+    FormsModule,
+    IonHeader,
+    IonToolbar,
+    IonTitle,
+    IonContent,
+    IonList,
+    IonItem,
+    IonInput,
+    IonButton,
+  ],
 })
 export class LoginPage {
   private readonly navCtrl = inject(NavController);
@@ -27,15 +38,14 @@ export class LoginPage {
   private readonly authService = inject(AuthService);
   private readonly toastCtrl = inject(ToastController);
 
-
   signup(): void {
     this.navCtrl.navigateRoot(['signup']);
   }
 
-  async login(value: { username: string, password: string }): Promise<void> {
+  async login(value: { username: string; password: string }): Promise<void> {
     const loading = await this.loadingCtrl.create({
       spinner: 'bubbles',
-      message: 'Logging in ...'
+      message: 'Logging in ...',
     });
 
     await loading.present();
@@ -44,8 +54,8 @@ export class LoginPage {
       .login(value)
       .pipe(finalize(() => loading.dismiss()))
       .subscribe({
-        next: () => this.navCtrl.navigateRoot(['home'], {replaceUrl: true}),
-        error: err => this.handleError(err)
+        next: () => this.navCtrl.navigateRoot(['home'], { replaceUrl: true }),
+        error: (err) => this.handleError(err),
       });
   }
 
@@ -61,10 +71,9 @@ export class LoginPage {
     const toast = await this.toastCtrl.create({
       message,
       duration: 5000,
-      position: 'bottom'
+      position: 'bottom',
     });
 
     await toast.present();
   }
-
 }

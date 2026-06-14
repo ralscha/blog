@@ -17,9 +17,7 @@
               "base": "dist/app"
             },
             "index": "src/index.html",
-            "polyfills": [
-              "src/polyfills.ts"
-            ],
+            "polyfills": ["src/polyfills.ts"],
             "tsConfig": "tsconfig.app.json",
             "inlineStyleLanguage": "scss",
             "assets": [
@@ -33,10 +31,7 @@
               "src/sw-master.js",
               "src/sw-sync.js"
             ],
-            "styles": [
-              "src/styles.scss",
-              "src/variables.scss"
-            ],
+            "styles": ["src/styles.scss", "src/variables.scss"],
             "scripts": [],
             "browser": "src/main.ts"
           },
@@ -88,9 +83,7 @@
     }
   },
   "cli": {
-    "schematicCollections": [
-      "@ionic/angular-toolkit"
-    ]
+    "schematicCollections": ["@ionic/angular-toolkit"]
   },
   "schematics": {
     "@ionic/angular-toolkit:component": {

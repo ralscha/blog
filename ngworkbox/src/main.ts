@@ -1,7 +1,7 @@
-import { provideZoneChangeDetection } from "@angular/core";
-import {Workbox} from 'workbox-window';
-import {bootstrapApplication} from '@angular/platform-browser';
-import {AppComponent} from './app/app.component';
+import { provideZoneChangeDetection } from '@angular/core';
+import { Workbox } from 'workbox-window';
+import { bootstrapApplication } from '@angular/platform-browser';
+import { AppComponent } from './app/app.component';
 
 function loadServiceWorker(): void {
   // if (environment.production && ('serviceWorker' in navigator)) {
@@ -17,8 +17,10 @@ function loadServiceWorker(): void {
     });
 
     wb.addEventListener('waiting', (event) => {
-      console.log(`A new service worker has installed, but it can't activate` +
-        `until all tabs running the current version have fully unloaded.`);
+      console.log(
+        `A new service worker has installed, but it can't activate` +
+          `until all tabs running the current version have fully unloaded.`,
+      );
     });
 
     wb.addEventListener('installed', (event) => {
@@ -34,7 +36,7 @@ function loadServiceWorker(): void {
 }
 
 bootstrapApplication(AppComponent, {
-  providers: [provideZoneChangeDetection(),]
+  providers: [provideZoneChangeDetection()],
 })
   .then(() => loadServiceWorker())
-  .catch(err => console.error(err));
+  .catch((err) => console.error(err));

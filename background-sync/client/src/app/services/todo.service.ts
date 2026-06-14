@@ -1,15 +1,14 @@
-import {Injectable} from '@angular/core';
-import {Todo, TodoDb} from '../todo';
-import {v4 as uuidv4} from 'uuid';
+import { Injectable } from '@angular/core';
+import { Todo, TodoDb } from '../todo';
+import { v4 as uuidv4 } from 'uuid';
 
 const SYNC_TAG = 'todo_updated';
 const TRIGGER_SYNC_MESSAGE = 'trigger_sync';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class TodoService {
-
   private db: TodoDb;
 
   constructor() {
@@ -59,7 +58,7 @@ export class TodoService {
       return;
     }
 
-    swRegistration.active?.postMessage({type: TRIGGER_SYNC_MESSAGE});
+    swRegistration.active?.postMessage({ type: TRIGGER_SYNC_MESSAGE });
   }
 
   private changed(oldTodo: Todo | undefined, newTodo: Todo): boolean {

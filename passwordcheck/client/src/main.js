@@ -1,9 +1,9 @@
-import { zxcvbn, zxcvbnOptions } from '@zxcvbn-ts/core';
+import { ZxcvbnFactory } from '@zxcvbn-ts/core';
 import * as zxcvbnCommonPackage from '@zxcvbn-ts/language-common';
 import * as zxcvbnEnPackage from '@zxcvbn-ts/language-en';
 import { pwnedPassword } from 'hibp';
 
-zxcvbnOptions.setOptions({
+const zxcvbn = new ZxcvbnFactory({
   translations: zxcvbnEnPackage.translations,
   graphs: zxcvbnCommonPackage.adjacencyGraphs,
   dictionary: {
@@ -38,7 +38,7 @@ password.addEventListener('input', () => {
     return;
   }
 
-  const result = zxcvbn(value);
+  const result = zxcvbn.check(value);
   const feedback = [result.feedback.warning, ...result.feedback.suggestions]
     .filter(Boolean)
     .join(' ');

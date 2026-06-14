@@ -1,16 +1,24 @@
-import {Component, CUSTOM_ELEMENTS_SCHEMA, OnDestroy, OnInit} from '@angular/core';
-import {IonContent, IonHeader, IonicSlides, IonTitle, IonToolbar} from '@ionic/angular/standalone';
+import {
+  Component,
+  CUSTOM_ELEMENTS_SCHEMA,
+  OnDestroy,
+  OnInit,
+  ChangeDetectionStrategy,
+} from '@angular/core';
+import {
+  IonContent,
+  IonHeader,
+  IonicSlides,
+  IonTitle,
+  IonToolbar,
+} from '@ionic/angular/standalone';
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.page.html',
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  imports: [
-    IonHeader,
-    IonToolbar,
-    IonTitle,
-    IonContent
-  ]
+  changeDetection: ChangeDetectionStrategy.Eager,
+  imports: [IonHeader, IonToolbar, IonTitle, IonContent],
 })
 export class HomePage implements OnInit, OnDestroy {
   swiperModules = [IonicSlides];
@@ -37,7 +45,7 @@ export class HomePage implements OnInit, OnDestroy {
     const cache = await caches.open(this.cacheName);
     const responses = await cache.matchAll();
     this.pictures = await Promise.all(
-      responses.map(async response => URL.createObjectURL(await response.blob()))
+      responses.map(async (response) => URL.createObjectURL(await response.blob())),
     );
   }
 
@@ -54,5 +62,4 @@ export class HomePage implements OnInit, OnDestroy {
     }
     this.pictures = [];
   }
-
 }

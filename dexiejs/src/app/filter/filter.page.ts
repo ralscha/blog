@@ -1,6 +1,6 @@
-import { Component, Input, inject } from '@angular/core';
-import {Filter} from '../filter-interface';
-import {FormsModule, NgForm} from '@angular/forms';
+import { Component, Input, inject, ChangeDetectionStrategy } from '@angular/core';
+import { Filter } from '../filter-interface';
+import { FormsModule, NgForm } from '@angular/forms';
 import {
   IonButton,
   IonButtons,
@@ -17,22 +17,40 @@ import {
   IonSelectOption,
   IonTitle,
   IonToolbar,
-  ModalController
-} from "@ionic/angular/standalone";
+  ModalController,
+} from '@ionic/angular/standalone';
 
 @Component({
   selector: 'app-filter',
   templateUrl: './filter.page.html',
   styleUrl: './filter.page.scss',
-  imports: [FormsModule, IonHeader, IonToolbar, IonButtons, IonButton, IonTitle, IonContent, IonItemGroup, IonItemDivider, IonLabel, IonItem, IonRange, IonRadioGroup, IonSelect, IonSelectOption, IonRadio]
+  changeDetection: ChangeDetectionStrategy.Eager,
+  imports: [
+    FormsModule,
+    IonHeader,
+    IonToolbar,
+    IonButtons,
+    IonButton,
+    IonTitle,
+    IonContent,
+    IonItemGroup,
+    IonItemDivider,
+    IonLabel,
+    IonItem,
+    IonRange,
+    IonRadioGroup,
+    IonSelect,
+    IonSelectOption,
+    IonRadio,
+  ],
 })
 export class FilterPage {
   private readonly modalCtrl = inject(ModalController);
 
-  @Input({required: true})
+  @Input({ required: true })
   filter!: Filter;
 
-  applyFilters({value}: NgForm): void {
+  applyFilters({ value }: NgForm): void {
     this.dismiss(value);
   }
 
@@ -43,5 +61,4 @@ export class FilterPage {
     }
     this.modalCtrl.dismiss(data);
   }
-
 }

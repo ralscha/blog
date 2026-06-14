@@ -1,7 +1,7 @@
 import path from 'node:path';
-import {defineConfig} from 'vite';
+import { defineConfig } from 'vite';
 
-export default defineConfig(({mode}) => {
+export default defineConfig(({ mode }) => {
   const isProduction = mode === 'production';
 
   return {
@@ -11,15 +11,15 @@ export default defineConfig(({mode}) => {
         entry: path.resolve(__dirname, 'src/service-worker.ts'),
         fileName: () => 'service-worker.js',
         formats: ['iife'],
-        name: 'ngWorkboxServiceWorker'
+        name: 'ngWorkboxServiceWorker',
       },
       minify: isProduction ? 'esbuild' : false,
       outDir: path.resolve(__dirname, isProduction ? 'dist/app' : 'src'),
       sourcemap: !isProduction,
-      target: 'es2022'
+      target: 'es2022',
     },
     define: {
-      'process.env.NODE_ENV': JSON.stringify(mode)
-    }
+      'process.env.NODE_ENV': JSON.stringify(mode),
+    },
   };
 });

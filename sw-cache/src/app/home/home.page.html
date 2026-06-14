@@ -1,15 +1,13 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>
-      Cache Example
-    </ion-title>
+    <ion-title> Cache Example </ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content class="ion-padding">
   <swiper-container [modules]="swiperModules" [pagination]="true">
     @for (pic of pictures; track $index) {
-      <swiper-slide><img [src]="pic" alt="pic"></swiper-slide>
+      <swiper-slide><img [src]="pic" alt="pic" /></swiper-slide>
     }
   </swiper-container>
 </ion-content>

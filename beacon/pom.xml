@@ -5,8 +5,8 @@
   <parent>
     <groupId>org.springframework.boot</groupId>
     <artifactId>spring-boot-starter-parent</artifactId>
-    <version>4.0.6</version>
-    <relativePath></relativePath>
+    <version>4.1.0</version>
+    <relativePath/>
   </parent>
 
   <groupId>ch.rasc</groupId>
