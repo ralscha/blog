@@ -13,9 +13,9 @@
     "vite": "8.0.16"
   },
   "dependencies": {
-    "@zxcvbn-ts/core": "4.1.1",
-    "@zxcvbn-ts/language-common": "4.1.1",
-    "@zxcvbn-ts/language-en": "4.1.0",
+    "@zxcvbn-ts/core": "4.1.2",
+    "@zxcvbn-ts/language-common": "4.1.2",
+    "@zxcvbn-ts/language-en": "4.1.1",
     "hibp": "15.2.1"
   }
 }
