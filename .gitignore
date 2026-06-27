@@ -1,8 +1,9 @@
 /.project
 /check_dependencies.bat
 /.settings/
-bun.lock
 www/
 node_modules/
+bun.lock
 package-lock.json
 bun.lock
+target/

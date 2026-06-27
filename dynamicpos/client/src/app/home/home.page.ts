@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, inject, ChangeDetectionStrategy } from '@angular/core';
+import { AfterViewInit, Component, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import {
   circleMarker,
@@ -17,7 +17,6 @@ import { environment } from '../../environments/environment';
   selector: 'app-home',
   templateUrl: './home.page.html',
   imports: [IonHeader, IonToolbar, IonTitle, IonContent, LeafletDirective],
-  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './home.page.scss',
 })
 export class HomePage implements AfterViewInit {

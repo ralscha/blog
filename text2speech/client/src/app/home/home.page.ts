@@ -1,4 +1,4 @@
-import { Component, inject, ChangeDetectionStrategy } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { environment } from '../../environments/environment';
 import {
   IonButton,
@@ -29,7 +29,6 @@ declare type SpeakRequest = {
   selector: 'app-home',
   templateUrl: './home.page.html',
   styleUrl: './home.page.scss',
-  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [
     FormsModule,
     IonHeader,

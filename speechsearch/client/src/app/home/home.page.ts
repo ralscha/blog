@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, inject, ChangeDetectionStrategy } from '@angular/core';
+import { ChangeDetectorRef, Component, inject } from '@angular/core';
 import { Movie } from '../movie';
 import { LoadingController } from '@ionic/angular';
 // @ts-ignore
@@ -28,7 +28,6 @@ type SpeechWindow = Window & {
   selector: 'app-home',
   templateUrl: './home.page.html',
   styleUrl: './home.page.scss',
-  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [
     IonHeader,
     IonToolbar,

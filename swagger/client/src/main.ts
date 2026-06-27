@@ -7,7 +7,6 @@ import { environment } from './environments/environment';
 import { HomePage } from './app/home/home.page';
 import { EditPage } from './app/edit/edit.page';
 import { AppComponent } from './app/app.component';
-import { provideZoneChangeDetection } from '@angular/core';
 
 const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
@@ -18,7 +17,6 @@ const routes: Routes = [
 
 bootstrapApplication(AppComponent, {
   providers: [
-    provideZoneChangeDetection(),
     provideIonicAngular(),
     provideApi({ basePath: environment.basePath }),
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },

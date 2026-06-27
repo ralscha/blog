@@ -1,9 +1,7 @@
 import { ClientError, ClientErrorDb } from './clientErrorDb';
-import { Injectable } from '@angular/core';
+import { Service } from '@angular/core';
 
-@Injectable({
-  providedIn: 'root',
-})
+@Service()
 export class ClientErrorService {
   private db: ClientErrorDb;
 

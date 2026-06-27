@@ -1,4 +1,4 @@
-import { Component, inject, ChangeDetectionStrategy } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { Todo, TodoService } from '../swagger';
 import {
   IonButton,
@@ -23,7 +23,6 @@ import { TodoStateService } from '../todo-state.service';
 @Component({
   selector: 'app-home',
   templateUrl: './home.page.html',
-  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [
     IonHeader,
     IonToolbar,

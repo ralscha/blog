@@ -1,4 +1,4 @@
-import { Component, OnInit, inject, ChangeDetectionStrategy } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TodoService } from '../../services/todo.service';
 import { Todo } from '../../todo';
@@ -23,7 +23,6 @@ import { addIcons } from 'ionicons';
   selector: 'app-edit',
   templateUrl: './edit.page.html',
   styleUrl: './edit.page.scss',
-  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [
     IonHeader,
     IonToolbar,

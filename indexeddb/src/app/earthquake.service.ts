@@ -1,4 +1,4 @@
-import { inject, Injectable } from '@angular/core';
+import { inject, Service } from '@angular/core';
 import { Filter } from './filter-interface';
 import { parse } from 'papaparse';
 import getDistance from 'geolib/es/getDistance';
@@ -7,9 +7,7 @@ import { HttpClient } from '@angular/common/http';
 import { Earthquake } from './earthquake';
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
-@Injectable({
-  providedIn: 'root',
-})
+@Service()
 export class EarthquakeService {
   private static readonly FOURTYFIVE_MINUTES = 30 * 60 * 1000;
   private static readonly ONE_HOUR = 60 * 60 * 1000;

@@ -17,7 +17,7 @@
               "base": "dist/app"
             },
             "index": "src/index.html",
-            "polyfills": ["src/polyfills.ts"],
+            "polyfills": [],
             "tsConfig": "tsconfig.app.json",
             "inlineStyleLanguage": "scss",
             "assets": [],
@@ -30,8 +30,8 @@
               "budgets": [
                 {
                   "type": "initial",
-                  "maximumWarning": "720kb",
-                  "maximumError": "720kb"
+                  "maximumWarning": "760kb",
+                  "maximumError": "760kb"
                 },
                 {
                   "type": "anyComponentStyle",

@@ -1,9 +1,7 @@
-import { Injectable } from '@angular/core';
+import { Service } from '@angular/core';
 import { Todo } from './todo';
 
-@Injectable({
-  providedIn: 'root',
-})
+@Service()
 export class TodoService {
   private todos: Map<number, Todo> | null = null;
 

@@ -1,4 +1,4 @@
-import { Component, inject, ChangeDetectionStrategy } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import {
   IonButton,
   IonContent,
@@ -16,7 +16,6 @@ import { FormsModule } from '@angular/forms';
   selector: 'app-password',
   templateUrl: './password.page.html',
   styleUrl: './password.page.scss',
-  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [FormsModule, IonHeader, IonToolbar, IonTitle, IonContent, IonInput, IonButton],
 })
 export class PasswordPage {

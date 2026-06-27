@@ -1,11 +1,9 @@
-import { Injectable } from '@angular/core';
+import { Service } from '@angular/core';
 import { gunzipSync, gzipSync, strFromU8, strToU8 } from 'fflate';
 import { environment } from '../environments/environment';
 import { Password } from './password';
 
-@Injectable({
-  providedIn: 'root',
-})
+@Service()
 export class PasswordService {
   private readonly ivLen = 12;
   private readonly pbkdf2Iterations = 600_000;

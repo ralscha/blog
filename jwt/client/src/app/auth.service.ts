@@ -1,4 +1,4 @@
-import { inject, Injectable } from '@angular/core';
+import { inject, Service } from '@angular/core';
 import { Observable, ReplaySubject } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { JwtHelperService } from '@auth0/angular-jwt';
@@ -6,9 +6,7 @@ import { tap } from 'rxjs/operators';
 import { environment } from '../environments/environment';
 import { NavController } from '@ionic/angular/standalone';
 
-@Injectable({
-  providedIn: 'root',
-})
+@Service()
 export class AuthService {
   private readonly httpClient = inject(HttpClient);
   private readonly navCtrl = inject(NavController);

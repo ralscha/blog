@@ -1,4 +1,4 @@
-import { Component, inject, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { IEarthquake } from '../protos/earthquake';
 import { EarthquakeService } from '../earthquake.service';
 import { DetailComponent } from '../detail/detail.component';
@@ -17,7 +17,6 @@ import {
 @Component({
   selector: 'app-protobuf',
   templateUrl: './protobuf.page.html',
-  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [
     DetailComponent,
     IonHeader,

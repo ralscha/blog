@@ -1,10 +1,6 @@
 import { provideRouter, RouteReuseStrategy, Routes, withHashLocation } from '@angular/router';
 import { IonicRouteStrategy, provideIonicAngular } from '@ionic/angular/standalone';
-import {
-  ErrorHandler,
-  provideBrowserGlobalErrorListeners,
-  provideZoneChangeDetection,
-} from '@angular/core';
+import { ErrorHandler, provideBrowserGlobalErrorListeners } from '@angular/core';
 import { AppGlobalErrorHandler } from './app/app.global.errorhandler';
 import { bootstrapApplication } from '@angular/platform-browser';
 import { HomePage } from './app/home/home.page';
@@ -17,7 +13,6 @@ const routes: Routes = [
 
 bootstrapApplication(AppComponent, {
   providers: [
-    provideZoneChangeDetection(),
     provideBrowserGlobalErrorListeners(),
     provideIonicAngular(),
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },

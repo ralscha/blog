@@ -1,10 +1,7 @@
-import { Component, inject, ChangeDetectionStrategy } from '@angular/core';
-import {
-  ReactiveFormsModule,
-  UntypedFormBuilder,
-  UntypedFormGroup,
-  Validators,
-} from '@angular/forms';
+import { Component, inject } from '@angular/core';
+import { FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { SignalFormControl } from '@angular/forms/signals/compat';
+import { maxLength, minLength, pattern, required, validate } from '@angular/forms/signals';
 import { HttpClient } from '@angular/common/http';
 import { UsernameValidator } from '../username-validator';
 import {
@@ -19,14 +16,12 @@ import {
   IonToolbar,
   ToastController,
 } from '@ionic/angular/standalone';
-import { AgeValidator } from '../age-validator';
 import { environment } from '../../environments/environment';
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.page.html',
   styleUrl: './home.page.scss',
-  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [
     ReactiveFormsModule,
     IonHeader,
@@ -41,35 +36,40 @@ import { environment } from '../../environments/environment';
   ],
 })
 export class HomePage {
-  public registrationForm: UntypedFormGroup;
+  public registrationForm: FormGroup<{
+    username: SignalFormControl<string>;
+    email: SignalFormControl<string>;
+    age: SignalFormControl<string>;
+  }>;
   public readonly minAge: number = 18;
   private readonly http = inject(HttpClient);
   private readonly toastCtrl = inject(ToastController);
   private readonly emailRegex = `(?:[a-z0-9!#$%&'*+/=?^_\`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_\`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\\])`;
 
   constructor() {
-    const formBuilder = inject(UntypedFormBuilder);
     const usernameValidator = inject(UsernameValidator);
 
-    this.registrationForm = formBuilder.group({
-      username: [
-        '',
-        [Validators.required, Validators.minLength(2), Validators.maxLength(30)],
-        usernameValidator.validate.bind(usernameValidator),
-      ],
-      email: ['', [Validators.required, Validators.pattern(this.emailRegex)]],
-      age: ['', [Validators.required, AgeValidator.validate(this.minAge)]],
+    const username = new SignalFormControl('', (path) => {
+      required(path);
+      minLength(path, 2);
+      maxLength(path, 30);
     });
+    username.setAsyncValidators(usernameValidator.validate.bind(usernameValidator));
 
-    // example without the FormBuilder
-    /*
-     this.registrationForm = new FormGroup({
-     username: new FormControl('', [Validators.required, Validators.minLength(2), Validators.maxLength(30)],
-     usernameValidator.validate.bind(usernameValidator)),
-     email: new FormControl('', [Validators.required, Validators.pattern(this.emailRegex)]),
-     age: new FormControl('', [Validators.required, AgeValidator.validate(this.minAge)])
-     });
-     */
+    this.registrationForm = new FormGroup({
+      username,
+      email: new SignalFormControl('', (path) => {
+        required(path);
+        pattern(path, new RegExp(this.emailRegex));
+      }),
+      age: new SignalFormControl('', (path) => {
+        required(path);
+        validate(path, (ctx) => {
+          const value = ctx.value();
+          return value && Number(value) < this.minAge ? { kind: 'notOldEnough' } : undefined;
+        });
+      }),
+    });
 
     // testing server side validation
     /*

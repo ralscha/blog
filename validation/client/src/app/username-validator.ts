@@ -1,11 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { AbstractControl } from '@angular/forms';
 import { environment } from '../environments/environment';
-import { inject, Injectable } from '@angular/core';
+import { inject, Service } from '@angular/core';
 
-@Injectable({
-  providedIn: 'root',
-})
+@Service()
 export class UsernameValidator {
   private readonly http = inject(HttpClient);
 

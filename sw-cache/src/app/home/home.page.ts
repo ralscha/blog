@@ -1,10 +1,4 @@
-import {
-  Component,
-  CUSTOM_ELEMENTS_SCHEMA,
-  OnDestroy,
-  OnInit,
-  ChangeDetectionStrategy,
-} from '@angular/core';
+import { Component, CUSTOM_ELEMENTS_SCHEMA, OnDestroy, OnInit } from '@angular/core';
 import {
   IonContent,
   IonHeader,
@@ -17,7 +11,6 @@ import {
   selector: 'app-home',
   templateUrl: './home.page.html',
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [IonHeader, IonToolbar, IonTitle, IonContent],
 })
 export class HomePage implements OnInit, OnDestroy {

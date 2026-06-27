@@ -1,4 +1,4 @@
-import { Component, inject, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { AuthService } from '../auth.service';
 import { JwtHelperService } from '@auth0/angular-jwt';
@@ -18,7 +18,6 @@ import { exitOutline } from 'ionicons/icons';
 @Component({
   selector: 'app-home',
   templateUrl: './home.page.html',
-  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [IonHeader, IonToolbar, IonTitle, IonButtons, IonButton, IonIcon, IonContent],
 })
 export class HomePage implements OnInit {

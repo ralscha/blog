@@ -1,4 +1,4 @@
-import { Component, ChangeDetectionStrategy } from '@angular/core';
+import { Component } from '@angular/core';
 import { ViewWillEnter, ViewWillLeave } from '@ionic/angular';
 import { EChartsOption } from 'echarts';
 import { NgxEchartsDirective } from 'ngx-echarts';
@@ -10,7 +10,6 @@ type DataType = { name: string; value: [string, number] };
   selector: 'app-chart6',
   templateUrl: 'chart6.html',
   styleUrl: './chart6.scss',
-  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [NgxEchartsDirective, IonHeader, IonToolbar, IonTitle, IonContent],
 })
 export class Chart6Page implements ViewWillEnter, ViewWillLeave {

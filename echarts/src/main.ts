@@ -1,4 +1,3 @@
-import { provideZoneChangeDetection } from '@angular/core';
 import {
   PreloadAllModules,
   provideRouter,
@@ -41,7 +40,6 @@ echarts.use([
 
 bootstrapApplication(AppComponent, {
   providers: [
-    provideZoneChangeDetection(),
     provideRouter(tabsRoutes, withHashLocation(), withPreloading(PreloadAllModules)),
     provideIonicAngular(),
     provideEchartsCore({ echarts }),

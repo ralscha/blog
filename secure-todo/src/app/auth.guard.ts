@@ -1,12 +1,10 @@
-import { inject, Injectable } from '@angular/core';
+import { inject, Service } from '@angular/core';
 import { UrlTree } from '@angular/router';
 import { Observable } from 'rxjs';
 import { TodoService } from './todo.service';
 import { NavController } from '@ionic/angular/standalone';
 
-@Injectable({
-  providedIn: 'root',
-})
+@Service()
 export class AuthGuard {
   private readonly todoService = inject(TodoService);
   private readonly navCtrl = inject(NavController);

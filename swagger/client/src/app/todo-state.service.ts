@@ -1,9 +1,7 @@
-import { Injectable, signal } from '@angular/core';
+import { Service, signal } from '@angular/core';
 import { Todo } from './swagger';
 
-@Injectable({
-  providedIn: 'root',
-})
+@Service()
 export class TodoStateService {
   readonly selectedTodo = signal<Todo | undefined>(undefined);
 

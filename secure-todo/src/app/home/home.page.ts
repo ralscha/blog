@@ -1,4 +1,4 @@
-import { Component, inject, ChangeDetectionStrategy } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import {
   IonButton,
   IonButtons,
@@ -23,7 +23,6 @@ import { addOutline, createOutline, exitOutline, trashOutline } from 'ionicons/i
 @Component({
   selector: 'app-home',
   templateUrl: './home.page.html',
-  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [
     IonHeader,
     IonToolbar,

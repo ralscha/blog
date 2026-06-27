@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { Component } from '@angular/core';
 import {
   IonButton,
   IonContent,
@@ -12,7 +12,6 @@ import {
   selector: 'app-home',
   templateUrl: './home.page.html',
   styleUrl: './home.page.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [IonHeader, IonToolbar, IonTitle, IonContent, IonButton, IonIcon],
 })
 export class HomePage {

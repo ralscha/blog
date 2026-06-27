@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Service } from '@angular/core';
 import { Earthquake, EarthquakeDb } from './earthquake-db';
 import { Filter } from './filter-interface';
 import Papa from 'papaparse';
@@ -14,9 +14,7 @@ interface EarthquakeCsvRow {
   longitude: string;
 }
 
-@Injectable({
-  providedIn: 'root',
-})
+@Service()
 export class EarthquakeService {
   private static readonly FORTY_FIVE_MINUTES = 45 * 60 * 1000;
   private static readonly ONE_HOUR = 60 * 60 * 1000;

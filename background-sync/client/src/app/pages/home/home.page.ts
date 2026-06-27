@@ -1,4 +1,4 @@
-import { Component, inject, ChangeDetectionStrategy } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { TodoService } from '../../services/todo.service';
 import { Todo } from '../../todo';
 import { Router, RouterLink } from '@angular/router';
@@ -23,7 +23,6 @@ import { addIcons } from 'ionicons';
 @Component({
   selector: 'app-page-home',
   templateUrl: './home.page.html',
-  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [
     IonHeader,
     IonToolbar,

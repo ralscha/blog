@@ -1,4 +1,4 @@
-import { Component, viewChild, ChangeDetectionStrategy } from '@angular/core';
+import { Component, viewChild } from '@angular/core';
 import { DrawableDirective } from '../drawable.directive';
 import { multiply } from 'mathjs';
 import { DecimalPipe } from '@angular/common';
@@ -8,7 +8,6 @@ import { IonButton, IonContent, IonHeader, IonTitle, IonToolbar } from '@ionic/a
   selector: 'app-home',
   templateUrl: './home.page.html',
   styleUrl: './home.page.scss',
-  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [DrawableDirective, DecimalPipe, IonHeader, IonToolbar, IonTitle, IonContent, IonButton],
 })
 export class HomePage {

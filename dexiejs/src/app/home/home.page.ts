@@ -1,4 +1,4 @@
-import { Component, OnInit, inject, ChangeDetectionStrategy } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { FilterPage } from '../filter/filter.page';
 import { Earthquake } from '../earthquake-db';
 import { EarthquakeService } from '../earthquake.service';
@@ -33,7 +33,6 @@ import { arrowDownOutline, optionsOutline } from 'ionicons/icons';
   selector: 'app-home',
   templateUrl: './home.page.html',
   styleUrl: './home.page.scss',
-  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [
     CdkVirtualScrollViewport,
     CdkFixedSizeVirtualScroll,

@@ -1,4 +1,4 @@
-import { Component, ChangeDetectionStrategy } from '@angular/core';
+import { Component } from '@angular/core';
 import { addIcons } from 'ionicons';
 import { cloudDownloadOutline } from 'ionicons/icons';
 import { IonIcon, IonLabel, IonTabBar, IonTabButton, IonTabs } from '@ionic/angular/standalone';
@@ -6,7 +6,6 @@ import { IonIcon, IonLabel, IonTabBar, IonTabButton, IonTabs } from '@ionic/angu
 @Component({
   selector: 'app-tabs',
   templateUrl: './tabs.page.html',
-  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [IonTabs, IonTabBar, IonTabButton, IonIcon, IonLabel],
 })
 export class TabsPage {

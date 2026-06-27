@@ -1,4 +1,4 @@
-import { Component, ChangeDetectionStrategy } from '@angular/core';
+import { Component } from '@angular/core';
 import { format } from 'date-fns';
 import { EChartsOption } from 'echarts';
 import { NgxEchartsDirective } from 'ngx-echarts';
@@ -8,7 +8,6 @@ import { IonContent, IonHeader, IonTitle, IonToolbar } from '@ionic/angular/stan
   selector: 'app-chart5',
   templateUrl: 'chart5.html',
   styleUrl: './chart5.scss',
-  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [NgxEchartsDirective, IonHeader, IonToolbar, IonTitle, IonContent],
 })
 export class Chart5Page {

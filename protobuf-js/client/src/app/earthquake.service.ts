@@ -1,13 +1,11 @@
-import { inject, Injectable } from '@angular/core';
+import { inject, Service } from '@angular/core';
 import { Observable, throwError } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Earthquakes, IEarthquake } from './protos/earthquake';
 import { environment } from '../environments/environment';
 
-@Injectable({
-  providedIn: 'root',
-})
+@Service()
 export class EarthquakeService {
   private readonly http = inject(HttpClient);
 

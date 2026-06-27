@@ -1,4 +1,4 @@
-import { Component, inject, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { Todo } from '../todo';
 import { ActivatedRoute } from '@angular/router';
 import {
@@ -21,7 +21,6 @@ import { FormsModule } from '@angular/forms';
 @Component({
   selector: 'app-edit',
   templateUrl: './edit.page.html',
-  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [
     FormsModule,
     IonHeader,

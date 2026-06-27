@@ -1,4 +1,4 @@
-import { Component, inject, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import {
   IonBackButton,
   IonButton,
@@ -25,7 +25,6 @@ import { trashOutline } from 'ionicons/icons';
 @Component({
   selector: 'app-edit',
   templateUrl: './edit.page.html',
-  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [
     FormsModule,
     IonHeader,

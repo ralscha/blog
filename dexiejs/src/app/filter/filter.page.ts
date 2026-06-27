@@ -1,4 +1,4 @@
-import { Component, Input, inject, ChangeDetectionStrategy } from '@angular/core';
+import { Component, Input, inject } from '@angular/core';
 import { Filter } from '../filter-interface';
 import { FormsModule, NgForm } from '@angular/forms';
 import {
@@ -24,7 +24,6 @@ import {
   selector: 'app-filter',
   templateUrl: './filter.page.html',
   styleUrl: './filter.page.scss',
-  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [
     FormsModule,
     IonHeader,

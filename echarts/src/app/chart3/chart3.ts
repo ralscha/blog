@@ -1,4 +1,4 @@
-import { Component, ChangeDetectionStrategy } from '@angular/core';
+import { Component } from '@angular/core';
 import { EChartsOption } from 'echarts';
 import { NgxEchartsDirective } from 'ngx-echarts';
 import {
@@ -14,7 +14,6 @@ import {
   selector: 'app-chart3',
   templateUrl: 'chart3.html',
   styleUrl: './chart3.scss',
-  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [NgxEchartsDirective, IonHeader, IonToolbar, IonTitle, IonContent, IonFooter, IonButton],
 })
 export class Chart3Page {

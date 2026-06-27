@@ -22,7 +22,7 @@
               "browser": ""
             },
             "index": "src/index.html",
-            "polyfills": ["zone.js"],
+            "polyfills": [],
             "tsConfig": "tsconfig.app.json",
             "inlineStyleLanguage": "scss",
             "assets": [

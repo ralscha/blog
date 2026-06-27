@@ -1,4 +1,4 @@
-import { Component, inject, viewChild, ChangeDetectionStrategy } from '@angular/core';
+import { Component, inject, viewChild } from '@angular/core';
 import {
   IonBackButton,
   IonButton,
@@ -21,7 +21,6 @@ import { finalize } from 'rxjs/operators';
 @Component({
   selector: 'app-signup',
   templateUrl: './signup.page.html',
-  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [
     FormsModule,
     IonHeader,

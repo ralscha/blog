@@ -1,4 +1,3 @@
-import { provideZoneChangeDetection } from '@angular/core';
 import { Workbox } from 'workbox-window';
 import { bootstrapApplication } from '@angular/platform-browser';
 import { AppComponent } from './app/app.component';
@@ -36,7 +35,7 @@ function loadServiceWorker(): void {
 }
 
 bootstrapApplication(AppComponent, {
-  providers: [provideZoneChangeDetection()],
+  providers: [],
 })
   .then(() => loadServiceWorker())
   .catch((err) => console.error(err));

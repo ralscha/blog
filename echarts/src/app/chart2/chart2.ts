@@ -1,4 +1,4 @@
-import { Component, ChangeDetectionStrategy } from '@angular/core';
+import { Component } from '@angular/core';
 import { EChartsOption } from 'echarts';
 import { NgxEchartsDirective } from 'ngx-echarts';
 import { IonContent, IonHeader, IonTitle, IonToolbar } from '@ionic/angular/standalone';
@@ -7,7 +7,6 @@ import { IonContent, IonHeader, IonTitle, IonToolbar } from '@ionic/angular/stan
   selector: 'app-chart2',
   templateUrl: 'chart2.html',
   styleUrl: './chart2.scss',
-  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [NgxEchartsDirective, IonHeader, IonToolbar, IonTitle, IonContent],
 })
 export class Chart2Page {
