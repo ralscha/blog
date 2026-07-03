@@ -9,14 +9,14 @@
   },
   "private": true,
   "dependencies": {
-    "@angular/common": "22.0.4",
-    "@angular/compiler": "22.0.4",
-    "@angular/core": "22.0.4",
-    "@angular/forms": "22.0.4",
-    "@angular/platform-browser": "22.0.4",
-    "@angular/router": "22.0.4",
+    "@angular/common": "22.0.5",
+    "@angular/compiler": "22.0.5",
+    "@angular/core": "22.0.5",
+    "@angular/forms": "22.0.5",
+    "@angular/platform-browser": "22.0.5",
+    "@angular/router": "22.0.5",
     "fflate": "0.8.3",
-    "@ionic/angular": "8.8.12",
+    "@ionic/angular": "8.8.13",
     "ionicons": "8.0.13",
     "rxjs": "7.8.2",
     "stream": "0.0.3",
@@ -24,11 +24,11 @@
     "uuid": "14.0.1"
   },
   "devDependencies": {
-    "@angular/build": "22.0.4",
-    "@angular/cli": "22.0.4",
-    "@angular/compiler-cli": "22.0.4",
+    "@angular/build": "22.0.5",
+    "@angular/cli": "22.0.5",
+    "@angular/compiler-cli": "22.0.5",
     "@ionic/angular-toolkit": "12.3.0",
-    "prettier": "3.9.1",
+    "prettier": "3.9.4",
     "typescript": "6.0.3"
   }
 }
