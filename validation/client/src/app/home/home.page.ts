@@ -1,9 +1,16 @@
-import { Component, inject } from '@angular/core';
-import { FormGroup, ReactiveFormsModule } from '@angular/forms';
-import { SignalFormControl } from '@angular/forms/signals/compat';
-import { maxLength, minLength, pattern, required, validate } from '@angular/forms/signals';
 import { HttpClient } from '@angular/common/http';
-import { UsernameValidator } from '../username-validator';
+import { Component, computed, inject, signal } from '@angular/core';
+import {
+  email,
+  form,
+  FormField,
+  maxLength,
+  min,
+  minLength,
+  required,
+  submit,
+  validateHttp,
+} from '@angular/forms/signals';
 import {
   IonButton,
   IonContent,
@@ -12,18 +19,28 @@ import {
   IonItem,
   IonLabel,
   IonList,
+  IonSpinner,
   IonTitle,
   IonToolbar,
   ToastController,
 } from '@ionic/angular/standalone';
+import { firstValueFrom } from 'rxjs';
 import { environment } from '../../environments/environment';
+
+interface Registration {
+  username: string;
+  email: string;
+  age: number | null;
+}
+
+type ServerValidationErrors = Partial<Record<keyof Registration, string[]>>;
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.page.html',
   styleUrl: './home.page.scss',
   imports: [
-    ReactiveFormsModule,
+    FormField,
     IonHeader,
     IonToolbar,
     IonTitle,
@@ -33,93 +50,118 @@ import { environment } from '../../environments/environment';
     IonInput,
     IonLabel,
     IonButton,
+    IonSpinner,
   ],
 })
 export class HomePage {
-  public registrationForm: FormGroup<{
-    username: SignalFormControl<string>;
-    email: SignalFormControl<string>;
-    age: SignalFormControl<string>;
-  }>;
-  public readonly minAge: number = 18;
+  public readonly minAge = 18;
+
   private readonly http = inject(HttpClient);
   private readonly toastCtrl = inject(ToastController);
-  private readonly emailRegex = `(?:[a-z0-9!#$%&'*+/=?^_\`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_\`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\\])`;
 
-  constructor() {
-    const usernameValidator = inject(UsernameValidator);
+  public readonly registration = signal<Registration>({
+    username: '',
+    email: '',
+    age: null,
+  });
 
-    const username = new SignalFormControl('', (path) => {
-      required(path);
-      minLength(path, 2);
-      maxLength(path, 30);
-    });
-    username.setAsyncValidators(usernameValidator.validate.bind(usernameValidator));
+  public readonly registrationForm = form(this.registration, (path) => {
+    required(path.username);
+    minLength(path.username, 2);
+    maxLength(path.username, 30);
 
-    this.registrationForm = new FormGroup({
-      username,
-      email: new SignalFormControl('', (path) => {
-        required(path);
-        pattern(path, new RegExp(this.emailRegex));
+    validateHttp(path.username, {
+      request: ({ value }) => {
+        const username = value().trim();
+        return username.length >= 2
+          ? `${environment.serverURL}/checkUsername?value=${encodeURIComponent(username)}`
+          : undefined;
+      },
+      debounce: 250,
+      onSuccess: (taken: boolean) =>
+        taken ? { kind: 'usernameTaken', message: 'Username is already taken' } : undefined,
+      onError: () => ({
+        kind: 'usernameCheckFailed',
+        message: 'Could not check the username',
       }),
-      age: new SignalFormControl('', (path) => {
-        required(path);
-        validate(path, (ctx) => {
-          const value = ctx.value();
-          return value && Number(value) < this.minAge ? { kind: 'notOldEnough' } : undefined;
-        });
-      }),
     });
 
-    // testing server side validation
-    /*
-     this.registrationForm = formBuilder.group({
-     username: [],
-     email: [],
-     age: []
-     });
-     */
+    required(path.email);
+    email(path.email);
+
+    required(path.age);
+    min(path.age, this.minAge, {
+      error: {
+        kind: 'notOldEnough',
+        message: `You must be at least ${this.minAge} years old`,
+      },
+    });
+  });
+
+  public readonly canSubmit = computed(
+    () =>
+      this.registrationForm().valid() &&
+      !this.registrationForm().pending() &&
+      !this.registrationForm().submitting(),
+  );
+
+  public showErrors(
+    field: () => { dirty: () => boolean; touched: () => boolean; invalid: () => boolean },
+  ): boolean {
+    const state = field();
+    return state.invalid() && (state.dirty() || state.touched());
   }
 
-  hasError(field: string, error: string): boolean {
-    const ctrl = this.registrationForm.get(field);
-    return ctrl !== null && ctrl.dirty && ctrl.hasError(error);
+  public hasError(field: () => { getError: (kind: string) => unknown }, kind: string): boolean {
+    return field().getError(kind) !== undefined;
   }
 
-  isInvalidAndDirty(field: string): boolean {
-    const ctrl = this.registrationForm.get(field);
-    return ctrl !== null && !ctrl.valid && ctrl.dirty;
-  }
+  public async register(): Promise<void> {
+    const success = await submit(this.registrationForm, async (formTree) => {
+      const errors = await firstValueFrom(
+        this.http.post<ServerValidationErrors>(
+          `${environment.serverURL}/register`,
+          formTree().value(),
+        ),
+      );
 
-  register(): void {
-    console.log(this.registrationForm.value);
-    this.http
-      .post<{
-        [key: string]: string[];
-      }>(`${environment.serverURL}/register`, this.registrationForm.value)
-      .subscribe(async (data) => {
-        for (const fieldName of Object.keys(data)) {
-          const serverErrors = data[fieldName];
+      const validationErrors = Object.entries(errors).flatMap(
+        ([fieldName, fieldErrors]) =>
+          fieldErrors?.map((kind) => ({
+            fieldTree: formTree[fieldName as keyof Registration],
+            kind,
+            message: this.messageFor(kind),
+          })) ?? [],
+      );
 
-          const errors: { [key: string]: boolean } = {};
-          for (const serverError of serverErrors) {
-            errors[serverError] = true;
-          }
+      return validationErrors.length > 0 ? validationErrors : undefined;
+    });
 
-          const control = this.registrationForm.get(fieldName);
-          if (control !== null) {
-            control.setErrors(errors);
-            control.markAsDirty();
-          }
-        }
-
-        if (this.registrationForm.valid) {
-          const toast = await this.toastCtrl.create({
-            message: 'Registration successful',
-            duration: 3000,
-          });
-          await toast.present();
-        }
+    if (success) {
+      const toast = await this.toastCtrl.create({
+        message: 'Registration successful',
+        duration: 3000,
       });
+      await toast.present();
+    }
+  }
+
+  private messageFor(kind: string): string {
+    switch (kind) {
+      case 'required':
+        return 'This field is required';
+      case 'minLength':
+        return 'The value is too short';
+      case 'maxLength':
+        return 'The value is too long';
+      case 'email':
+        return 'Email is not valid';
+      case 'notOldEnough':
+        return `You must be at least ${this.minAge} years old`;
+      case 'usernameTaken':
+        return 'Username is already taken';
+      default:
+        return 'The value is invalid';
+    }
   }
 }

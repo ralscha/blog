@@ -6,7 +6,8 @@
     "ng": "ng",
     "serve-dist": "ws --hostname localhost -d dist/app/browser -p 1234 -o --log.format stats",
     "start": "ng serve",
-    "format": "npx prettier --write ."
+    "format": "npx prettier --write .",
+    "lint": "ng lint"
   },
   "private": true,
   "dependencies": {
@@ -25,9 +26,13 @@
     "@angular/build": "22.0.5",
     "@angular/cli": "22.0.5",
     "@angular/compiler-cli": "22.0.5",
+    "@eslint/js": "10.0.1",
     "@ionic/angular-toolkit": "12.3.0",
+    "angular-eslint": "22.0.0",
+    "eslint": "^10.6.0",
     "local-web-server": "5.4.0",
     "prettier": "3.9.4",
-    "typescript": "6.0.3"
+    "typescript": "6.0.3",
+    "typescript-eslint": "8.62.1"
   }
 }

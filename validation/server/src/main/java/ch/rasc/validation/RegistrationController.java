@@ -1,7 +1,9 @@
 package ch.rasc.validation;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -29,39 +31,23 @@ public class RegistrationController {
 
   @GetMapping("/checkUsername")
   public boolean checkUsername(@RequestParam("value") String value) {
-    return this.existingUsernames.contains(value);
+    return this.existingUsernames.contains(value.toLowerCase());
   }
 
   @PostMapping("/register")
-  public Map<String, Set<String>> register(@Valid @RequestBody Registration registration,
+  public Map<String, List<String>> register(@Valid @RequestBody Registration registration,
       BindingResult result) {
 
-    Map<String, Set<String>> errors = new HashMap<>();
+    Map<String, List<String>> errors = new HashMap<>();
 
-    if (this.existingUsernames.contains(registration.getUsername())) {
-      errors.computeIfAbsent("username", _ -> new HashSet<>()).add("usernameTaken");
+    if (registration.getUsername() != null
+        && this.existingUsernames.contains(registration.getUsername().toLowerCase())) {
+      errors.computeIfAbsent("username", _ -> new ArrayList<>()).add("usernameTaken");
     }
 
     for (FieldError fieldError : result.getFieldErrors()) {
-      String code = fieldError.getCode();
-      String field = fieldError.getField();
-      if ("NotBlank".equals(code) || "NotNull".equals(code)) {
-        errors.computeIfAbsent(field, _ -> new HashSet<>()).add("required");
-      }
-      else if ("Email".equals(code) && "email".equals(field)) {
-        errors.computeIfAbsent(field, _ -> new HashSet<>()).add("pattern");
-      }
-      else if ("Min".equals(code) && "age".equals(field)) {
-        errors.computeIfAbsent(field, _ -> new HashSet<>()).add("notOldEnough");
-      }
-      else if ("Size".equals(code) && "username".equals(field)) {
-        if (registration.getUsername().length() < 2) {
-          errors.computeIfAbsent(field, _ -> new HashSet<>()).add("minlength");
-        }
-        else {
-          errors.computeIfAbsent(field, _ -> new HashSet<>()).add("maxlength");
-        }
-      }
+      errors.computeIfAbsent(fieldError.getField(), _ -> new ArrayList<>())
+          .add(toClientError(fieldError));
     }
 
     if (errors.isEmpty()) {
@@ -69,6 +55,21 @@ public class RegistrationController {
     }
 
     return errors;
+  }
+
+  private static String toClientError(FieldError fieldError) {
+    return switch (fieldError.getCode()) {
+      case "NotBlank", "NotNull" -> "required";
+      case "Email" -> "email";
+      case "Min" -> "notOldEnough";
+      case "Size" -> {
+        if (fieldError.getRejectedValue() instanceof String value && value.length() < 2) {
+          yield "minLength";
+        }
+        yield "maxLength";
+      }
+      default -> "invalid";
+    };
   }
 
 }
