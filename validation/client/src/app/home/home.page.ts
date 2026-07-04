@@ -4,6 +4,7 @@ import {
   email,
   form,
   FormField,
+  FormRoot,
   maxLength,
   min,
   minLength,
@@ -41,6 +42,7 @@ type ServerValidationErrors = Partial<Record<keyof Registration, string[]>>;
   styleUrl: './home.page.scss',
   imports: [
     FormField,
+    FormRoot,
     IonHeader,
     IonToolbar,
     IonTitle,

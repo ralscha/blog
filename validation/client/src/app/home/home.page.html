@@ -5,7 +5,7 @@
 </ion-header>
 
 <ion-content class="ion-padding">
-  <form (submit)="register(); $event.preventDefault()" novalidate>
+  <form [formRoot]="registrationForm" (submit)="register()">
     <ion-list>
       <ion-item>
         <ion-input
