@@ -33,6 +33,6 @@
     "local-web-server": "5.4.0",
     "prettier": "3.9.4",
     "typescript": "6.0.3",
-    "typescript-eslint": "8.62.1"
+    "typescript-eslint": "8.63.0"
   }
 }
