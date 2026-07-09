@@ -48,7 +48,7 @@
     <dependency>
       <groupId>com.google.cloud</groupId>
       <artifactId>google-cloud-speech</artifactId>
-      <version>4.88.0</version>
+      <version>4.89.0</version>
     </dependency>
 
     <dependency>
