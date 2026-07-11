@@ -29,7 +29,7 @@
     "@eslint/js": "10.0.1",
     "@ionic/angular-toolkit": "12.3.0",
     "angular-eslint": "22.0.0",
-    "eslint": "^10.6.0",
+    "eslint": "^10.7.0",
     "local-web-server": "5.4.0",
     "prettier": "3.9.5",
     "typescript": "6.0.3",
