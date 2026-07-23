@@ -30,8 +30,8 @@
     "workbox-window": "7.4.1"
   },
   "devDependencies": {
-    "@angular/build": "22.0.7",
-    "@angular/cli": "22.0.7",
+    "@angular/build": "22.0.8",
+    "@angular/cli": "22.0.8",
     "@angular/compiler-cli": "22.0.8",
     "local-web-server": "5.4.0",
     "npm-run-all": "4.1.5",
