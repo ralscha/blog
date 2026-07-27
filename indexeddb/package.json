@@ -33,7 +33,7 @@
     "@angular/compiler-cli": "22.0.8",
     "@ionic/angular-toolkit": "12.3.0",
     "@types/papaparse": "5.5.2",
-    "bread-compressor-cli": "4.1.0",
+    "bread-compressor-cli": "4.1.1",
     "local-web-server": "5.4.0",
     "prettier": "3.9.6",
     "typescript": "6.0.3"
