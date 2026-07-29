@@ -21,14 +21,14 @@
     "@ionic/angular": "8.8.15",
     "date-fns": "4.4.0",
     "echarts": "6.1.0",
-    "ionicons": "8.0.13",
+    "ionicons": "8.1.0",
     "ngx-echarts": "22.0.0",
     "rxjs": "7.8.2",
     "tslib": "2.8.1"
   },
   "devDependencies": {
-    "@angular/build": "22.0.8",
-    "@angular/cli": "22.0.8",
+    "@angular/build": "22.0.9",
+    "@angular/cli": "22.0.9",
     "@angular/compiler-cli": "22.0.8",
     "@ionic/angular-toolkit": "12.3.0",
     "@juggle/resize-observer": "3.4.0",
