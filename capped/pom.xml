@@ -9,12 +9,12 @@
     <dependency>
       <groupId>org.mongodb</groupId>
       <artifactId>mongodb-driver-sync</artifactId>
-      <version>5.9.1</version>
+      <version>5.9.2</version>
     </dependency>
     <dependency>
       <groupId>ch.qos.logback</groupId>
       <artifactId>logback-classic</artifactId>
-      <version>1.6.1</version>
+      <version>1.6.2</version>
     </dependency>
   </dependencies>
 
