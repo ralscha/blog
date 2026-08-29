@@ -13,7 +13,7 @@
     <dependency>
       <groupId>com.launchdarkly</groupId>
       <artifactId>okhttp-eventsource</artifactId>
-      <version>4.3.0</version>
+      <version>5.0.0</version>
     </dependency>
     <dependency>
       <groupId>com.squareup.okhttp3</groupId>
