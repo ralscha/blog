@@ -1,4 +1,10 @@
-import { Component, inject, OnInit } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  inject,
+  OnInit,
+} from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { AuthService } from '../auth.service';
 import { JwtHelperService } from '@auth0/angular-jwt';
@@ -11,11 +17,12 @@ import {
   IonIcon,
   IonTitle,
   IonToolbar,
-} from '@ionic/angular/standalone';
+} from '@ionic/angular';
 import { addIcons } from 'ionicons';
 import { exitOutline } from 'ionicons/icons';
 
 @Component({
+  changeDetection: ChangeDetectionStrategy.Eager,
   selector: 'app-home',
   templateUrl: './home.page.html',
   imports: [IonHeader, IonToolbar, IonTitle, IonButtons, IonButton, IonIcon, IonContent],
@@ -25,6 +32,7 @@ export class HomePage implements OnInit {
   message: string | null = null;
   private readonly authService = inject(AuthService);
   private readonly httpClient = inject(HttpClient);
+  private readonly changeDetectorRef = inject(ChangeDetectorRef);
 
   constructor() {
     addIcons({ exitOutline });
@@ -37,12 +45,16 @@ export class HomePage implements OnInit {
       } else {
         this.user = null;
       }
+      this.changeDetectorRef.markForCheck();
     });
   }
 
   ngOnInit(): void {
     this.httpClient.get(`${environment.serverURL}/secret`, { responseType: 'text' }).subscribe(
-      (text) => (this.message = text),
+      (text) => {
+        this.message = text;
+        this.changeDetectorRef.markForCheck();
+      },
       (err) => console.log(err),
     );
   }

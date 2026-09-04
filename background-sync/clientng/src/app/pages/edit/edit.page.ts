@@ -1,4 +1,10 @@
-import { Component, OnInit, inject } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  OnInit,
+  inject,
+} from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TodoService } from '../../services/todo.service';
 import { Todo } from '../../todo';
@@ -15,11 +21,12 @@ import {
   IonList,
   IonTitle,
   IonToolbar,
-} from '@ionic/angular/standalone';
+} from '@ionic/angular';
 import { trashOutline } from 'ionicons/icons';
 import { addIcons } from 'ionicons';
 
 @Component({
+  changeDetection: ChangeDetectionStrategy.Eager,
   selector: 'app-edit',
   templateUrl: './edit.page.html',
   styleUrl: './edit.page.scss',
@@ -42,6 +49,7 @@ export class EditPage implements OnInit {
   private readonly route = inject(ActivatedRoute);
   private readonly todoService = inject(TodoService);
   private readonly router = inject(Router);
+  private readonly changeDetectorRef = inject(ChangeDetectorRef);
 
   todo: Todo | undefined;
 
@@ -61,6 +69,7 @@ export class EditPage implements OnInit {
         ts: 0,
       };
     }
+    this.changeDetectorRef.markForCheck();
   }
 
   deleteTodo(): void {

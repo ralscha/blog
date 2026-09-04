@@ -1,5 +1,5 @@
 import { provideRouter, RouteReuseStrategy, Routes, withHashLocation } from '@angular/router';
-import { IonicRouteStrategy, provideIonicAngular } from '@ionic/angular/standalone';
+import { IonicRouteStrategy, provideIonicAngular } from '@ionic/angular';
 import { ErrorHandler, provideBrowserGlobalErrorListeners } from '@angular/core';
 import { AppGlobalErrorHandler } from './app/app.global.errorhandler';
 import { bootstrapApplication } from '@angular/platform-browser';

@@ -1,4 +1,10 @@
-import { Component, inject, viewChild } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  inject,
+  viewChild,
+} from '@angular/core';
 import {
   IonBackButton,
   IonButton,
@@ -13,12 +19,13 @@ import {
   LoadingController,
   NavController,
   ToastController,
-} from '@ionic/angular/standalone';
+} from '@ionic/angular';
 import { AuthService } from '../auth.service';
 import { FormsModule, NgModel } from '@angular/forms';
 import { finalize } from 'rxjs/operators';
 
 @Component({
+  changeDetection: ChangeDetectionStrategy.Eager,
   selector: 'app-signup',
   templateUrl: './signup.page.html',
   imports: [
@@ -41,6 +48,7 @@ export class SignupPage {
   private readonly authService = inject(AuthService);
   private readonly loadingCtrl = inject(LoadingController);
   private readonly toastCtrl = inject(ToastController);
+  private readonly changeDetectorRef = inject(ChangeDetectorRef);
 
   async signup(value: {
     name: string;
@@ -97,6 +105,7 @@ export class SignupPage {
       toast.present();
 
       this.usernameModel().control.setErrors({ usernameTaken: true });
+      this.changeDetectorRef.markForCheck();
     }
   }
 }

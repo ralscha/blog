@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, OnInit } from '@angular/core';
 import {
   IonBackButton,
   IonButton,
@@ -13,7 +13,7 @@ import {
   IonTitle,
   IonToolbar,
   NavController,
-} from '@ionic/angular/standalone';
+} from '@ionic/angular';
 import { v4 } from 'uuid';
 import { PasswordService } from '../password.service';
 import { Password } from '../password';
@@ -23,6 +23,7 @@ import { addIcons } from 'ionicons';
 import { trashOutline } from 'ionicons/icons';
 
 @Component({
+  changeDetection: ChangeDetectionStrategy.Eager,
   selector: 'app-edit',
   templateUrl: './edit.page.html',
   imports: [

@@ -1,6 +1,6 @@
-import { ChangeDetectorRef, Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, inject } from '@angular/core';
 import { Movie } from '../movie';
-import { LoadingController } from '@ionic/angular';
+import { LoadingController } from '@ionic/angular/lazy';
 // @ts-ignore
 import RecordRTC from 'recordrtc';
 import { environment } from '../../environments/environment';
@@ -15,7 +15,7 @@ import {
   IonList,
   IonTitle,
   IonToolbar,
-} from '@ionic/angular/standalone';
+} from '@ionic/angular';
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
@@ -25,6 +25,7 @@ type SpeechWindow = Window & {
 };
 
 @Component({
+  changeDetection: ChangeDetectionStrategy.Eager,
   selector: 'app-home',
   templateUrl: './home.page.html',
   styleUrl: './home.page.scss',

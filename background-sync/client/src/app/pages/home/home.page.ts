@@ -1,8 +1,8 @@
-import { Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, inject } from '@angular/core';
 import { TodoService } from '../../services/todo.service';
 import { Todo } from '../../todo';
 import { Router, RouterLink } from '@angular/router';
-import { ViewDidEnter } from '@ionic/angular';
+import { ViewDidEnter } from '@ionic/angular/lazy';
 import { AsyncPipe } from '@angular/common';
 import {
   IonButton,
@@ -16,11 +16,12 @@ import {
   IonRouterLink,
   IonTitle,
   IonToolbar,
-} from '@ionic/angular/standalone';
+} from '@ionic/angular';
 import { addOutline } from 'ionicons/icons';
 import { addIcons } from 'ionicons';
 
 @Component({
+  changeDetection: ChangeDetectionStrategy.Eager,
   selector: 'app-page-home',
   templateUrl: './home.page.html',
   imports: [
@@ -42,6 +43,7 @@ import { addIcons } from 'ionicons';
 export class HomePage implements ViewDidEnter {
   private readonly todoService = inject(TodoService);
   private readonly router = inject(Router);
+  private readonly changeDetectorRef = inject(ChangeDetectorRef);
 
   todos!: Promise<Todo[]>;
 
@@ -53,6 +55,7 @@ export class HomePage implements ViewDidEnter {
       navigator.serviceWorker.addEventListener('message', (event) => {
         if (event.data === 'sync_finished') {
           this.todos = this.todoService.getTodos();
+          this.changeDetectorRef.markForCheck();
         }
       });
     }

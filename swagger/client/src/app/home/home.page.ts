@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, inject } from '@angular/core';
 import { Todo, TodoService } from '../swagger';
 import {
   IonButton,
@@ -15,12 +15,13 @@ import {
   IonToolbar,
   NavController,
   ViewDidEnter,
-} from '@ionic/angular/standalone';
+} from '@ionic/angular';
 import { addIcons } from 'ionicons';
 import { addOutline, createOutline, trashOutline } from 'ionicons/icons';
 import { TodoStateService } from '../todo-state.service';
 
 @Component({
+  changeDetection: ChangeDetectionStrategy.Eager,
   selector: 'app-home',
   templateUrl: './home.page.html',
   imports: [
@@ -43,13 +44,17 @@ export class HomePage implements ViewDidEnter {
   private readonly navCtrl = inject(NavController);
   private readonly todoService = inject(TodoService);
   private readonly todoState = inject(TodoStateService);
+  private readonly changeDetectorRef = inject(ChangeDetectorRef);
 
   constructor() {
     addIcons({ addOutline, createOutline, trashOutline });
   }
 
   ionViewDidEnter(): void {
-    this.todoService.list().subscribe((data) => (this.todos = data));
+    this.todoService.list().subscribe((data) => {
+      this.todos = data;
+      this.changeDetectorRef.markForCheck();
+    });
   }
 
   addTodo(): void {

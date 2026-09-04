@@ -1,4 +1,10 @@
-import { Component, OnDestroy, inject } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  OnDestroy,
+  inject,
+} from '@angular/core';
 import { TodoService } from '../../services/todo.service';
 import { Todo } from '../../todo';
 import { Router, RouterLink } from '@angular/router';
@@ -16,11 +22,12 @@ import {
   IonTitle,
   IonToolbar,
   ViewDidEnter,
-} from '@ionic/angular/standalone';
+} from '@ionic/angular';
 import { addOutline } from 'ionicons/icons';
 import { addIcons } from 'ionicons';
 
 @Component({
+  changeDetection: ChangeDetectionStrategy.Eager,
   selector: 'app-page-home',
   templateUrl: './home.page.html',
   imports: [
@@ -42,9 +49,11 @@ import { addIcons } from 'ionicons';
 export class HomePage implements ViewDidEnter, OnDestroy {
   private readonly todoService = inject(TodoService);
   private readonly router = inject(Router);
+  private readonly changeDetectorRef = inject(ChangeDetectorRef);
   private readonly handleServiceWorkerMessage = (event: MessageEvent) => {
     if (event.data === 'sync_finished') {
       this.todos = this.todoService.getTodos();
+      this.changeDetectorRef.markForCheck();
     }
   };
 

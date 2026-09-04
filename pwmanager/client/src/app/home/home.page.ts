@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import {
   IonButton,
   IonButtons,
@@ -14,7 +14,7 @@ import {
   IonToolbar,
   NavController,
   ViewDidEnter,
-} from '@ionic/angular/standalone';
+} from '@ionic/angular';
 import { PasswordService } from '../password.service';
 import { Password } from '../password';
 import { FormsModule } from '@angular/forms';
@@ -22,6 +22,7 @@ import { addIcons } from 'ionicons';
 import { addOutline, exitOutline } from 'ionicons/icons';
 
 @Component({
+  changeDetection: ChangeDetectionStrategy.Eager,
   selector: 'app-home',
   templateUrl: './home.page.html',
   imports: [

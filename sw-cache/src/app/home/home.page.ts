@@ -1,19 +1,23 @@
-import { Component, CUSTOM_ELEMENTS_SCHEMA, OnDestroy, OnInit } from '@angular/core';
 import {
-  IonContent,
-  IonHeader,
-  IonicSlides,
-  IonTitle,
-  IonToolbar,
-} from '@ionic/angular/standalone';
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  CUSTOM_ELEMENTS_SCHEMA,
+  inject,
+  OnDestroy,
+  OnInit,
+} from '@angular/core';
+import { IonContent, IonHeader, IonicSlides, IonTitle, IonToolbar } from '@ionic/angular';
 
 @Component({
+  changeDetection: ChangeDetectionStrategy.Eager,
   selector: 'app-home',
   templateUrl: './home.page.html',
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   imports: [IonHeader, IonToolbar, IonTitle, IonContent],
 })
 export class HomePage implements OnInit, OnDestroy {
+  private readonly changeDetectorRef = inject(ChangeDetectorRef);
   swiperModules = [IonicSlides];
   pictures: string[] = [];
   private readonly cacheName = 'images-v1';
@@ -40,6 +44,7 @@ export class HomePage implements OnInit, OnDestroy {
     this.pictures = await Promise.all(
       responses.map(async (response) => URL.createObjectURL(await response.blob())),
     );
+    this.changeDetectorRef.markForCheck();
   }
 
   ngOnDestroy(): void {

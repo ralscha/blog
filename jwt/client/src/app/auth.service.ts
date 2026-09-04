@@ -4,7 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { tap } from 'rxjs/operators';
 import { environment } from '../environments/environment';
-import { NavController } from '@ionic/angular/standalone';
+import { NavController } from '@ionic/angular';
 
 @Service()
 export class AuthService {

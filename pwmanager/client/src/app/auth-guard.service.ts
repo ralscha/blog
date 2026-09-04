@@ -1,7 +1,7 @@
 import { UrlTree } from '@angular/router';
 import { Observable } from 'rxjs';
 import { inject, Service } from '@angular/core';
-import { NavController } from '@ionic/angular/standalone';
+import { NavController } from '@ionic/angular';
 import { PasswordService } from './password.service';
 
 @Service()

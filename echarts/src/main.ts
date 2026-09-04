@@ -20,7 +20,7 @@ import {
 import { BarChart, GaugeChart, GraphChart, HeatmapChart, LineChart } from 'echarts/charts';
 import { CanvasRenderer } from 'echarts/renderers';
 import { AppComponent } from './app/app.component';
-import { IonicRouteStrategy, provideIonicAngular } from '@ionic/angular/standalone';
+import { IonicRouteStrategy, provideIonicAngular } from '@ionic/angular';
 import { tabsRoutes } from './app/tabs/tabs.routes';
 
 echarts.use([

@@ -1,8 +1,8 @@
 import { provideRouter, RouteReuseStrategy, Routes, withHashLocation } from '@angular/router';
-import { IonicRouteStrategy } from '@ionic/angular';
+import { IonicRouteStrategy } from '@ionic/angular/lazy';
 import { bootstrapApplication } from '@angular/platform-browser';
 import { AppComponent } from './app/app.component';
-import { provideIonicAngular } from '@ionic/angular/standalone';
+import { provideIonicAngular } from '@ionic/angular';
 import { provideHttpClient, withInterceptorsFromDi, withXhr } from '@angular/common/http';
 import { HomePage } from './app/home/home.page';
 

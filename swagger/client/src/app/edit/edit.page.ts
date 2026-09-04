@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, OnInit } from '@angular/core';
 import { Todo, TodoService } from '../swagger';
 import {
   IonBackButton,
@@ -13,12 +13,13 @@ import {
   IonTitle,
   IonToolbar,
   NavController,
-} from '@ionic/angular/standalone';
+} from '@ionic/angular';
 import { v4 } from 'uuid';
 import { FormsModule } from '@angular/forms';
 import { TodoStateService } from '../todo-state.service';
 
 @Component({
+  changeDetection: ChangeDetectionStrategy.Eager,
   selector: 'app-edit',
   templateUrl: './edit.page.html',
   imports: [

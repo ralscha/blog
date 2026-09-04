@@ -2,7 +2,7 @@ import { provideRouter, RouteReuseStrategy, Routes, withHashLocation } from '@an
 import { bootstrapApplication } from '@angular/platform-browser';
 import { HomePage } from './app/home/home.page';
 import { AppComponent } from './app/app.component';
-import { IonicRouteStrategy, provideIonicAngular } from '@ionic/angular/standalone';
+import { IonicRouteStrategy, provideIonicAngular } from '@ionic/angular';
 
 const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },

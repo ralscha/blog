@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import {
   IonButton,
   IonContent,
@@ -11,12 +11,13 @@ import {
   LoadingController,
   NavController,
   ToastController,
-} from '@ionic/angular/standalone';
+} from '@ionic/angular';
 import { AuthService } from '../auth.service';
 import { finalize } from 'rxjs/operators';
 import { FormsModule } from '@angular/forms';
 
 @Component({
+  changeDetection: ChangeDetectionStrategy.Eager,
   selector: 'app-login',
   templateUrl: './login.page.html',
   imports: [

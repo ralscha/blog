@@ -1,10 +1,11 @@
-import { Component, input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, input } from '@angular/core';
 import { Earthquake } from '../earthquake-db';
 import { DatePipe, DecimalPipe } from '@angular/common';
-import { IonCol, IonRow } from '@ionic/angular/standalone';
+import { IonCol, IonRow } from '@ionic/angular';
 import getDistance from 'geolib/es/getDistance';
 
 @Component({
+  changeDetection: ChangeDetectionStrategy.Eager,
   selector: 'app-detail',
   templateUrl: './detail.component.html',
   styles: ['.magnitude { font-weight: bold; font-size: 1.3em; }'],

@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, AfterViewInit, Component, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import {
   circleMarker,
@@ -9,11 +9,12 @@ import {
   Map,
   tileLayer,
 } from 'leaflet';
-import { IonContent, IonHeader, IonTitle, IonToolbar } from '@ionic/angular/standalone';
+import { IonContent, IonHeader, IonTitle, IonToolbar } from '@ionic/angular';
 import { LeafletDirective } from '@bluehalo/ngx-leaflet';
 import { environment } from '../../environments/environment';
 
 @Component({
+  changeDetection: ChangeDetectionStrategy.Eager,
   selector: 'app-home',
   templateUrl: './home.page.html',
   imports: [IonHeader, IonToolbar, IonTitle, IonContent, LeafletDirective],
@@ -52,9 +53,9 @@ export class HomePage implements AfterViewInit {
     const southWest = wrappedBounds.getSouthWest();
     const northEast = wrappedBounds.getNorthEast();
     this.httpClient
-      .get<
-        Earthquake[]
-      >(`${environment.serverUrl}/earthquakes/${southWest.lng}/${southWest.lat}/${northEast.lng}/${northEast.lat}`)
+      .get<Earthquake[]>(
+        `${environment.serverUrl}/earthquakes/${southWest.lng}/${southWest.lat}/${northEast.lng}/${northEast.lat}`,
+      )
       .subscribe((data) => this.drawCircles(data));
   }
 

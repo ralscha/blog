@@ -1,4 +1,10 @@
-import { Component, inject, OnInit } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  inject,
+  OnInit,
+} from '@angular/core';
 import { EarthquakeService } from '../earthquake.service';
 import { IEarthquake } from '../protos/earthquake';
 import { DetailComponent } from '../detail/detail.component';
@@ -12,9 +18,10 @@ import {
   IonRefresherContent,
   IonTitle,
   IonToolbar,
-} from '@ionic/angular/standalone';
+} from '@ionic/angular';
 
 @Component({
+  changeDetection: ChangeDetectionStrategy.Eager,
   selector: 'app-json',
   templateUrl: './json.page.html',
   imports: [
@@ -33,17 +40,22 @@ import {
 export class JsonPage implements OnInit {
   earthquakes: IEarthquake[] = [];
   private readonly earthquakeService = inject(EarthquakeService);
+  private readonly changeDetectorRef = inject(ChangeDetectorRef);
 
   doRefresh(event: Event): void {
     this.earthquakeService.refresh().subscribe(() => {
       this.earthquakeService.fetchJson().subscribe((data) => {
         this.earthquakes = data;
         (event as CustomEvent).detail.complete();
+        this.changeDetectorRef.markForCheck();
       });
     });
   }
 
   ngOnInit(): void {
-    this.earthquakeService.fetchJson().subscribe((data) => (this.earthquakes = data));
+    this.earthquakeService.fetchJson().subscribe((data) => {
+      this.earthquakes = data;
+      this.changeDetectorRef.markForCheck();
+    });
   }
 }

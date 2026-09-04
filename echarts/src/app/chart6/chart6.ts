@@ -1,12 +1,13 @@
-import { Component } from '@angular/core';
-import { ViewWillEnter, ViewWillLeave } from '@ionic/angular';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, inject } from '@angular/core';
+import { ViewWillEnter, ViewWillLeave } from '@ionic/angular/lazy';
 import { EChartsOption } from 'echarts';
 import { NgxEchartsDirective } from 'ngx-echarts';
-import { IonContent, IonHeader, IonTitle, IonToolbar } from '@ionic/angular/standalone';
+import { IonContent, IonHeader, IonTitle, IonToolbar } from '@ionic/angular';
 
 type DataType = { name: string; value: [string, number] };
 
 @Component({
+  changeDetection: ChangeDetectionStrategy.Eager,
   selector: 'app-chart6',
   templateUrl: 'chart6.html',
   styleUrl: './chart6.scss',
@@ -14,6 +15,7 @@ type DataType = { name: string; value: [string, number] };
 })
 export class Chart6Page implements ViewWillEnter, ViewWillLeave {
   private static oneDay = 24 * 3600 * 1000;
+  private readonly changeDetectorRef = inject(ChangeDetectorRef);
 
   data1: DataType[] = [];
   data2: DataType[] = [];
@@ -144,6 +146,7 @@ export class Chart6Page implements ViewWillEnter, ViewWillLeave {
           },
         ],
       };
+      this.changeDetectorRef.markForCheck();
     }, 1000);
   }
 

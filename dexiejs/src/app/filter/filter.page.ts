@@ -1,4 +1,4 @@
-import { Component, Input, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, inject } from '@angular/core';
 import { Filter } from '../filter-interface';
 import { FormsModule, NgForm } from '@angular/forms';
 import {
@@ -18,9 +18,10 @@ import {
   IonTitle,
   IonToolbar,
   ModalController,
-} from '@ionic/angular/standalone';
+} from '@ionic/angular';
 
 @Component({
+  changeDetection: ChangeDetectionStrategy.Eager,
   selector: 'app-filter',
   templateUrl: './filter.page.html',
   styleUrl: './filter.page.scss',

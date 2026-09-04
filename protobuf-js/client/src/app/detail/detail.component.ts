@@ -1,9 +1,10 @@
-import { Component, input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, input } from '@angular/core';
 import { IEarthquake } from '../protos/earthquake';
 import { DatePipe, DecimalPipe } from '@angular/common';
-import { IonNote } from '@ionic/angular/standalone';
+import { IonNote } from '@ionic/angular';
 
 @Component({
+  changeDetection: ChangeDetectionStrategy.Eager,
   selector: 'app-detail',
   templateUrl: './detail.component.html',
   styleUrls: ['./detail.component.scss'],

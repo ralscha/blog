@@ -1,22 +1,17 @@
-import { Component } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, inject } from '@angular/core';
 import { EChartsOption } from 'echarts';
 import { NgxEchartsDirective } from 'ngx-echarts';
-import {
-  IonButton,
-  IonContent,
-  IonFooter,
-  IonHeader,
-  IonTitle,
-  IonToolbar,
-} from '@ionic/angular/standalone';
+import { IonButton, IonContent, IonFooter, IonHeader, IonTitle, IonToolbar } from '@ionic/angular';
 
 @Component({
+  changeDetection: ChangeDetectionStrategy.Eager,
   selector: 'app-chart3',
   templateUrl: 'chart3.html',
   styleUrl: './chart3.scss',
   imports: [NgxEchartsDirective, IonHeader, IonToolbar, IonTitle, IonContent, IonFooter, IonButton],
 })
 export class Chart3Page {
+  private readonly changeDetectorRef = inject(ChangeDetectorRef);
   running = false;
   options: EChartsOption = {
     series: [
@@ -40,6 +35,7 @@ export class Chart3Page {
           },
         ],
       };
+      this.changeDetectorRef.markForCheck();
     }, 2000);
   }
 

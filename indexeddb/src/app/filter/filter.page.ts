@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, OnInit } from '@angular/core';
 import {
   IonButton,
   IonButtons,
@@ -17,11 +17,12 @@ import {
   IonToolbar,
   ModalController,
   NavParams,
-} from '@ionic/angular/standalone';
+} from '@ionic/angular';
 import { Filter } from '../filter-interface';
 import { FormsModule, NgForm } from '@angular/forms';
 
 @Component({
+  changeDetection: ChangeDetectionStrategy.Eager,
   selector: 'app-filter',
   templateUrl: './filter.page.html',
   styleUrls: ['./filter.page.scss'],

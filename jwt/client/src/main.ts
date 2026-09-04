@@ -1,5 +1,5 @@
 import { provideRouter, RouteReuseStrategy, Routes, withHashLocation } from '@angular/router';
-import { IonicRouteStrategy, provideIonicAngular } from '@ionic/angular/standalone';
+import { IonicRouteStrategy, provideIonicAngular } from '@ionic/angular';
 import { provideHttpClient, withInterceptorsFromDi, withXhr } from '@angular/common/http';
 import { bootstrapApplication } from '@angular/platform-browser';
 import { JwtModule } from '@auth0/angular-jwt';

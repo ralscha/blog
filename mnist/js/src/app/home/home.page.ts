@@ -1,10 +1,17 @@
-import { Component, viewChild } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  inject,
+  viewChild,
+} from '@angular/core';
 import { DrawableDirective } from '../drawable.directive';
 import { multiply } from 'mathjs';
 import { DecimalPipe } from '@angular/common';
-import { IonButton, IonContent, IonHeader, IonTitle, IonToolbar } from '@ionic/angular/standalone';
+import { IonButton, IonContent, IonHeader, IonTitle, IonToolbar } from '@ionic/angular';
 
 @Component({
+  changeDetection: ChangeDetectionStrategy.Eager,
   selector: 'app-home',
   templateUrl: './home.page.html',
   styleUrl: './home.page.scss',
@@ -12,6 +19,7 @@ import { IonButton, IonContent, IonHeader, IonTitle, IonToolbar } from '@ionic/a
 })
 export class HomePage {
   readonly drawable = viewChild.required(DrawableDirective);
+  private readonly changeDetectorRef = inject(ChangeDetectorRef);
   detections: number[] = [];
   detectedNumber: number | null | undefined;
   private readonly weightsLoaded: Promise<void>;
@@ -78,6 +86,7 @@ export class HomePage {
 
     this.detections = this.forwardPropagation(values);
     this.detectedNumber = this.indexMax(this.detections);
+    this.changeDetectorRef.markForCheck();
   }
 
   erase(): void {

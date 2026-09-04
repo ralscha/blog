@@ -1,4 +1,10 @@
-import { Component, OnInit, inject } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  OnInit,
+  inject,
+} from '@angular/core';
 import { FilterPage } from '../filter/filter.page';
 import { Earthquake } from '../earthquake-db';
 import { EarthquakeService } from '../earthquake.service';
@@ -25,11 +31,12 @@ import {
   IonToolbar,
   LoadingController,
   ModalController,
-} from '@ionic/angular/standalone';
+} from '@ionic/angular';
 import { addIcons } from 'ionicons';
 import { arrowDownOutline, optionsOutline } from 'ionicons/icons';
 
 @Component({
+  changeDetection: ChangeDetectionStrategy.Eager,
   selector: 'app-home',
   templateUrl: './home.page.html',
   styleUrl: './home.page.scss',
@@ -57,6 +64,7 @@ export class HomePage implements OnInit {
   private readonly earthquakeService = inject(EarthquakeService);
   private readonly modalCtrl = inject(ModalController);
   private readonly loadingCtrl = inject(LoadingController);
+  private readonly changeDetectorRef = inject(ChangeDetectorRef);
 
   earthquakes: Earthquake[] = [];
   elapsedTime!: number;
@@ -142,6 +150,7 @@ export class HomePage implements OnInit {
     if (loading) {
       loading.dismiss();
     }
+    this.changeDetectorRef.markForCheck();
   }
 
   async presentFilterPage(): Promise<void> {

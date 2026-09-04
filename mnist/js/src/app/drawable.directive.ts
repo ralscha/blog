@@ -7,7 +7,7 @@ import {
   Renderer2,
   output,
 } from '@angular/core';
-import { Platform } from '@ionic/angular/standalone';
+import { Platform } from '@ionic/angular';
 
 @Directive({ selector: '[appDrawable]' })
 export class DrawableDirective implements OnInit {

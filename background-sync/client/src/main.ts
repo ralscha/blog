@@ -8,7 +8,7 @@ import {
 import { bootstrapApplication } from '@angular/platform-browser';
 import { routes } from './app/app.routes';
 import { AppComponent } from './app/app.component';
-import { provideIonicAngular, IonicRouteStrategy } from '@ionic/angular/standalone';
+import { provideIonicAngular, IonicRouteStrategy } from '@ionic/angular';
 import { Workbox } from 'workbox-window';
 
 function loadServiceWorker() {

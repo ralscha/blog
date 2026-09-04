@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, inject } from '@angular/core';
 import { environment } from '../../environments/environment';
 import {
   IonButton,
@@ -13,7 +13,7 @@ import {
   IonTitle,
   IonToolbar,
   LoadingController,
-} from '@ionic/angular/standalone';
+} from '@ionic/angular';
 import { FormsModule } from '@angular/forms';
 
 declare type Voice = { name: string; gender: string; language: string };
@@ -26,6 +26,7 @@ declare type SpeakRequest = {
 };
 
 @Component({
+  changeDetection: ChangeDetectionStrategy.Eager,
   selector: 'app-home',
   templateUrl: './home.page.html',
   styleUrl: './home.page.scss',
@@ -58,6 +59,7 @@ export class HomePage {
   selectedClientVoice: SpeechSynthesisVoice | null = null;
   clientVoices: SpeechSynthesisVoice[] = [];
   private readonly loadingController = inject(LoadingController);
+  private readonly changeDetectorRef = inject(ChangeDetectorRef);
 
   constructor() {
     this.loadVoices();
@@ -143,6 +145,7 @@ export class HomePage {
     this.selectedGender = this.genders.includes('FEMALE') ? 'FEMALE' : (this.genders[0] ?? null);
     this.text = 'Text to speak';
     this.updateFilteredVoices();
+    this.changeDetectorRef.markForCheck();
   }
 
   private updateClientVoices(): void {
@@ -152,6 +155,7 @@ export class HomePage {
       this.clientVoices.find((voice) => voice.lang.startsWith('en-')) ??
       this.clientVoices[0] ??
       null;
+    this.changeDetectorRef.markForCheck();
   }
 
   private updateFilteredVoices(): void {

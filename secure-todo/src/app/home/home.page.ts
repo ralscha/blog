@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import {
   IonButton,
   IonButtons,
@@ -14,13 +14,14 @@ import {
   IonToolbar,
   NavController,
   ViewDidEnter,
-} from '@ionic/angular/standalone';
+} from '@ionic/angular';
 import { TodoService } from '../todo.service';
 import { Todo } from '../todo';
 import { addIcons } from 'ionicons';
 import { addOutline, createOutline, exitOutline, trashOutline } from 'ionicons/icons';
 
 @Component({
+  changeDetection: ChangeDetectionStrategy.Eager,
   selector: 'app-home',
   templateUrl: './home.page.html',
   imports: [
