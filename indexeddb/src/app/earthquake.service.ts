@@ -1,7 +1,7 @@
 import { inject, Service } from '@angular/core';
 import { Filter } from './filter-interface';
 import { parse } from 'papaparse';
-import getDistance from 'geolib/es/getDistance';
+import { getDistance } from 'geolib';
 import { map } from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
 import { Earthquake } from './earthquake';

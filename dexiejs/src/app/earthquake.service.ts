@@ -2,7 +2,7 @@ import { Service } from '@angular/core';
 import { Earthquake, EarthquakeDb } from './earthquake-db';
 import { Filter } from './filter-interface';
 import Papa from 'papaparse';
-import getDistance from 'geolib/es/getDistance';
+import { getDistance } from 'geolib';
 
 interface EarthquakeCsvRow {
   id: string;

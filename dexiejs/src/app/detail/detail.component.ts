@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component, input } from '@angular/core';
 import { Earthquake } from '../earthquake-db';
 import { DatePipe, DecimalPipe } from '@angular/common';
 import { IonCol, IonRow } from '@ionic/angular';
-import getDistance from 'geolib/es/getDistance';
+import { getDistance } from 'geolib';
 
 @Component({
   changeDetection: ChangeDetectionStrategy.Eager,

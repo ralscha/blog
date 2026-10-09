@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, input } from '@angular/core';
-import getDistance from 'geolib/es/getDistance';
+import { getDistance } from 'geolib';
 import { Earthquake } from '../earthquake';
 import { DatePipe, DecimalPipe } from '@angular/common';
 import { IonCol, IonRow } from '@ionic/angular';
