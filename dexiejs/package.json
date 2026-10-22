@@ -10,14 +10,14 @@
   },
   "private": true,
   "dependencies": {
-    "@angular/cdk": "22.2.2",
-    "@angular/common": "22.2.2",
-    "@angular/compiler": "22.2.2",
-    "@angular/core": "22.2.2",
-    "@angular/forms": "22.2.2",
-    "@angular/platform-browser": "22.2.2",
-    "@angular/router": "22.2.2",
-    "@ionic/angular": "9.0.7",
+    "@angular/cdk": "22.2.4",
+    "@angular/common": "22.2.3",
+    "@angular/compiler": "22.2.3",
+    "@angular/core": "22.2.3",
+    "@angular/forms": "22.2.3",
+    "@angular/platform-browser": "22.2.3",
+    "@angular/router": "22.2.3",
+    "@ionic/angular": "9.0.9",
     "dexie": "4.4.6",
     "geolib": "4.0.0",
     "ionicons": "8.1.0",
@@ -26,13 +26,13 @@
     "tslib": "2.8.1"
   },
   "devDependencies": {
-    "@angular/build": "22.2.2",
-    "@angular/cli": "22.2.2",
-    "@angular/compiler-cli": "22.2.2",
+    "@angular/build": "22.2.3",
+    "@angular/cli": "22.2.3",
+    "@angular/compiler-cli": "22.2.3",
     "@ionic/angular-toolkit": "13.0.0",
     "@types/papaparse": "5.5.2",
-    "local-web-server": "5.4.0",
-    "prettier": "3.9.9",
+    "local-web-server": "5.4.2",
+    "prettier": "3.9.10",
     "typescript": "6.0.3"
   }
 }
