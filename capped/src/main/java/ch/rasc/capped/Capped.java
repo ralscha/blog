@@ -1,5 +1,7 @@
 package ch.rasc.capped;
 
+import java.util.List;
+
 import org.bson.Document;
 
 import com.mongodb.client.MongoClient;
@@ -12,7 +14,9 @@ public class Capped {
     try (MongoClient mongoClient = MongoClients.create()) {
       MongoDatabase db = mongoClient.getDatabase("test");
 
-      Document collStats = db.runCommand(new Document("collStats", "log"));
+      Document collStats = db.getCollection("log")
+          .aggregate(List.of(new Document("$collStats", new Document("storageStats", new Document()))))
+          .first().get("storageStats", Document.class);
 
       System.out.println("Is capped: " + collStats.get("capped"));
       System.out.println("Max. Documents: " + collStats.get("max"));

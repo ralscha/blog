@@ -101,7 +101,7 @@ export class EarthquakeService {
           tx.oncomplete = () => resolve(result);
         });
       } else {
-        magIndex.getAll().onsuccess = (e) => resolve((e.target as any).result);
+        store.getAll().onsuccess = (e) => resolve((e.target as any).result);
       }
     });
 

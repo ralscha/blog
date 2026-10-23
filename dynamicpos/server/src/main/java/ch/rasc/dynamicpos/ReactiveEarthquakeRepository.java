@@ -1,6 +1,6 @@
 package ch.rasc.dynamicpos;
 
-import org.springframework.data.geo.Box;
+import org.springframework.data.mongodb.core.geo.GeoJsonPolygon;
 import org.springframework.data.repository.reactive.ReactiveCrudRepository;
 import org.springframework.data.repository.reactive.ReactiveSortingRepository;
 
@@ -10,6 +10,6 @@ public interface ReactiveEarthquakeRepository
     extends ReactiveCrudRepository<Earthquake, String>,
     ReactiveSortingRepository<Earthquake, String> {
 
-  Flux<Earthquake> findByLocationWithin(Box box);
+  Flux<Earthquake> findByLocationWithin(GeoJsonPolygon polygon);
 
 }

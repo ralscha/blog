@@ -15,12 +15,36 @@
 
   self.addEventListener('sync', function (event) {
     if (event.tag === SYNC_TAG) {
-      event.waitUntil(serverSync());
+      event.waitUntil(requestSync());
     }
   });
 
+  self.addEventListener('message', function (event) {
+    if (event.data?.type === SYNC_TAG) {
+      event.waitUntil(requestSync().catch(error => console.warn('Foreground sync failed', error)));
+    }
+  });
+
+  let runningSync;
+  let syncRequested = false;
+  function requestSync() {
+    syncRequested = true;
+    if (!runningSync) {
+      runningSync = (async () => {
+        do {
+          syncRequested = false;
+          await serverSync();
+        } while (syncRequested);
+      })().finally(() => { runningSync = undefined; });
+    }
+    return runningSync;
+  }
+
   async function serverSync() {
     const syncViewResponse = await fetch(`${API_BASE_URL}/syncview`);
+    if (!syncViewResponse.ok) {
+      throw new Error('syncview failed: ' + syncViewResponse.status);
+    }
     const syncView = await syncViewResponse.json();
 
     const serverMap = new Map();

@@ -77,7 +77,7 @@ public class Importer {
     String sha1 = prefix + line.substring(0, separator);
     int count = Integer.parseInt(line.substring(separator + 1).trim());
 
-    store.putRight(txn, new ArrayByteIterable(HEX_FORMAT.parseHex(sha1)),
+    store.put(txn, new ArrayByteIterable(HEX_FORMAT.parseHex(sha1)),
         IntegerBinding.intToCompressedEntry(count));
   }
 

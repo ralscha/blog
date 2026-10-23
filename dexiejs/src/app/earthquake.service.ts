@@ -164,8 +164,8 @@ export class EarthquakeService {
 
     await this.db.transaction('rw', this.db.earthquakes, async () => {
       await this.db.earthquakes.bulkPut(earthquakes);
-      localStorage.setItem('lastUpdate', Date.now().toString());
     });
+    localStorage.setItem('lastUpdate', Date.now().toString());
   }
 
   private deleteOldRecords(): Promise<number> {

@@ -2,6 +2,7 @@ package ch.rasc.pluggablefs;
 
 import java.io.IOException;
 import java.net.URI;
+import java.nio.CharBuffer;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.FileSystem;
 import java.nio.file.Files;
@@ -17,6 +18,7 @@ import org.cryptomator.cryptofs.CryptoFileSystemProperties;
 import org.cryptomator.cryptofs.CryptoFileSystemProvider;
 import org.cryptomator.cryptolib.api.Masterkey;
 import org.cryptomator.cryptolib.api.MasterkeyLoader;
+import org.cryptomator.cryptolib.common.MasterkeyFileAccess;
 
 public class Cryptomator {
 
@@ -25,13 +27,21 @@ public class Cryptomator {
 
     Files.createDirectories(storageLocation);
     SecureRandom csprng = new SecureRandom();
+    if (System.console() == null) {
+      throw new IllegalStateException("Run from a terminal to enter the vault password");
+    }
+    char[] password = System.console().readPassword("Vault password: ");
+    if (password == null || password.length == 0) {
+      throw new IllegalArgumentException("A vault password is required");
+    }
+    MasterkeyFileAccess keyAccess = new MasterkeyFileAccess(new byte[0], csprng);
 
     try (Masterkey masterkey = Masterkey.generate(csprng)) {
-      MasterkeyLoader loader = _ -> masterkey.copy();
-  
-      Path masterKeyPath = Paths.get("E:\\temp\\vault\\masterkey.cryptomator");
-  
-      Files.write(masterKeyPath, masterkey.getEncoded(), StandardOpenOption.CREATE_NEW);
+      Path masterKeyPath = storageLocation.resolve("masterkey.cryptomator");
+      try (var output = Files.newOutputStream(masterKeyPath, StandardOpenOption.CREATE_NEW)) {
+        keyAccess.persist(masterkey, output, CharBuffer.wrap(password), 999);
+      }
+      MasterkeyLoader loader = keyUri -> keyAccess.load(Paths.get(keyUri), CharBuffer.wrap(password));
       URI uri = masterKeyPath.toUri();
       CryptoFileSystemProperties fsProps = CryptoFileSystemProperties
           .cryptoFileSystemProperties().withKeyLoader(loader).build();
@@ -59,6 +69,9 @@ public class Cryptomator {
   
         Files.delete(p1);
       }
+    }
+    finally {
+      Arrays.fill(password, '\0');
     }
   }
 

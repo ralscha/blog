@@ -1,4 +1,4 @@
-import { Service } from '@angular/core';
+import { DestroyRef, inject, Service } from '@angular/core';
 import { Todo, TodoDb } from '../todo';
 import { v4 as uuidv4 } from 'uuid';
 
@@ -10,6 +10,13 @@ export class TodoService {
 
   constructor() {
     this.db = new TodoDb();
+    const retry = () => { void this.requestSync(); };
+    const timer = window.setInterval(retry, 30_000);
+    window.addEventListener('online', retry);
+    inject(DestroyRef).onDestroy(() => {
+      window.clearInterval(timer);
+      window.removeEventListener('online', retry);
+    });
   }
 
   async getTodos(): Promise<Todo[]> {
@@ -44,12 +51,15 @@ export class TodoService {
       return;
     }
 
-    const swRegistration = await navigator.serviceWorker.ready;
-    if (!swRegistration.sync) {
-      return;
+    try {
+      const swRegistration = await navigator.serviceWorker.ready;
+      swRegistration.active?.postMessage({ type: SYNC_TAG });
+      if (swRegistration.sync) {
+        await swRegistration.sync.register(SYNC_TAG);
+      }
+    } catch (error) {
+      console.warn('Background Sync registration failed; foreground retries remain active', error);
     }
-
-    await swRegistration.sync.register(SYNC_TAG);
   }
 
   private changed(oldTodo: Todo | undefined, newTodo: Todo): boolean {

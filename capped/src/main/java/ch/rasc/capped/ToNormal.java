@@ -4,6 +4,8 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.function.Consumer;
 
+import java.util.List;
+
 import org.bson.Document;
 
 import com.mongodb.MongoNamespace;
@@ -35,7 +37,9 @@ public class ToNormal {
         collection.insertOne(logMessage);
       }
 
-      Document collStats = db.runCommand(new Document("collStats", "log"));
+      Document collStats = db.getCollection("log")
+          .aggregate(List.of(new Document("$collStats", new Document("storageStats", new Document()))))
+          .first().get("storageStats", Document.class);
       System.out.println(collStats.get("capped")); // true
 
       MongoNamespace newName = new MongoNamespace("test", "logOld");
@@ -47,7 +51,9 @@ public class ToNormal {
             System.out.println(block);
           });
 
-      collStats = db.runCommand(new Document("collStats", "log"));
+      collStats = db.getCollection("log")
+          .aggregate(List.of(new Document("$collStats", new Document("storageStats", new Document()))))
+          .first().get("storageStats", Document.class);
       System.out.println(collStats.get("capped")); // false
 
       db.getCollection("logOld").drop();

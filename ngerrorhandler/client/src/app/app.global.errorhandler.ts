@@ -47,12 +47,15 @@ export class AppGlobalErrorHandler implements ErrorHandler {
   async handleError(error: any): Promise<void> {
     console.error(error);
 
-    const body = JSON.stringify(this.createErrorReport(error));
-
-    const wasOK = await this.sendError(body);
-    if (!wasOK) {
-      await this.clientErrorService.store(body);
-      this.scheduleRetry();
+    try {
+      const body = JSON.stringify(this.createErrorReport(error));
+      const wasOK = await this.sendError(body);
+      if (!wasOK) {
+        await this.clientErrorService.store(body);
+        this.scheduleRetry();
+      }
+    } catch (reportingError) {
+      console.error('Could not report or store the application error', reportingError);
     }
   }
 
@@ -88,7 +91,14 @@ export class AppGlobalErrorHandler implements ErrorHandler {
       this.scheduleRetry();
     };
 
-    await retry();
+    try {
+      await retry();
+    } catch (reportingError) {
+      console.error('Could not process stored application errors', reportingError);
+      this.scheduleRetry();
+    } finally {
+      this.isRetryRunning = false;
+    }
   }
 
   private createErrorReport(error: unknown): ErrorReport {
