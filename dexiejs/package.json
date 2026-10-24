@@ -18,7 +18,7 @@
     "@angular/platform-browser": "22.2.3",
     "@angular/router": "22.2.3",
     "@ionic/angular": "9.0.9",
-    "dexie": "4.4.6",
+    "dexie": "4.4.7",
     "geolib": "4.0.0",
     "ionicons": "8.1.0",
     "papaparse": "5.7.0",
@@ -26,8 +26,8 @@
     "tslib": "2.8.1"
   },
   "devDependencies": {
-    "@angular/build": "22.2.3",
-    "@angular/cli": "22.2.3",
+    "@angular/build": "22.2.4",
+    "@angular/cli": "22.2.4",
     "@angular/compiler-cli": "22.2.3",
     "@ionic/angular-toolkit": "13.0.0",
     "@types/papaparse": "5.5.2",

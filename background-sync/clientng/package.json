@@ -18,15 +18,15 @@
     "@angular/router": "22.2.3",
     "@angular/service-worker": "22.2.3",
     "@ionic/angular": "9.0.9",
-    "dexie": "4.4.6",
+    "dexie": "4.4.7",
     "ionicons": "8.1.0",
     "rxjs": "7.8.2",
     "tslib": "2.8.1",
     "uuid": "14.0.3"
   },
   "devDependencies": {
-    "@angular/build": "22.2.3",
-    "@angular/cli": "22.2.3",
+    "@angular/build": "22.2.4",
+    "@angular/cli": "22.2.4",
     "@angular/compiler-cli": "22.2.3",
     "@ionic/angular-toolkit": "13.0.0",
     "local-web-server": "5.4.2",
