@@ -31,6 +31,6 @@
     "@ionic/angular-toolkit": "13.0.0",
     "local-web-server": "5.4.2",
     "prettier": "3.9.10",
-    "typescript": "6.0.3"
+    "typescript": "7.0.2"
   }
 }
