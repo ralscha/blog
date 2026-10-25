@@ -1,5 +1,6 @@
 # Weekly version updates; security updates are enabled in repository settings.
 # Minor and patch releases are grouped; major releases remain separate.
+# Temporarily hold TypeScript below 7 for Angular projects; remove the ignore rule when compatible.
 version: 2
 updates:
 - package-ecosystem: docker-compose
@@ -78,27 +79,6 @@ updates:
       - minor
       - patch
 - package-ecosystem: npm
-  directories:
-  - /background-sync/client
-  - /background-sync/clientng
-  - /customicons4
-  - /datefns
-  - /dexiejs
-  - /dynamicpos/client
-  - /echarts
-  - /indexeddb
-  - /jwt/client
-  - /mnist/js
-  - /ngerrorhandler/client
-  - /ngworkbox
-  - /passwordcheck/client
-  - /poll/client
-  - /protobuf-js/client
-  - /pwmanager/client
-  - /secure-todo
-  - /speechsearch/client
-  - /sw-cache
-  - /swagger/client
   schedule:
     interval: weekly
     day: monday
@@ -113,11 +93,48 @@ updates:
       update-types:
       - minor
       - patch
-- package-ecosystem: npm
   directories:
-  - /text2speech/client
-  - /validation/client
-  - /verbalregex/js
+  - /datefns
+  - /passwordcheck/client
+  - /poll/client
+- package-ecosystem: npm
+  schedule:
+    interval: weekly
+    day: monday
+    time: "09:00"
+    timezone: Europe/Zurich
+  open-pull-requests-limit: 5
+  groups:
+    minor-and-patch-a-angular:
+      applies-to: version-updates
+      patterns:
+      - '*'
+      update-types:
+      - minor
+      - patch
+  directories:
+  - /background-sync/client
+  - /background-sync/clientng
+  - /customicons4
+  - /dexiejs
+  - /dynamicpos/client
+  - /echarts
+  - /indexeddb
+  - /jwt/client
+  - /mnist/js
+  - /ngerrorhandler/client
+  - /ngworkbox
+  - /protobuf-js/client
+  - /pwmanager/client
+  - /secure-todo
+  - /speechsearch/client
+  - /sw-cache
+  - /swagger/client
+  ignore:
+  - dependency-name: typescript
+    versions:
+    - '>=7.0.0'
+- package-ecosystem: npm
   schedule:
     interval: weekly
     day: monday
@@ -132,3 +149,26 @@ updates:
       update-types:
       - minor
       - patch
+  directory: /verbalregex/js
+- package-ecosystem: npm
+  schedule:
+    interval: weekly
+    day: monday
+    time: "09:00"
+    timezone: Europe/Zurich
+  open-pull-requests-limit: 5
+  groups:
+    minor-and-patch-b-angular:
+      applies-to: version-updates
+      patterns:
+      - '*'
+      update-types:
+      - minor
+      - patch
+  directories:
+  - /text2speech/client
+  - /validation/client
+  ignore:
+  - dependency-name: typescript
+    versions:
+    - '>=7.0.0'
