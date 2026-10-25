@@ -1,0 +1,134 @@
+# Weekly version updates; security updates are enabled in repository settings.
+# Minor and patch releases are grouped; major releases remain separate.
+version: 2
+updates:
+- package-ecosystem: docker-compose
+  directories:
+  - /capped
+  - /dynamicpos/server
+  - /speechsearch/server
+  schedule:
+    interval: weekly
+    day: monday
+    time: "09:00"
+    timezone: Europe/Zurich
+  open-pull-requests-limit: 5
+  groups:
+    minor-and-patch:
+      applies-to: version-updates
+      patterns:
+      - '*'
+      update-types:
+      - minor
+      - patch
+- package-ecosystem: maven
+  directories:
+  - /background-sync/server
+  - /beacon
+  - /capped
+  - /dynamicpos/server
+  - /jwt/server
+  - /mnist/java
+  - /ngerrorhandler/server
+  - /passwordcheck/server
+  - /pluggable-fs
+  - /poll/server
+  - /protobuf
+  - /protobuf-js/server
+  - /pwmanager/server
+  - /pwnd
+  - /rss
+  - /speechsearch/server
+  - /sse
+  - /sse-client
+  - /sw-push
+  - /swagger/server
+  schedule:
+    interval: weekly
+    day: monday
+    time: "09:00"
+    timezone: Europe/Zurich
+  open-pull-requests-limit: 5
+  groups:
+    minor-and-patch-a:
+      applies-to: version-updates
+      patterns:
+      - '*'
+      update-types:
+      - minor
+      - patch
+- package-ecosystem: maven
+  directories:
+  - /text2speech/server
+  - /twolegged
+  - /validation/server
+  - /verbalregex
+  schedule:
+    interval: weekly
+    day: monday
+    time: "09:00"
+    timezone: Europe/Zurich
+  open-pull-requests-limit: 5
+  groups:
+    minor-and-patch-b:
+      applies-to: version-updates
+      patterns:
+      - '*'
+      update-types:
+      - minor
+      - patch
+- package-ecosystem: npm
+  directories:
+  - /background-sync/client
+  - /background-sync/clientng
+  - /customicons4
+  - /datefns
+  - /dexiejs
+  - /dynamicpos/client
+  - /echarts
+  - /indexeddb
+  - /jwt/client
+  - /mnist/js
+  - /ngerrorhandler/client
+  - /ngworkbox
+  - /passwordcheck/client
+  - /poll/client
+  - /protobuf-js/client
+  - /pwmanager/client
+  - /secure-todo
+  - /speechsearch/client
+  - /sw-cache
+  - /swagger/client
+  schedule:
+    interval: weekly
+    day: monday
+    time: "09:00"
+    timezone: Europe/Zurich
+  open-pull-requests-limit: 5
+  groups:
+    minor-and-patch-a:
+      applies-to: version-updates
+      patterns:
+      - '*'
+      update-types:
+      - minor
+      - patch
+- package-ecosystem: npm
+  directories:
+  - /text2speech/client
+  - /validation/client
+  - /verbalregex/js
+  schedule:
+    interval: weekly
+    day: monday
+    time: "09:00"
+    timezone: Europe/Zurich
+  open-pull-requests-limit: 5
+  groups:
+    minor-and-patch-b:
+      applies-to: version-updates
+      patterns:
+      - '*'
+      update-types:
+      - minor
+      - patch
