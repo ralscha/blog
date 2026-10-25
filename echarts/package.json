@@ -36,6 +36,6 @@
     "local-web-server": "5.4.2",
     "prettier": "3.9.10",
     "resize-observer-polyfill": "1.5.1",
-    "typescript": "6.0.3"
+    "typescript": "7.0.2"
   }
 }
