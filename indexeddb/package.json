@@ -11,13 +11,13 @@
   },
   "private": true,
   "dependencies": {
-    "@angular/cdk": "22.2.5",
+    "@angular/cdk": "22.2.6",
     "@angular/common": "22.2.4",
     "@angular/compiler": "22.2.4",
     "@angular/core": "22.2.4",
     "@angular/forms": "22.2.4",
     "@angular/platform-browser": "22.2.4",
-    "@angular/pwa": "22.2.5",
+    "@angular/pwa": "22.2.6",
     "@angular/router": "22.2.4",
     "@angular/service-worker": "22.2.4",
     "@ionic/angular": "9.0.10",
@@ -28,8 +28,8 @@
     "tslib": "2.9.1"
   },
   "devDependencies": {
-    "@angular/build": "22.2.5",
-    "@angular/cli": "22.2.5",
+    "@angular/build": "22.2.6",
+    "@angular/cli": "22.2.6",
     "@angular/compiler-cli": "22.2.4",
     "@ionic/angular-toolkit": "13.0.0",
     "@types/papaparse": "5.5.2",
