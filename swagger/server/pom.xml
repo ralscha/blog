@@ -5,7 +5,7 @@
   <parent>
     <groupId>org.springframework.boot</groupId>
     <artifactId>spring-boot-starter-parent</artifactId>
-    <version>4.1.2</version>
+    <version>4.2.0</version>
   </parent>
 
   <groupId>ch.rasc.swagger</groupId>
@@ -31,7 +31,7 @@
     <dependency>
       <groupId>org.springdoc</groupId>
       <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
-      <version>3.2.0</version>
+      <version>3.2.1</version>
     </dependency>
 
   </dependencies>
@@ -92,7 +92,7 @@
             <path>
               <groupId>com.google.errorprone</groupId>
               <artifactId>error_prone_core</artifactId>
-              <version>2.52.0</version>
+              <version>2.53.0</version>
             </path>
           </annotationProcessorPaths>
         </configuration>
